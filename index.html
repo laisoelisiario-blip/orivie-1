@@ -332,7 +332,7 @@ body.modal-open{overflow:hidden}
 </style>
 </head>
 <body>
-<div id="app"></div>
+<div id="app"><div style="padding:80px 24px;text-align:center;font-family:'DM Sans',system-ui,sans-serif;color:#75655B"><p style="font-family:'Playfair Display',Georgia,serif;font-size:24px;font-weight:700;color:#3A2E28">Orivie - Sua Personalidade</p><p style="margin-top:8px">Carregando…</p></div></div>
 <div id="layer"></div>
 <noscript><p style="padding:24px;font-family:sans-serif">Ative o JavaScript para usar o Orivie - Sua Personalidade.</p></noscript>
 
@@ -726,7 +726,7 @@ function U(){return DB.session?DB.users[DB.session]||null:null}
 function save(){
  const ok=LS.set(K_USERS,DB.users);
  LS.set(K_SESSION,DB.session);
- if(!ok)toast('Ops! O espaço do aparelho encheu. Apague boards antigos para liberar.');
+ if(!ok&&!ui.warnedStorage){ui.warnedStorage=true;toast('Este navegador não está guardando dados agora (espaço cheio ou janela anônima). Se o espaço encheu, apague boards antigos.')}
  return ok;
 }
 async function hashPass(p){
@@ -886,8 +886,17 @@ function showMilestone(){
    ========================================================= */
 const PUBLIC=['boas-vindas','cadastro','login'];
 const TABS=[{id:'hoje',n:'Hoje',ic:'sun'},{id:'combina',n:'Combina',ic:'heart'},{id:'checklist',n:'Checklist',ic:'check'},{id:'board',n:'Board',ic:'grid'},{id:'aprender',n:'Aprender',ic:'book'},{id:'eu',n:'Eu',ic:'user'}];
-const route=()=>{const h=location.hash.replace(/^#\/?/,'').replace('/','-');return h||'boas-vindas'};
-function go(r){if(route()===r)render();else location.hash='#'+r}
+/* A tela é desenhada direto pelo app; o endereço (#) é só um extra para o botão Voltar.
+   Assim o app funciona mesmo em visualizadores que bloqueiam ou não avisam mudanças de endereço. */
+function hashRoute(){let h='';try{h=location.hash||''}catch(e){}h=h.replace(/^#\/?/,'').replace('/','-');return h||'boas-vindas'}
+const route=()=>ui.route||hashRoute();
+function setHash(r,push){
+ try{if(location.hash==='#'+r)return}catch(e){return}
+ ui.ownHash='#'+r;
+ try{if(push)location.hash=r;else history.replaceState(null,'','#'+r)}
+ catch(e){try{location.replace('#'+r)}catch(e2){ui.ownHash=null}}
+}
+function go(r){ui.route=r;render();setHash(r,true)}
 function stepFor(u){if(!u.paid)return 'pagamento';if(!u.testDone)return 'teste';if(!u.prefsDone)return 'personalizacao';return 'app-hoje'}
 function allowed(r,u){
  if(!u)return PUBLIC.includes(r)?r:'boas-vindas';
@@ -906,7 +915,7 @@ const APP=()=>document.getElementById('app');
 function render(){
  try{
   const u=U();const want=route();const r=allowed(want,u);
-  if(r!==want){location.replace('#'+r);return}
+  if(r!==want){ui.route=r;setHash(r,false)}
   if(r!=='personalizacao')ui.prefs=null;
   if(r!=='teste')ui.q=null;
   let html='';
@@ -1457,8 +1466,8 @@ const FORMS={
   if(f.querySelector('.bad'))return nope(f);
   const u=blankUser();u.name=name;u.email=email;u.birth=birth;u.pass=await hashPass(pass);
   DB.users[email]=u;DB.session=email;
-  if(!save()){delete DB.users[email];DB.session=null;setErr(f,'form','Não consegui salvar neste aparelho. Verifique se o navegador permite armazenamento.');return}
-  sfx('ok');toast(`Conta criada! Bem-vinda, ${esc(first(name))}.`);go(stepFor(u));
+  const stored=save();
+  sfx('ok');toast(stored?`Conta criada! Bem-vinda, ${esc(first(name))}.`:'Conta criada! Este navegador não está guardando dados, então seu progresso vale só até fechar a página.');go(stepFor(u));
  },
  async login(f){
   clearErr(f);const email=f.email.value.trim().toLowerCase(),pass=f.pass.value;
@@ -1538,7 +1547,7 @@ function finishTest(){
 }
 const ACT={
  go:el=>go(el.dataset.to),
- hardHome:()=>{closeModal();const u=U();location.hash='#'+(u?stepFor(u):'boas-vindas');setTimeout(render,0)},
+ hardHome:()=>{closeModal();const u=U();go(u?stepFor(u):'boas-vindas')},
  closeModal:()=>closeModal(),
  confirmOk:()=>{const f=ui.onOk;ui.onOk=null;closeModal();if(f)f()},
  tab:el=>{ui.reading=null;sfx('tap');go('app-'+el.dataset.v)},
@@ -1695,14 +1704,14 @@ document.addEventListener('keydown',e=>{
  if(idx>=0&&e.key.length===1){e.preventDefault();pickAnswer('ABCDE'[idx]);return}
  if(e.key==='Enter'&&tag!=='BUTTON'){const b=$('[data-act="qNext"]');if(b&&!b.disabled){e.preventDefault();b.click()}}
 });
-window.addEventListener('hashchange',()=>{if(ui.modal&&!ui.modal.lock)closeModal();render()});
+window.addEventListener('hashchange',()=>{let h='';try{h=location.hash}catch(e){}if(ui.ownHash&&h===ui.ownHash){ui.ownHash=null;return}ui.ownHash=null;const r=hashRoute();if(r===ui.route)return;if(ui.modal&&!ui.modal.lock)closeModal();ui.route=r;render()});
 window.addEventListener('storage',e=>{if(e.key===K_USERS||e.key===K_SESSION){loadDB();render()}});
 
 /* =========================================================
    INÍCIO
    ========================================================= */
-loadDB();
-if(!location.hash||location.hash.includes('/')){try{location.replace('#'+allowed(route(),U()))}catch(e){}}
+try{loadDB()}catch(e){DB={users:{},session:null}}
+ui.route=hashRoute();
 render();
 </script>
 </body>
