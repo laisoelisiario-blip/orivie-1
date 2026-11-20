@@ -1,0 +1,209 @@
+/* =============================================================
+   Duo Style — tokens e classes base
+   Copie para o projeto e troque a cor-herói (--duo-hero*).
+   Fontes sugeridas (Google Fonts):
+   @import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@600;700&family=Nunito:wght@500;600;700;800;900&display=swap');
+   ============================================================= */
+
+:root {
+  /* Funcionais */
+  --duo-green: #58cc02;   --duo-green-shadow: #58a700;  --duo-green-light: #d7ffb8;  --duo-green-lime: #89e219;
+  --duo-blue: #1cb0f6;    --duo-blue-shadow: #1899d6;   --duo-blue-light: #ddf4ff;   --duo-blue-border: #84d8ff; --duo-blue-text: #009be4;
+  --duo-red: #ff4b4b;     --duo-red-shadow: #ea2b2b;    --duo-red-light: #ffdfe0;
+  --duo-orange: #ff9600;  --duo-orange-shadow: #cd7900;
+  --duo-yellow: #ffc800;  --duo-yellow-shadow: #e5a400; --duo-yellow-light: #fff5d3;
+  --duo-purple: #ce82ff;  --duo-purple-shadow: #a568cc; --duo-purple-light: #f3e0ff;
+  --duo-premium: linear-gradient(135deg, #26ff55 0%, #268aff 45%, #fc55ff 100%);
+
+  /* Cor-herói — TROQUE pela aprovada no plano */
+  --duo-hero: var(--duo-green);
+  --duo-hero-shadow: var(--duo-green-shadow);
+  --duo-hero-light: var(--duo-green-light);
+
+  /* Neutros */
+  --duo-bg: #ffffff;
+  --duo-surface: #f7f7f7;
+  --duo-border: #e5e5e5;
+  --duo-border-lip: #e8e8e8;
+  --duo-pressed-bg: #e6e6e6;
+  --duo-gray-300: #cecece;
+  --duo-gray-400: #afafaf;
+  --duo-text-muted: #777777;
+  --duo-text: #4b4b4b;
+
+  /* Tipografia */
+  --duo-font-display: "Fredoka", "Nunito", system-ui, sans-serif;
+  --duo-font-ui: "Nunito", system-ui, -apple-system, "Segoe UI", sans-serif;
+
+  /* Espaço, raio, lábio */
+  --sp-1: 4px; --sp-2: 8px; --sp-3: 12px; --sp-4: 16px; --sp-5: 20px; --sp-6: 24px; --sp-8: 32px; --sp-10: 40px; --sp-12: 48px;
+  --radius-sm: 8px; --radius-md: 12px; --radius-lg: 16px; --radius-xl: 24px; --radius-full: 9999px;
+  --lip: 4px;
+
+  /* Movimento */
+  --duo-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --duo-ease-out: cubic-bezier(0.2, 0, 0, 1);
+  --duo-dur-press: 80ms; --duo-dur-fast: 150ms; --duo-dur-base: 250ms;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --duo-bg: #131f24; --duo-surface: #202f36; --duo-border: #37464f; --duo-border-lip: #37464f;
+    --duo-pressed-bg: #202f36; --duo-gray-300: #37464f; --duo-gray-400: #52656d;
+    --duo-text-muted: #94a3ad; --duo-text: #f1f7fb;
+    --duo-blue-light: rgba(28, 176, 246, 0.15); --duo-green-light: rgba(88, 204, 2, 0.15);
+    --duo-red-light: rgba(255, 75, 75, 0.15); --duo-yellow-light: rgba(255, 200, 0, 0.15);
+    --duo-blue-text: #1cb0f6;
+  }
+}
+:root[data-theme="dark"] {
+  --duo-bg: #131f24; --duo-surface: #202f36; --duo-border: #37464f; --duo-border-lip: #37464f;
+  --duo-pressed-bg: #202f36; --duo-gray-300: #37464f; --duo-gray-400: #52656d;
+  --duo-text-muted: #94a3ad; --duo-text: #f1f7fb;
+  --duo-blue-light: rgba(28, 176, 246, 0.15); --duo-green-light: rgba(88, 204, 2, 0.15);
+  --duo-red-light: rgba(255, 75, 75, 0.15); --duo-yellow-light: rgba(255, 200, 0, 0.15);
+  --duo-blue-text: #1cb0f6;
+}
+
+/* ---------- Base ---------- */
+html, body { background: var(--duo-bg); color: var(--duo-text); font-family: var(--duo-font-ui); font-weight: 600; }
+h1, h2, h3 { font-weight: 800; color: var(--duo-text); margin: 0; }
+.duo-display { font-family: var(--duo-font-display); font-weight: 700; }
+.duo-brand-title { font-family: var(--duo-font-display); font-weight: 700; color: var(--duo-hero); text-transform: lowercase; }
+.duo-muted { color: var(--duo-text-muted); }
+.duo-link { color: var(--duo-blue); font-weight: 700; text-decoration: none; }
+
+/* ---------- Botões ---------- */
+.duo-btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: var(--sp-2);
+  min-height: 48px; padding: 13px 24px; border: 2px solid transparent; border-radius: var(--radius-md);
+  font: 700 15px/1 var(--duo-font-ui); letter-spacing: 0.64px; text-transform: uppercase;
+  cursor: pointer; user-select: none;
+  transition: transform var(--duo-dur-press), box-shadow var(--duo-dur-press), filter var(--duo-dur-fast);
+}
+.duo-btn:hover { filter: brightness(1.05); }
+.duo-btn:active { transform: translateY(var(--lip)); box-shadow: none; }
+.duo-btn:focus-visible { outline: 3px solid var(--duo-blue-border); outline-offset: 3px; }
+.duo-btn--block { width: 100%; }
+.duo-btn--primary   { background: var(--duo-hero);   color: #fff; box-shadow: 0 var(--lip) 0 var(--duo-hero-shadow); }
+.duo-btn--secondary { background: var(--duo-blue);   color: #fff; box-shadow: 0 var(--lip) 0 var(--duo-blue-shadow); }
+.duo-btn--danger    { background: var(--duo-red);    color: #fff; box-shadow: 0 var(--lip) 0 var(--duo-red-shadow); }
+.duo-btn--gold      { background: var(--duo-yellow); color: #fff; box-shadow: 0 var(--lip) 0 var(--duo-yellow-shadow); }
+.duo-btn--premium   { background: var(--duo-premium); color: #fff; box-shadow: 0 var(--lip) 0 var(--duo-purple-shadow); }
+.duo-btn--outline   { background: var(--duo-bg); color: var(--duo-blue); border-color: var(--duo-border); box-shadow: 0 2px 0 var(--duo-border-lip); }
+.duo-btn--outline:active { background: var(--duo-pressed-bg); border-color: var(--duo-gray-300); }
+.duo-btn--ghost     { background: transparent; color: var(--duo-blue); }
+.duo-btn:disabled, .duo-btn[aria-disabled="true"] {
+  background: var(--duo-border); color: var(--duo-gray-400); box-shadow: none; transform: none; filter: none; cursor: default;
+}
+.duo-btn--icon { width: 56px; height: 56px; padding: 0; border-radius: var(--radius-full); }
+
+/* ---------- Opções / tiles ---------- */
+.duo-tile {
+  display: flex; align-items: center; gap: var(--sp-3); width: 100%; text-align: left;
+  padding: 12px 16px; background: var(--duo-bg); color: var(--duo-text);
+  border: 2px solid var(--duo-border); border-bottom-width: 4px; border-radius: var(--radius-lg);
+  font: 700 17px/1.3 var(--duo-font-ui); cursor: pointer;
+  transition: transform var(--duo-dur-press), background-color var(--duo-dur-fast), border-color var(--duo-dur-fast);
+}
+.duo-tile:active { transform: translateY(2px); border-bottom-width: 2px; }
+.duo-tile.is-selected  { background: var(--duo-blue-light);  border-color: var(--duo-blue-border); color: var(--duo-blue-text); }
+.duo-tile.is-correct   { background: var(--duo-green-light); border-color: var(--duo-green);       color: var(--duo-green-shadow); }
+.duo-tile.is-incorrect { background: var(--duo-red-light);   border-color: var(--duo-red);         color: var(--duo-red-shadow); animation: duo-shake 300ms; }
+.duo-tile__key {
+  display: grid; place-items: center; width: 30px; height: 30px; flex: none;
+  border: 2px solid var(--duo-border); border-radius: var(--radius-sm); font-size: 15px; color: var(--duo-gray-400);
+}
+
+/* ---------- Card ---------- */
+.duo-card { background: var(--duo-bg); border: 2px solid var(--duo-border); border-radius: var(--radius-lg); padding: var(--sp-4) var(--sp-6); }
+.duo-callout { background: var(--duo-blue-light); border-radius: var(--radius-md); padding: 28px; }
+
+/* ---------- Tag / pílula ---------- */
+.duo-tag {
+  display: inline-flex; align-items: center; height: 28px; padding: 0 10px;
+  background: var(--duo-blue-light); color: var(--duo-blue-text); border-radius: var(--radius-sm);
+  font: 700 12px/1 var(--duo-font-ui); letter-spacing: 0.48px; text-transform: uppercase;
+}
+.duo-pill { display: inline-flex; padding: 4px 12px; border-radius: var(--radius-full); font: 800 13px/1.2 var(--duo-font-ui); text-transform: uppercase; }
+
+/* ---------- Barra de progresso ---------- */
+.duo-progress { height: 16px; background: var(--duo-border); border-radius: var(--radius-full); overflow: hidden; }
+.duo-progress__fill {
+  position: relative; height: 100%; background: var(--duo-hero); border-radius: var(--radius-full);
+  transition: width 400ms var(--duo-spring);
+}
+.duo-progress__fill::after {
+  content: ""; position: absolute; left: 8px; right: 8px; top: 4px; height: 4px;
+  background: rgba(255, 255, 255, 0.3); border-radius: var(--radius-full);
+}
+.duo-progress--gold .duo-progress__fill { background: var(--duo-yellow); }
+
+/* ---------- Nó da trilha ---------- */
+.duo-node {
+  --c: var(--duo-hero); --cs: var(--duo-hero-shadow);
+  display: grid; place-items: center; width: 70px; height: 64px; border: 0; border-radius: 50%;
+  background: var(--c); color: #fff; box-shadow: 0 8px 0 var(--cs); cursor: pointer;
+  transition: transform var(--duo-dur-press), box-shadow var(--duo-dur-press);
+}
+.duo-node:active { transform: translateY(8px); box-shadow: none; }
+.duo-node--locked { --c: var(--duo-border); --cs: var(--duo-gray-300); color: var(--duo-gray-400); }
+.duo-node--gold   { --c: var(--duo-yellow); --cs: var(--duo-yellow-shadow); }
+.duo-node-tooltip {
+  padding: 10px 14px; background: var(--duo-bg); color: var(--c, var(--duo-hero));
+  border: 2px solid var(--duo-border); border-radius: var(--radius-md);
+  font: 800 15px/1 var(--duo-font-ui); text-transform: uppercase; letter-spacing: 0.64px;
+  animation: duo-float 2s ease-in-out infinite;
+}
+
+/* ---------- Cabeçalho de unidade ---------- */
+.duo-unit {
+  position: sticky; top: 0; display: flex; justify-content: space-between; align-items: center; gap: var(--sp-4);
+  padding: var(--sp-4); background: var(--duo-hero); color: #fff;
+  border-radius: var(--radius-lg); box-shadow: 0 var(--lip) 0 var(--duo-hero-shadow);
+}
+.duo-unit__eyebrow { font: 800 13px/1.2 var(--duo-font-ui); text-transform: uppercase; letter-spacing: 0.5px; opacity: 0.8; }
+.duo-unit__title { font: 800 20px/1.3 var(--duo-font-ui); }
+
+/* ---------- Banner de feedback ---------- */
+.duo-feedback { position: fixed; inset: auto 0 0 0; padding: var(--sp-6) var(--sp-4) calc(var(--sp-6) + env(safe-area-inset-bottom)); animation: duo-slide-up var(--duo-dur-base) var(--duo-ease-out); }
+.duo-feedback--correct   { background: var(--duo-green-light); color: var(--duo-green-shadow); }
+.duo-feedback--incorrect { background: var(--duo-red-light);   color: var(--duo-red-shadow); }
+.duo-feedback__title { font: 800 24px/1.3 var(--duo-font-ui); }
+
+/* ---------- Input ---------- */
+.duo-input {
+  width: 100%; min-height: 50px; padding: 12px 16px; box-sizing: border-box;
+  background: var(--duo-surface); color: var(--duo-text);
+  border: 2px solid var(--duo-border); border-radius: var(--radius-md);
+  font: 600 17px var(--duo-font-ui);
+}
+.duo-input:focus { outline: none; border-color: var(--duo-blue-border); background: var(--duo-bg); }
+.duo-input[aria-invalid="true"] { border-color: var(--duo-red); }
+
+/* ---------- Tab bar ---------- */
+.duo-tabbar {
+  position: fixed; inset: auto 0 0 0; display: flex; justify-content: space-around; align-items: center;
+  height: 64px; padding-bottom: env(safe-area-inset-bottom);
+  background: var(--duo-bg); border-top: 2px solid var(--duo-border);
+}
+.duo-tabbar a { display: grid; place-items: center; width: 52px; height: 48px; border: 2px solid transparent; border-radius: var(--radius-md); }
+.duo-tabbar a[aria-current="page"] { background: var(--duo-blue-light); border-color: var(--duo-blue-border); }
+
+/* ---------- Modal ---------- */
+.duo-backdrop { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.5); }
+.duo-modal { background: var(--duo-bg); border-radius: var(--radius-xl); padding: var(--sp-8) var(--sp-6); text-align: center; animation: duo-pop var(--duo-dur-base) var(--duo-spring); }
+
+/* ---------- Skeleton ---------- */
+.duo-skeleton { background: var(--duo-surface); border-radius: var(--radius-lg); animation: duo-pulse 1.2s ease-in-out infinite; }
+
+/* ---------- Animações ---------- */
+@keyframes duo-pop { from { transform: scale(0.9); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+@keyframes duo-slide-up { from { transform: translateY(100%); } }
+@keyframes duo-float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
+@keyframes duo-shake { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-6px); } 75% { transform: translateX(6px); } }
+@keyframes duo-pulse { 50% { opacity: 0.5; } }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 1ms !important; animation-iteration-count: 1 !important; transition-duration: 1ms !important; }
+}

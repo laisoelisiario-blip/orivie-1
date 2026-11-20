@@ -1,6 +1,6 @@
 ---
 name: insta-style
-description: Design system "Insta Style" — estilo visual inspirado no Instagram (UI monocromática que some para o conteúdo brilhar, mídia de ponta a ponta, ícones de traço que viram preenchidos quando ativos, tipografia de sistema, azul de ação único, gradiente vibrante só em momentos de marca, stories, feed, reels e perfil em grade). Use SEMPRE que for criar ou alterar qualquer interface, tela, componente, landing page, ícone, animação ou texto de UI neste projeto, para qualquer tipo de app. Antes de desenhar, conduz uma descoberta com o usuário e um plano aprovado.
+description: Design system "Insta Style" — estilo visual inspirado no Instagram (UI monocromática que some para o conteúdo brilhar, mídia de ponta a ponta, ícones de traço que viram preenchidos quando ativos, tipografia de sistema, azul de ação único, gradiente vibrante só em momentos de marca, stories, feed, reels e perfil em grade). Use quando o usuário escolher o estilo Instagram/minimalista/centrado em conteúdo para criar ou alterar qualquer interface, tela, componente, landing page, ícone, animação ou texto de UI neste projeto, para qualquer tipo de app. Antes de desenhar, conduz uma descoberta com o usuário e um plano aprovado.
 ---
 
 # Insta Style — design system centrado no conteúdo
