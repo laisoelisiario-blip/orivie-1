@@ -1,0 +1,1575 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Orivie - Sua Personalidade</title>
+<meta name="description" content="Descubra quem você é e viva o que combina com você.">
+<meta name="theme-color" content="#F7F3EE">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cellipse cx='32' cy='38' rx='22' ry='23' fill='%23D9A08B'/%3E%3Cellipse cx='24' cy='10' rx='9' ry='4.5' fill='%23A8B8A0' transform='rotate(-25 24 10)'/%3E%3Cellipse cx='40' cy='9' rx='9' ry='4.5' fill='%23A8B8A0' transform='rotate(25 40 9)'/%3E%3Ccircle cx='25' cy='35' r='6' fill='%23fff'/%3E%3Ccircle cx='39' cy='35' r='6' fill='%23fff'/%3E%3Ccircle cx='25' cy='36' r='3.4' fill='%233A2E28'/%3E%3Ccircle cx='39' cy='36' r='3.4' fill='%233A2E28'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700;9..40,800;9..40,900&family=Playfair+Display:wght@600;700;800&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+try{tailwind.config={corePlugins:{preflight:false},theme:{extend:{colors:{creme:'#F7F3EE',salvia:'#A8B8A0',terracota:'#D9A08B',texto:'#3A2E28',bege:'#EAE2D9'},fontFamily:{display:['"Playfair Display"','serif'],ui:['"DM Sans"','sans-serif']}}}}}catch(e){}
+</script>
+<style>
+/* =========================================================
+   ORIVIE - SUA PERSONALIDADE · Design system
+   Estilo lúdico/gamificado (lábio sólido, afundar ao tocar,
+   bordas de 2px, trilha, mascote) com a paleta Orivie.
+   ========================================================= */
+:root{
+  --creme:#F7F3EE;--branco:#FFFFFF;
+  --salvia:#A8B8A0;--salvia-sh:#879A7E;--salvia-lt:#EDF1EA;--salvia-dk:#4F6249;
+  --terra:#D9A08B;--terra-sh:#B97F6A;--terra-lt:#F8EAE3;--terra-dk:#94553F;
+  --texto:#3A2E28;--muted:#75655B;
+  --bege:#EAE2D9;--bege-sh:#D5C8BA;
+  --mel:#E3B65E;--mel-sh:#C49840;--mel-lt:#FBF0DA;--mel-dk:#8A621A;
+  --erro:#B5544A;--erro-sh:#934038;--erro-lt:#F8E1DD;
+  --cinza:#ADA198;
+  --f-display:"Playfair Display",Georgia,serif;
+  --f-ui:"DM Sans",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  --spring:cubic-bezier(.34,1.56,.64,1);
+}
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--creme);color:var(--texto);font-family:var(--f-ui);font-weight:500;font-size:16px;line-height:1.5;-webkit-font-smoothing:antialiased}
+h1,h2,h3,p,ul,figure{margin:0}
+ul{padding:0;list-style:none}
+button,input,textarea{font:inherit;color:inherit}
+button{cursor:pointer;background:none;border:0;padding:0;-webkit-tap-highlight-color:transparent}
+img{display:block;max-width:100%}
+body.modal-open{overflow:hidden}
+#app{max-width:430px;margin:0 auto;min-height:100vh;min-height:100dvh;background:var(--creme);position:relative}
+:focus-visible{outline:3px solid var(--salvia-dk);outline-offset:2px}
+.sr-only{position:absolute!important;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);border:0}
+/* Fallback das utilidades Tailwind usadas: o layout continua íntegro mesmo se o CDN falhar */
+.block{display:block}.flex{display:flex}.grid{display:grid}.flex-col{flex-direction:column}.flex-wrap{flex-wrap:wrap}
+.items-center{align-items:center}.justify-between{justify-content:space-between}.justify-center{justify-content:center}.justify-end{justify-content:flex-end}
+.gap-1{gap:4px}.gap-2{gap:8px}.gap-3{gap:12px}.gap-4{gap:16px}
+.grid-cols-1{grid-template-columns:repeat(1,minmax(0,1fr))}.grid-cols-2{grid-template-columns:repeat(2,minmax(0,1fr))}.grid-cols-3{grid-template-columns:repeat(3,minmax(0,1fr))}
+.mt-1{margin-top:4px}.mt-2{margin-top:8px}.mt-3{margin-top:12px}.mt-4{margin-top:16px}.mt-5{margin-top:20px}.mt-6{margin-top:24px}.mt-8{margin-top:32px}
+.mb-1{margin-bottom:4px}.mb-3{margin-bottom:12px}.mb-5{margin-bottom:20px}.mb-6{margin-bottom:24px}.mx-auto{margin-left:auto;margin-right:auto}.pt-4{padding-top:16px}
+.text-center{text-align:center}.text-left{text-align:left}
+
+/* ---------- Tipografia ---------- */
+.display{font-family:var(--f-display);font-weight:700;font-size:32px;line-height:40px;letter-spacing:-.3px}
+.h1{font-family:var(--f-display);font-weight:700;font-size:26px;line-height:33px}
+.h2{font-weight:800;font-size:20px;line-height:28px}
+.h3{font-weight:700;font-size:17px;line-height:24px}
+.body{font-size:17px;line-height:26px}
+.lead{font-size:17px;line-height:26px;color:var(--muted)}
+.small{font-size:14.5px;line-height:21px;font-weight:600}
+.muted{color:var(--muted)}
+.link{color:var(--terra-dk);font-weight:800;text-decoration:underline;text-underline-offset:3px}
+.c-terra{color:var(--terra-dk)}.c-mel{color:var(--mel-dk)}.c-gray{color:var(--cinza)}.c-sage{color:var(--salvia-dk)}
+
+/* ---------- Estrutura ---------- */
+.brandbar{position:sticky;top:0;z-index:30;display:flex;align-items:center;justify-content:space-between;gap:8px;min-height:60px;padding:8px 14px;background:var(--creme);border-bottom:2px solid var(--bege)}
+.brand{display:flex;align-items:center;gap:6px;font-size:13px;font-weight:700;color:var(--texto);white-space:nowrap}
+.brand b{font-family:var(--f-display);font-size:18px;font-weight:800}
+.screen{padding:20px 16px 190px}
+.screen.app{padding-bottom:120px}
+.footbar{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:430px;padding:14px 16px calc(14px + env(safe-area-inset-bottom));background:var(--creme);border-top:2px solid var(--bege);display:flex;gap:12px;z-index:40}
+.footbar.stack{flex-direction:column}
+.center-col{display:flex;flex-direction:column;align-items:center}
+
+/* ---------- Botões (lábio sólido + afundar) ---------- */
+.btn{position:relative;display:inline-flex;align-items:center;justify-content:center;gap:8px;width:100%;min-height:50px;padding:12px 20px;border:2px solid transparent;border-radius:12px;font:700 15px/1.15 var(--f-ui);letter-spacing:.64px;text-transform:uppercase;text-align:center;cursor:pointer;user-select:none;transition:transform 80ms,box-shadow 80ms,background-color 150ms,filter 150ms;text-decoration:none}
+.btn:hover:not(:disabled){filter:brightness(1.03)}
+.btn:active:not(:disabled){transform:translateY(4px);box-shadow:none!important}
+.btn-primary{background:var(--terra);color:var(--texto);box-shadow:0 4px 0 var(--terra-sh)}
+.btn-sage{background:var(--salvia);color:var(--texto);box-shadow:0 4px 0 var(--salvia-sh)}
+.btn-mel{background:var(--mel);color:var(--texto);box-shadow:0 4px 0 var(--mel-sh)}
+.btn-danger{background:var(--erro);color:#fff;box-shadow:0 4px 0 var(--erro-sh)}
+.btn-outline{background:#fff;color:var(--terra-dk);border-color:var(--bege);box-shadow:0 2px 0 var(--bege-sh)}
+.btn-outline:active:not(:disabled){background:var(--bege);border-color:var(--bege-sh);transform:translateY(2px)}
+.btn-ghost{background:transparent;color:var(--terra-dk);min-height:46px}
+.btn-ghost:active:not(:disabled){transform:none;background:var(--bege)}
+.btn-premium{background:linear-gradient(135deg,#A8B8A0 0%,#D9A08B 55%,#E3B65E 100%);color:var(--texto);box-shadow:0 4px 0 var(--terra-sh)}
+.btn:disabled,.btn.is-disabled{background:var(--bege);color:var(--cinza);box-shadow:none;border-color:transparent;cursor:not-allowed;filter:none;pointer-events:none}
+.btn-sm{width:auto;min-height:40px;padding:8px 14px;font-size:12.5px}
+.ibtn{display:grid;place-items:center;flex:none;width:44px;height:44px;border-radius:12px;color:var(--muted);transition:background-color 150ms}
+.ibtn:hover{background:var(--bege)}
+.ibtn.danger{color:var(--erro)}
+.btn-x{display:grid;place-items:center;width:44px;height:44px;border-radius:12px;color:var(--cinza)}
+.btn-x:hover{background:var(--bege);color:var(--texto)}
+
+/* ---------- Segmentado / chips ---------- */
+.seg{display:grid;grid-auto-flow:column;grid-auto-columns:1fr;gap:6px;padding:4px;background:var(--bege);border-radius:14px}
+.seg button{min-height:44px;border-radius:10px;font:800 13.5px var(--f-ui);letter-spacing:.6px;text-transform:uppercase;color:var(--muted);transition:background-color 150ms}
+.seg button.on{background:#fff;color:var(--terra-dk);box-shadow:0 2px 0 var(--bege-sh)}
+.seg.sm button{min-height:40px}
+.chips{display:flex;gap:8px;overflow-x:auto;padding:2px 2px 8px;margin:0 -16px;padding-left:16px;padding-right:16px;scrollbar-width:none}
+.chips::-webkit-scrollbar{display:none}
+.chip-f{flex:none;display:inline-flex;align-items:center;gap:6px;min-height:42px;padding:0 14px;background:#fff;border:2px solid var(--bege);border-bottom-width:4px;border-radius:12px;font:700 13.5px var(--f-ui);letter-spacing:.3px;text-transform:uppercase;color:var(--muted);transition:transform 80ms}
+.chip-f:active{transform:translateY(2px);border-bottom-width:2px;margin-bottom:2px}
+.chip-f.on{background:var(--salvia-lt);border-color:var(--salvia);color:var(--salvia-dk)}
+.chip-f b{font-weight:800;color:var(--terra-dk)}
+
+/* ---------- Tiles / opções ---------- */
+.tile{display:flex;align-items:center;gap:12px;width:100%;padding:14px 16px;background:#fff;color:var(--texto);border:2px solid var(--bege);border-bottom-width:4px;border-radius:16px;font:700 16px/1.35 var(--f-ui);text-align:left;cursor:pointer;transition:transform 80ms,background-color 150ms,border-color 150ms}
+.tile:hover{background:#FDFBF8}
+.tile:active{transform:translateY(2px);border-bottom-width:2px;margin-bottom:2px}
+.tile.sel{background:var(--salvia-lt);border-color:var(--salvia);color:var(--salvia-dk)}
+.tile .key{flex:none;display:grid;place-items:center;width:32px;height:32px;border:2px solid var(--bege);border-radius:8px;font-size:14px;font-weight:800;color:var(--muted)}
+.tile.sel .key{background:var(--salvia);border-color:var(--salvia);color:var(--texto)}
+.tile.chip{padding:12px;min-height:56px;font-size:15px}
+.check-dot{display:grid;place-items:center;width:28px;height:28px;border-radius:50%;background:var(--salvia);color:var(--texto);flex:none}
+.cbox{display:grid;place-items:center;flex:none;width:26px;height:26px;border:2px solid var(--bege-sh);border-radius:8px;background:#fff;color:var(--texto)}
+.tile.sel .cbox,.cbox.on{background:var(--salvia);border-color:var(--salvia-sh)}
+.cbox.big{width:34px;height:34px;border-radius:9px;border-bottom-width:4px}
+.cbox.big:active{transform:translateY(2px);border-bottom-width:2px}
+
+/* ---------- Cards / tags ---------- */
+.card{background:#fff;border:2px solid var(--bege);border-radius:16px;padding:16px 18px}
+.tag{display:inline-flex;align-items:center;gap:4px;height:26px;padding:0 10px;border-radius:8px;background:var(--salvia-lt);color:var(--salvia-dk);font:800 11.5px/1 var(--f-ui);letter-spacing:.48px;text-transform:uppercase;white-space:nowrap}
+.tag-terra{background:var(--terra-lt);color:var(--terra-dk)}
+.tag-mel{background:var(--mel-lt);color:var(--mel-dk)}
+.tag-premium{background:linear-gradient(135deg,#EDF1EA,#F8EAE3,#FBF0DA);color:var(--terra-dk);border:2px solid var(--terra)}
+.list li{display:flex;align-items:center;gap:12px;padding:8px 0;font-weight:700;font-size:16px}
+.sec-h{display:flex;align-items:center;gap:8px;font-weight:800;font-size:15px;letter-spacing:.6px;text-transform:uppercase}
+.empty{display:flex;flex-direction:column;align-items:center;text-align:center;padding:24px 12px}
+
+/* ---------- Progresso ---------- */
+.prog{height:14px;background:var(--bege);border-radius:999px;overflow:hidden;flex:1}
+.prog>i{display:block;position:relative;height:100%;width:0;background:var(--terra);border-radius:999px;transition:width .5s var(--spring)}
+.prog>i::after{content:"";position:absolute;left:6px;right:6px;top:3px;height:3px;background:rgba(255,255,255,.4);border-radius:999px}
+.prog.sage>i{background:var(--salvia)}
+.prog.mel>i{background:var(--mel)}
+.prog.sm{height:10px}.prog.sm>i::after{display:none}
+.lesson-bar{display:flex;align-items:center;gap:12px;padding:12px 16px 0}
+.btn-icon-plain{display:grid;place-items:center;width:44px;height:44px;border-radius:12px;color:var(--cinza)}
+.btn-icon-plain:hover{background:var(--bege);color:var(--texto)}
+.dim{display:grid;grid-template-columns:110px 1fr 26px;align-items:center;gap:10px;padding:5px 0;font-size:14px;font-weight:700}
+.dim b{text-align:right;color:var(--muted)}
+
+/* ---------- Inputs ---------- */
+.lbl-f{display:block;font-weight:800;font-size:14px;margin:0 0 6px}
+.input{width:100%;min-height:50px;padding:12px 14px;background:#FBF8F4;color:var(--texto);border:2px solid var(--bege);border-radius:12px;font:500 16px var(--f-ui);transition:border-color 150ms,background-color 150ms}
+.input::placeholder{color:#A69A91}
+.input:focus{outline:none;border-color:var(--salvia);background:#fff}
+.input.bad{border-color:var(--erro);background:var(--erro-lt)}
+.input.sm{min-height:42px;padding:8px 12px;font-size:16px}
+.err{color:var(--erro);font-size:13.5px;font-weight:700;margin-top:6px}
+.err:empty{display:none}
+
+/* ---------- Fala / mascote ---------- */
+.speech{display:flex;align-items:flex-end;gap:10px}
+.speech>svg{flex:none}
+.bubble{position:relative;flex:1;background:#fff;border:2px solid var(--bege);border-radius:16px;padding:12px 14px;font-weight:600;font-size:15.5px;line-height:1.45}
+.bubble::before{content:"";position:absolute;left:-9px;bottom:18px;width:14px;height:14px;background:#fff;border-left:2px solid var(--bege);border-bottom:2px solid var(--bege);transform:rotate(45deg)}
+.bubble.up::before{left:50%;top:-9px;bottom:auto;margin-left:-7px;transform:rotate(135deg)}
+.mascot .m-wave{transform-box:fill-box;transform-origin:30% 95%;animation:wave 1.3s ease-in-out infinite}
+.floaty{animation:floaty 2.6s ease-in-out infinite}
+.hop{animation:hop .9s var(--spring) infinite alternate}
+.pop{animation:pop .3s var(--spring)}
+.shake{animation:shake .3s}
+.welcome-art{position:relative;margin:8px 0 6px}
+.spark{position:absolute;animation:floaty 3s ease-in-out infinite}
+.spark.s1{top:10px;left:-26px}.spark.s2{top:40px;right:-30px;animation-delay:.6s}
+
+/* ---------- Pagamento ---------- */
+.premium-card{border-radius:24px;padding:20px;border:2px solid var(--bege);background:linear-gradient(135deg,#EDF1EA 0%,#F8EAE3 55%,#FBF0DA 100%)}
+.price{font-family:var(--f-display);font-weight:800;font-size:54px;line-height:1;margin:16px 0 8px;color:var(--terra-dk)}
+.benefits{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:18px}
+.benefits li{display:flex;align-items:center;gap:8px;font-weight:700;font-size:15px}
+.qr-box{display:grid;place-items:center;padding:14px;background:#fff;border:2px solid var(--bege);border-radius:16px;width:fit-content;margin:0 auto}
+.code-box{display:flex;gap:8px;align-items:center}
+.code-box .input{font-size:13px;font-family:ui-monospace,Menlo,monospace}
+.dots{display:flex;gap:8px;justify-content:center}
+.dots i{width:12px;height:12px;border-radius:50%;background:var(--terra);animation:dot 1s infinite ease-in-out}
+.dots i:nth-child(2){animation-delay:.15s;background:var(--salvia)}
+.dots i:nth-child(3){animation-delay:.3s;background:var(--mel)}
+
+/* ---------- App: header de status e tab bar ---------- */
+.stat{display:flex;align-items:center;gap:4px;padding:6px 8px;min-height:44px;border-radius:12px;font-weight:800;font-size:16px}
+.stat:hover{background:var(--bege)}
+.tabbar{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:430px;display:grid;grid-template-columns:repeat(6,1fr);gap:4px;padding:8px 6px calc(8px + env(safe-area-inset-bottom));background:#fff;border-top:2px solid var(--bege);z-index:40}
+.tabbar button{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;min-height:56px;border:2px solid transparent;border-radius:12px;font:800 10px var(--f-ui);letter-spacing:.3px;text-transform:uppercase;color:var(--muted);transition:background-color 150ms}
+.tabbar button svg{transition:transform 150ms var(--spring)}
+.tabbar button[aria-current="page"]{background:var(--salvia-lt);border-color:var(--salvia);color:var(--salvia-dk)}
+.tabbar button[aria-current="page"] svg{transform:scale(1.1)}
+
+/* ---------- Unidade / trilha ---------- */
+.unit-head{position:sticky;top:60px;z-index:20;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 16px;border-radius:16px;background:var(--terra);color:var(--texto);box-shadow:0 4px 0 var(--terra-sh)}
+.unit-head.sage{background:var(--salvia);box-shadow:0 4px 0 var(--salvia-sh)}
+.unit-kicker{font:800 11.5px var(--f-ui);letter-spacing:.6px;text-transform:uppercase;opacity:.85}
+.unit-title{font-family:var(--f-display);font-weight:700;font-size:20px;line-height:26px}
+.unit-head .btn-outline{background:rgba(255,255,255,.85)}
+#semana{scroll-margin-top:66px}
+.trail{position:relative;display:flex;flex-direction:column;align-items:center;gap:26px;padding:60px 0 12px}
+.trow{position:relative;display:flex;flex-direction:column;align-items:center}
+.node{position:relative;z-index:1;display:grid;place-items:center;width:72px;height:66px;border:0;border-radius:50%;background:var(--terra);color:#fff;box-shadow:0 7px 0 var(--terra-sh);cursor:pointer;transition:transform 80ms}
+.node:active{transform:translateY(7px);box-shadow:none}
+.node.done{background:var(--salvia);color:var(--texto);box-shadow:0 7px 0 var(--salvia-sh)}
+.node.locked,.node.missed{background:var(--bege);color:var(--cinza);box-shadow:0 7px 0 var(--bege-sh)}
+.node.todo{background:#fff;border:2px solid var(--bege);box-shadow:0 7px 0 var(--bege-sh)}
+.node-cap{margin-top:12px;font-weight:800;font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.4px;max-width:120px;text-align:center;line-height:1.25}
+.ring{position:absolute;width:100px;height:100px;left:50%;top:-17px;transform:translateX(-50%);pointer-events:none}
+.balloon{position:absolute;z-index:2;top:-50px;left:50%;transform:translate(-50%,0);background:#fff;border:2px solid var(--bege);border-radius:12px;padding:6px 12px;font:800 13px var(--f-ui);color:var(--terra-dk);letter-spacing:.6px;text-transform:uppercase;white-space:nowrap;animation:bob 1.6s ease-in-out infinite}
+.balloon::after{content:"";position:absolute;bottom:-8px;left:50%;margin-left:-7px;width:12px;height:12px;background:#fff;border-right:2px solid var(--bege);border-bottom:2px solid var(--bege);transform:rotate(45deg)}
+.trail-pal{position:absolute;top:150px;pointer-events:none}
+.trail-pal.left{left:4px}.trail-pal.right{right:4px;top:330px}
+
+/* ---------- Combina ---------- */
+.icard{display:block;width:100%;text-align:left;background:#fff;border:2px solid var(--bege);border-bottom-width:4px;border-radius:16px;overflow:hidden;transition:transform 80ms}
+.icard:active{transform:translateY(2px);border-bottom-width:2px;margin-bottom:2px}
+.img-box{position:relative;display:grid;place-items:center;aspect-ratio:16/10;background:var(--bege);overflow:hidden}
+.img-box img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.img-box.big{border-radius:16px;aspect-ratio:4/3}
+.img-box.cover{border-radius:16px}
+.img-box.thumb{width:76px;height:76px;aspect-ratio:auto;border-radius:12px;flex:none}
+.why{font-size:14.5px;line-height:21px;color:var(--salvia-dk);background:var(--salvia-lt);border-radius:12px;padding:10px 12px}
+.whybox{background:var(--salvia-lt);border-radius:16px;padding:14px}
+.whybox .bubble{background:#fff}
+
+/* ---------- Checklist ---------- */
+.crow{background:#fff;border:2px solid var(--bege);border-radius:16px;padding:10px 10px 12px 12px;transition:background-color 150ms}
+.crow.is-done{background:var(--salvia-lt);border-color:var(--salvia)}
+.crow-t{flex:1;font-weight:700;font-size:15.5px;line-height:1.35}
+.crow.is-done .crow-t{text-decoration:line-through;text-decoration-thickness:2px;color:var(--salvia-dk)}
+.hist{display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:2px solid var(--bege)}
+.hist:last-child{border-bottom:0}
+
+/* ---------- Missões ---------- */
+.mission{display:flex;align-items:center;gap:12px;padding:10px 0}
+.mission-txt{flex:1;min-width:0}
+.mission-txt p{font-weight:700;font-size:15px;line-height:1.3;margin-bottom:6px}
+.mission .prog{height:12px}
+
+/* ---------- Board ---------- */
+.bgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.bcell{position:relative;aspect-ratio:1;border-radius:12px;overflow:hidden;background:var(--bege)}
+.bcell img{width:100%;height:100%;object-fit:cover}
+.bcell.add{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;border:2px solid var(--bege-sh);background:#fff;cursor:pointer;font:800 11.5px var(--f-ui);letter-spacing:.4px;text-transform:uppercase;color:var(--terra-dk)}
+.bcell.add:hover{background:var(--terra-lt)}
+.bdel{position:absolute;top:6px;right:6px;display:grid;place-items:center;width:30px;height:30px;border-radius:50%;background:rgba(58,46,40,.78);color:#fff}
+.bdel::before{content:"";position:absolute;inset:-7px}
+.prev{display:flex;align-items:center;gap:12px;width:100%;text-align:left;padding:10px;background:#fff;border:2px solid var(--bege);border-bottom-width:4px;border-radius:16px}
+.prev:active{transform:translateY(2px);border-bottom-width:2px;margin-bottom:2px}
+.prev-thumbs{display:grid;grid-template-columns:repeat(3,26px);gap:3px;flex:none}
+.prev-thumbs img,.prev-thumbs span{width:26px;height:26px;border-radius:6px;object-fit:cover;background:var(--bege)}
+
+/* ---------- Aprender ---------- */
+.reading p{font-size:17px;line-height:28px;margin-bottom:16px}
+.tcard{display:flex;align-items:center;gap:12px;width:100%;text-align:left;padding:10px;background:#fff;border:2px solid var(--bege);border-bottom-width:4px;border-radius:16px}
+.tcard:active{transform:translateY(2px);border-bottom-width:2px;margin-bottom:2px}
+
+/* ---------- Eu ---------- */
+.avatar{position:relative;width:104px;height:104px;border-radius:50%;background:var(--terra);display:grid;place-items:center;font-family:var(--f-display);font-size:44px;font-weight:800;color:var(--texto);box-shadow:0 5px 0 var(--terra-sh)}
+.avatar img{width:100%;height:100%;border-radius:50%;object-fit:cover}
+.avatar-edit{position:absolute;right:-4px;bottom:-2px;display:grid;place-items:center;width:42px;height:42px;border-radius:50%;background:#fff;border:2px solid var(--bege);box-shadow:0 3px 0 var(--bege-sh);cursor:pointer}
+.paid{display:inline-flex;text-align:left;align-items:center;gap:8px;padding:8px 14px;border-radius:12px;background:var(--salvia-lt);color:var(--salvia-dk);font-weight:800;font-size:14px}
+.stile{display:flex;align-items:center;gap:10px;padding:12px;background:#fff;border:2px solid var(--bege);border-radius:16px}
+.stile b{display:block;font-size:20px;font-weight:800;line-height:1.1}
+.stile span{font-size:12.5px;font-weight:700;color:var(--muted)}
+.cal{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;text-align:center}
+.cal-h{font:800 11.5px var(--f-ui);color:var(--muted)}
+.cal-d{display:grid;place-items:center;aspect-ratio:1;border-radius:50%;font-weight:700;font-size:13.5px}
+.cal-d.on{background:var(--terra);color:var(--texto);font-weight:800}
+.cal-d.miss{color:var(--cinza);background:#F3EEE8}
+.cal-d.fut{color:#C9BFB6}
+.cal-d.today{box-shadow:inset 0 0 0 2px var(--terra-dk)}
+.legend{display:inline-flex;align-items:center;gap:6px}
+.lg{width:12px;height:12px;border-radius:50%;display:inline-block}
+.lg.on{background:var(--terra)}.lg.miss{background:#E5DDD4}
+.badge{display:flex;flex-direction:column;align-items:center;gap:6px;padding:12px 6px;background:#fff;border:2px solid var(--bege);border-bottom-width:4px;border-radius:16px;text-align:center;font:800 11.5px/1.25 var(--f-ui)}
+.badge:active{transform:translateY(2px);border-bottom-width:2px;margin-bottom:2px}
+.badge-ic{display:grid;place-items:center;width:52px;height:52px;border-radius:50%;background:var(--mel-lt);box-shadow:0 3px 0 var(--mel)}
+.badge.locked{color:var(--cinza)}
+.badge.locked .badge-ic{filter:grayscale(1);opacity:.45;box-shadow:0 3px 0 var(--bege-sh);background:var(--bege)}
+.menu-ic{display:grid;place-items:center;flex:none;width:40px;height:40px;border-radius:12px;background:var(--creme)}
+.switch{position:relative;flex:none;width:52px;height:30px;border-radius:999px;background:var(--bege-sh);transition:background-color 150ms}
+.switch::after{content:"";position:absolute;top:3px;left:3px;width:24px;height:24px;border-radius:50%;background:#fff;transition:transform .2s var(--spring)}
+.switch.on{background:var(--salvia-dk)}
+.switch.on::after{transform:translateX(22px)}
+
+/* ---------- Modal / toast / celebração ---------- */
+.backdrop{position:fixed;inset:0;z-index:80;display:flex;align-items:flex-end;justify-content:center;background:rgba(58,46,40,.5);animation:fade .2s ease-out}
+.backdrop.noanim,.backdrop.noanim .sheet{animation:none}
+.sheet{width:100%;max-width:430px;max-height:92vh;max-height:92dvh;overflow:auto;background:#fff;border-radius:24px 24px 0 0;padding:22px 16px calc(22px + env(safe-area-inset-bottom));animation:sheetUp .32s var(--spring)}
+.backdrop.center{align-items:center;padding:16px}
+.backdrop.center .sheet{border-radius:24px;animation:popIn .38s var(--spring)}
+.sheet.full{min-height:70vh}
+.toast{position:fixed;left:50%;top:70px;z-index:150;transform:translateX(-50%);display:flex;align-items:center;gap:8px;max-width:calc(100% - 32px);width:max-content;padding:12px 16px;background:var(--texto);color:#fff;border-radius:14px;font-weight:700;font-size:14.5px;line-height:1.35;box-shadow:0 4px 0 #1F1814;animation:toastIn .35s var(--spring)}
+.toast.out{opacity:0;transform:translate(-50%,-10px);transition:all .3s}
+.xp-pill{position:fixed;left:50%;top:42%;z-index:160;transform:translateX(-50%);padding:10px 18px;border-radius:999px;background:var(--mel);color:var(--texto);font:800 20px var(--f-ui);box-shadow:0 4px 0 var(--mel-sh);animation:xpUp 1.3s ease-out forwards;pointer-events:none}
+.stat-card{border:2px solid var(--c);border-radius:16px;overflow:hidden;background:#fff}
+.stat-k{background:var(--c);color:var(--texto);font:800 10.5px var(--f-ui);letter-spacing:.5px;text-transform:uppercase;padding:5px 2px}
+.stat-v{display:flex;align-items:center;justify-content:center;gap:4px;padding:10px 2px;font:800 20px var(--f-ui)}
+.sc-mel{--c:var(--mel)}.sc-sage{--c:var(--salvia)}.sc-terra{--c:var(--terra)}
+.bignum{font-family:var(--f-display);font-weight:800;font-size:96px;line-height:1;color:var(--terra-dk)}
+.cf-box{position:fixed;inset:0;pointer-events:none;z-index:200;overflow:hidden}
+.cf{position:absolute;top:-16px;width:9px;height:14px;border-radius:3px;animation-name:fall;animation-timing-function:linear;animation-fill-mode:forwards}
+
+@keyframes wave{0%,100%{transform:rotate(0)}50%{transform:rotate(-22deg)}}
+@keyframes floaty{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+@keyframes hop{from{transform:translateY(0)}to{transform:translateY(-10px)}}
+@keyframes bob{0%,100%{transform:translate(-50%,0)}50%{transform:translate(-50%,-6px)}}
+@keyframes pop{0%{transform:scale(1)}50%{transform:scale(1.03)}100%{transform:scale(1)}}
+@keyframes popIn{from{transform:scale(.85);opacity:0}to{transform:scale(1);opacity:1}}
+@keyframes shake{25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+@keyframes sheetUp{from{transform:translateY(100%)}to{transform:translateY(0)}}
+@keyframes fade{from{opacity:0}to{opacity:1}}
+@keyframes toastIn{from{transform:translate(-50%,-14px);opacity:0}to{transform:translate(-50%,0);opacity:1}}
+@keyframes xpUp{0%{transform:translate(-50%,10px) scale(.7);opacity:0}20%{transform:translate(-50%,0) scale(1.08);opacity:1}70%{opacity:1}100%{transform:translate(-50%,-60px) scale(1);opacity:0}}
+@keyframes fall{to{transform:translate3d(var(--dx),110vh,0) rotate(var(--r))}}
+@keyframes dot{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:1ms!important;animation-iteration-count:1!important;transition-duration:1ms!important}}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<div id="layer"></div>
+<noscript><p style="padding:24px;font-family:sans-serif">Ative o JavaScript para usar o Orivie - Sua Personalidade.</p></noscript>
+
+<script>
+'use strict';
+/* =========================================================
+   CONFIG
+   ========================================================= */
+const K_USERS='orivie_users', K_SESSION='orivie_session';
+const DAILY_GOAL=30;
+const PIX_CODE='00020126580014BR.GOV.BCB.PIX0136orivie-sua-personalidade-pagamento-unico520400005303986540512.905802BR5913ORIVIE6009SAO PAULO62070503***6304A1B2';
+const C={T:'#3A2E28',TE:'#D9A08B',TS:'#B97F6A',SA:'#A8B8A0',SS:'#879A7E',ME:'#E3B65E',BE:'#EAE2D9',BS:'#D5C8BA'};
+
+/* =========================================================
+   DADOS
+   ========================================================= */
+const QUESTIONS=[
+ {q:'Como você reage às emoções?',o:['Analiso antes de reagir','Sinto tudo intensamente','Resolvo e sigo em frente','Converso sobre o que sinto','Guardo minhas emoções']},
+ {q:'Como funciona sua mente?',o:['Imagino possibilidades futuras','Questiono a vida e a existência','Analiso fatos e informações','Penso sobre o passado','Vivo mais o presente']},
+ {q:'Como você é socialmente?',o:['Comunicativa e espontânea','Observadora e reservada','Seletiva com amizades','Sociável com pessoas íntimas','Prefiro minha própria companhia']},
+ {q:'Como toma decisões?',o:['Pela lógica','Pela intuição','Pelos sentimentos','Pelos meus valores','Pela segurança']},
+ {q:'Como lida com novidades?',o:['Adoro experimentar','Gosto de pesquisar primeiro','Avalio vantagens e riscos','Tenho curiosidade, mas insegurança','Prefiro minha rotina']},
+ {q:'Como você recarrega sua energia?',o:['Sozinha, em silêncio','Com pessoas que amo','Na natureza','Criando algo','Dormindo e descansando']},
+ {q:'O que mais te deixa feliz?',o:['Liberdade','Amor e conexão','Conquistas','Paz e leveza','Descobrir coisas novas']},
+ {q:'Como você lida com conflitos?',o:['Falo na hora','Penso antes de falar','Evito para não brigar','Tento entender o outro lado','Fico em silêncio e me afasto']},
+ {q:'Como é seu dia ideal?',o:['Aventura e movimento','Rotina calma e organizada','Tempo com quem amo','Dia criativo, sem pressa','Dia de autocuidado']},
+ {q:'O que mais te define?',o:['Minha sensibilidade','Minha força','Minha criatividade','Minha lealdade','Minha calma']}
+];
+const DIMS=['SEN','RAC','CRI','SOC','INT','INU','ORG','ABE','IND','AFE'];
+const DIM_N={SEN:'Sensibilidade',RAC:'Racionalidade',CRI:'Criatividade',SOC:'Sociabilidade',INT:'Introspecção',INU:'Intuição',ORG:'Organização',ABE:'Abertura',IND:'Independência',AFE:'Afetividade'};
+const SCORING=[
+ {A:{RAC:2,INT:1},B:{SEN:2,AFE:1},C:{IND:2,ORG:1},D:{SOC:2,AFE:1},E:{INT:2,IND:1}},
+ {A:{CRI:2,ABE:1},B:{INU:2,INT:1},C:{RAC:2,ORG:1},D:{INT:2,SEN:1},E:{ABE:2,SOC:1}},
+ {A:{SOC:2,ABE:1},B:{INT:2,RAC:1},C:{IND:1,ORG:1,RAC:1},D:{AFE:2,SOC:1},E:{IND:2,INT:1}},
+ {A:{RAC:2,ORG:1},B:{INU:2,CRI:1},C:{SEN:2,AFE:1},D:{IND:1,INU:1,INT:1},E:{ORG:2,RAC:1}},
+ {A:{ABE:2,IND:1},B:{RAC:1,ORG:1,INT:1},C:{RAC:2,IND:1},D:{SEN:1,ABE:1,INT:1},E:{ORG:2,INT:1}},
+ {A:{INT:2,INU:1},B:{AFE:2,SOC:1},C:{INU:1,ABE:1,SEN:1},D:{CRI:2,INT:1},E:{SEN:1,ORG:1,INT:1}},
+ {A:{IND:2,ABE:1},B:{AFE:2,SOC:1},C:{IND:1,ORG:1,RAC:1},D:{SEN:1,INU:1,INT:1},E:{ABE:2,CRI:1}},
+ {A:{IND:2,SOC:1},B:{RAC:2,INT:1},C:{SEN:1,AFE:1},D:{AFE:1,SEN:1,INU:1},E:{INT:2,IND:1}},
+ {A:{ABE:2,SOC:1},B:{ORG:2,RAC:1},C:{AFE:2,SOC:1},D:{CRI:2,INU:1},E:{SEN:1,INT:1,INU:1}},
+ {A:{SEN:2,AFE:1},B:{IND:2,ORG:1},C:{CRI:2,ABE:1},D:{AFE:2,ORG:1},E:{INU:2,INT:1}}
+];
+
+const PROFILES=[
+{id:'serena',name:'Serena Criativa',dims:['CRI','SEN','INT'],
+ short:'Sensível, imaginativa e cheia de mundos por dentro.',
+ desc:['Você é daquelas pessoas que percebem o que quase ninguém vê: a luz entrando pela janela, a mudança no tom de voz de alguém, a beleza escondida no simples. Sua sensibilidade não é fragilidade — é uma lente rara para enxergar a vida.',
+  'Sua criatividade nasce do silêncio. Você precisa de tempo só seu para organizar o que sente e transformar isso em ideias, projetos, palavras ou pequenos rituais. Quando respeita esse ritmo, floresce de um jeito único.',
+  'Seu caminho é unir calma e expressão: criar sem pressa, sentir sem se perder e mostrar ao mundo a delicadeza que existe em você.'],
+ forces:['Imaginação fértil','Empatia profunda','Olhar estético apurado','Calma que acolhe'],
+ challenges:['Absorver demais as emoções dos outros','Adiar projetos esperando o momento perfeito','Se cobrar quando a inspiração não vem'],
+ phrases:['Sua sensibilidade é o seu superpoder mais bonito.','Criar devagar também é criar.','Hoje, repare em uma beleza pequena.','O silêncio é onde suas ideias nascem.','Você não precisa ter pressa para florescer.','Sentir muito é sinal de que você está viva.','Seu jeito delicado muda ambientes.'],
+ themes:[{t:'Beleza no simples',d:'Esta semana, registre três detalhes bonitos do seu dia.'},{t:'Criar sem cobrança',d:'Faça algo criativo só pelo prazer, sem precisar ficar perfeito.'},{t:'Limites gentis',d:'Pratique dizer não com carinho para proteger sua energia.'},{t:'Ritual de calma',d:'Crie um pequeno ritual diário só seu: um chá, uma música, uma página.'}],
+ why:'Combina com sua alma criativa e sensível:',
+ texts:{t1:'Como Serena Criativa, sua maior força é transformar sensibilidade em beleza. Seu desafio é não esperar o “momento perfeito”: comece pequeno e deixe a obra crescer com você.',
+  t2:'Você decide sentindo a atmosfera das coisas. Dê a si mesma um tempo de silêncio antes de responder — é ali que sua clareza aparece.',
+  t3:'No estresse, você tende a se recolher e absorver tudo. Desenhar, escrever ou ouvir música ajuda seu corpo a soltar o que a mente guardou.',
+  t4:'Você ama nos detalhes: lembra do que a pessoa disse, cria surpresas, transforma o comum em especial. Busque quem perceba sua delicadeza também.',
+  t5:'Provavelmente sua linguagem principal são os gestos de cuidado e os presentes cheios de significado. Diga também em palavras o que você precisa.',
+  t6:'Sua rotina ideal tem espaços vazios: manhãs calmas, um bloco criativo sem interrupção e um ritual de fim de dia que acalma a mente.'},
+ check:{provei:'Um chá novo, tomado com calma',ouvi:'Um álbum instrumental inteiro',visitei:'Um ateliê ou exposição',li:'Um poema antes de dormir'}},
+{id:'exploradora',name:'Exploradora Livre',dims:['ABE','IND','SOC'],
+ short:'Curiosa, corajosa e movida por novas experiências.',
+ desc:['Você foi feita para o movimento. Novos lugares, ideias e pessoas acendem algo em você, e a rotina repetida demais parece pequena para o tamanho da sua curiosidade.',
+  'Sua liberdade é um valor, não um capricho. Você aprende experimentando, se conecta com facilidade e tem coragem de começar o que outras pessoas só imaginam.',
+  'Seu caminho é explorar com intenção: escolher aventuras que alimentam a alma e criar raízes leves que te sustentam sem prender.'],
+ forces:['Coragem para o novo','Adaptabilidade','Energia contagiante','Mente aberta'],
+ challenges:['Perder o interesse quando vira rotina','Começar muitas coisas ao mesmo tempo','Dificuldade com compromissos longos'],
+ phrases:['O mundo é grande e você também.','Diga sim a uma pequena aventura hoje.','Curiosidade é a sua bússola.','Liberdade também é escolher onde ficar.','Toda rota nova começa com um passo.','Hoje é um bom dia para estrear algo.','Sua energia abre caminhos.'],
+ themes:[{t:'Pequenas aventuras',d:'Faça uma coisa nova por dia, mesmo que seja um caminho diferente para casa.'},{t:'Raízes leves',d:'Escolha um hábito simples e mantenha por 7 dias seguidos.'},{t:'Conexões novas',d:'Puxe conversa com alguém fora da sua bolha.'},{t:'Terminar o que começou',d:'Escolha um projeto parado e dê o próximo passo.'}],
+ why:'Combina com seu espírito livre:',
+ texts:{t1:'Como Exploradora Livre, sua força é ter coragem de começar. O desafio é sustentar: transforme metas grandes em pequenas aventuras com começo, meio e fim.',
+  t2:'Você decide rápido e pelo entusiasmo. Antes de dizer sim, pergunte: isso me aproxima da vida que eu quero?',
+  t3:'O estresse te deixa inquieta. Movimento é seu remédio: caminhar, dançar ou mudar de cenário ajuda a descarregar a tensão.',
+  t4:'Você ama com leveza e aventura: quer alguém para descobrir o mundo junto. Precisa de espaço — e de alguém que entenda isso como confiança, não distância.',
+  t5:'Seu idioma do amor costuma ser tempo de qualidade em experiências novas. Uma viagem curta vale mais que mil promessas.',
+  t6:'Sua rotina ideal é flexível: uma base mínima (sono, comida, movimento) e muitos espaços para o inesperado.'},
+ check:{provei:'Uma comida que nunca experimentei',ouvi:'Um gênero musical novo',visitei:'Uma rua ou bairro desconhecido',li:'Um relato de viagem'}},
+{id:'analitica',name:'Mente Analítica',dims:['RAC','ORG','INT'],
+ short:'Lógica, estratégica e apaixonada por entender o porquê.',
+ desc:['Sua mente é um laboratório. Você observa, compara, questiona e só se convence quando as peças se encaixam. Essa clareza faz de você alguém em quem as pessoas confiam para resolver problemas.',
+  'Você valoriza organização e profundidade. Prefere entender bem um assunto a saber um pouco de tudo, e se sente em paz quando tem um plano.',
+  'Seu caminho é unir razão e acolhimento: usar sua inteligência a seu favor sem esquecer que sentimentos também são dados importantes.'],
+ forces:['Raciocínio claro','Planejamento','Foco profundo','Senso crítico'],
+ challenges:['Pensar demais antes de agir','Exigir perfeição de si mesma','Deixar as emoções para depois'],
+ phrases:['Nem tudo precisa estar resolvido hoje.','Sua clareza é um presente para quem está perto.','Planeje, mas deixe espaço para o acaso.','Errar também é coletar dados.','Uma decisão boa hoje vale mais que a perfeita amanhã.','Sentir também é uma forma de entender.','Sua mente merece descanso.'],
+ themes:[{t:'Feito é melhor que perfeito',d:'Entregue algo esta semana sem revisar mil vezes.'},{t:'Sentir sem analisar',d:'Anote uma emoção por dia, sem tentar explicá-la.'},{t:'Plano da semana',d:'Organize três prioridades e celebre quando concluir.'},{t:'Pausas que recarregam',d:'Faça pausas curtas e sem telas entre os blocos de foco.'}],
+ why:'Combina com sua mente analítica:',
+ texts:{t1:'Como Mente Analítica, sua força é enxergar com clareza o que está confuso para os outros. O desafio é aceitar que nem tudo cabe numa planilha — inclusive você.',
+  t2:'Você decide pela lógica, listando prós e contras. Inclua uma linha extra: “como eu me sinto com isso?”. Ela também conta.',
+  t3:'No estresse, sua mente acelera e tenta controlar tudo. Escrever o que preocupa e separar o que depende de você ajuda a desligar.',
+  t4:'Você ama com lealdade e atitudes concretas: resolve, planeja, cuida dos detalhes práticos. Diga também em palavras o que sente.',
+  t5:'Seu idioma do amor costuma ser atos de serviço: ajudar a resolver é seu jeito de dizer “eu me importo”.',
+  t6:'Sua rotina ideal é organizada: blocos de foco profundo, horários previsíveis e uma pausa de verdade, sem telas, no fim do dia.'},
+ check:{provei:'Uma receita seguindo cada passo',ouvi:'Um podcast sobre algo que quero entender',visitei:'Um museu de ciência ou história',li:'Um capítulo de não ficção'}},
+{id:'conectiva',name:'Alma Conectiva',dims:['AFE','SOC','SEN'],
+ short:'Afetuosa, calorosa e feita para criar laços.',
+ desc:['Você enxerga a vida através das pessoas. Um abraço, uma conversa sincera, uma mesa cheia — é ali que você se sente em casa e mostra quem é.',
+  'Sua empatia acolhe e sua presença aquece. As pessoas se sentem vistas ao seu lado, porque você escuta de verdade e lembra do que importa para cada uma.',
+  'Seu caminho é cuidar dos outros sem se esquecer: dar amor também a você e escolher relações que te devolvem o mesmo carinho.'],
+ forces:['Empatia','Comunicação afetuosa','Lealdade','Talento para unir pessoas'],
+ challenges:['Colocar todos antes de si','Dificuldade em dizer não','Sentir demais as críticas'],
+ phrases:['Você também merece o cuidado que oferece.','Uma mensagem carinhosa pode mudar o dia de alguém.','Conexões verdadeiras são o seu tesouro.','Dizer não também é amor-próprio.','Seu abraço é casa para muita gente.','Hoje, cuide de quem cuida: você.','Amar é o seu talento natural.'],
+ themes:[{t:'Amor-próprio primeiro',d:'Reserve um momento por dia só para você, sem culpa.'},{t:'Conversas que nutrem',d:'Marque um encontro com alguém que te faz bem.'},{t:'Limites com carinho',d:'Pratique dizer “agora não posso” sem se justificar demais.'},{t:'Gratidão compartilhada',d:'Conte para três pessoas o quanto elas importam.'}],
+ why:'Combina com seu coração conectivo:',
+ texts:{t1:'Como Alma Conectiva, sua força é criar laços e fazer as pessoas se sentirem amadas. O desafio é lembrar que você também precisa estar na sua lista de cuidados.',
+  t2:'Você decide pensando em como os outros vão se sentir. Pergunte também: e eu, o que eu quero?',
+  t3:'No estresse, você busca colo e conversa — e isso é ótimo. Só cuide para não carregar os problemas de todo mundo junto com os seus.',
+  t4:'Você ama de forma presente e generosa: lembra datas, manda mensagens, está lá. Escolha quem retribui com a mesma intensidade.',
+  t5:'Seu idioma do amor costuma ser palavras de afirmação e tempo juntos. Um “tô com saudade” te enche de energia.',
+  t6:'Sua rotina ideal tem gente: um café com alguém querido, um momento em família e também um tempo só seu para recarregar.'},
+ check:{provei:'Uma receita para dividir com alguém',ouvi:'A música favorita de alguém que amo',visitei:'Alguém querido',li:'Uma carta ou mensagem antiga'}},
+{id:'contemplativa',name:'Essência Contemplativa',dims:['INT','INU','SEN'],
+ short:'Profunda, intuitiva e conectada ao que é essencial.',
+ desc:['Você vive em camadas. Enquanto muitos olham a superfície, você mergulha nas perguntas grandes: quem sou eu, o que importa, para onde estou indo.',
+  'Sua intuição é afiada e sua presença é tranquila. Você precisa de silêncio, natureza e tempo para digerir a vida — e é desse lugar quieto que nasce sua sabedoria.',
+  'Seu caminho é confiar na sua voz interior e trazê-la para o mundo, sem medo de ser profunda num mundo apressado.'],
+ forces:['Intuição','Profundidade','Serenidade','Autoconhecimento'],
+ challenges:['Se isolar demais','Ficar presa no passado','Dificuldade em agir sem certeza'],
+ phrases:['Sua intuição sabe o caminho.','O silêncio também responde.','Desacelerar é um ato de coragem.','Você não precisa explicar sua profundidade.','Hoje, escute o que o seu corpo diz.','O essencial cabe em pouco.','Sua calma é sabedoria.'],
+ themes:[{t:'Escuta interior',d:'Comece o dia com cinco minutos de silêncio antes do celular.'},{t:'Natureza que cura',d:'Passe um tempo ao ar livre, nem que seja numa praça.'},{t:'Do pensamento à ação',d:'Transforme uma reflexão em um pequeno passo concreto.'},{t:'Leveza com o passado',d:'Escreva sobre algo que você está pronta para soltar.'}],
+ why:'Combina com sua essência contemplativa:',
+ texts:{t1:'Como Essência Contemplativa, sua força é a profundidade: você entende a vida por dentro. O desafio é levar essa sabedoria para fora, em pequenas ações.',
+  t2:'Você decide pela intuição, aquela certeza silenciosa. Confie nela, mas dê um primeiro passo pequeno para testar o caminho.',
+  t3:'No estresse, você se recolhe. Natureza, respiração lenta e escrita livre ajudam a voltar para o seu centro.',
+  t4:'Você ama em profundidade: prefere poucas conexões verdadeiras a muitas superficiais. Precisa de alguém que respeite seus silêncios.',
+  t5:'Seu idioma do amor costuma ser tempo de qualidade e presença: estar junto, mesmo em silêncio, já diz muito.',
+  t6:'Sua rotina ideal é lenta e intencional: manhãs sem pressa, contato com a natureza e um ritual de reflexão antes de dormir.'},
+ check:{provei:'Uma refeição em silêncio, com atenção',ouvi:'Sons da natureza por 10 minutos',visitei:'Um parque, praia ou jardim',li:'Algumas páginas de filosofia'}},
+{id:'determinada',name:'Espírito Determinado',dims:['IND','RAC','ORG'],
+ short:'Forte, independente e movida por conquistas.',
+ desc:['Você tem fogo nos olhos. Quando decide algo, vai até o fim — e é essa determinação que faz você chegar onde muitos desistem no meio do caminho.',
+  'Independente e prática, você confia na própria capacidade, resolve problemas com rapidez e gosta de ver resultados concretos do seu esforço.',
+  'Seu caminho é conquistar sem se esgotar: celebrar cada vitória, pedir ajuda quando precisar e lembrar que descanso também faz parte da jornada.'],
+ forces:['Determinação','Autonomia','Praticidade','Liderança'],
+ challenges:['Dificuldade em descansar','Impaciência com processos lentos','Querer resolver tudo sozinha'],
+ phrases:['Sua força também mora no descanso.','Celebre o quanto você já caminhou.','Um passo firme por dia já é vitória.','Pedir ajuda também é coragem.','Você é capaz — e não precisa provar isso a ninguém.','Hoje, foque no que realmente importa.','Disciplina é amor pelo seu futuro.'],
+ themes:[{t:'Celebrar vitórias',d:'Anote uma conquista por dia, por menor que pareça.'},{t:'Descanso estratégico',d:'Agende pausas como agenda reuniões importantes.'},{t:'Pedir ajuda',d:'Delegue ou peça apoio em uma tarefa esta semana.'},{t:'Uma meta, foco total',d:'Escolha uma única prioridade e dedique a ela sua melhor energia.'}],
+ why:'Combina com seu espírito determinado:',
+ texts:{t1:'Como Espírito Determinado, sua força é transformar decisão em resultado. O desafio é lembrar que você é mais do que aquilo que produz.',
+  t2:'Você decide rápido e com firmeza. Antes de agir, faça uma pausa de cinco minutos e pergunte se a pressa é sua ou do momento.',
+  t3:'No estresse, você acelera ainda mais. Exercício intenso ajuda a liberar a tensão, mas o que realmente te recarrega é parar de verdade.',
+  t4:'Você ama protegendo e construindo junto: quer alguém que divida sonhos e metas. Lembre-se de mostrar também seu lado vulnerável.',
+  t5:'Seu idioma do amor costuma ser atos de serviço e apoio prático: estar presente nos desafios do outro é sua forma de amar.',
+  t6:'Sua rotina ideal é produtiva e com propósito: metas claras pela manhã, treino ou movimento e um horário fixo para desligar.'},
+ check:{provei:'Um café da manhã nutritivo antes de começar',ouvi:'Uma playlist que me dá energia',visitei:'Uma academia, trilha ou aula nova',li:'Um capítulo sobre carreira ou finanças'}}
+];
+
+const PREFS=['Emoções','Mente','Vida social','Decisões','Novidades','Energia','Felicidade','Conflitos','Dia ideal','Essência','Estilo','Rotina','Amor','Carreira','Autocuidado'];
+
+const CATS=[{id:'todos',n:'Todos',ic:'sparkle'},{id:'roupas',n:'Roupas',ic:'shirt'},{id:'musicas',n:'Músicas',ic:'music'},{id:'lugares',n:'Lugares',ic:'pin'},{id:'comidas',n:'Comidas',ic:'food'},{id:'viagens',n:'Viagens',ic:'plane'},{id:'livros',n:'Livros',ic:'books'},{id:'favoritos',n:'Favoritos',ic:'heart'}];
+const ITEMS=[
+ {id:'r1',c:'roupas',n:'Linho e tons terrosos',d:'Peças leves e naturais em areia, oliva e terracota.',w:'elas trazem calma, textura e uma beleza discreta, do jeito que você gosta.',p:['serena','contemplativa'],img:'photo-1490481651871-ab68de25d43d'},
+ {id:'r2',c:'roupas',n:'Jaqueta utilitária',d:'Bolsos, tecido resistente e estilo para qualquer roteiro.',w:'ela acompanha seu ritmo e está pronta para o inesperado.',p:['exploradora','determinada'],img:'photo-1551028719-00167b16eac5'},
+ {id:'r3',c:'roupas',n:'Alfaiataria minimalista',d:'Cortes limpos, cores neutras e zero excesso.',w:'o visual organizado reflete a clareza da sua mente.',p:['analitica','determinada'],img:'photo-1594633312681-425c7b97ccd1'},
+ {id:'r4',c:'roupas',n:'Vestido floral fluido',d:'Estampas delicadas e tecidos que dançam com o vento.',w:'ele expressa doçura e deixa você acolhedora e leve.',p:['conectiva','serena'],img:'photo-1515372039744-b8f02a3ae446'},
+ {id:'r5',c:'roupas',n:'Tricô aconchegante',d:'Malhas macias para dias de chá e introspecção.',w:'é como um abraço que você pode vestir.',p:['contemplativa','conectiva'],img:'photo-1434389677669-e08b4cac3105'},
+ {id:'r6',c:'roupas',n:'Tênis colorido',d:'Conforto com um toque de ousadia para o dia todo.',w:'ele deixa você pronta para o próximo passo — literalmente.',p:['exploradora','determinada'],img:'photo-1542291026-7eec264c27ff'},
+ {id:'m1',c:'musicas',n:'Lo-fi para criar',d:'Batidas suaves que ajudam a mente a fluir.',w:'cria o clima perfeito para suas ideias nascerem.',p:['serena','analitica'],img:'photo-1511379938547-c1f69419868d'},
+ {id:'m2',c:'musicas',n:'MPB acústica',d:'Voz e violão para cantar junto ou só sentir.',w:'fala de afeto, memória e conexão.',p:['conectiva','contemplativa'],img:'photo-1510915361894-db8b60106cad'},
+ {id:'m3',c:'musicas',n:'Indie de estrada',d:'Guitarras leves para ouvir de janela aberta.',w:'é trilha sonora de quem vive em movimento.',p:['exploradora','serena'],img:'photo-1470225620780-dba8ba36b745'},
+ {id:'m4',c:'musicas',n:'Piano para focar',d:'Clássicos e neoclássicos sem pressa.',w:'acalma o ruído e aprofunda sua concentração.',p:['analitica','contemplativa'],img:'photo-1507838153414-b4b713384a76'},
+ {id:'m5',c:'musicas',n:'Pop para dançar junto',d:'Refrões que pedem amigos e uma sala livre.',w:'transforma qualquer encontro em celebração.',p:['conectiva','exploradora'],img:'photo-1493225457124-a3eb161ffa5f'},
+ {id:'m6',c:'musicas',n:'Playlist de energia',d:'Batidas fortes para treinar e conquistar.',w:'acompanha sua força e o seu ritmo de quem vai até o fim.',p:['determinada'],img:'photo-1571019613454-1cb2f99b2d8b'},
+ {id:'l1',c:'lugares',n:'Café com livros',d:'Mesas de madeira, aroma de café e estantes cheias.',w:'é um refúgio para pensar, criar e desacelerar.',p:['serena','analitica'],img:'photo-1495474472287-4d71bcdd2085'},
+ {id:'l2',c:'lugares',n:'Trilha com mirante',d:'Subida desafiadora e uma vista que recompensa.',w:'une aventura, esforço e a sensação de conquista.',p:['exploradora','determinada'],img:'photo-1551632811-561732d1e306'},
+ {id:'l3',c:'lugares',n:'Jardim botânico',d:'Verde, silêncio e tempo para respirar.',w:'a natureza conversa com sua alma tranquila.',p:['contemplativa','serena'],img:'photo-1441974231531-c6227db76b6e'},
+ {id:'l4',c:'lugares',n:'Feira de rua',d:'Cores, cheiros, conversas e descobertas.',w:'é cheia de gente, histórias e surpresas.',p:['conectiva','exploradora'],img:'photo-1488459716781-31db52582fe9'},
+ {id:'l5',c:'lugares',n:'Museu interativo',d:'Exposições para tocar, testar e entender.',w:'alimenta sua curiosidade com profundidade.',p:['analitica','serena'],img:'photo-1554907984-15263bfd63bd'},
+ {id:'l6',c:'lugares',n:'Rooftop ao pôr do sol',d:'Céu alaranjado e boa companhia lá de cima.',w:'é o lugar perfeito para celebrar suas vitórias com quem você ama.',p:['determinada','conectiva'],img:'photo-1514933651103-005eec06c04b'},
+ {id:'c1',c:'comidas',n:'Bowl colorido',d:'Grãos, folhas e proteínas em equilíbrio.',w:'nutre seu corpo para dar conta de tudo o que você quer fazer.',p:['determinada','analitica'],img:'photo-1512621776951-a57141f2eefd'},
+ {id:'c2',c:'comidas',n:'Massa caseira para dividir',d:'Receita de família, mesa cheia e conversa longa.',w:'comida boa é desculpa para reunir quem você ama.',p:['conectiva'],img:'photo-1551183053-bf91a1d81141'},
+ {id:'c3',c:'comidas',n:'Comida de rua do mundo',d:'Sabores de outros países, sem sair da cidade.',w:'cada prato é uma pequena viagem.',p:['exploradora'],img:'photo-1504674900247-0877df9cc836'},
+ {id:'c4',c:'comidas',n:'Chá e bolo da tarde',d:'Um ritual simples para uma pausa gostosa.',w:'transforma o fim de tarde em um momento de calma criativa.',p:['serena','contemplativa'],img:'photo-1544787219-7f47ccb76574'},
+ {id:'c5',c:'comidas',n:'Café especial',d:'Grãos selecionados e métodos de preparo diferentes.',w:'tem técnica, detalhe e muito sabor para analisar.',p:['analitica','determinada'],img:'photo-1509042239860-f550ce710b93'},
+ {id:'c6',c:'comidas',n:'Frutas da estação',d:'O que a natureza oferece agora, fresco e simples.',w:'respeita o tempo das coisas, como você.',p:['contemplativa','serena'],img:'photo-1610832958506-aa56368176cf'},
+ {id:'v1',c:'viagens',n:'Mochilão sem roteiro',d:'Uma mochila, um mapa e muita vontade de descobrir.',w:'deixa espaço para o inesperado que você tanto ama.',p:['exploradora'],img:'photo-1488646953014-85cb44e25828'},
+ {id:'v2',c:'viagens',n:'Retiro na montanha',d:'Silêncio, ar puro e tempo para você.',w:'é o cenário ideal para se reencontrar.',p:['contemplativa','serena'],img:'photo-1506905925346-21bda4d32df4'},
+ {id:'v3',c:'viagens',n:'Cidade histórica',d:'Ruas antigas, museus e histórias em cada esquina.',w:'une beleza e conhecimento em cada passeio.',p:['analitica','serena'],img:'photo-1467269204594-9661b134dd2b'},
+ {id:'v4',c:'viagens',n:'Praia com amigos',d:'Sol, risadas e lembranças para a vida toda.',w:'as melhores memórias são aquelas compartilhadas.',p:['conectiva','exploradora'],img:'photo-1507525428034-b723cf961d3e'},
+ {id:'v5',c:'viagens',n:'Trekking desafiador',d:'Dias de caminhada e metas a cada quilômetro.',w:'é a viagem perfeita para quem ama superar limites.',p:['determinada','exploradora'],img:'photo-1464822759023-fed622ff2c3b'},
+ {id:'v6',c:'viagens',n:'Vila no interior',d:'Ritmo lento, comida caseira e gente acolhedora.',w:'lembra que a vida pode ser simples e cheia de afeto.',p:['contemplativa','conectiva'],img:'photo-1476514525535-07fb3b4ae5f1'},
+ {id:'b1',c:'livros',n:'Poesia contemporânea',d:'Versos curtos que cabem num respiro.',w:'conversa direto com a sua sensibilidade.',p:['serena','contemplativa'],img:'photo-1474932430478-367dbb6832c1'},
+ {id:'b2',c:'livros',n:'Relatos de viagem',d:'Histórias reais de quem saiu pelo mundo.',w:'alimenta sua vontade de explorar.',p:['exploradora'],img:'photo-1512820790803-83ca734da794'},
+ {id:'b3',c:'livros',n:'Ensaios sobre a mente',d:'Ciência e reflexão sobre como pensamos.',w:'satisfaz sua sede de entender o porquê das coisas.',p:['analitica'],img:'photo-1481627834876-b7833e8f5570'},
+ {id:'b4',c:'livros',n:'Romances sobre amizade',d:'Personagens que se encontram e se transformam.',w:'celebra os laços que você tanto valoriza.',p:['conectiva'],img:'photo-1544947950-fa07a98d237f'},
+ {id:'b5',c:'livros',n:'Filosofia para o dia a dia',d:'Grandes perguntas em linguagem simples.',w:'acompanha seus pensamentos mais profundos.',p:['contemplativa','analitica'],img:'photo-1457369804613-52c61a468e7d'},
+ {id:'b6',c:'livros',n:'Biografias inspiradoras',d:'Trajetórias de mulheres que fizeram acontecer.',w:'mostra que a sua determinação pode ir longe.',p:['determinada'],img:'photo-1589829085413-56de8ae18c73'}
+];
+
+const LCATS=[{id:'todos',n:'Todos'},{id:'forcas',n:'Forças'},{id:'emocoes',n:'Emoções'},{id:'relacionamentos',n:'Relacionamentos'},{id:'rotina',n:'Rotina'}];
+const TEXTS=[
+ {id:'t1',title:'Pontos fortes e desafios',cat:'forcas',min:4,img:'photo-1499209974431-9dddcece7f88',prefs:['Essência','Carreira','Mente','Estilo'],
+  body:['Toda personalidade tem luz e sombra. Conhecer suas forças ajuda você a usá-las com intenção; conhecer seus desafios ajuda você a se tratar com mais gentileza.',
+   'Forças são aquilo que você faz com naturalidade e energia. Muitas vezes nem percebemos, porque parecem fáceis demais. Pergunte a pessoas próximas: “o que você acha que eu faço bem?”.',
+   'Desafios não são defeitos. Eles costumam ser forças em excesso: a sensibilidade que vira sobrecarga, a determinação que vira cobrança, a liberdade que vira dispersão.',
+   'O equilíbrio vem de observar sem julgamento. Quando notar um desafio aparecendo, respire e pergunte: qual força minha está pedindo cuidado agora?']},
+ {id:'t2',title:'Como toma decisões',cat:'forcas',min:5,img:'photo-1506784983877-45594efa4cbe',prefs:['Decisões','Mente','Novidades','Carreira'],
+  body:['Decidir é escolher um caminho e, ao mesmo tempo, abrir mão de outros. Por isso pode ser tão difícil — e tão revelador sobre quem somos.',
+   'Algumas pessoas decidem pela lógica, outras pela intuição, pelos sentimentos ou pelos valores. Nenhum estilo é melhor: cada um enxerga uma parte da verdade.',
+   'Decisões importantes ficam mais leves quando você combina estilos: liste os fatos, escute o corpo, imagine-se daqui a um ano e veja se a escolha conversa com seus valores.',
+   'E lembre: quase toda decisão pode ser ajustada depois. Escolher com o que você sabe hoje já é um ato de coragem.']},
+ {id:'t3',title:'Como lida com estresse',cat:'emocoes',min:4,img:'photo-1506126613408-eca07ce68773',prefs:['Emoções','Conflitos','Energia','Autocuidado'],
+  body:['O estresse é a forma como o corpo avisa que algo precisa de atenção. Ele não é inimigo, mas não deveria morar com você.',
+   'Cada personalidade reage de um jeito: há quem acelere, quem se isole, quem busque pessoas, quem tente controlar tudo. Reconhecer o seu padrão é o primeiro passo.',
+   'Pequenos gestos fazem diferença: respirar fundo contando até quatro, beber água, sair por cinco minutos, escrever o que está pesando.',
+   'Se o estresse estiver constante e intenso, procurar apoio profissional é um gesto de cuidado — não de fraqueza.']},
+ {id:'t4',title:'Como você ama',cat:'relacionamentos',min:5,img:'photo-1518199266791-5375a83190b7',prefs:['Amor','Vida social','Felicidade'],
+  body:['Cada pessoa tem um jeito único de amar. Algumas demonstram com palavras, outras com gestos, presença ou pequenos cuidados do dia a dia.',
+   'Seu jeito de amar nasce da sua história e da sua personalidade. Entender isso ajuda a escolher relações em que você se sente vista e respeitada.',
+   'Amor saudável tem espaço para os dois: para estar junto e para ser quem se é. Ele não pede que você diminua para caber.',
+   'Observe: em quais momentos você se sente mais amada? E como você costuma demonstrar carinho? As respostas dizem muito sobre você.']},
+ {id:'t5',title:'Linguagem do amor',cat:'relacionamentos',min:4,img:'photo-1516589178581-6cd7833ae3b2',prefs:['Amor','Emoções','Vida social'],
+  body:['A ideia das linguagens do amor ajuda a entender como damos e recebemos carinho. As mais conhecidas são: palavras de afirmação, tempo de qualidade, presentes, atos de serviço e toque físico.',
+   'Muitas vezes amamos alguém na nossa linguagem, mas a pessoa entende outra. Daí nasce a sensação de “eu faço tanto e ninguém percebe”.',
+   'Conversar sobre isso aproxima: conte o que faz você se sentir amada e pergunte o que faz a outra pessoa se sentir assim.',
+   'As linguagens não são caixinhas fixas. Elas mudam com as fases da vida — e tudo bem.']},
+ {id:'t6',title:'Sua rotina ideal',cat:'rotina',min:3,img:'photo-1484480974693-6ca0a78fb36b',prefs:['Rotina','Dia ideal','Autocuidado','Energia'],
+  body:['Rotina não é prisão: é a estrutura que sustenta a vida que você quer viver. A rotina ideal é aquela que respeita a sua energia.',
+   'Comece pelo básico: sono, alimentação e movimento. Depois, inclua um pequeno ritual que seja só seu e faça você se sentir você.',
+   'Observe seus horários de mais energia e use-os para o que importa. Nos horários de menos energia, permita-se o simples.',
+   'Ajuste com carinho. Uma rotina boa é viva: muda com você e com as estações da vida.']}
+];
+
+const GROUPS=[{id:'provei',n:'Provei',ic:'food'},{id:'ouvi',n:'Ouvi',ic:'music'},{id:'visitei',n:'Visitei',ic:'pin'},{id:'li',n:'Li',ic:'books'}];
+const GENERIC_CHECK={provei:'Uma fruta ou bebida diferente',ouvi:'Uma música que me acalma',visitei:'Um cantinho novo no meu bairro',li:'10 páginas de um livro'};
+
+const ACH=[
+ {id:'teste',n:'Primeiro passo',d:'Concluiu o teste de personalidade.',ic:'sparkle',ok:u=>u.testDone},
+ {id:'fav1',n:'De olho no que combina',d:'Favoritou o primeiro item.',ic:'heart',ok:u=>u.favs.length>=1},
+ {id:'dia',n:'Dia concluído',d:'Concluiu um dia no checklist.',ic:'check',ok:u=>u.history.length>=1},
+ {id:'leitora',n:'Leitora curiosa',d:'Leu 3 textos.',ic:'book',ok:u=>u.read.length>=3},
+ {id:'board',n:'Meu universo',d:'Salvou o primeiro board.',ic:'grid',ok:u=>u.boards.length>=1},
+ {id:'meta',n:'Meta cumprida',d:'Concluiu uma meta ou hábito.',ic:'target',ok:u=>u.goals.some(g=>g.done)},
+ {id:'seq3',n:'Três dias seguidos',d:'Manteve 3 dias de sequência.',ic:'flame',ok:u=>u.best>=3},
+ {id:'bau',n:'Baú aberto',d:'Completou as missões do dia.',ic:'chest',ok:u=>Object.keys(u.chest).length>=1},
+ {id:'colecao',n:'Colecionadora',d:'Favoritou 5 itens.',ic:'heart',ok:u=>u.favs.length>=5},
+ {id:'sabia',n:'Mente iluminada',d:'Leu todos os 6 textos.',ic:'trophy',ok:u=>TEXTS.every(t=>u.read.includes(t.id))},
+ {id:'seq7',n:'Semana florida',d:'Manteve 7 dias de sequência.',ic:'flame',ok:u=>u.best>=7},
+ {id:'xp200',n:'Brilho próprio',d:'Somou 200 XP.',ic:'star',ok:u=>u.xp>=200}
+];
+const MILESTONES=[3,7,30,100,365];
+const DIAS=['Domingo','Segunda','Terça','Quarta','Quinta','Sexta','Sábado'];
+const DIAS_L=['domingo','segunda-feira','terça-feira','quarta-feira','quinta-feira','sexta-feira','sábado'];
+const MESES=['janeiro','fevereiro','março','abril','maio','junho','julho','agosto','setembro','outubro','novembro','dezembro'];
+
+/* =========================================================
+   ÍCONES (preenchidos, arredondados) E MASCOTE "ORI"
+   ========================================================= */
+const ICONS={
+ sun:`<g stroke="${C.ME}" stroke-width="2.6" stroke-linecap="round"><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.3 5.3l1.6 1.6M17.1 17.1l1.6 1.6M5.3 18.7l1.6-1.6M17.1 6.9l1.6-1.6"/></g><circle cx="12" cy="12" r="5" fill="${C.ME}"/>`,
+ heart:`<path fill="${C.TE}" d="M12 21s-7.5-4.6-9.6-9.2C1 8.6 3 5 6.6 5c2 0 3.4 1.1 4.4 2.5C12 6.1 13.4 5 15.4 5 19 5 21 8.6 19.6 11.8 17.5 16.4 12 21 12 21z"/>`,
+ heartc:`<path fill="currentColor" d="M12 21s-7.5-4.6-9.6-9.2C1 8.6 3 5 6.6 5c2 0 3.4 1.1 4.4 2.5C12 6.1 13.4 5 15.4 5 19 5 21 8.6 19.6 11.8 17.5 16.4 12 21 12 21z"/>`,
+ check:`<rect x="2.5" y="2.5" width="19" height="19" rx="6" fill="${C.SA}"/><path d="M7.5 12.4l3 3 6-6.4" fill="none" stroke="#fff" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/>`,
+ tick:`<path d="M5 12.5l4.5 4.5L19 7.5" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/>`,
+ grid:`<rect x="3" y="3" width="8" height="8" rx="2.5" fill="${C.TE}"/><rect x="13" y="3" width="8" height="8" rx="2.5" fill="${C.SA}"/><rect x="3" y="13" width="8" height="8" rx="2.5" fill="${C.ME}"/><rect x="13" y="13" width="8" height="8" rx="2.5" fill="${C.TS}"/>`,
+ book:`<path fill="${C.SA}" d="M2.5 5.2c0-.9.8-1.6 1.7-1.5 2.6.2 5 .9 7 2.3V20c-2-1.3-4.3-2-6.9-2.2-1-.1-1.8-.8-1.8-1.7z"/><path fill="${C.TE}" d="M21.5 5.2c0-.9-.8-1.6-1.7-1.5-2.6.2-5 .9-7 2.3V20c2-1.3 4.3-2 6.9-2.2 1-.1 1.8-.8 1.8-1.7z"/>`,
+ bookc:`<path fill="currentColor" d="M2.5 5.2c0-.9.8-1.6 1.7-1.5 2.6.2 5 .9 7 2.3V20c-2-1.3-4.3-2-6.9-2.2-1-.1-1.8-.8-1.8-1.7zM21.5 5.2c0-.9-.8-1.6-1.7-1.5-2.6.2-5 .9-7 2.3V20c2-1.3 4.3-2 6.9-2.2 1-.1 1.8-.8 1.8-1.7z"/>`,
+ user:`<circle cx="12" cy="8" r="4.6" fill="${C.TE}"/><path fill="${C.SA}" d="M3.5 21c0-4.5 3.8-7.6 8.5-7.6s8.5 3.1 8.5 7.6z"/>`,
+ flame:`<path fill="${C.TE}" d="M12 2c1 3.6 5.8 6 5.8 11.2A5.8 5.8 0 0 1 6.2 13c0-2.6 1.4-4.3 2.7-5.4.2 1.7.9 2.9 2 3.4C10.4 7.8 11 5 12 2z"/><path fill="${C.ME}" d="M12 11.5c.6 1.8 2.8 2.8 2.8 5a2.8 2.8 0 0 1-5.6 0c0-1.5.9-2.4 1.6-3 .2.8.6 1.2 1.2 1.4-.2-1.3-.2-2.4 0-3.4z"/>`,
+ star:`<path fill="${C.ME}" stroke="${C.ME}" stroke-width="2" stroke-linejoin="round" d="M12 3l2.7 5.6 6.1.8-4.5 4.2 1.2 6.1L12 16.8l-5.5 2.9 1.2-6.1-4.5-4.2 6.1-.8z"/>`,
+ starc:`<path fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linejoin="round" d="M12 3l2.7 5.6 6.1.8-4.5 4.2 1.2 6.1L12 16.8l-5.5 2.9 1.2-6.1-4.5-4.2 6.1-.8z"/>`,
+ lock:`<rect x="5" y="10.5" width="14" height="10.5" rx="3" fill="currentColor"/><path d="M8.2 10.5V8.3a3.8 3.8 0 0 1 7.6 0v2.2" fill="none" stroke="currentColor" stroke-width="2.8"/>`,
+ x:`<path d="M6.5 6.5l11 11M17.5 6.5l-11 11" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>`,
+ plus:`<path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>`,
+ back:`<path d="M14.5 5.5L8 12l6.5 6.5" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>`,
+ chev:`<path d="M9.5 5.5L16 12l-6.5 6.5" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>`,
+ edit:`<path fill="currentColor" d="M4 20l.9-4.6L15.6 4.7a2.2 2.2 0 0 1 3.1 0l.6.6a2.2 2.2 0 0 1 0 3.1L8.6 19.1z"/>`,
+ trash:`<path fill="currentColor" d="M6 8h12l-1 11.2A2 2 0 0 1 15 21H9a2 2 0 0 1-2-1.8z"/><rect x="4" y="4.5" width="16" height="2.6" rx="1.3" fill="currentColor"/><rect x="9.5" y="2.5" width="5" height="2.5" rx="1.2" fill="currentColor"/>`,
+ share:`<path d="M12 14.5V3.5M7.5 7.5L12 3l4.5 4.5" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 12.5v5.5A2.5 2.5 0 0 0 7.5 20.5h9a2.5 2.5 0 0 0 2.5-2.5v-5.5" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round"/>`,
+ download:`<path d="M12 3.5v11M7.5 10.5L12 15l4.5-4.5" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 17.5v1A2.5 2.5 0 0 0 7.5 21h9a2.5 2.5 0 0 0 2.5-2.5v-1" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round"/>`,
+ camera:`<rect x="2.5" y="6.5" width="19" height="14" rx="4" fill="${C.TE}"/><rect x="8" y="3.5" width="8" height="4" rx="1.5" fill="${C.TE}"/><circle cx="12" cy="13.5" r="4.2" fill="#fff"/><circle cx="12" cy="13.5" r="2.4" fill="${C.SA}"/>`,
+ copy:`<rect x="8" y="8" width="12.5" height="12.5" rx="3" fill="currentColor"/><path d="M5.5 15.5h-.3A1.7 1.7 0 0 1 3.5 13.8V5.2c0-.9.8-1.7 1.7-1.7h8.6c.9 0 1.7.8 1.7 1.7v.3" fill="none" stroke="currentColor" stroke-width="2.4"/>`,
+ chest:`<rect x="3" y="10" width="18" height="10.5" rx="2.5" fill="${C.TS}"/><path fill="${C.TE}" d="M3 10.5V9a5.5 5.5 0 0 1 5.5-5.5h7A5.5 5.5 0 0 1 21 9v1.5z"/><rect x="10" y="9" width="4" height="5.5" rx="1.5" fill="${C.ME}"/>`,
+ trophy:`<path fill="${C.ME}" d="M7 3.5h10v5.5a5 5 0 0 1-10 0z"/><path d="M7 5.5H4.5v1.2A3.3 3.3 0 0 0 7.8 10M17 5.5h2.5v1.2a3.3 3.3 0 0 1-3.3 3.3" fill="none" stroke="${C.ME}" stroke-width="2.2"/><rect x="10.8" y="13.5" width="2.4" height="4" fill="${C.ME}"/><rect x="7.5" y="17.5" width="9" height="3.5" rx="1.5" fill="${C.TS}"/>`,
+ leaf:`<path fill="${C.SA}" d="M20.5 3.5C11 3.5 4 8 4 15.5c0 1.5.4 2.9 1 4 .7-3.8 3.3-7.3 7.5-9.5-3 2.6-5 5.6-5.6 9.4 1 .6 2.3 1 3.6 1 7 0 10-7.4 10-16.9z"/>`,
+ sparkle:`<path fill="${C.ME}" d="M12 2c.8 5 2.3 6.9 7.5 8-5.2 1.1-6.7 3-7.5 8-.8-5-2.3-6.9-7.5-8C9.7 8.9 11.2 7 12 2z"/><circle cx="19" cy="18.5" r="2" fill="${C.TE}"/>`,
+ logout:`<path d="M10 4.5H6.5A2.5 2.5 0 0 0 4 7v10a2.5 2.5 0 0 0 2.5 2.5H10" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round"/><path d="M14 8l4 4-4 4M18 12H9.5" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/>`,
+ target:`<circle cx="12" cy="12" r="9.5" fill="${C.TE}"/><circle cx="12" cy="12" r="6.2" fill="#fff"/><circle cx="12" cy="12" r="3" fill="${C.TE}"/>`,
+ sound:`<path fill="${C.TS}" d="M4 9.5h3.5L12.5 5v14l-5-4.5H4z"/><path d="M16 9a4.2 4.2 0 0 1 0 6M18.5 6.5a7.8 7.8 0 0 1 0 11" fill="none" stroke="${C.SA}" stroke-width="2.4" stroke-linecap="round"/>`,
+ shirt:`<path fill="${C.TE}" d="M8.5 3L3 6l2 4.5 2.2-1V21h9.6V9.5l2.2 1L21 6l-5.5-3c-.6 1.6-1.9 2.6-3.5 2.6S9.1 4.6 8.5 3z"/>`,
+ music:`<path fill="${C.SA}" d="M9 4.8l11-2.3v12.8a3 3 0 1 1-2.2-2.9V7L11.2 8.4v9.4A3 3 0 1 1 9 14.9z"/>`,
+ pin:`<path fill="${C.TE}" d="M12 22s7-6.3 7-12a7 7 0 0 0-14 0c0 5.7 7 12 7 12z"/><circle cx="12" cy="10" r="2.8" fill="#fff"/>`,
+ food:`<path fill="${C.ME}" d="M2.5 11.5h19a9.5 9.5 0 0 1-19 0z"/><path d="M8.5 3.5c-1 1.3 1 2.2 0 4M12 3c-1 1.3 1 2.2 0 4M15.5 3.5c-1 1.3 1 2.2 0 4" fill="none" stroke="${C.SA}" stroke-width="2" stroke-linecap="round"/>`,
+ plane:`<path fill="${C.SA}" d="M21.5 15.2v-2.1l-8.1-5.1V3.6a1.4 1.4 0 0 0-2.8 0V8l-8.1 5.1v2.1l8.1-2.5v5.1l-2.1 1.6V21l3.5-1 3.5 1v-1.6l-2.1-1.6v-5.1z"/>`,
+ books:`<rect x="3" y="4" width="5" height="16.5" rx="1.5" fill="${C.TE}"/><rect x="9.5" y="2.5" width="5" height="18" rx="1.5" fill="${C.SA}"/><rect x="15" y="5.5" width="5" height="15" rx="1.5" fill="${C.ME}" transform="rotate(-12 17.5 13)"/>`,
+ brush:`<path fill="${C.SA}" d="M19.5 3a1.6 1.6 0 0 1 1.5 2.2c-1.3 3.2-4.1 7-6.7 8.6l-2.3-2.3c1.6-2.6 5.4-5.4 7.5-8.5z"/><path fill="${C.TE}" d="M10.5 12.8l1.7 1.7c.4 2.9-1.7 5.5-6.7 5.5 1.5-1 1.2-2.6 1.6-4.2.5-1.7 1.9-3 3.4-3z"/>`,
+ refresh:`<path d="M19.5 12a7.5 7.5 0 1 1-2.2-5.3" fill="none" stroke="${C.SS}" stroke-width="2.8" stroke-linecap="round"/><path fill="${C.SS}" d="M20.5 3.5v6h-6z"/>`,
+ pencil:`<path fill="${C.ME}" d="M4 20l.9-4.6L15.6 4.7a2.2 2.2 0 0 1 3.1 0l.6.6a2.2 2.2 0 0 1 0 3.1L8.6 19.1z"/><path fill="${C.TS}" d="M4 20l.9-4.6 3.7 3.7z"/>`,
+ exit:`<path d="M10 4.5H6.5A2.5 2.5 0 0 0 4 7v10a2.5 2.5 0 0 0 2.5 2.5H10" fill="none" stroke="${C.TS}" stroke-width="2.8" stroke-linecap="round"/><path d="M14 8l4 4-4 4M18 12H9.5" fill="none" stroke="${C.TS}" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/>`
+};
+function ic(n,s=24,cls=''){return `<svg class="ic ${cls}" width="${s}" height="${s}" viewBox="0 0 24 24" aria-hidden="true" focusable="false">${ICONS[n]||ICONS.sparkle}</svg>`}
+
+/* Ori: sementinha com broto de duas folhas (assinatura), olhos grandes, pés soltos */
+function mascot(mood='happy',size=96,extra=''){
+ const {T,TE,TS,SA,SS,ME,BE}=C;
+ const look=mood==='think'?{x:3,y:-5}:{x:0,y:0};
+ const eyes=mood==='sleep'
+  ?`<path d="M37 63q9 7 18 0M65 63q9 7 18 0" stroke="${T}" stroke-width="3.6" fill="none" stroke-linecap="round"/>`
+  :`<circle cx="46" cy="62" r="13" fill="#fff"/><circle cx="74" cy="62" r="13" fill="#fff"/>
+    <circle cx="${47+look.x}" cy="${63+look.y}" r="7.5" fill="${T}"/><circle cx="${75+look.x}" cy="${63+look.y}" r="7.5" fill="${T}"/>
+    <circle cx="${50+look.x}" cy="${60+look.y}" r="2.6" fill="#fff"/><circle cx="${78+look.x}" cy="${60+look.y}" r="2.6" fill="#fff"/>`;
+ const brows=mood==='sad'?`<path d="M36 46l14 4M84 46l-14 4" stroke="${T}" stroke-width="3" stroke-linecap="round"/>`:'';
+ const mouths={
+  happy:`<path d="M52 82q8 8 16 0" stroke="${T}" stroke-width="3.6" fill="none" stroke-linecap="round"/>`,
+  wave:`<path d="M52 82q8 8 16 0" stroke="${T}" stroke-width="3.6" fill="none" stroke-linecap="round"/>`,
+  celebrate:`<path d="M49 79q11 18 22 0z" fill="${T}"/><path d="M54 87q6 4 12 0" fill="#E58C7A"/>`,
+  proud:`<path d="M50 80q10 10 20 0" stroke="${T}" stroke-width="3.6" fill="none" stroke-linecap="round"/>`,
+  sad:`<path d="M52 88q8-7 16 0" stroke="${T}" stroke-width="3.6" fill="none" stroke-linecap="round"/>`,
+  think:`<circle cx="63" cy="86" r="3.4" fill="${T}"/>`,
+  sleep:`<path d="M55 86h10" stroke="${T}" stroke-width="3.4" stroke-linecap="round"/>`
+ };
+ let arms=`<ellipse cx="21" cy="86" rx="7" ry="12" fill="${TE}" transform="rotate(18 21 86)"/><ellipse cx="99" cy="86" rx="7" ry="12" fill="${TE}" transform="rotate(-18 99 86)"/>`;
+ if(mood==='wave')arms=`<ellipse cx="21" cy="86" rx="7" ry="12" fill="${TE}" transform="rotate(18 21 86)"/><g class="m-wave"><ellipse cx="103" cy="52" rx="7" ry="13" fill="${TE}" transform="rotate(30 103 52)"/></g>`;
+ if(mood==='celebrate'||mood==='proud')arms=`<ellipse cx="17" cy="50" rx="7" ry="13" fill="${TE}" transform="rotate(-30 17 50)"/><ellipse cx="103" cy="50" rx="7" ry="13" fill="${TE}" transform="rotate(30 103 50)"/>`;
+ if(mood==='think')arms=`<ellipse cx="21" cy="86" rx="7" ry="12" fill="${TE}" transform="rotate(18 21 86)"/><ellipse cx="78" cy="92" rx="7" ry="11" fill="${TE}" transform="rotate(-50 78 92)"/>`;
+ const extras=(mood==='proud'||mood==='celebrate')
+  ?`<path fill="${ME}" d="M12 26c.6 4 1.8 5.4 6 6.2-4.2.8-5.4 2.2-6 6.2-.6-4-1.8-5.4-6-6.2 4.2-.8 5.4-2.2 6-6.2zM108 14c.5 3.2 1.4 4.3 4.8 5-3.4.7-4.3 1.8-4.8 5-.5-3.2-1.4-4.3-4.8-5 3.4-.7 4.3-1.8 4.8-5z"/><circle cx="110" cy="104" r="3" fill="${SA}"/><circle cx="9" cy="104" r="2.5" fill="${TE}"/>`:'';
+ const zz=mood==='sleep'?`<text x="92" y="34" font-family="DM Sans,sans-serif" font-weight="800" font-size="17" fill="${SS}">z</text><text x="102" y="20" font-family="DM Sans,sans-serif" font-weight="800" font-size="12" fill="${SS}">z</text>`:'';
+ return `<svg class="mascot ${extra}" viewBox="0 0 120 132" width="${size}" height="${Math.round(size*1.1)}" role="img" aria-label="Ori, a mascote do Orivie">
+  <rect x="36" y="118" width="20" height="10" rx="5" fill="${TS}"/><rect x="64" y="118" width="20" height="10" rx="5" fill="${TS}"/>
+  ${arms}
+  <rect x="57.8" y="16" width="4.6" height="20" rx="2.3" fill="${SS}"/>
+  <ellipse cx="47" cy="19" rx="12" ry="6" fill="${SA}" transform="rotate(-28 47 19)"/>
+  <ellipse cx="73" cy="16" rx="13" ry="6.5" fill="${SA}" transform="rotate(24 73 16)"/>
+  <ellipse cx="60" cy="74" rx="40" ry="42" fill="${TE}"/>
+  <ellipse cx="60" cy="94" rx="23" ry="17" fill="${BE}"/>
+  <ellipse cx="32" cy="78" rx="6" ry="4" fill="${TS}" opacity=".55"/><ellipse cx="88" cy="78" rx="6" ry="4" fill="${TS}" opacity=".55"/>
+  ${brows}${eyes}${mouths[mood]||mouths.happy}${extras}${zz}
+ </svg>`;
+}
+
+/* =========================================================
+   STORAGE (nunca trava: sempre try/catch + valor padrão)
+   ========================================================= */
+const LS={
+ get(k,d){try{const v=localStorage.getItem(k);return v==null?d:JSON.parse(v)}catch(e){return d}},
+ set(k,v){try{localStorage.setItem(k,JSON.stringify(v));return true}catch(e){return false}},
+ del(k){try{localStorage.removeItem(k)}catch(e){}}
+};
+const pad=n=>String(n).padStart(2,'0');
+const ymd=d=>`${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`;
+const today=()=>ymd(new Date());
+const parseYmd=s=>{const p=String(s||'').split('-').map(Number);return new Date(p[0]||2000,(p[1]||1)-1,p[2]||1)};
+const fmtBR=s=>{const d=parseYmd(s);return `${pad(d.getDate())}/${pad(d.getMonth()+1)}/${d.getFullYear()}`};
+const dayOfYear=(d=new Date())=>Math.floor((d-new Date(d.getFullYear(),0,0))/864e5);
+function isoWeek(d=new Date()){const t=new Date(Date.UTC(d.getFullYear(),d.getMonth(),d.getDate()));const n=t.getUTCDay()||7;t.setUTCDate(t.getUTCDate()+4-n);const y0=new Date(Date.UTC(t.getUTCFullYear(),0,1));return Math.ceil(((t-y0)/864e5+1)/7)}
+const uid=()=>Date.now().toString(36)+Math.random().toString(36).slice(2,7);
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const first=n=>(String(n||'').trim().split(/\s+/)[0])||'você';
+const cap=s=>s.charAt(0).toUpperCase()+s.slice(1);
+const reduced=()=>{try{return matchMedia('(prefers-reduced-motion: reduce)').matches}catch(e){return false}};
+const $=(s,el=document)=>el.querySelector(s);
+const imgUrl=(id,w=800)=>`https://images.unsplash.com/${id}?auto=format&fit=crop&w=${w}&q=70`;
+
+function blankUser(){return{name:'',email:'',pass:'',birth:'',created:today(),paid:false,payMethod:'',payDate:'',
+ answers:Array(10).fill(null),testDone:false,testDate:'',testXP:false,profile:null,scores:{},prefs:[],prefsDone:false,resultSeen:false,
+ favs:[],favLog:{},read:[],readLog:{},readXP:[],checklist:null,history:[],board:{title:'',photos:[]},boards:[],goals:[],photo:'',
+ xp:0,xpLog:{},days:[],best:0,chest:{},ach:[],sound:true}}
+function fix(u){
+ const b=blankUser();
+ if(!u||typeof u!=='object'||Array.isArray(u))return b;
+ for(const k in b){
+  if(u[k]===undefined||(u[k]===null&&b[k]!==null))u[k]=b[k];
+  if(Array.isArray(b[k])&&!Array.isArray(u[k]))u[k]=b[k];
+  if(b[k]&&typeof b[k]==='object'&&!Array.isArray(b[k])&&(typeof u[k]!=='object'||Array.isArray(u[k])))u[k]=b[k];
+ }
+ if(u.answers.length!==10)u.answers=Array.from({length:10},(_,i)=>u.answers[i]||null);
+ if(!Array.isArray(u.board.photos))u.board={title:'',photos:[]};
+ if(typeof u.board.title!=='string')u.board.title='';
+ if(u.profile&&!PROFILES.some(p=>p.id===u.profile))u.profile='serena';
+ if(u.testDone&&!u.profile)u.profile='serena';
+ u.prefs=u.prefs.filter(p=>PREFS.includes(p));
+ u.xp=Number(u.xp)||0;u.best=Number(u.best)||0;
+ return u;
+}
+let DB={users:{},session:null};
+function loadDB(){
+ let users=LS.get(K_USERS,{});
+ if(!users||typeof users!=='object'||Array.isArray(users))users={};
+ for(const k in users)users[k]=fix(users[k]);
+ let s=LS.get(K_SESSION,null);
+ if(typeof s!=='string'||!users[s])s=null;
+ DB={users,session:s};
+}
+function U(){return DB.session?DB.users[DB.session]||null:null}
+function save(){
+ const ok=LS.set(K_USERS,DB.users);
+ LS.set(K_SESSION,DB.session);
+ if(!ok)toast('Ops! O espaço do aparelho encheu. Apague boards antigos para liberar.');
+ return ok;
+}
+async function hashPass(p){
+ try{if(window.crypto&&crypto.subtle&&window.TextEncoder){const b=await crypto.subtle.digest('SHA-256',new TextEncoder().encode('orivie::'+p));return 'sha256:'+[...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,'0')).join('')}}catch(e){}
+ return djb2(p);
+}
+function djb2(p){let h=5381;const s='orivie::'+p;for(let i=0;i<s.length;i++)h=((h<<5)+h+s.charCodeAt(i))|0;return 'djb2:'+(h>>>0).toString(16)}
+async function checkPass(p,stored){if(!stored)return false;if(String(stored).startsWith('djb2:'))return djb2(p)===stored;return (await hashPass(p))===stored}
+
+/* =========================================================
+   LÓGICA: perfil, XP, sequência, missões, conquistas
+   ========================================================= */
+function calcProfile(answers){
+ try{
+  const s={};DIMS.forEach(k=>s[k]=0);
+  for(let i=0;i<10;i++){
+   let a=answers&&answers[i];
+   if(typeof a!=='string'||a.length!==1||!'ABCDE'.includes(a))a='C';
+   const add=(SCORING[i]&&SCORING[i][a])||{};
+   for(const k in add)s[k]+=add[k];
+  }
+  let best=PROFILES[0],bv=-1;
+  PROFILES.forEach(p=>{const v=p.dims.reduce((t,k)=>t+(s[k]||0),0);if(v>bv){bv=v;best=p}});
+  return {profile:best.id,scores:s};
+ }catch(e){return {profile:'serena',scores:{}}}
+}
+const prof=u=>PROFILES.find(p=>p.id===(u&&u.profile))||PROFILES[0];
+function streakOf(u){const set=new Set(u.days);const d=new Date();if(!set.has(ymd(d)))d.setDate(d.getDate()-1);let k=0;while(set.has(ymd(d))){k++;d.setDate(d.getDate()-1)}return k}
+function markActive(){
+ const u=U();if(!u)return;const t=today();
+ if(!u.days.includes(t)){
+  u.days.push(t);
+  const s=streakOf(u);
+  if(s>u.best)u.best=s;
+  if(MILESTONES.includes(s))ui.milestone=s;
+ }
+}
+function addXP(n){
+ const u=U();if(!u||!n)return;const t=today();
+ const before=u.xpLog[t]||0;
+ u.xp+=n;u.xpLog[t]=before+n;
+ xpPill(n);
+ if(before<DAILY_GOAL&&before+n>=DAILY_GOAL)setTimeout(()=>toast(`${ic('target',20)} Meta do dia batida! Que orgulho.`),900);
+}
+function missions(u){
+ const t=today();const cl=u.checklist||{items:[]};
+ const checks=cl.items.filter(i=>i.done).length;
+ const reads=Object.values(u.readLog).filter(d=>d===t).length;
+ const favs=Object.values(u.favLog).filter(d=>d===t).length;
+ return [
+  {ic:'check',n:'Marque 3 atividades no checklist',cur:Math.min(3,checks),max:3},
+  {ic:'book',n:'Leia 1 texto no Aprender',cur:Math.min(1,reads),max:1},
+  {ic:'heart',n:'Favorite 1 item no Combina',cur:Math.min(1,favs),max:1}
+ ];
+}
+function checkAch(){
+ const u=U();if(!u)return;let delay=700;
+ ACH.forEach(a=>{
+  if(u.ach.includes(a.id))return;
+  let ok=false;try{ok=!!a.ok(u)}catch(e){}
+  if(ok){u.ach.push(a.id);const d=delay;delay+=1600;setTimeout(()=>{toast(`${ic('trophy',20)} Conquista desbloqueada: <b>${a.n}</b>`);sfx('ok')},d)}
+ });
+}
+function visibleTexts(u){const v=TEXTS.filter(t=>t.prefs.some(p=>u.prefs.includes(p)));return v.length?v:TEXTS}
+function matchOf(it,pid){if(it.p[0]===pid)return 98;if(it.p.includes(pid))return 93;let h=0;for(const ch of it.id+pid)h=(h*31+ch.charCodeAt(0))%997;return 70+h%15}
+function defaultItems(pid){
+ const p=PROFILES.find(x=>x.id===pid)||PROFILES[0];
+ return GROUPS.flatMap(g=>[{id:uid(),g:g.id,t:p.check[g.id],done:false,note:''},{id:uid(),g:g.id,t:GENERIC_CHECK[g.id],done:false,note:''}]);
+}
+function ensureChecklist(u){
+ let c=u.checklist;
+ if(!c||typeof c!=='object'||!Array.isArray(c.items)){u.checklist={date:today(),items:defaultItems(u.profile)};save();return}
+ c.items=c.items.filter(i=>i&&typeof i.t==='string').map(i=>({id:i.id||uid(),g:GROUPS.some(g=>g.id===i.g)?i.g:'provei',t:i.t,done:!!i.done,note:typeof i.note==='string'?i.note:''}));
+ if(c.date!==today()){c.items.forEach(i=>{i.done=false;i.note=''});c.date=today();save()}
+}
+
+/* =========================================================
+   FEEDBACK: som, vibração, toast, XP, confete
+   ========================================================= */
+let AC=null;
+function soundOn(){const u=U();return !u||u.sound!==false}
+function vib(p){try{if(soundOn()&&navigator.vibrate)navigator.vibrate(p)}catch(e){}}
+function sfx(kind){
+ if(!soundOn())return;
+ try{
+  AC=AC||new (window.AudioContext||window.webkitAudioContext)();
+  const notes={tap:[[620,.05]],ok:[[660,.08],[880,.13]],win:[[523,.1],[659,.1],[784,.1],[1047,.28]],soft:[[330,.14]]}[kind]||[];
+  let t=AC.currentTime;
+  notes.forEach(([f,d])=>{const o=AC.createOscillator(),g=AC.createGain();o.type='sine';o.frequency.value=f;g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(.14,t+.012);g.gain.exponentialRampToValueAtTime(.0001,t+d);o.connect(g);g.connect(AC.destination);o.start(t);o.stop(t+d+.03);t+=d*.85});
+ }catch(e){}
+ if(kind==='ok')vib(18);if(kind==='win')vib([30,40,60]);if(kind==='soft')vib(40);
+}
+function toast(msg){
+ document.querySelectorAll('.toast').forEach(t=>t.remove());
+ const el=document.createElement('div');el.className='toast';el.setAttribute('role','status');el.innerHTML=msg;
+ document.body.appendChild(el);
+ setTimeout(()=>el.classList.add('out'),2600);setTimeout(()=>el.remove(),3000);
+}
+function xpPill(n){const el=document.createElement('div');el.className='xp-pill';el.setAttribute('aria-hidden','true');el.textContent=`+${n} XP`;document.body.appendChild(el);setTimeout(()=>el.remove(),1400)}
+function confetti(n=70){
+ if(reduced())return;
+ const cols=['#D9A08B','#A8B8A0','#E3B65E','#EAE2D9','#B97F6A','#879A7E'];
+ const box=document.createElement('div');box.className='cf-box';box.setAttribute('aria-hidden','true');
+ for(let i=0;i<n;i++){const s=document.createElement('i');s.className='cf';s.style.left=Math.random()*100+'%';s.style.background=cols[i%cols.length];s.style.animationDelay=(Math.random()*.4)+'s';s.style.animationDuration=(1.5+Math.random()*1.1)+'s';s.style.setProperty('--dx',(Math.random()*160-80)+'px');s.style.setProperty('--r',(Math.random()*720-360)+'deg');if(i%3===0)s.style.borderRadius='50%';box.appendChild(s)}
+ document.body.appendChild(box);setTimeout(()=>box.remove(),3200);
+}
+function countUp(){
+ document.querySelectorAll('[data-count]').forEach(el=>{
+  const to=+el.dataset.count||0;el.removeAttribute('data-count');
+  if(reduced()||to<=0){el.textContent=to;return}
+  const t0=performance.now(),D=900;el.textContent='0';
+  const step=t=>{const k=Math.min(1,(t-t0)/D);el.textContent=Math.round(to*(1-Math.pow(1-k,3)));if(k<1)requestAnimationFrame(step)};
+  requestAnimationFrame(step);
+ });
+}
+
+/* =========================================================
+   MODAL
+   ========================================================= */
+const ui={q:null,justPicked:false,payTab:'pix',prefs:null,comb:'todos',learn:'todos',reading:null,actG:'provei',actDraft:'',actId:null,goalType:'Meta',goalDraft:'',editGoal:null,modal:null,onOk:null,milestone:null,scrollTo:null,lastRoute:null};
+const LAYER=()=>document.getElementById('layer');
+function openModal(fn,opt={}){ui.modal={fn,...opt};paintModal(true)}
+function paintModal(anim){
+ if(!ui.modal)return;const o=ui.modal;let inner='';
+ try{inner=o.fn()}catch(e){console.error(e);inner=`<div class="empty">${mascot('sad',90)}<p class="h3 mt-3">Algo não carregou direito.</p><button class="btn btn-primary mt-4" data-act="closeModal">Fechar</button></div>`}
+ LAYER().innerHTML=`<div class="backdrop ${o.center?'center':''} ${anim?'':'noanim'}" data-backdrop><div class="sheet ${o.full?'full':''}" role="dialog" aria-modal="true">${inner}</div></div>`;
+ document.body.classList.add('modal-open');countUp();
+ if(anim){const f=LAYER().querySelector('[autofocus]');if(f)setTimeout(()=>f.focus(),50)}
+}
+function refreshModal(){const s=LAYER().querySelector('.sheet');const sc=s?s.scrollTop:0;paintModal(false);const s2=LAYER().querySelector('.sheet');if(s2)s2.scrollTop=sc}
+function closeModal(){ui.modal=null;LAYER().innerHTML='';document.body.classList.remove('modal-open')}
+function confirmBox({title,text,ok='Confirmar',cancel='Agora não',danger=false,mood='sad',onOk}){
+ ui.onOk=onOk;
+ openModal(()=>`<div class="text-center">${mascot(mood,96)}<h2 class="h2 mt-2">${title}</h2><p class="muted mt-2">${text}</p></div>
+  <div class="flex flex-col gap-3 mt-6"><button class="btn ${danger?'btn-danger':'btn-primary'}" data-act="confirmOk">${ok}</button><button class="btn btn-ghost" data-act="closeModal">${cancel}</button></div>`,{center:true});
+}
+function infoBox({title,text,mood='happy',btn='Entendi'}){
+ openModal(()=>`<div class="text-center">${mascot(mood,100)}<h2 class="h2 mt-2">${title}</h2><p class="muted mt-2">${text}</p></div><button class="btn btn-primary mt-6" data-act="closeModal">${btn}</button>`,{center:true});
+}
+function celebrate({title,sub,stats=[],mood='celebrate',icon=''}){
+ sfx('win');confetti();
+ openModal(()=>`<div class="text-center">${icon?`<div class="flex justify-center">${icon}</div>`:mascot(mood,130,'hop')}
+  <h2 class="display mt-3">${title}</h2><p class="muted mt-2">${sub}</p></div>
+  ${stats.length?`<div class="grid grid-cols-${stats.length} gap-3 mt-5">${stats.map(s=>`<div class="stat-card ${s.c} text-center"><p class="stat-k">${s.k}</p><div class="stat-v">${ic(s.ic,20)}<b data-count="${s.v}">${s.v}</b>${s.suf||''}</div></div>`).join('')}</div>`:''}
+  <button class="btn btn-primary mt-6" data-act="closeCelebrate" autofocus>Continuar</button>`,{center:true});
+}
+function showMilestone(){
+ const n=ui.milestone;ui.milestone=null;if(!n)return;
+ sfx('win');confetti(110);
+ openModal(()=>`<div class="text-center">${mascot('proud',140,'hop')}<p class="bignum mt-2">${n}</p><h2 class="h1">dias seguidos!</h2>
+  <p class="muted mt-2">Você está florescendo! Cada dia que você volta é um presente para você mesma.</p></div>
+  <div class="flex flex-col gap-3 mt-6"><button class="btn btn-premium" data-act="shareStreak" data-n="${n}">${ic('share',20)} Compartilhar</button><button class="btn btn-ghost" data-act="closeModal">Continuar</button></div>`,{center:true});
+}
+
+/* =========================================================
+   ROTEADOR (hash) + guard
+   ========================================================= */
+const PUBLIC=['boas-vindas','cadastro','login'];
+const TABS=[{id:'hoje',n:'Hoje',ic:'sun'},{id:'combina',n:'Combina',ic:'heart'},{id:'checklist',n:'Checklist',ic:'check'},{id:'board',n:'Board',ic:'grid'},{id:'aprender',n:'Aprender',ic:'book'},{id:'eu',n:'Eu',ic:'user'}];
+const route=()=>location.hash.replace(/^#\/?/,'')||'boas-vindas';
+function go(r){if(route()===r)render();else location.hash='#/'+r}
+function stepFor(u){if(!u.paid)return 'pagamento';if(!u.testDone)return 'teste';if(!u.prefsDone)return 'personalizacao';return 'app/hoje'}
+function allowed(r,u){
+ if(!u)return PUBLIC.includes(r)?r:'boas-vindas';
+ if(PUBLIC.includes(r))return stepFor(u);
+ if(r==='pagamento')return u.paid?stepFor(u):r;
+ if(!u.paid)return 'pagamento';
+ if(r==='teste')return u.testDone?stepFor(u):r;
+ if(!u.testDone)return 'teste';
+ if(r==='personalizacao')return r;
+ if(!u.prefsDone)return 'personalizacao';
+ if(r==='resultado')return r;
+ if(TABS.some(t=>'app/'+t.id===r))return r;
+ return 'app/hoje';
+}
+const APP=()=>document.getElementById('app');
+function render(){
+ try{
+  const u=U();const want=route();const r=allowed(want,u);
+  if(r!==want){location.replace('#/'+r);return}
+  if(r!=='personalizacao')ui.prefs=null;
+  if(r!=='teste')ui.q=null;
+  let html='';
+  if(r==='boas-vindas')html=vWelcome();
+  else if(r==='cadastro'||r==='login')html=vAuth(r);
+  else if(r==='pagamento')html=vPay(u);
+  else if(r==='teste')html=vTest(u);
+  else if(r==='personalizacao')html=vPrefs(u);
+  else if(r==='resultado')html=vResult(u);
+  else html=vApp(u,r.split('/')[1]);
+  APP().innerHTML=html;
+  if(ui.lastRoute!==r)window.scrollTo(0,0);
+  ui.lastRoute=r;
+  after(r,u);
+ }catch(e){
+  console.error(e);
+  APP().innerHTML=brand()+`<main class="screen"><div class="empty">${mascot('sad',120)}<h1 class="h1 mt-4">Opa, tropecei aqui!</h1><p class="muted mt-2">Seus dados estão seguros. Vamos voltar para um lugar conhecido?</p><button class="btn btn-primary mt-6" data-act="hardHome">Voltar ao início</button></div></main>`;
+ }
+}
+function after(r,u){
+ countUp();ui.justPicked=false;
+ if(r==='resultado'&&u&&!u.resultSeen){u.resultSeen=true;save();setTimeout(()=>{confetti();sfx('win')},250)}
+ if(ui.scrollTo){const el=document.getElementById(ui.scrollTo);ui.scrollTo=null;if(el)setTimeout(()=>el.scrollIntoView({behavior:reduced()?'auto':'smooth',block:'start'}),80)}
+}
+
+/* =========================================================
+   TELAS
+   ========================================================= */
+function brand(right=''){return `<header class="brandbar"><div class="brand">${mascot('happy',28)}<span><b>Orivie</b> - Sua Personalidade</span></div>${right}</header>`}
+function field(name,label,type,ph,ac,val=''){return `<div><label class="lbl-f" for="f-${name}">${label}</label><input class="input" id="f-${name}" name="${name}" type="${type}" placeholder="${ph}" autocomplete="${ac}" value="${esc(val)}" ${type==='date'?`max="${today()}" min="1900-01-01"`:''}><p class="err" data-err="${name}"></p></div>`}
+
+/* 1. Boas-vindas */
+function vWelcome(){return brand()+`<main class="screen center-col">
+ <div class="welcome-art">${mascot('wave',150,'floaty')}<span class="spark s1">${ic('sparkle',24)}</span><span class="spark s2">${ic('leaf',24)}</span></div>
+ <div class="bubble up mb-6" style="flex:none;max-width:320px;text-align:center">Oi! Eu sou a <b>Ori</b>, sua sementinha guia. Bora descobrir sua essência juntas?</div>
+ <h1 class="display text-center">Descubra quem você é e viva o que combina com você</h1>
+ <p class="lead text-center mt-3">Um espaço para conhecer sua essência e construir uma vida que tenha a sua identidade.</p>
+ <div class="flex justify-center gap-2 mt-5 flex-wrap"><span class="tag">10 perguntas</span><span class="tag tag-terra">3 minutos</span><span class="tag tag-mel">6 perfis</span></div>
+</main>
+<footer class="footbar stack"><button class="btn btn-primary" data-act="go" data-to="cadastro">Começar meu teste</button><button class="btn btn-outline" data-act="go" data-to="login">Já tenho conta</button></footer>`}
+
+/* 2. Cadastro / Login */
+function vAuth(mode){const cad=mode==='cadastro';return brand()+`<main class="screen">
+ <div class="seg mb-6" role="tablist" aria-label="Acesso"><button class="${cad?'on':''}" role="tab" aria-selected="${cad}" data-act="go" data-to="cadastro">Criar conta</button><button class="${cad?'':'on'}" role="tab" aria-selected="${!cad}" data-act="go" data-to="login">Entrar</button></div>
+ <div class="speech mb-5">${mascot(cad?'happy':'wave',64)}<div class="bubble">${cad?'Que bom te ver por aqui! Vamos criar o seu cantinho.':'Que saudade! Entra aí que eu guardei tudo pra você.'}</div></div>
+ <h1 class="h1 mb-5">${cad?'Crie sua conta':'Bem-vinda de volta'}</h1>
+ <form id="authform" data-form="${mode}" novalidate class="flex flex-col gap-4">
+  ${cad?field('name','Nome','text','Como você quer ser chamada?','name'):''}
+  ${field('email','E-mail','email','voce@email.com','email')}
+  ${field('pass','Senha','password',cad?'Mínimo de 6 caracteres':'Sua senha',cad?'new-password':'current-password')}
+  ${cad?field('birth','Data de nascimento','date','','bday'):''}
+  <p class="err" data-err="form"></p>
+  <button type="submit" class="sr-only" tabindex="-1">Enviar</button>
+ </form>
+ <p class="text-center small muted mt-6">${cad?'Já tem conta? <button class="link" data-act="go" data-to="login">Entrar</button>':'Ainda não tem conta? <button class="link" data-act="go" data-to="cadastro">Criar conta</button>'}</p>
+ <button class="btn btn-ghost mt-3" data-act="go" data-to="boas-vindas">${ic('back',18)} Voltar</button>
+</main>
+<footer class="footbar"><button class="btn btn-primary" type="submit" form="authform">${cad?'Continuar':'Entrar'}</button></footer>`}
+
+/* 3. Pagamento (MODO DEMONSTRAÇÃO: nenhuma cobrança real é feita e nenhum dado de cartão é salvo.
+   Para cobrança real, integrar Mercado Pago/Stripe via backend, por exemplo Netlify Functions.) */
+function qrSvg(){
+ const n=25;let r='';let seed=1290;const rnd=()=>(seed=(seed*16807)%2147483647)/2147483647;
+ const inF=(x,y)=>(x<8&&y<8)||(x>=n-8&&y<8)||(x<8&&y>=n-8);
+ for(let y=0;y<n;y++)for(let x=0;x<n;x++){if(inF(x,y))continue;if(rnd()>.5)r+=`<rect x="${x}" y="${y}" width="1" height="1"/>`}
+ const fin=(x,y)=>`<rect x="${x}" y="${y}" width="7" height="7" fill="${C.T}"/><rect x="${x+1}" y="${y+1}" width="5" height="5" fill="#fff"/><rect x="${x+2}" y="${y+2}" width="3" height="3" fill="${C.T}"/>`;
+ return `<svg viewBox="-1 -1 ${n+2} ${n+2}" width="190" height="190" shape-rendering="crispEdges" role="img" aria-label="QR Code PIX"><rect x="-1" y="-1" width="${n+2}" height="${n+2}" fill="#fff"/><g fill="${C.T}">${r}</g>${fin(0,0)}${fin(n-7,0)}${fin(0,n-7)}</svg>`;
+}
+function vPay(u){const pix=ui.payTab!=='card';return brand()+`<main class="screen">
+ <section class="premium-card">
+  <div class="flex items-center gap-3">${mascot('proud',76,'floaty')}<div><span class="tag tag-premium">Pagamento único</span><h1 class="h1 mt-2">Desbloqueie seu Orivie - Sua Personalidade</h1></div></div>
+  <p class="price">R$12,90</p>
+  <p class="h3">Acesso vitalício, sem mensalidade</p>
+  <ul class="benefits">${['Teste completo','Recomendações','Checklist','Board','Aprender','Metas'].map(b=>`<li>${ic('check',22)}<span>${b}</span></li>`).join('')}</ul>
+ </section>
+ <div class="seg mt-6" role="tablist" aria-label="Forma de pagamento"><button class="${pix?'on':''}" role="tab" aria-selected="${pix}" data-act="payTab" data-v="pix">PIX</button><button class="${pix?'':'on'}" role="tab" aria-selected="${!pix}" data-act="payTab" data-v="card">Cartão</button></div>
+ <div class="mt-5">${pix?`
+  <div class="card text-center">
+   <div class="qr-box">${qrSvg()}</div>
+   <p class="small muted mt-4">Abra o app do seu banco, escolha <b>PIX</b> e escaneie o QR Code ou use o código copia e cola.</p>
+   <label class="lbl-f mt-4 text-left" for="pixcode">Código copia e cola</label>
+   <div class="code-box"><input id="pixcode" class="input" readonly value="${PIX_CODE}"><button class="btn btn-outline btn-sm" style="min-height:50px" data-act="copyPix">${ic('copy',18)} Copiar</button></div>
+  </div>`:`
+  <form id="cardform" data-form="card" novalidate class="card flex flex-col gap-4">
+   <div><label class="lbl-f" for="f-cnum">Número do cartão</label><input class="input" id="f-cnum" name="cnum" inputmode="numeric" autocomplete="cc-number" placeholder="0000 0000 0000 0000" data-mask="card"><p class="err" data-err="cnum"></p></div>
+   <div class="grid grid-cols-2 gap-3">
+    <div><label class="lbl-f" for="f-cexp">Validade</label><input class="input" id="f-cexp" name="cexp" inputmode="numeric" autocomplete="cc-exp" placeholder="MM/AA" data-mask="exp"><p class="err" data-err="cexp"></p></div>
+    <div><label class="lbl-f" for="f-ccvv">CVV</label><input class="input" id="f-ccvv" name="ccvv" inputmode="numeric" autocomplete="cc-csc" placeholder="123" data-mask="cvv"><p class="err" data-err="ccvv"></p></div>
+   </div>
+   <div><label class="lbl-f" for="f-cname">Nome impresso no cartão</label><input class="input" id="f-cname" name="cname" autocomplete="cc-name" placeholder="Como está no cartão"><p class="err" data-err="cname"></p></div>
+   <p class="small muted">${ic('lock',16)} Os dados do cartão não ficam salvos no aparelho.</p>
+   <button type="submit" class="sr-only" tabindex="-1">Pagar</button>
+  </form>`}
+ </div>
+ <button class="btn btn-ghost mt-5" data-act="logout">${ic('logout',18)} Sair da conta</button>
+</main>
+<footer class="footbar">${pix?`<button class="btn btn-primary" data-act="payPix">Já paguei, liberar acesso</button>`:`<button class="btn btn-primary" type="submit" form="cardform">Pagar R$12,90 e entrar</button>`}</footer>`}
+
+/* 4. Teste (formato lição) */
+function vTest(u){
+ if(ui.q==null||ui.q<0||ui.q>9){const i=u.answers.findIndex(a=>!a);ui.q=i<0?9:i}
+ const i=ui.q,q=QUESTIONS[i],a=u.answers[i];
+ const answered=u.answers.filter(Boolean).length;const pct=answered*10;
+ const lines=['Sem resposta certa ou errada, tá? Só a sua verdade.','Respira e escolhe o que mais parece você.','A primeira ideia costuma ser a mais sincera!','Tô adorando te conhecer!','Metade do caminho! Você está indo super bem.','Essa aqui diz muito sobre a sua energia.','Pensa no que faz seu coração sorrir.','Sem julgamentos aqui, prometo.','Quase lá! Faltam só duas.','Última! Capricha.'];
+ const reacts=['Anotado!','Faz todo sentido.','Hmm, interessante!','Adorei saber disso.','Isso é tão você!'];
+ const say=a?reacts['ABCDE'.indexOf(a)]:lines[i];
+ return brand()+`<div class="lesson-bar"><button class="btn-icon-plain" data-act="quitTest" aria-label="Pausar teste">${ic('x',26)}</button><div class="prog" role="progressbar" aria-label="Progresso do teste" aria-valuenow="${pct}" aria-valuemin="0" aria-valuemax="100"><i style="width:${pct}%"></i></div><span class="small muted">${answered}/10</span></div>
+ <main class="screen pt-4">
+  <span class="tag tag-terra">Pergunta ${i+1} de 10</span>
+  <div class="speech mt-4">${mascot(a?'happy':'think',72)}<div class="bubble ${ui.justPicked?'pop':''}">${say}</div></div>
+  <h1 class="h1 mt-5 mb-5">${q.q}</h1>
+  <div class="flex flex-col gap-3" role="radiogroup" aria-label="${esc(q.q)}">
+   ${q.o.map((o,j)=>{const k='ABCDE'[j];const sel=a===k;return `<button class="tile ${sel?'sel':''} ${sel&&ui.justPicked?'pop':''}" role="radio" aria-checked="${sel}" data-act="answer" data-k="${k}"><span class="key">${k}</span><span style="flex:1">${o}</span>${sel?`<span class="check-dot">${ic('tick',16)}</span>`:''}</button>`}).join('')}
+  </div>
+ </main>
+ <footer class="footbar"><button class="btn btn-outline" style="flex:0 0 36%" data-act="qBack" ${i===0?'disabled':''}>Voltar</button><button class="btn btn-primary" data-act="qNext" ${a?'':'disabled'}>${i===9?'Finalizar':'Continuar'}</button></footer>`;
+}
+
+/* 5. Personalização */
+function vPrefs(u){
+ if(!ui.prefs)ui.prefs=u.prefs.length?[...u.prefs]:[...PREFS];
+ const editing=u.prefsDone;
+ return brand()+`<main class="screen">
+  ${editing?`<button class="btn btn-ghost btn-sm mb-3" data-act="prefsCancel">${ic('back',18)} Voltar</button>`:`<div class="lesson-bar" style="padding:0 0 16px"><div class="prog sage"><i style="width:100%"></i></div><span class="tag">Teste feito</span></div>`}
+  <div class="speech">${mascot('happy',64)}<div class="bubble">Escolha os temas que fazem sentido pra você. Eu monto seus conteúdos a partir disso!</div></div>
+  <h1 class="h1 mt-5">O que você quer incluir na sua personalidade?</h1>
+  <p class="muted mt-2">${ui.prefs.length} de ${PREFS.length} selecionados</p>
+  <div class="flex gap-2 mt-3"><button class="btn btn-outline btn-sm" data-act="prefsAll">Marcar todos</button><button class="btn btn-outline btn-sm" data-act="prefsNone">Desmarcar todos</button></div>
+  <div class="grid grid-cols-2 gap-3 mt-4">${PREFS.map(p=>{const on=ui.prefs.includes(p);return `<button class="tile chip ${on?'sel':''}" role="checkbox" aria-checked="${on}" data-act="prefToggle" data-v="${p}"><span class="cbox">${on?ic('tick',16):''}</span><span>${p}</span></button>`}).join('')}</div>
+ </main>
+ <footer class="footbar"><button class="btn btn-primary" data-act="prefsSave">${editing?'Salvar escolhas':'Ver meu resultado'}</button></footer>`;
+}
+
+/* 6. Resultado */
+function vResult(u){
+ const p=prof(u);const s=u.scores||{};const max=Math.max(1,...DIMS.map(k=>s[k]||0));
+ return brand()+`<main class="screen">
+  <div class="flex justify-center">${mascot('celebrate',130,'hop')}</div>
+  <div class="flex justify-center mt-3"><span class="tag tag-terra">Você é...</span></div>
+  <h1 class="display text-center mt-2" style="color:var(--terra-dk)">${p.name}</h1>
+  <p class="lead text-center mt-2">${p.short}</p>
+  <section class="card mt-6"><h2 class="h2">Sua essência</h2>${p.desc.map(d=>`<p class="body mt-3">${d}</p>`).join('')}</section>
+  <section class="card mt-4"><h2 class="h2 mb-1">Suas forças</h2><ul class="list">${p.forces.map(f=>`<li>${ic('check',24)}<span>${f}</span></li>`).join('')}</ul></section>
+  <section class="card mt-4"><h2 class="h2 mb-1">Seus desafios</h2><ul class="list">${p.challenges.map(f=>`<li>${ic('leaf',24)}<span>${f}</span></li>`).join('')}</ul><p class="small muted mt-2">Desafios não são defeitos: são lugares onde você pode crescer com carinho.</p></section>
+  <section class="card mt-4"><h2 class="h2 mb-3">Seu mapa de personalidade</h2>${DIMS.map(k=>`<div class="dim"><span>${DIM_N[k]}</span><div class="prog sm ${p.dims.includes(k)?'':'sage'}"><i style="width:${Math.round((s[k]||0)/max*100)}%"></i></div><b>${s[k]||0}</b></div>`).join('')}<p class="small muted mt-3">Em terracota, as dimensões que definem o seu perfil.</p></section>
+ </main>
+ <footer class="footbar stack"><button class="btn btn-primary" data-act="toWeek">Ver minha semana</button><button class="btn btn-outline" data-act="toLearn">Ler sobre minha personalidade</button></footer>`;
+}
+
+/* 7. App */
+function vApp(u,tab){
+ ensureChecklist(u);
+ const st=streakOf(u);
+ const right=`<div class="flex gap-1"><button class="stat" data-act="streakInfo" aria-label="Sequência de ${st} dias">${ic('flame',22)}<b class="${st?'c-terra':'c-gray'}">${st}</b></button><button class="stat" data-act="xpInfo" aria-label="${u.xp} XP no total">${ic('star',22)}<b class="${u.xp?'c-mel':'c-gray'}">${u.xp}</b></button></div>`;
+ const body={hoje:tHoje,combina:tCombina,checklist:tCheck,board:tBoard,aprender:tLearn,eu:tEu}[tab]||tHoje;
+ return brand(right)+`<main class="screen app">${body(u)}</main>
+ <nav class="tabbar" aria-label="Navegação principal">${TABS.map(t=>`<button data-act="tab" data-v="${t.id}" ${t.id===tab?'aria-current="page"':''} aria-label="${t.n}">${ic(t.ic,28)}<span>${t.n}</span></button>`).join('')}</nav>`;
+}
+
+/* ---- Aba Hoje ---- */
+function ring(r){const L=2*Math.PI*44;return `<svg class="ring" viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="44" fill="none" stroke="${C.BE}" stroke-width="7"/><circle cx="50" cy="50" r="44" fill="none" stroke="${C.TE}" stroke-width="7" stroke-linecap="round" stroke-dasharray="${(L*Math.max(.03,Math.min(1,r))).toFixed(1)} ${L.toFixed(1)}" transform="rotate(-90 50 50)"/></svg>`}
+function weekDays(){const now=new Date();const dow=(now.getDay()+6)%7;const mon=new Date(now.getFullYear(),now.getMonth(),now.getDate()-dow);return Array.from({length:7},(_,i)=>new Date(mon.getFullYear(),mon.getMonth(),mon.getDate()+i))}
+function dayState(u,k){const t=today();const act=u.days.includes(k);if(k<t&&!act&&k<(u.created||t))return 'before';return k<t?(act?'done':'missed'):k===t?(act?'done':'current'):'locked'}
+function weekTrail(u){
+ const offs=[0,45,70,45,0,-45,-70];const cl=u.checklist;const ratio=cl.items.length?cl.items.filter(i=>i.done).length/cl.items.length:0;
+ const th=prof(u).themes[isoWeek()%4];
+ const rows=weekDays().map((d,i)=>{const k=ymd(d);const st=dayState(u,k);
+  const icn=st==='done'?ic('tick',30):st==='locked'?ic('lock',24):st==='current'?ic('starc',30):ic('leaf',26);
+  const lab={done:'concluído',missed:'em branco',before:'antes de você chegar',current:'hoje, a fazer',locked:'ainda não chegou'}[st];
+  return `<div class="trow" style="transform:translateX(${offs[i]}px)">${st==='current'?`<span class="balloon">Começar</span>${ring(ratio)}`:''}<button class="node ${st==='before'?'missed':st}" data-act="dayInfo" data-d="${k}" aria-label="${DIAS[d.getDay()]}: ${lab}">${icn}</button><span class="node-cap">${k===today()?'Hoje':DIAS[d.getDay()].slice(0,3)}</span></div>`}).join('');
+ return `<section class="mt-6" id="semana"><div class="unit-head"><div><p class="unit-kicker">Semana ${isoWeek()} · Tema da semana</p><h2 class="unit-title">${th.t}</h2></div><button class="btn btn-outline btn-sm" data-act="guide" data-v="semana">${ic('bookc',16)} Guia</button></div>
+ <div class="trail">${rows}<div class="trail-pal left">${mascot(new Date().getHours()>=22||new Date().getHours()<5?'sleep':'happy',62,'floaty')}</div><div class="trail-pal right">${mascot('think',56)}</div></div></section>`;
+}
+function tHoje(u){
+ const p=prof(u);const h=new Date().getHours();
+ const g=h>=5&&h<12?'Bom dia':h>=12&&h<18?'Boa tarde':'Boa noite';
+ const phrase=p.phrases[dayOfYear()%p.phrases.length];const th=p.themes[isoWeek()%4];
+ const cl=u.checklist;const done=cl.items.filter(i=>i.done).length,tot=cl.items.length;const pct=tot?Math.round(done/tot*100):0;
+ const xpT=u.xpLog[today()]||0;const ms=missions(u);const allM=ms.every(m=>m.cur>=m.max);const opened=!!u.chest[today()];
+ const d=new Date();const dateL=cap(`${DIAS_L[d.getDay()]}, ${d.getDate()} de ${MESES[d.getMonth()]}`);
+ const mood=h>=22||h<5?'sleep':h<12?'wave':'happy';
+ const checkMsg=done===0?'Comece por uma atividade pequena. Já conta!':done===tot?'Tudo marcado! Bora concluir o dia?':`Faltam ${tot-done}. Você está indo muito bem!`;
+ return `
+ <h1 class="h1">${g}, ${esc(first(u.name))}</h1>
+ <p class="muted">${dateL}</p>
+ <div class="speech mt-4">${mascot(mood,72)}<div class="bubble"><span class="tag tag-mel">Frase do dia</span><p class="mt-2">${phrase}</p></div></div>
+ ${weekTrail(u)}
+ <section class="card mt-6"><div class="flex items-center justify-between gap-2"><h2 class="h2">Meus checks de hoje</h2><span class="tag">${done}/${tot}</span></div>
+  <div class="prog sage mt-3" role="progressbar" aria-valuenow="${pct}" aria-valuemin="0" aria-valuemax="100" aria-label="Checks de hoje"><i style="width:${pct}%"></i></div>
+  <p class="small muted mt-2">${checkMsg}</p>
+  <button class="btn btn-primary mt-4" data-act="tab" data-v="checklist">Ir para checklist</button></section>
+ <section class="card mt-4"><span class="tag tag-terra">Tema da semana</span><h3 class="h3 mt-2">${th.t}</h3><p class="muted mt-1">${th.d}</p></section>
+ <section class="card mt-4"><div class="flex items-center gap-3">${ic('target',36)}<div style="flex:1"><div class="flex justify-between"><h2 class="h3">Meta do dia</h2><b class="c-mel">${Math.min(xpT,DAILY_GOAL)}/${DAILY_GOAL} XP</b></div><div class="prog mel mt-2"><i style="width:${Math.min(100,Math.round(xpT/DAILY_GOAL*100))}%"></i></div></div></div></section>
+ <section class="card mt-4"><div class="flex items-center justify-between"><h2 class="h2">Missões do dia</h2><span class="tag tag-mel">${ms.filter(m=>m.cur>=m.max).length}/3</span></div>
+  ${ms.map(m=>`<div class="mission">${ic(m.ic,30)}<div class="mission-txt"><p>${m.n}</p><div class="flex items-center gap-2"><div class="prog mel"><i style="width:${Math.round(m.cur/m.max*100)}%"></i></div><b class="small c-mel">${m.cur}/${m.max}</b></div></div></div>`).join('')}
+  <div class="flex items-center gap-3 mt-2" style="border-top:2px solid var(--bege);padding-top:12px">${ic('chest',40)}<div style="flex:1">${opened?'<p class="h3">Baú aberto hoje!</p><p class="small muted">Volte amanhã para novas missões.</p>':allM?'<p class="h3">Seu baú está pronto!</p><p class="small muted">Abra para ganhar +20 XP.</p>':'<p class="h3">Baú das missões</p><p class="small muted">Complete as 3 missões para abrir.</p>'}</div>
+  ${allM&&!opened?`<button class="btn btn-mel btn-sm" data-act="openChest">Abrir</button>`:''}</div></section>`;
+}
+
+/* ---- Aba Combina ---- */
+function itemCard(it,u,p){
+ const cat=CATS.find(c=>c.id===it.c);const fav=u.favs.includes(it.id);
+ return `<button class="icard" data-act="item" data-id="${it.id}" aria-label="${esc(it.n)}: ver detalhes">
+  <div class="img-box">${ic(cat.ic,48)}<img src="${imgUrl(it.img,700)}" alt="" loading="lazy" onerror="this.remove()"></div>
+  <div style="padding:14px 16px 16px"><div class="flex gap-2 items-center flex-wrap"><span class="tag">${cat.n}</span><span class="tag tag-terra">${it.m}% combina</span>${fav?`<span style="margin-left:auto" aria-label="Favorito">${ic('heart',22)}</span>`:''}</div>
+  <h3 class="h3 mt-2">${it.n}</h3><p class="muted mt-1" style="font-size:15px">${it.d}</p>
+  <p class="why mt-3"><b>Por que combina com você:</b> ${p.why} ${it.w}</p></div></button>`;
+}
+function tCombina(u){
+ const p=prof(u);const f=ui.comb||'todos';
+ let list=ITEMS.map(it=>({...it,m:matchOf(it,p.id)}));
+ if(f==='favoritos')list=list.filter(it=>u.favs.includes(it.id));else if(f!=='todos')list=list.filter(it=>it.c===f);
+ list.sort((a,b)=>b.m-a.m);
+ return `<h1 class="h1">O que combina com você</h1><p class="muted mt-1">Escolhas pensadas para quem é ${p.name}.</p>
+ <div class="chips mt-4" role="group" aria-label="Filtros">${CATS.map(c=>`<button class="chip-f ${f===c.id?'on':''}" aria-pressed="${f===c.id}" data-act="comb" data-v="${c.id}">${ic(c.ic,18)}${c.n}${c.id==='favoritos'?` <b>${u.favs.length}</b>`:''}</button>`).join('')}</div>
+ <div class="flex flex-col gap-4 mt-3">${list.length?list.map(it=>itemCard(it,u,p)).join(''):
+  `<div class="empty card">${mascot('think',96)}<h2 class="h2 mt-3">Nenhum favorito ainda</h2><p class="muted mt-1">Toque em um item e favorite o que mais tem a sua cara.</p><button class="btn btn-primary mt-5" data-act="comb" data-v="todos">Ver todos</button></div>`}</div>`;
+}
+function itemModal(id){
+ openModal(()=>{const u=U(),p=prof(u),it=ITEMS.find(x=>x.id===id);if(!it)return '<p>Item não encontrado.</p>';const cat=CATS.find(c=>c.id===it.c);const fav=u.favs.includes(id);
+  return `<div class="flex justify-end" style="margin:-8px -4px 4px"><button class="btn-x" data-act="closeModal" aria-label="Fechar">${ic('x',22)}</button></div>
+  <div class="img-box big">${ic(cat.ic,64)}<img src="${imgUrl(it.img,900)}" alt="${esc(it.n)}" onerror="this.remove()"></div>
+  <div class="flex gap-2 mt-4"><span class="tag">${cat.n}</span><span class="tag tag-terra">${matchOf(it,p.id)}% combina</span></div>
+  <h2 class="h1 mt-2">${it.n}</h2><p class="body mt-2">${it.d}</p>
+  <div class="whybox mt-4"><div class="speech">${mascot('happy',52)}<div class="bubble"><b>Por que combina com você</b><br>${p.why} ${it.w}</div></div></div>
+  <div class="flex flex-col gap-3 mt-5"><button class="btn ${fav?'btn-sage':'btn-primary'}" data-act="fav" data-id="${id}" aria-pressed="${fav}">${ic('heartc',20)} ${fav?'Favoritado':'Favoritar'}</button><button class="btn btn-ghost" data-act="closeModal">Fechar</button></div>`});
+}
+
+/* ---- Aba Checklist ---- */
+function checkRow(i){return `<div class="crow ${i.done?'is-done':''}">
+ <div class="flex items-center gap-2"><button class="cbox big ${i.done?'on':''}" role="checkbox" aria-checked="${i.done}" aria-label="Marcar: ${esc(i.t)}" data-act="toggleCheck" data-id="${i.id}">${i.done?ic('tick',18):''}</button>
+ <span class="crow-t" style="margin-left:4px">${esc(i.t)}</span>
+ <button class="ibtn" data-act="editAct" data-id="${i.id}" aria-label="Editar: ${esc(i.t)}">${ic('edit',18)}</button><button class="ibtn danger" data-act="delAct" data-id="${i.id}" aria-label="Excluir: ${esc(i.t)}">${ic('trash',18)}</button></div>
+ <input class="input sm mt-2" placeholder="Observação: como foi?" aria-label="Observação sobre ${esc(i.t)}" value="${esc(i.note)}" data-in="note" data-id="${i.id}" maxlength="200"></div>`}
+function tCheck(u){
+ const cl=u.checklist;const done=cl.items.filter(i=>i.done).length,tot=cl.items.length;const pct=tot?Math.round(done/tot*100):0;
+ const concl=u.history.some(h=>h.date===today());
+ return `<h1 class="h1">Seu dia, do seu jeito.</h1><p class="muted mt-1">Marque o que você viveu hoje e anote como foi.</p>
+ <div class="card mt-4"><div class="flex justify-between items-center gap-2"><b>${done} de ${tot} concluídos</b>${concl?`<span class="tag">${ic('tick',14)} Dia concluído</span>`:''}</div><div class="prog sage mt-3" role="progressbar" aria-valuenow="${pct}" aria-valuemin="0" aria-valuemax="100" aria-label="Progresso do dia"><i style="width:${pct}%"></i></div></div>
+ ${GROUPS.map(g=>{const its=cl.items.filter(i=>i.g===g.id);return `<section class="mt-6"><h2 class="sec-h">${ic(g.ic,24)} ${g.n} <span class="muted" style="margin-left:auto">${its.filter(i=>i.done).length}/${its.length}</span></h2>
+  <div class="flex flex-col gap-3 mt-3">${its.length?its.map(checkRow).join(''):`<p class="small muted">Nada aqui ainda. Que tal criar uma atividade?</p>`}</div></section>`}).join('')}
+ <button class="btn btn-outline mt-6" data-act="newAct">${ic('plus',18)} Nova atividade</button>
+ <button class="btn btn-primary mt-4" data-act="concludeDay">${concl?'Atualizar dia concluído':'Concluir dia'}</button>
+ <section class="mt-8"><h2 class="h2">Histórico</h2>
+  ${u.history.length?`<div class="card mt-3">${u.history.slice(0,30).map(h=>`<div class="hist">${ic('check',28)}<div style="flex:1"><p class="h3">${fmtBR(h.date)}</p><p class="small muted">${h.done} de ${h.total} atividades${h.items&&h.items.length?` · ${esc(h.items.slice(0,2).join(', '))}${h.items.length>2?'…':''}`:''}</p></div></div>`).join('')}</div>`
+  :`<div class="empty card mt-3">${mascot('sleep',80)}<p class="h3 mt-2">Seu histórico começa hoje</p><p class="small muted">Conclua o dia para guardar suas memórias aqui.</p></div>`}
+ </section>`;
+}
+function actModal(id){
+ const u=U();const it=id?u.checklist.items.find(i=>i.id===id):null;
+ ui.actId=it?it.id:null;ui.actG=it?it.g:'provei';ui.actDraft=it?it.t:'';
+ openModal(()=>`<div class="flex items-center justify-between"><h2 class="h1">${ui.actId?'Editar atividade':'Nova atividade'}</h2><button class="btn-x" data-act="closeModal" aria-label="Fechar">${ic('x',22)}</button></div>
+ <form data-form="act" class="flex flex-col gap-4 mt-4" novalidate>
+  <div><span class="lbl-f">Grupo</span><div class="grid grid-cols-2 gap-2">${GROUPS.map(g=>`<button type="button" class="tile chip ${ui.actG===g.id?'sel':''}" aria-pressed="${ui.actG===g.id}" data-act="actGroup" data-v="${g.id}">${ic(g.ic,22)} ${g.n}</button>`).join('')}</div></div>
+  <div><label class="lbl-f" for="actT">Atividade</label><input id="actT" name="t" class="input" maxlength="80" value="${esc(ui.actDraft)}" placeholder="Ex.: Um café de um lugar novo" autofocus><p class="err" data-err="t"></p></div>
+  <button class="btn btn-primary" type="submit">Salvar</button><button class="btn btn-ghost" type="button" data-act="closeModal">Cancelar</button>
+ </form>`);
+}
+
+/* ---- Aba Board ---- */
+function tBoard(u){
+ const b=u.board;const n=b.photos.length;
+ return `<h1 class="h1">Seu universo da semana.</h1><p class="muted mt-1">Junte imagens que representam o que você quer sentir e viver.</p>
+ <label class="lbl-f mt-5" for="btitle">Título do board</label><input id="btitle" class="input" maxlength="40" placeholder="Ex.: Minha semana leve" value="${esc(b.title)}" data-in="btitle">
+ ${n?'':`<div class="speech mt-4">${mascot('think',56)}<div class="bubble">Seu board está vazio. Bora colocar cor nele?</div></div>`}
+ <div class="bgrid mt-4">${b.photos.map((ph,i)=>`<div class="bcell"><img src="${ph}" alt="Foto ${i+1} do board"><button class="bdel" data-act="delPhoto" data-i="${i}" aria-label="Remover foto ${i+1}">${ic('x',14)}</button></div>`).join('')}${n<9?`<label class="bcell add" for="bfile">${ic('camera',30)}<span>Adicionar</span></label>`:''}</div>
+ <p class="small muted mt-2">${n}/9 fotos</p>
+ <input type="file" id="bfile" accept="image/*" multiple class="sr-only" data-file="board" ${n>=9?'disabled':''}>
+ <label for="bfile" class="btn btn-outline mt-4 ${n>=9?'is-disabled':''}">${ic('camera',20)} Adicionar foto</label>
+ <button class="btn btn-primary mt-4" data-act="saveBoard" ${n?'':'disabled'}>${ic('share',20)} Salvar e enviar</button>
+ <section class="mt-8"><h2 class="h2">Meus boards anteriores</h2>
+  ${u.boards.length?`<div class="flex flex-col gap-3 mt-3">${u.boards.map(x=>`<button class="prev" data-act="viewBoard" data-id="${x.id}"><div class="prev-thumbs">${x.photos.slice(0,6).map(ph=>`<img src="${ph}" alt="">`).join('')}</div><div style="flex:1;min-width:0"><p class="h3" style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${esc(x.title)}</p><p class="small muted">${fmtBR(x.date)} · ${x.photos.length} foto${x.photos.length>1?'s':''}</p></div>${ic('chev',20)}</button>`).join('')}</div>`
+  :`<div class="empty card mt-3">${mascot('sleep',80)}<p class="h3 mt-2">Nenhum board salvo ainda</p><p class="small muted">Quando você salvar, ele aparece aqui.</p></div>`}
+ </section>`;
+}
+function compress(file,max,q){
+ return new Promise(res=>{try{
+  if(!file||!/^image\//.test(file.type||'image/'))return res(null);
+  const r=new FileReader();r.onerror=()=>res(null);
+  r.onload=()=>{const im=new Image();im.onerror=()=>res(null);im.onload=()=>{try{let w=im.naturalWidth||im.width,h=im.naturalHeight||im.height;if(!w||!h)return res(null);const s=Math.min(1,max/Math.max(w,h));w=Math.round(w*s);h=Math.round(h*s);const c=document.createElement('canvas');c.width=w;c.height=h;const x=c.getContext('2d');x.fillStyle='#fff';x.fillRect(0,0,w,h);x.drawImage(im,0,0,w,h);res(c.toDataURL('image/jpeg',q))}catch(e){res(null)}};im.src=r.result};
+  r.readAsDataURL(file);
+ }catch(e){res(null)}});
+}
+function rr(x,X,Y,W,H,R){x.beginPath();x.moveTo(X+R,Y);x.arcTo(X+W,Y,X+W,Y+H,R);x.arcTo(X+W,Y+H,X,Y+H,R);x.arcTo(X,Y+H,X,Y,R);x.arcTo(X,Y,X+W,Y,R);x.closePath()}
+function collage(entry){
+ return new Promise(res=>{try{
+  const S=1080,c=document.createElement('canvas');c.width=S;c.height=S+150;const x=c.getContext('2d');
+  x.fillStyle='#F7F3EE';x.fillRect(0,0,c.width,c.height);
+  const n=entry.photos.length;const cols=n<=1?1:n<=4?2:3;const rows=Math.max(1,Math.ceil(n/cols));const gap=16,pd=40;
+  const cw=(S-pd*2-gap*(cols-1))/cols,ch=(S-pd*2-gap*(rows-1))/rows;let loaded=0;
+  const draw=()=>{imgs.forEach((im,i)=>{const w=im.naturalWidth,h=im.naturalHeight;if(!w||!h)return;const X=pd+(i%cols)*(cw+gap),Y=pd+Math.floor(i/cols)*(ch+gap);const r=Math.max(cw/w,ch/h),sw=cw/r,sh=ch/r;x.save();rr(x,X,Y,cw,ch,24);x.clip();x.drawImage(im,(w-sw)/2,(h-sh)/2,sw,sh,X,Y,cw,ch);x.restore()});
+   x.fillStyle='#3A2E28';x.font='700 46px "Playfair Display", Georgia, serif';x.fillText(String(entry.title).slice(0,34),pd,S+62);
+   x.fillStyle='#75655B';x.font='600 28px "DM Sans", sans-serif';x.fillText('Orivie - Sua Personalidade · '+fmtBR(entry.date),pd,S+110);
+   c.toBlob(b=>res(b),'image/png')};
+  const imgs=entry.photos.map(src=>{const im=new Image();im.onload=im.onerror=()=>{if(++loaded===n)draw()};im.src=src;return im});
+  if(!n)draw();
+ }catch(e){res(null)}});
+}
+async function shareBoard(id){
+ const u=U();const entry=u.boards.find(b=>b.id===id);if(!entry)return;
+ const blob=await collage(entry);
+ if(!blob){toast('Não consegui gerar a imagem agora. Tente de novo.');return}
+ try{const file=new File([blob],'orivie-board.png',{type:'image/png'});
+  if(navigator.canShare&&navigator.canShare({files:[file]})){await navigator.share({files:[file],title:entry.title,text:'Meu universo da semana no Orivie - Sua Personalidade'});return}
+ }catch(e){if(e&&e.name==='AbortError')return}
+ try{const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='orivie-board.png';document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),4000);toast(`${ic('download',18)} Imagem do board baixada!`)}catch(e){toast('Não consegui baixar a imagem.')}
+}
+function boardModal(id){
+ openModal(()=>{const u=U();const b=u.boards.find(x=>x.id===id);if(!b)return `<div class="empty">${mascot('think',80)}<p class="h3 mt-2">Board não encontrado</p><button class="btn btn-primary mt-4" data-act="closeModal">Fechar</button></div>`;
+  return `<div class="flex items-center justify-between gap-2"><div><h2 class="h1">${esc(b.title)}</h2><p class="small muted">${fmtBR(b.date)}</p></div><button class="btn-x" data-act="closeModal" aria-label="Fechar">${ic('x',22)}</button></div>
+  <div class="bgrid mt-4">${b.photos.map((ph,i)=>`<div class="bcell"><img src="${ph}" alt="Foto ${i+1}"></div>`).join('')}</div>
+  <div class="flex flex-col gap-3 mt-5"><button class="btn btn-primary" data-act="shareBoard" data-id="${b.id}">${ic('share',20)} Enviar</button><button class="btn btn-outline" data-act="delBoard" data-id="${b.id}" style="color:var(--erro)">${ic('trash',18)} Excluir board</button></div>`});
+}
+
+/* ---- Aba Aprender ---- */
+function tLearn(u){
+ if(ui.reading)return readView(u,ui.reading);
+ const p=prof(u);const vis=visibleTexts(u);const readN=vis.filter(t=>u.read.includes(t.id)).length;const pct=Math.round(readN/vis.length*100);
+ const f=ui.learn||'todos';const list=f==='todos'?vis:vis.filter(t=>t.cat===f);const cur=list.find(t=>!u.read.includes(t.id));
+ const offs=[0,45,70,45,0,-45,-70,-45];
+ return `<div class="unit-head sage"><div><p class="unit-kicker">Trilha de leitura</p><h1 class="unit-title">Sua personalidade: ${p.name}</h1></div><button class="btn btn-outline btn-sm" data-act="guide" data-v="aprender">${ic('bookc',16)} Guia</button></div>
+ <div class="card mt-4"><b>Você leu ${readN} de ${vis.length} textos</b><div class="prog sage mt-3" role="progressbar" aria-valuenow="${pct}" aria-valuemin="0" aria-valuemax="100" aria-label="Textos lidos"><i style="width:${pct}%"></i></div></div>
+ <div class="chips mt-4" role="group" aria-label="Filtros de tema">${LCATS.map(c=>`<button class="chip-f ${f===c.id?'on':''}" aria-pressed="${f===c.id}" data-act="learn" data-v="${c.id}">${c.n}</button>`).join('')}</div>
+ ${list.length?`
+ <div class="trail">${list.map((t,i)=>{const rd=u.read.includes(t.id);const isCur=cur&&cur.id===t.id;const cls=rd?'done':isCur?'':'todo';
+  return `<div class="trow" style="transform:translateX(${offs[i%8]}px)">${isCur?`<span class="balloon">Começar</span>`:''}<button class="node ${cls}" data-act="textPop" data-id="${t.id}" aria-label="${t.title}${rd?' (lido)':''}">${rd?ic('tick',30):isCur?ic('bookc',30):ic('book',30)}</button><span class="node-cap">${t.title}</span></div>`}).join('')}
+  ${list.length>=3?`<div class="trail-pal left" style="top:170px">${mascot('happy',58,'floaty')}</div>`:''}</div>
+ <h2 class="h2 mt-6">Todos os textos</h2>
+ <div class="flex flex-col gap-3 mt-3">${list.map(t=>{const rd=u.read.includes(t.id);return `<button class="tcard" data-act="openText" data-id="${t.id}"><div class="img-box thumb">${ic('book',28)}<img src="${imgUrl(t.img,200)}" alt="" loading="lazy" onerror="this.remove()"></div><div style="flex:1;min-width:0"><p class="h3">${t.title}</p><div class="flex gap-2 mt-1 flex-wrap"><span class="tag">${LCATS.find(c=>c.id===t.cat).n}</span><span class="tag tag-mel">${t.min} min</span>${rd?`<span class="tag tag-terra">${ic('tick',12)} Lido</span>`:''}</div></div></button>`}).join('')}</div>`
+ :`<div class="empty card mt-4">${mascot('think',96)}<h2 class="h2 mt-3">Nenhum texto deste tema</h2><p class="muted mt-1">Esse tema não está nas suas escolhas. Quer incluir?</p><button class="btn btn-primary mt-5" data-act="editPrefs">Editar escolhas</button></div>`}`;
+}
+function textModal(id){
+ openModal(()=>{const u=U();const t=TEXTS.find(x=>x.id===id);if(!t)return '';const rd=u.read.includes(id);
+  return `<div class="img-box big">${ic('book',64)}<img src="${imgUrl(t.img,900)}" alt="" onerror="this.remove()"></div>
+  <div class="flex gap-2 mt-4"><span class="tag">${LCATS.find(c=>c.id===t.cat).n}</span><span class="tag tag-mel">${t.min} min de leitura</span>${rd?`<span class="tag tag-terra">Lido</span>`:''}</div>
+  <h2 class="h1 mt-2">${t.title}</h2><p class="muted mt-1">${t.body[0].slice(0,110)}…</p>
+  <div class="flex flex-col gap-3 mt-5"><button class="btn btn-primary" data-act="openText" data-id="${id}">${rd?'Ler de novo':'Ler agora'}${rd?'':' · +15 XP'}</button><button class="btn btn-ghost" data-act="closeModal">Agora não</button></div>`});
+}
+function readView(u,id){
+ const t=TEXTS.find(x=>x.id===id);if(!t){ui.reading=null;return tLearn(u)}
+ const p=prof(u);const rd=u.read.includes(id);const vis=visibleTexts(u);const idx=vis.findIndex(x=>x.id===id);const next=vis.slice(idx+1).concat(vis.slice(0,Math.max(0,idx))).find(x=>!u.read.includes(x.id)&&x.id!==id);
+ return `<button class="btn btn-ghost btn-sm" data-act="closeRead">${ic('back',18)} Voltar para a trilha</button>
+ <div class="img-box cover mt-2">${ic('book',56)}<img src="${imgUrl(t.img,900)}" alt="" onerror="this.remove()"></div>
+ <div class="flex gap-2 mt-4 flex-wrap"><span class="tag">${LCATS.find(c=>c.id===t.cat).n}</span><span class="tag tag-mel">${t.min} min de leitura</span>${rd?`<span class="tag tag-terra">${ic('tick',12)} Lido</span>`:''}</div>
+ <h1 class="h1 mt-3">${t.title}</h1>
+ <article class="reading mt-4">${t.body.map(x=>`<p>${x}</p>`).join('')}</article>
+ <div class="whybox mt-2"><div class="speech">${mascot('happy',56)}<div class="bubble"><b>Para você, ${p.name}:</b><br>${p.texts[id]}</div></div></div>
+ <button class="btn ${rd?'btn-sage':'btn-primary'} mt-6" data-act="markRead" data-id="${id}" aria-pressed="${rd}">${rd?`${ic('tick',18)} Lido · toque para desmarcar`:'Marcar como lido'}</button>
+ ${next?`<button class="btn btn-outline mt-3" data-act="openText" data-id="${next.id}">Próximo: ${next.title}</button>`:''}`;
+}
+
+/* ---- Aba Eu ---- */
+function calendar(u){
+ const d=new Date(),y=d.getFullYear(),m=d.getMonth();const fd=(new Date(y,m,1).getDay()+6)%7;const n=new Date(y,m+1,0).getDate();const set=new Set(u.days);const t=today();const created=u.created||t;
+ let cells=['S','T','Q','Q','S','S','D'].map(x=>`<span class="cal-h">${x}</span>`).join('');
+ for(let i=0;i<fd;i++)cells+='<span></span>';
+ for(let k=1;k<=n;k++){const key=`${y}-${pad(m+1)}-${pad(k)}`;let c=set.has(key)?'on':key<t&&key>=created?'miss':key>t?'fut':'';if(key===t)c+=' today';cells+=`<span class="cal-d ${c}">${k}</span>`}
+ return `<p class="small muted mt-1">${cap(MESES[m])} de ${y}</p><div class="cal mt-3" aria-label="Calendário de dias ativos">${cells}</div><div class="flex gap-4 mt-3 small muted"><span class="legend"><i class="lg on"></i>Dia ativo</span><span class="legend"><i class="lg miss"></i>Dia em branco</span></div>`;
+}
+function menuTile(act,icon,label,sub='',right=''){return `<button class="tile" data-act="${act}"><span class="menu-ic">${ic(icon,24)}</span><span style="flex:1"><span class="block">${label}</span>${sub?`<span class="block small muted" style="font-weight:600">${sub}</span>`:''}</span>${right||`<span class="c-gray">${ic('chev',20)}</span>`}</button>`}
+function tEu(u){
+ const p=prof(u);const st=streakOf(u);const nAch=ACH.filter(a=>u.ach.includes(a.id)).length;
+ return `<section class="text-center">
+  <div class="avatar mx-auto">${u.photo?`<img src="${u.photo}" alt="Sua foto de perfil">`:`<span aria-hidden="true">${esc(first(u.name).charAt(0).toUpperCase()||'O')}</span>`}<label for="afile" class="avatar-edit" aria-label="Trocar foto">${ic('camera',20)}</label></div>
+  <input type="file" id="afile" accept="image/*" class="sr-only" data-file="avatar">
+  <h1 class="h1 mt-4">${esc(u.name)}</h1><p class="muted">${esc(u.email)}</p>
+  <div class="flex justify-center mt-3"><span class="tag tag-terra">${p.name}</span></div>
+  <p class="paid mt-4">${ic('check',20)} Acesso vitalício - Pago R$12,90${u.payDate?` em ${fmtBR(u.payDate)}`:''}</p>
+ </section>
+ <section class="grid grid-cols-2 gap-3 mt-6">
+  <div class="stile">${ic('flame',28)}<div><b>${st}</b><span>Dias seguidos</span></div></div>
+  <div class="stile">${ic('star',28)}<div><b>${u.xp}</b><span>XP total</span></div></div>
+  <div class="stile">${ic('book',28)}<div><b>${u.read.length}</b><span>Textos lidos</span></div></div>
+  <div class="stile">${ic('check',28)}<div><b>${u.history.length}</b><span>Dias concluídos</span></div></div>
+ </section>
+ <section class="card mt-5"><div class="flex justify-between items-center"><h2 class="h2">Sua sequência</h2><span class="tag tag-terra">Recorde: ${u.best}</span></div>${calendar(u)}</section>
+ <section class="mt-6"><div class="flex justify-between items-center"><h2 class="h2">Conquistas</h2><span class="tag tag-mel">${nAch}/${ACH.length}</span></div>
+  <div class="grid grid-cols-3 gap-3 mt-3">${ACH.map(a=>{const on=u.ach.includes(a.id);return `<button class="badge ${on?'':'locked'}" data-act="achInfo" data-id="${a.id}" aria-label="${a.n}${on?'':' (bloqueada)'}"><span class="badge-ic">${ic(on?a.ic:'lock',28,on?'':'c-gray')}</span>${a.n}</button>`}).join('')}</div></section>
+ <section class="mt-6 flex flex-col gap-3">
+  ${menuTile('metas','target','Metas e hábitos',`${u.goals.length} cadastrada${u.goals.length===1?'':'s'} · ${u.goals.filter(g=>g.done).length} concluída${u.goals.filter(g=>g.done).length===1?'':'s'}`)}
+  ${menuTile('favs','heart','Meus favoritos',`${u.favs.length} ite${u.favs.length===1?'m':'ns'}`)}
+  ${menuTile('editPrefs','brush','Editar escolhas',`${u.prefs.length} temas selecionados`)}
+  ${menuTile('seeResult','sparkle','Ver meu resultado',p.name)}
+  ${menuTile('retake','refresh','Refazer teste','Seu pagamento e seus dados continuam salvos')}
+  ${menuTile('editProfile','pencil','Editar perfil','Nome, nascimento e senha')}
+  ${menuTile('toggleSound','sound','Sons e vibração',u.sound?'Ligados':'Desligados',`<span class="switch ${u.sound?'on':''}" role="switch" aria-checked="${u.sound}"></span>`)}
+  ${menuTile('logoutAsk','exit','Sair','Seus dados ficam salvos neste aparelho')}
+ </section>`;
+}
+function goalRow(g){
+ if(ui.editGoal===g.id)return `<form data-form="goalEdit" data-id="${g.id}" class="card flex flex-col gap-3" novalidate><label class="lbl-f" for="ge-${g.id}">Editar</label><input id="ge-${g.id}" class="input" name="t" maxlength="80" value="${esc(g.t)}" autofocus><div class="seg sm">${['Meta','Hábito'].map(k=>`<button type="button" class="${ui.goalEditType===k?'on':''}" data-act="goalEditType" data-v="${k}">${k}</button>`).join('')}</div><div class="flex gap-2"><button class="btn btn-ghost" type="button" data-act="cancelEditGoal">Cancelar</button><button class="btn btn-primary" type="submit">Salvar</button></div></form>`;
+ return `<div class="crow ${g.done?'is-done':''}"><div class="flex items-center gap-2"><button class="cbox big ${g.done?'on':''}" role="checkbox" aria-checked="${g.done}" aria-label="Concluir: ${esc(g.t)}" data-act="toggleGoal" data-id="${g.id}">${g.done?ic('tick',18):''}</button><div style="flex:1;margin-left:4px"><p class="crow-t">${esc(g.t)}</p><span class="tag ${g.type==='Hábito'?'':'tag-terra'} mt-1">${g.type}</span></div><button class="ibtn" data-act="editGoal" data-id="${g.id}" aria-label="Editar: ${esc(g.t)}">${ic('edit',18)}</button><button class="ibtn danger" data-act="delGoal" data-id="${g.id}" aria-label="Excluir: ${esc(g.t)}">${ic('trash',18)}</button></div></div>`;
+}
+function metasModal(){
+ openModal(()=>{const u=U();return `<div class="flex items-center justify-between"><h2 class="h1">Metas e hábitos</h2><button class="btn-x" data-act="closeModal" aria-label="Fechar">${ic('x',22)}</button></div>
+ <p class="muted mt-1">Pequenos passos, grandes florescimentos.</p>
+ <form data-form="goal" class="card mt-4 flex flex-col gap-3" novalidate><label class="lbl-f" for="goalT">Nova meta ou hábito</label><input id="goalT" class="input" name="t" maxlength="80" placeholder="Ex.: Beber 2 litros de água" value="${esc(ui.goalDraft)}"><p class="err" data-err="t"></p>
+  <div class="seg sm">${['Meta','Hábito'].map(k=>`<button type="button" class="${ui.goalType===k?'on':''}" aria-pressed="${ui.goalType===k}" data-act="goalType" data-v="${k}">${k}</button>`).join('')}</div>
+  <button class="btn btn-primary" type="submit">${ic('plus',18)} Adicionar</button></form>
+ <div class="flex flex-col gap-3 mt-4">${u.goals.length?u.goals.map(goalRow).join(''):`<div class="empty">${mascot('think',80)}<p class="h3 mt-2">Nenhuma meta ainda</p><p class="small muted">Que tal começar com algo pequeno?</p></div>`}</div>`},{full:true});
+}
+function profileModal(){
+ const u=U();
+ openModal(()=>`<div class="flex items-center justify-between"><h2 class="h1">Editar perfil</h2><button class="btn-x" data-act="closeModal" aria-label="Fechar">${ic('x',22)}</button></div>
+ <form data-form="perfil" class="flex flex-col gap-4 mt-4" novalidate>
+  ${field('name','Nome','text','Seu nome','name',u.name)}
+  ${field('birth','Data de nascimento','date','','bday',u.birth)}
+  <p class="small muted">Para trocar a senha, preencha os dois campos abaixo.</p>
+  ${field('cur','Senha atual','password','Sua senha atual','current-password')}
+  ${field('nw','Nova senha','password','Mínimo de 6 caracteres','new-password')}
+  <button class="btn btn-primary" type="submit">Salvar</button><button class="btn btn-ghost" type="button" data-act="closeModal">Cancelar</button>
+ </form>`);
+}
+
+/* =========================================================
+   FORMULÁRIOS
+   ========================================================= */
+function clearErr(f){f.querySelectorAll('.err').forEach(e=>e.textContent='');f.querySelectorAll('.bad').forEach(e=>e.classList.remove('bad'))}
+function setErr(f,name,msg){const e=f.querySelector(`[data-err="${name}"]`);if(e)e.textContent=msg;const i=f.querySelector(`[name="${name}"]`);if(i)i.classList.add('bad')}
+function nope(f){sfx('soft');const b=f.querySelector('.bad');if(b){b.classList.remove('shake');void b.offsetWidth;b.classList.add('shake');b.focus()}}
+const emailOk=e=>/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(e);
+function birthErr(b){if(!b)return 'Escolha sua data de nascimento.';const d=parseYmd(b);if(isNaN(d)||b>today())return 'Essa data ainda não chegou!';if(d.getFullYear()<1900)return 'Confere o ano para mim?';return ''}
+const FORMS={
+ async cadastro(f){
+  clearErr(f);const name=f.name.value.trim(),email=f.email.value.trim().toLowerCase(),pass=f.pass.value,birth=f.birth.value;
+  if(name.length<2)setErr(f,'name','Conta pra gente o seu nome.');
+  if(!emailOk(email))setErr(f,'email','Esse e-mail parece incompleto.');else if(DB.users[email])setErr(f,'email','Esse e-mail já tem conta. Que tal entrar?');
+  if(pass.length<6)setErr(f,'pass','Use pelo menos 6 caracteres.');
+  const be=birthErr(birth);if(be)setErr(f,'birth',be);
+  if(f.querySelector('.bad'))return nope(f);
+  const u=blankUser();u.name=name;u.email=email;u.birth=birth;u.pass=await hashPass(pass);
+  DB.users[email]=u;DB.session=email;
+  if(!save()){delete DB.users[email];DB.session=null;setErr(f,'form','Não consegui salvar neste aparelho. Verifique se o navegador permite armazenamento.');return}
+  sfx('ok');toast(`Conta criada! Bem-vinda, ${esc(first(name))}.`);go(stepFor(u));
+ },
+ async login(f){
+  clearErr(f);const email=f.email.value.trim().toLowerCase(),pass=f.pass.value;
+  if(!email||!pass){setErr(f,'form','Preencha e-mail e senha.');if(!email)setErr(f,'email','');if(!pass)setErr(f,'pass','');return nope(f)}
+  const u=DB.users[email];
+  if(!u||!(await checkPass(pass,u.pass))){setErr(f,'form','E-mail ou senha incorretos.');setErr(f,'pass','');return nope(f)}
+  DB.session=email;save();sfx('ok');toast(`Oi de novo, ${esc(first(u.name))}!`);go(stepFor(u));
+ },
+ card(f){
+  clearErr(f);const num=f.cnum.value.replace(/\D/g,''),exp=f.cexp.value,cvv=f.ccvv.value.replace(/\D/g,''),nm=f.cname.value.trim();
+  if(num.length<13||num.length>19)setErr(f,'cnum','Confere o número do cartão?');
+  const m=/^(\d{2})\/(\d{2})$/.exec(exp);
+  if(!m||+m[1]<1||+m[1]>12)setErr(f,'cexp','Use o formato MM/AA.');
+  else{const end=new Date(2000+ +m[2],+m[1],0,23,59);if(end<new Date())setErr(f,'cexp','Esse cartão já venceu.')}
+  if(cvv.length<3||cvv.length>4)setErr(f,'ccvv','3 ou 4 dígitos.');
+  if(nm.length<3)setErr(f,'cname','Digite o nome como está no cartão.');
+  if(f.querySelector('.bad'))return nope(f);
+  f.reset();processPayment('cartao');
+ },
+ act(f){
+  clearErr(f);const t=f.t.value.trim();if(!t){setErr(f,'t','Escreva a atividade.');return nope(f)}
+  const u=U();
+  if(ui.actId){const it=u.checklist.items.find(i=>i.id===ui.actId);if(it){it.t=t;it.g=ui.actG}toast('Atividade atualizada!')}
+  else{u.checklist.items.push({id:uid(),g:ui.actG,t,done:false,note:''});toast('Atividade criada!')}
+  save();sfx('ok');closeModal();render();
+ },
+ goal(f){
+  clearErr(f);const t=f.t.value.trim();if(!t){setErr(f,'t','Escreva sua meta ou hábito.');return nope(f)}
+  const u=U();u.goals.unshift({id:uid(),t,type:ui.goalType,done:false,xp:false,created:today()});ui.goalDraft='';
+  save();sfx('ok');refreshModal();render();toast(`${ui.goalType} adicionad${ui.goalType==='Meta'?'a':'o'}!`);
+ },
+ goalEdit(f){
+  const t=f.t.value.trim();if(!t){f.t.classList.add('bad');return nope(f)}
+  const u=U();const g=u.goals.find(x=>x.id===f.dataset.id);if(g){g.t=t;g.type=ui.goalEditType||g.type}
+  ui.editGoal=null;save();refreshModal();render();toast('Salvo!');
+ },
+ async perfil(f){
+  clearErr(f);const u=U();const name=f.name.value.trim(),birth=f.birth.value,cur=f.cur.value,nw=f.nw.value;
+  if(name.length<2)setErr(f,'name','Conta pra gente o seu nome.');
+  const be=birthErr(birth);if(be)setErr(f,'birth',be);
+  if(nw||cur){if(nw.length<6)setErr(f,'nw','Use pelo menos 6 caracteres.');if(!cur||!(await checkPass(cur,u.pass)))setErr(f,'cur','Senha atual incorreta.')}
+  if(f.querySelector('.bad'))return nope(f);
+  u.name=name;u.birth=birth;if(nw)u.pass=await hashPass(nw);
+  save();sfx('ok');closeModal();render();toast('Perfil atualizado!');
+ }
+};
+function mask(el){
+ const d=el.value.replace(/\D/g,'');
+ if(el.dataset.mask==='card')el.value=d.slice(0,19).replace(/(\d{4})(?=\d)/g,'$1 ');
+ if(el.dataset.mask==='exp')el.value=d.length>2?d.slice(0,2)+'/'+d.slice(2,4):d;
+ if(el.dataset.mask==='cvv')el.value=d.slice(0,4);
+}
+function processPayment(method){
+ openModal(()=>`<div class="text-center" style="padding:16px 0">${mascot('think',110,'floaty')}<h2 class="h2 mt-3">Processando pagamento...</h2><p class="muted mt-1">Só um instantinho.</p><div class="dots mt-5"><i></i><i></i><i></i></div></div>`,{center:true,lock:true});
+ setTimeout(()=>{
+  const u=U();if(!u){closeModal();go('boas-vindas');return}
+  u.paid=true;u.payMethod=method;u.payDate=today();save();
+  sfx('win');confetti();
+  openModal(()=>`<div class="text-center">${mascot('celebrate',130,'hop')}<h2 class="display mt-3">Pagamento aprovado!</h2><p class="muted mt-2">Seu acesso vitalício está liberado. Agora vem a parte mais gostosa: te conhecer.</p></div><button class="btn btn-primary mt-6" data-act="afterPay" autofocus>Começar o teste</button>`,{center:true,lock:true});
+ },1500);
+}
+async function copyText(txt){
+ try{await navigator.clipboard.writeText(txt);return true}catch(e){
+  try{const ta=document.createElement('textarea');ta.value=txt;ta.setAttribute('readonly','');ta.style.position='fixed';ta.style.opacity='0';document.body.appendChild(ta);ta.select();const ok=document.execCommand('copy');ta.remove();return ok}catch(e2){return false}}
+}
+
+/* =========================================================
+   AÇÕES (todo botão faz algo de verdade)
+   ========================================================= */
+function pickAnswer(k){const u=U();if(!u||ui.q==null)return;u.answers[ui.q]=k;save();ui.justPicked=true;sfx('tap');render()}
+function finishTest(){
+ const u=U();const r=calcProfile(u.answers);
+ u.profile=r.profile;u.scores=r.scores;u.testDone=true;u.testDate=today();u.resultSeen=false;ui.q=null;save();
+ const tips=['Misturando suas respostas com carinho...','Regando sua sementinha de personalidade...','Conectando os pontinhos de quem você é...'];
+ openModal(()=>`<div class="text-center" style="padding:16px 0">${mascot('think',110,'floaty')}<h2 class="h2 mt-3">${tips[Math.floor(Math.random()*tips.length)]}</h2><div class="dots mt-5"><i></i><i></i><i></i></div></div>`,{center:true,lock:true});
+ setTimeout(()=>{closeModal();if(!u.testXP){u.testXP=true;addXP(50)}markActive();checkAch();save();go('personalizacao')},1600);
+}
+const ACT={
+ go:el=>go(el.dataset.to),
+ hardHome:()=>{closeModal();const u=U();location.hash='#/'+(u?stepFor(u):'boas-vindas');setTimeout(render,0)},
+ closeModal:()=>closeModal(),
+ confirmOk:()=>{const f=ui.onOk;ui.onOk=null;closeModal();if(f)f()},
+ tab:el=>{ui.reading=null;sfx('tap');go('app/'+el.dataset.v)},
+ logout:()=>{DB.session=null;save();closeModal();ui.payTab='pix';go('boas-vindas')},
+ logoutAsk:()=>confirmBox({title:'Já vai?',text:'Seus dados ficam salvos neste aparelho. Volte logo, tá?',ok:'Sair',cancel:'Ficar mais um pouco',danger:true,onOk:()=>ACT.logout()}),
+ payTab:el=>{ui.payTab=el.dataset.v==='card'?'card':'pix';render()},
+ copyPix:async()=>{const ok=await copyText(PIX_CODE);if(ok){sfx('ok');toast(`${ic('copy',18)} Código copiado!`)}else{const i=$('#pixcode');if(i){i.focus();i.select()}toast('Selecione o código e copie manualmente.')}},
+ payPix:()=>processPayment('pix'),
+ afterPay:()=>{closeModal();go('teste')},
+ answer:el=>pickAnswer(el.dataset.k),
+ qBack:()=>{if(ui.q>0){ui.q--;sfx('tap');render()}},
+ qNext:()=>{const u=U();if(!u.answers[ui.q])return;sfx('tap');if(ui.q<9){ui.q++;render();window.scrollTo(0,0)}else finishTest()},
+ quitTest:()=>openModal(()=>`<div class="text-center">${mascot('sad',100)}<h2 class="h2 mt-2">Não desista!</h2><p class="muted mt-2">Quer fazer uma pausa? Suas respostas ficam salvas e você continua de onde parou.</p></div><div class="flex flex-col gap-3 mt-6"><button class="btn btn-primary" data-act="closeModal">Continuar teste</button><button class="btn btn-ghost" data-act="logout">Pausar e sair</button></div>`,{center:true}),
+ prefToggle:el=>{const v=el.dataset.v;ui.prefs=ui.prefs.includes(v)?ui.prefs.filter(x=>x!==v):[...ui.prefs,v];sfx('tap');render()},
+ prefsAll:()=>{ui.prefs=[...PREFS];render()},
+ prefsNone:()=>{ui.prefs=[];render()},
+ prefsSave:()=>{const u=U();let p=ui.prefs||[];if(!p.length){p=[...PREFS];toast('Marquei todos para você não perder nada!')}const editing=u.prefsDone;u.prefs=PREFS.filter(x=>p.includes(x));u.prefsDone=true;ui.prefs=null;save();sfx('ok');if(editing){toast('Escolhas salvas!');go('app/eu')}else go('resultado')},
+ prefsCancel:()=>{ui.prefs=null;go('app/eu')},
+ toWeek:()=>{ui.scrollTo='semana';go('app/hoje')},
+ toLearn:()=>{ui.reading=null;ui.learn='todos';go('app/aprender')},
+ streakInfo:()=>{const u=U();const st=streakOf(u);const next=MILESTONES.find(m=>m>st)||365;
+  openModal(()=>`<div class="text-center">${ic('flame',64)}<p class="bignum">${st}</p><h2 class="h2">dia${st===1?'':'s'} seguido${st===1?'':'s'}</h2><p class="muted mt-2">${u.days.includes(today())?'Hoje já está garantido. Que orgulho!':'Faça uma atividade hoje para manter sua sequência florescendo.'}</p></div>
+  <div class="flex justify-center gap-2 mt-5">${weekDays().map(d=>{const k=ymd(d),s=dayState(u,k);return `<div class="text-center"><div class="cal-d ${s==='done'?'on':s==='missed'?'miss':'fut'} ${k===today()?'today':''}" style="width:36px">${s==='done'?ic('tick',16):d.getDate()}</div><span class="small muted">${DIAS[d.getDay()].charAt(0)}</span></div>`}).join('')}</div>
+  <div class="card mt-5"><div class="flex justify-between"><b>Próximo marco: ${next} dias</b><span class="tag tag-terra">Recorde ${u.best}</span></div><div class="prog mt-3"><i style="width:${Math.min(100,Math.round(st/next*100))}%"></i></div></div>
+  <button class="btn btn-primary mt-6" data-act="closeModal">Entendi</button>`,{center:true})},
+ xpInfo:()=>{const u=U();const t=u.xpLog[today()]||0;
+  openModal(()=>`<div class="text-center">${ic('star',56)}<p class="bignum" style="color:var(--mel-dk)">${u.xp}</p><h2 class="h2">XP no total</h2></div>
+  <div class="card mt-5"><div class="flex justify-between"><b>Meta do dia</b><b class="c-mel">${Math.min(t,DAILY_GOAL)}/${DAILY_GOAL} XP</b></div><div class="prog mel mt-3"><i style="width:${Math.min(100,Math.round(t/DAILY_GOAL*100))}%"></i></div></div>
+  <ul class="list mt-4">${[['sparkle','Concluir o teste','+50'],['check','Concluir o dia','+20'],['chest','Abrir o baú das missões','+20'],['book','Ler um texto','+15'],['grid','Salvar um board','+15'],['target','Cumprir uma meta','+10']].map(([i,n,v])=>`<li>${ic(i,24)}<span style="flex:1">${n}</span><span class="tag tag-mel">${v} XP</span></li>`).join('')}</ul>
+  <button class="btn btn-primary mt-5" data-act="closeModal">Entendi</button>`,{center:true})},
+ dayInfo:el=>{const u=U();const k=el.dataset.d;const st=dayState(u,k);const d=parseYmd(k);
+  const txt={before:'Esse dia foi antes de você chegar por aqui. Sua jornada começou depois — e começou linda!',done:'Dia concluído! Você cuidou de você.',missed:'Esse dia passou em branco. Tudo bem: recomeçar também faz parte.',current:'Hoje é dia de florescer! Conclua uma atividade para acender este dia.',locked:'Esse dia ainda vai chegar. Te espero lá!'}[st];
+  const mood={before:'happy',done:'celebrate',missed:'sad',current:'wave',locked:'sleep'}[st];
+  openModal(()=>`<div class="text-center">${mascot(mood,100)}<p class="tag tag-terra mt-2">${DIAS_L[d.getDay()]} · ${fmtBR(k)}</p><h2 class="h2 mt-3">${txt}</h2></div>
+  <div class="flex flex-col gap-3 mt-6">${st==='current'?`<button class="btn btn-primary" data-act="goChecklist">Ir para checklist</button><button class="btn btn-ghost" data-act="closeModal">Agora não</button>`:`<button class="btn btn-primary" data-act="closeModal">Entendi</button>`}</div>`,{center:true})},
+ goChecklist:()=>{closeModal();go('app/checklist')},
+ guide:el=>{const v=el.dataset.v;
+  if(v==='semana')infoBox({title:'Como funciona sua semana',text:'Cada nó é um dia. Ele acende quando você conclui o dia no Checklist, lê um texto no Aprender, salva um board ou faz o teste. Basta uma atividade por dia para manter sua sequência florescendo.',mood:'wave'});
+  else openModal(()=>`<div class="text-center">${mascot('happy',100)}<h2 class="h2 mt-2">Sua trilha de leitura</h2><p class="muted mt-2">Aqui ficam os textos dos temas que você escolheu. Leia no seu ritmo: cada texto lido vale +15 XP e conta para a sua sequência. Quer outros temas? Edite suas escolhas.</p></div><div class="flex flex-col gap-3 mt-6"><button class="btn btn-primary" data-act="closeModal">Entendi</button><button class="btn btn-ghost" data-act="editPrefs">Editar escolhas</button></div>`,{center:true})},
+ comb:el=>{ui.comb=el.dataset.v;sfx('tap');render()},
+ item:el=>itemModal(el.dataset.id),
+ fav:el=>{const u=U();const id=el.dataset.id;
+  if(u.favs.includes(id)){u.favs=u.favs.filter(x=>x!==id);toast('Removido dos favoritos.')}
+  else{u.favs.push(id);u.favLog[id]=today();sfx('ok');toast(`${ic('heart',18)} Favoritado!`);checkAch()}
+  save();refreshModal();render()},
+ favs:()=>{ui.comb='favoritos';go('app/combina')},
+ toggleCheck:el=>{const u=U();const it=u.checklist.items.find(i=>i.id===el.dataset.id);if(!it)return;it.done=!it.done;save();sfx(it.done?'ok':'tap');render();
+  if(it.done){const all=u.checklist.items.every(i=>i.done);if(all)toast('Tudo marcado! Bora concluir o dia?')}},
+ newAct:()=>actModal(null),
+ editAct:el=>actModal(el.dataset.id),
+ actGroup:el=>{const i=$('#actT');if(i)ui.actDraft=i.value;ui.actG=el.dataset.v;refreshModal()},
+ delAct:el=>{const u=U();const it=u.checklist.items.find(i=>i.id===el.dataset.id);if(!it)return;
+  confirmBox({title:'Excluir atividade?',text:`“${esc(it.t)}” vai sair da sua lista.`,ok:'Excluir',danger:true,onOk:()=>{u.checklist.items=u.checklist.items.filter(i=>i.id!==it.id);save();render();toast('Atividade excluída.')}})},
+ concludeDay:()=>{const u=U();const items=u.checklist.items;const done=items.filter(i=>i.done);
+  if(!done.length){infoBox({title:'Quase lá!',text:'Marque pelo menos uma atividade para concluir o dia. Uma pequena já vale!',mood:'think'});return}
+  const entry={date:today(),done:done.length,total:items.length,items:done.map(i=>i.t)};
+  const idx=u.history.findIndex(h=>h.date===entry.date);const firstTime=idx<0;
+  if(firstTime)u.history.unshift(entry);else u.history[idx]=entry;
+  if(firstTime){addXP(20);markActive()}checkAch();save();render();
+  celebrate({title:firstTime?'Dia concluído!':'Dia atualizado!',sub:firstTime?'Você viveu o seu dia do seu jeito. Isso merece festa!':'Seu histórico de hoje foi atualizado.',
+   stats:[{k:'XP',v:firstTime?20:0,ic:'star',c:'sc-mel'},{k:'Checks',v:done.length,ic:'check',c:'sc-sage'},{k:'Sequência',v:streakOf(u),ic:'flame',c:'sc-terra'}]})},
+ closeCelebrate:()=>{closeModal();if(ui.milestone)setTimeout(showMilestone,150)},
+ openChest:()=>{const u=U();if(u.chest[today()])return;if(!missions(u).every(m=>m.cur>=m.max))return;u.chest[today()]=true;addXP(20);checkAch();save();render();
+  celebrate({title:'Baú aberto!',sub:'Missões do dia completas. Você é incrível!',icon:ic('chest',110),stats:[{k:'XP',v:20,ic:'star',c:'sc-mel'}]})},
+ delPhoto:el=>{const u=U();const i=+el.dataset.i;u.board.photos.splice(i,1);save();render()},
+ saveBoard:()=>{const u=U();const b=u.board;if(!b.photos.length)return;
+  const entry={id:uid(),title:b.title.trim()||`Meu universo · ${fmtBR(today())}`,date:today(),photos:[...b.photos]};
+  u.boards.unshift(entry);u.board={title:'',photos:[]};
+  if(!save()){u.boards.shift();u.board=b;LS.set(K_USERS,DB.users);return}
+  addXP(15);markActive();checkAch();save();render();sfx('win');confetti(50);
+  openModal(()=>`<div class="text-center">${mascot('celebrate',110,'hop')}<h2 class="h1 mt-2">Board salvo!</h2><p class="muted mt-2">Seu universo da semana está guardado em “Meus boards anteriores”. Quer enviar para alguém?</p></div>
+  <div class="flex flex-col gap-3 mt-6"><button class="btn btn-primary" data-act="shareBoard" data-id="${entry.id}">${ic('share',20)} Enviar agora</button><button class="btn btn-ghost" data-act="closeCelebrate">Agora não</button></div>`,{center:true})},
+ shareBoard:el=>shareBoard(el.dataset.id),
+ viewBoard:el=>boardModal(el.dataset.id),
+ delBoard:el=>{const id=el.dataset.id;confirmBox({title:'Excluir board?',text:'Essa ação não pode ser desfeita.',ok:'Excluir',danger:true,onOk:()=>{const u=U();u.boards=u.boards.filter(b=>b.id!==id);save();render();toast('Board excluído.')}})},
+ learn:el=>{ui.learn=el.dataset.v;sfx('tap');render()},
+ textPop:el=>textModal(el.dataset.id),
+ openText:el=>{closeModal();ui.reading=el.dataset.id;render();window.scrollTo(0,0)},
+ closeRead:()=>{ui.reading=null;render();window.scrollTo(0,0)},
+ markRead:el=>{const u=U();const id=el.dataset.id;
+  if(u.read.includes(id)){u.read=u.read.filter(x=>x!==id);delete u.readLog[id];save();render();toast('Marcado como não lido.');return}
+  u.read.push(id);u.readLog[id]=today();
+  if(!u.readXP.includes(id)){u.readXP.push(id);addXP(15)}
+  markActive();checkAch();save();render();sfx('ok');
+  const vis=visibleTexts(u);
+  if(vis.every(t=>u.read.includes(t.id)))celebrate({title:'Trilha concluída!',sub:'Você leu todos os textos da sua trilha. Que mente iluminada!',stats:[{k:'Lidos',v:vis.length,ic:'book',c:'sc-sage'},{k:'XP total',v:u.xp,ic:'star',c:'sc-mel'}]});
+  else{toast(`${ic('tick',18)} Leitura concluída!`);if(ui.milestone)setTimeout(showMilestone,600)}},
+ metas:()=>{ui.editGoal=null;ui.goalDraft='';metasModal()},
+ goalType:el=>{const i=$('#goalT');if(i)ui.goalDraft=i.value;ui.goalType=el.dataset.v;refreshModal()},
+ goalEditType:el=>{const i=LAYER().querySelector('form[data-form="goalEdit"] input');const u=U();const g=u.goals.find(x=>x.id===ui.editGoal);if(g&&i)ui.goalEditDraft=i.value;ui.goalEditType=el.dataset.v;refreshModal();const i2=LAYER().querySelector('form[data-form="goalEdit"] input');if(i2&&ui.goalEditDraft!=null)i2.value=ui.goalEditDraft},
+ toggleGoal:el=>{const u=U();const g=u.goals.find(x=>x.id===el.dataset.id);if(!g)return;g.done=!g.done;
+  if(g.done){sfx('ok');if(!g.xp){g.xp=true;addXP(10)}markActive();checkAch();toast(`${ic('target',18)} ${g.type} cumprid${g.type==='Meta'?'a':'o'}!`)}else sfx('tap');
+  save();refreshModal();render()},
+ editGoal:el=>{const u=U();const g=u.goals.find(x=>x.id===el.dataset.id);if(!g)return;ui.editGoal=g.id;ui.goalEditType=g.type;ui.goalEditDraft=null;refreshModal()},
+ cancelEditGoal:()=>{ui.editGoal=null;refreshModal()},
+ delGoal:el=>{const u=U();const g=u.goals.find(x=>x.id===el.dataset.id);if(!g)return;
+  confirmBox({title:'Excluir meta?',text:`“${esc(g.t)}” vai sair da sua lista.`,ok:'Excluir',danger:true,onOk:()=>{u.goals=u.goals.filter(x=>x.id!==g.id);save();render();metasModal();toast('Excluída.')}})},
+ editPrefs:()=>{closeModal();ui.prefs=null;go('personalizacao')},
+ seeResult:()=>go('resultado'),
+ retake:()=>confirmBox({title:'Refazer o teste?',text:'Suas respostas e seu perfil atual serão substituídos. Pagamento, checklist, boards, metas e favoritos continuam salvos.',ok:'Refazer teste',cancel:'Agora não',mood:'think',onOk:()=>{const u=U();u.answers=Array(10).fill(null);u.testDone=false;u.profile=null;u.scores={};u.prefsDone=false;u.resultSeen=false;ui.q=0;save();go('teste')}}),
+ editProfile:()=>profileModal(),
+ toggleSound:()=>{const u=U();u.sound=!u.sound;save();render();if(u.sound)sfx('ok');toast(u.sound?'Sons e vibração ligados.':'Sons e vibração desligados.')},
+ achInfo:el=>{const u=U();const a=ACH.find(x=>x.id===el.dataset.id);if(!a)return;const on=u.ach.includes(a.id);
+  openModal(()=>`<div class="text-center"><div class="flex justify-center"><span class="badge-ic" style="width:96px;height:96px${on?'':';filter:grayscale(1);opacity:.5'}">${ic(on?a.ic:'lock',52,on?'':'c-gray')}</span></div><h2 class="h1 mt-4">${a.n}</h2><p class="muted mt-2">${on?'Desbloqueada! ':'Para desbloquear: '}${a.d}</p></div><button class="btn btn-primary mt-6" data-act="closeModal">Entendi</button>`,{center:true})},
+ shareStreak:async el=>{const n=el.dataset.n;const txt=`Estou há ${n} dias seguidos cuidando de mim no Orivie - Sua Personalidade!`;
+  try{if(navigator.share){await navigator.share({title:'Orivie - Sua Personalidade',text:txt});return}}catch(e){if(e&&e.name==='AbortError')return}
+  const ok=await copyText(txt);toast(ok?'Texto copiado para compartilhar!':'Não consegui compartilhar agora.')}
+};
+
+/* =========================================================
+   EVENTOS GLOBAIS
+   ========================================================= */
+document.addEventListener('click',e=>{
+ if(e.target.matches&&e.target.matches('[data-backdrop]')){if(ui.modal&&!ui.modal.lock)closeModal();return}
+ const el=e.target.closest('[data-act]');
+ if(!el||el.disabled)return;
+ const fn=ACT[el.dataset.act];
+ if(fn){try{fn(el,e)}catch(err){console.error(err);toast('Opa! Tenta de novo?')}}
+});
+document.addEventListener('submit',e=>{const f=e.target;const k=f.dataset&&f.dataset.form;if(!k||!FORMS[k])return;e.preventDefault();try{const r=FORMS[k](f);if(r&&r.catch)r.catch(err=>{console.error(err);toast('Opa! Tenta de novo?')})}catch(err){console.error(err)}});
+document.addEventListener('input',e=>{
+ const el=e.target;if(el.dataset.mask)mask(el);
+ if(el.classList.contains('bad')){el.classList.remove('bad');const er=el.parentElement&&el.parentElement.querySelector('.err');if(er)er.textContent=''}
+ const k=el.dataset.in;if(!k)return;const u=U();if(!u)return;
+ if(k==='note'){const it=u.checklist&&u.checklist.items.find(i=>i.id===el.dataset.id);if(it){it.note=el.value.slice(0,200);save()}}
+ if(k==='btitle'){u.board.title=el.value.slice(0,40);save()}
+});
+document.addEventListener('change',async e=>{
+ const el=e.target;const kind=el.dataset&&el.dataset.file;if(!kind)return;
+ const u=U();if(!u)return;const files=[...(el.files||[])];el.value='';if(!files.length)return;
+ if(kind==='board'){
+  const before=u.board.photos.length;const room=9-before;
+  if(files.length>room)toast(`Cabem mais ${room} foto${room===1?'':'s'} neste board.`);
+  let fails=0;
+  for(const f of files.slice(0,Math.max(0,room))){const d=await compress(f,800,.7);if(d)u.board.photos.push(d);else fails++}
+  if(fails)toast('Não consegui abrir uma das imagens.');
+  if(!save()){u.board.photos=u.board.photos.slice(0,before);LS.set(K_USERS,DB.users)}else if(u.board.photos.length>before)sfx('ok');
+  render();
+ }
+ if(kind==='avatar'){
+  const d=await compress(files[0],320,.82);
+  if(!d){toast('Não consegui abrir essa imagem.');return}
+  const old=u.photo;u.photo=d;if(!save()){u.photo=old;LS.set(K_USERS,DB.users)}else{sfx('ok');toast('Foto atualizada!')}
+  render();
+ }
+});
+document.addEventListener('keydown',e=>{
+ if(e.key==='Escape'&&ui.modal&&!ui.modal.lock){closeModal();return}
+ if(route()!=='teste'||ui.modal)return;
+ const tag=(e.target&&e.target.tagName)||'';if(tag==='INPUT'||tag==='TEXTAREA')return;
+ let idx='12345'.indexOf(e.key);if(idx<0)idx='ABCDE'.indexOf(String(e.key).toUpperCase());
+ if(idx>=0&&e.key.length===1){e.preventDefault();pickAnswer('ABCDE'[idx]);return}
+ if(e.key==='Enter'&&tag!=='BUTTON'){const b=$('[data-act="qNext"]');if(b&&!b.disabled){e.preventDefault();b.click()}}
+});
+window.addEventListener('hashchange',()=>{if(ui.modal&&!ui.modal.lock)closeModal();render()});
+window.addEventListener('storage',e=>{if(e.key===K_USERS||e.key===K_SESSION){loadDB();render()}});
+
+/* =========================================================
+   INÍCIO
+   ========================================================= */
+loadDB();
+if(!location.hash)history.replaceState(null,'','#/'+(U()?stepFor(U()):'boas-vindas'));
+render();
+</script>
+</body>
+</html>
