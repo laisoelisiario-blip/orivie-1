@@ -872,9 +872,9 @@ function showMilestone(){
    ========================================================= */
 const PUBLIC=['boas-vindas','cadastro','login'];
 const TABS=[{id:'hoje',n:'Hoje',ic:'sun'},{id:'combina',n:'Combina',ic:'heart'},{id:'checklist',n:'Checklist',ic:'check'},{id:'board',n:'Board',ic:'grid'},{id:'aprender',n:'Aprender',ic:'book'},{id:'eu',n:'Eu',ic:'user'}];
-const route=()=>location.hash.replace(/^#\/?/,'')||'boas-vindas';
-function go(r){if(route()===r)render();else location.hash='#/'+r}
-function stepFor(u){if(!u.paid)return 'pagamento';if(!u.testDone)return 'teste';if(!u.prefsDone)return 'personalizacao';return 'app/hoje'}
+const route=()=>{const h=location.hash.replace(/^#\/?/,'').replace('/','-');return h||'boas-vindas'};
+function go(r){if(route()===r)render();else location.hash='#'+r}
+function stepFor(u){if(!u.paid)return 'pagamento';if(!u.testDone)return 'teste';if(!u.prefsDone)return 'personalizacao';return 'app-hoje'}
 function allowed(r,u){
  if(!u)return PUBLIC.includes(r)?r:'boas-vindas';
  if(PUBLIC.includes(r))return stepFor(u);
@@ -885,14 +885,14 @@ function allowed(r,u){
  if(r==='personalizacao')return r;
  if(!u.prefsDone)return 'personalizacao';
  if(r==='resultado')return r;
- if(TABS.some(t=>'app/'+t.id===r))return r;
- return 'app/hoje';
+ if(TABS.some(t=>'app-'+t.id===r))return r;
+ return 'app-hoje';
 }
 const APP=()=>document.getElementById('app');
 function render(){
  try{
   const u=U();const want=route();const r=allowed(want,u);
-  if(r!==want){location.replace('#/'+r);return}
+  if(r!==want){location.replace('#'+r);return}
   if(r!=='personalizacao')ui.prefs=null;
   if(r!=='teste')ui.q=null;
   let html='';
@@ -902,7 +902,7 @@ function render(){
   else if(r==='teste')html=vTest(u);
   else if(r==='personalizacao')html=vPrefs(u);
   else if(r==='resultado')html=vResult(u);
-  else html=vApp(u,r.split('/')[1]);
+  else html=vApp(u,r.slice(4));
   APP().innerHTML=html;
   if(ui.lastRoute!==r)window.scrollTo(0,0);
   ui.lastRoute=r;
@@ -1198,7 +1198,12 @@ async function shareBoard(id){
  try{const file=new File([blob],'orivie-board.png',{type:'image/png'});
   if(navigator.canShare&&navigator.canShare({files:[file]})){await navigator.share({files:[file],title:entry.title,text:'Meu universo da semana no Orivie - Sua Personalidade'});return}
  }catch(e){if(e&&e.name==='AbortError')return}
- try{const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='orivie-board.png';document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),4000);toast(`${ic('download',18)} Imagem do board baixada!`)}catch(e){toast('Não consegui baixar a imagem.')}
+ const url=URL.createObjectURL(blob);
+ openModal(()=>`<div class="flex items-center justify-between"><h2 class="h1">Seu board pronto</h2><button class="btn-x" data-act="closeModal" aria-label="Fechar">${ic('x',22)}</button></div>
+  <p class="muted mt-1">Toque e segure a imagem (no computador, clique com o botão direito) para salvar ou enviar.</p>
+  <img src="${url}" alt="Colagem do board ${esc(entry.title)}" class="mt-4" style="border-radius:16px;border:2px solid var(--bege);width:100%">
+  <a class="btn btn-outline mt-4" href="${url}" download="orivie-board.png">${ic('download',18)} Baixar imagem</a>
+  <button class="btn btn-primary mt-3" data-act="closeModal">Pronto</button>`,{center:true});
 }
 function boardModal(id){
  openModal(()=>{const u=U();const b=u.boards.find(x=>x.id===id);if(!b)return `<div class="empty">${mascot('think',80)}<p class="h3 mt-2">Board não encontrado</p><button class="btn btn-primary mt-4" data-act="closeModal">Fechar</button></div>`;
@@ -1406,10 +1411,10 @@ function finishTest(){
 }
 const ACT={
  go:el=>go(el.dataset.to),
- hardHome:()=>{closeModal();const u=U();location.hash='#/'+(u?stepFor(u):'boas-vindas');setTimeout(render,0)},
+ hardHome:()=>{closeModal();const u=U();location.hash='#'+(u?stepFor(u):'boas-vindas');setTimeout(render,0)},
  closeModal:()=>closeModal(),
  confirmOk:()=>{const f=ui.onOk;ui.onOk=null;closeModal();if(f)f()},
- tab:el=>{ui.reading=null;sfx('tap');go('app/'+el.dataset.v)},
+ tab:el=>{ui.reading=null;sfx('tap');go('app-'+el.dataset.v)},
  logout:()=>{DB.session=null;save();closeModal();ui.payTab='pix';go('boas-vindas')},
  logoutAsk:()=>confirmBox({title:'Já vai?',text:'Seus dados ficam salvos neste aparelho. Volte logo, tá?',ok:'Sair',cancel:'Ficar mais um pouco',danger:true,onOk:()=>ACT.logout()}),
  payTab:el=>{ui.payTab=el.dataset.v==='card'?'card':'pix';render()},
@@ -1423,10 +1428,10 @@ const ACT={
  prefToggle:el=>{const v=el.dataset.v;ui.prefs=ui.prefs.includes(v)?ui.prefs.filter(x=>x!==v):[...ui.prefs,v];sfx('tap');render()},
  prefsAll:()=>{ui.prefs=[...PREFS];render()},
  prefsNone:()=>{ui.prefs=[];render()},
- prefsSave:()=>{const u=U();let p=ui.prefs||[];if(!p.length){p=[...PREFS];toast('Marquei todos para você não perder nada!')}const editing=u.prefsDone;u.prefs=PREFS.filter(x=>p.includes(x));u.prefsDone=true;ui.prefs=null;save();sfx('ok');if(editing){toast('Escolhas salvas!');go('app/eu')}else go('resultado')},
- prefsCancel:()=>{ui.prefs=null;go('app/eu')},
- toWeek:()=>{ui.scrollTo='semana';go('app/hoje')},
- toLearn:()=>{ui.reading=null;ui.learn='todos';go('app/aprender')},
+ prefsSave:()=>{const u=U();let p=ui.prefs||[];if(!p.length){p=[...PREFS];toast('Marquei todos para você não perder nada!')}const editing=u.prefsDone;u.prefs=PREFS.filter(x=>p.includes(x));u.prefsDone=true;ui.prefs=null;save();sfx('ok');if(editing){toast('Escolhas salvas!');go('app-eu')}else go('resultado')},
+ prefsCancel:()=>{ui.prefs=null;go('app-eu')},
+ toWeek:()=>{ui.scrollTo='semana';go('app-hoje')},
+ toLearn:()=>{ui.reading=null;ui.learn='todos';go('app-aprender')},
  streakInfo:()=>{const u=U();const st=streakOf(u);const next=MILESTONES.find(m=>m>st)||365;
   openModal(()=>`<div class="text-center">${ic('flame',64)}<p class="bignum">${st}</p><h2 class="h2">dia${st===1?'':'s'} seguido${st===1?'':'s'}</h2><p class="muted mt-2">${u.days.includes(today())?'Hoje já está garantido. Que orgulho!':'Faça uma atividade hoje para manter sua sequência florescendo.'}</p></div>
   <div class="flex justify-center gap-2 mt-5">${weekDays().map(d=>{const k=ymd(d),s=dayState(u,k);return `<div class="text-center"><div class="cal-d ${s==='done'?'on':s==='missed'?'miss':'fut'} ${k===today()?'today':''}" style="width:36px">${s==='done'?ic('tick',16):d.getDate()}</div><span class="small muted">${DIAS[d.getDay()].charAt(0)}</span></div>`}).join('')}</div>
@@ -1442,7 +1447,7 @@ const ACT={
   const mood={before:'happy',done:'celebrate',missed:'sad',current:'wave',locked:'sleep'}[st];
   openModal(()=>`<div class="text-center">${mascot(mood,100)}<p class="tag tag-terra mt-2">${DIAS_L[d.getDay()]} · ${fmtBR(k)}</p><h2 class="h2 mt-3">${txt}</h2></div>
   <div class="flex flex-col gap-3 mt-6">${st==='current'?`<button class="btn btn-primary" data-act="goChecklist">Ir para checklist</button><button class="btn btn-ghost" data-act="closeModal">Agora não</button>`:`<button class="btn btn-primary" data-act="closeModal">Entendi</button>`}</div>`,{center:true})},
- goChecklist:()=>{closeModal();go('app/checklist')},
+ goChecklist:()=>{closeModal();go('app-checklist')},
  guide:el=>{const v=el.dataset.v;
   if(v==='semana')infoBox({title:'Como funciona sua semana',text:'Cada nó é um dia. Ele acende quando você conclui o dia no Checklist, lê um texto no Aprender, salva um board ou faz o teste. Basta uma atividade por dia para manter sua sequência florescendo.',mood:'wave'});
   else openModal(()=>`<div class="text-center">${mascot('happy',100)}<h2 class="h2 mt-2">Sua trilha de leitura</h2><p class="muted mt-2">Aqui ficam os textos dos temas que você escolheu. Leia no seu ritmo: cada texto lido vale +15 XP e conta para a sua sequência. Quer outros temas? Edite suas escolhas.</p></div><div class="flex flex-col gap-3 mt-6"><button class="btn btn-primary" data-act="closeModal">Entendi</button><button class="btn btn-ghost" data-act="editPrefs">Editar escolhas</button></div>`,{center:true})},
@@ -1452,7 +1457,7 @@ const ACT={
   if(u.favs.includes(id)){u.favs=u.favs.filter(x=>x!==id);toast('Removido dos favoritos.')}
   else{u.favs.push(id);u.favLog[id]=today();sfx('ok');toast(`${ic('heart',18)} Favoritado!`);checkAch()}
   save();refreshModal();render()},
- favs:()=>{ui.comb='favoritos';go('app/combina')},
+ favs:()=>{ui.comb='favoritos';go('app-combina')},
  toggleCheck:el=>{const u=U();const it=u.checklist.items.find(i=>i.id===el.dataset.id);if(!it)return;it.done=!it.done;save();sfx(it.done?'ok':'tap');render();
   if(it.done){const all=u.checklist.items.every(i=>i.done);if(all)toast('Tudo marcado! Bora concluir o dia?')}},
  newAct:()=>actModal(null),
@@ -1568,7 +1573,7 @@ window.addEventListener('storage',e=>{if(e.key===K_USERS||e.key===K_SESSION){loa
    INÍCIO
    ========================================================= */
 loadDB();
-if(!location.hash)history.replaceState(null,'','#/'+(U()?stepFor(U()):'boas-vindas'));
+if(!location.hash||location.hash.includes('/')){try{location.replace('#'+allowed(route(),U()))}catch(e){}}
 render();
 </script>
 </body>
