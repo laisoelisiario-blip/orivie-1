@@ -57,3 +57,17 @@ Replicar estilo é permitido; copiar marca não. Proibido:
   **próprio** (pode seguir a mesma técnica: multicor, quente → frio, vibrante). Ver `02-tokens.md`.
 - Nomes de recursos com marca ("Reels", "Stories" com o mesmo nome e visual idêntico em contexto
   comercial). Prefira nomes próprios (ex.: Orivie → "Momentos", "Clipes", "Reflexões").
+
+### Regras oficiais de uso da marca (Meta Brand Resource Center)
+Fonte: `meta.com/brand/resources/instagram/instagram-brand/` (lida em 20/11/2026). A página trata de
+uso da marca, não de design de interface. O que se aplica a este projeto:
+- **Não combine "Insta" ou "gram" com a sua marca** (nome do app, recursos, domínio, hashtag).
+  O nome interno desta skill (`insta-style`) nunca deve aparecer na interface do produto.
+- Não combine nenhuma parte da marca Instagram com nome de empresa, outras marcas ou termos genéricos.
+- Não dê a entender parceria, patrocínio ou endosso do Instagram.
+- Se o produto integrar com o Instagram (ex.: "compartilhar no Instagram"), use o nome só de forma
+  descritiva ("para Instagram", "no Instagram"), com "I" maiúsculo, mesma fonte e tamanho do texto ao
+  redor, sem traduzir nem abreviar, e use apenas os logos oficiais do pacote de marca, sem alterá-los.
+- Capturas de tela da interface do Instagram em publicidade/vídeo exigem permissão da Meta.
+- Não use nem registre marcas da Meta (ou nomes confusamente parecidos) como marca, nome de
+  empresa, nome de usuário ou domínio.
