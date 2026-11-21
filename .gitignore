@@ -1,2 +1,5 @@
 node_modules/
 .netlify/
+# Lista de códigos de acesso: nunca publicar
+*codigos*
+*.csv
