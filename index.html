@@ -377,7 +377,7 @@ const fmtBRL=v=>'R$'+Number(v).toFixed(2).replace('.',',');
 function isDemoHost(){try{return location.protocol==='file:'||/claude/i.test(location.hostname)||!location.hostname}catch(e){return true}}
 async function api(path,opt={}){
  const ctl=window.AbortController?new AbortController():null;const t=setTimeout(()=>ctl&&ctl.abort(),opt.timeout||12000);
- try{const r=await fetch('/.netlify/functions/'+path,{method:opt.method||'GET',body:opt.body,signal:ctl&&ctl.signal,cache:'no-store',headers:{'content-type':'application/json'}});const j=await r.json().catch(()=>({}));return{ok:r.ok,status:r.status,data:j||{}}}
+ try{const h={'content-type':'application/json'};if(opt.token)h.authorization='Bearer '+opt.token;const r=await fetch('/.netlify/functions/'+path,{method:opt.method||'GET',body:opt.body,signal:ctl&&ctl.signal,cache:'no-store',headers:h});const j=await r.json().catch(()=>({}));return{ok:r.ok,status:r.status,data:j||{}}}
  catch(e){return{ok:false,status:0,data:{}}}finally{clearTimeout(t)}
 }
 async function detectPay(){
@@ -831,7 +831,62 @@ function loadDB(){
  DB={users,session:s};
 }
 function U(){return DB.session?DB.users[DB.session]||null:null}
+/* =========================================================
+   NUVEM: contas e progresso guardados no servidor (Netlify Functions + Netlify Blobs).
+   Liga sozinha quando o servidor de contas responde; senão o app guarda só no aparelho.
+   ========================================================= */
+const K_TOKEN='orivie_token';
+const CLOUD={on:false,token:null,timer:null,pushing:false,again:false};
+const LOCAL_ONLY=['email','pass','paid','payMethod','payDate','accessCode','pix','_localAt','_cloudAt'];
+function dataOf(u){const d={};for(const k in u)if(!LOCAL_ONLY.includes(k))d[k]=u[k];return d}
+const cloud=(action,body={},timeout)=>api('account',{method:'POST',body:JSON.stringify({action,...body}),token:CLOUD.token,timeout:timeout||15000});
+async function detectCloud(){
+ CLOUD.token=LS.get(K_TOKEN,null);if(typeof CLOUD.token!=='string')CLOUD.token=null;
+ if(isDemoHost()){CLOUD.on=false;return false}
+ const r=await api('account',{method:'POST',body:JSON.stringify({action:'ping'}),timeout:7000});
+ CLOUD.on=!!(r.ok&&r.data&&r.data.ok);return CLOUD.on;
+}
+function setToken(t){CLOUD.token=t||null;if(t)LS.set(K_TOKEN,t);else LS.del(K_TOKEN)}
+function saveLocal(){LS.set(K_USERS,DB.users);LS.set(K_SESSION,DB.session)}
+/* Aplica no aparelho o que veio da nuvem. O status de pagamento é SEMPRE o do servidor. */
+function applyCloud(res,local){
+ const pr=res.profile||{};const d=res.data||{};
+ const u=fix({...d});
+ if(local&&Array.isArray(local.boards)){const ids=new Set(u.boards.map(b=>b.id));u.boards=u.boards.concat(local.boards.filter(b=>b&&!ids.has(b.id)))}
+ Object.assign(u,{email:pr.email,name:pr.name||u.name,birth:pr.birth||u.birth,paid:!!pr.paid,payMethod:pr.payMethod||'',payDate:pr.payDate||'',created:(pr.created||'').slice(0,10)||u.created,pass:'',_cloudAt:res.updatedAt||Date.now(),_localAt:res.updatedAt||Date.now()});
+ if(u.testDone&&!u.profile)u.profile='serena';
+ DB.users[pr.email]=u;return u;
+}
+function schedulePush(){if(!CLOUD.on||!CLOUD.token||!U())return;const u=U();u._localAt=Date.now();clearTimeout(CLOUD.timer);CLOUD.timer=setTimeout(pushCloud,1200)}
+async function pushCloud(){
+ const u=U();if(!CLOUD.on||!CLOUD.token||!u)return;
+ if(CLOUD.pushing){CLOUD.again=true;return}
+ CLOUD.pushing=true;const sentAt=u._localAt;
+ const r=await cloud('save',{data:dataOf(u),name:u.name,birth:u.birth});
+ CLOUD.pushing=false;
+ if(r.ok){u._cloudAt=r.data.updatedAt;if(u._localAt===sentAt)u._localAt=r.data.updatedAt;
+  const wasPaid=u.paid;u.paid=!!(r.data.profile&&r.data.profile.paid);saveLocal();if(wasPaid&&!u.paid)render()}
+ else if(r.status===401)sessionExpired();
+ else if(r.status===413)toast(r.data.message||'Seus dados ficaram grandes demais. Apague boards antigos.');
+ if(CLOUD.again){CLOUD.again=false;pushCloud()}
+}
+/* Atualiza o aparelho com a nuvem ao abrir o app (e corrige qualquer "pago" falso no navegador). */
+async function refreshCloud(){
+ const u=U();if(!CLOUD.on||!u)return false;
+ if(!CLOUD.token){DB.session=null;saveLocal();toast('Atualizamos o Orivie! Entre de novo para guardar seu progresso na nuvem.');go('login');return true}
+ const r=await cloud('me');
+ if(r.status===401){sessionExpired();return true}
+ if(!r.ok)return false;
+ const before=JSON.stringify([u.paid,u.testDone,u.prefsDone]);
+ if((r.data.updatedAt||0)>(u._cloudAt||0)||!u._localAt||u._localAt<=(u._cloudAt||0))applyCloud(r.data,u);
+ else{u.paid=!!r.data.profile.paid;pushCloud()}
+ saveLocal();const nu=U();
+ if(JSON.stringify([nu.paid,nu.testDone,nu.prefsDone])!==before){go(stepFor(nu))}else render();
+ return true;
+}
+function sessionExpired(){setToken(null);DB.session=null;saveLocal();closeModal();toast('Sua sessão expirou. Entre de novo.');go('login')}
 function save(){
+ schedulePush();
  const ok=LS.set(K_USERS,DB.users);
  LS.set(K_SESSION,DB.session);
  if(!ok&&!ui.warnedStorage){ui.warnedStorage=true;toast('Este navegador não está guardando dados agora (espaço cheio ou janela anônima). Se o espaço encheu, apague boards antigos.')}
@@ -1081,6 +1136,7 @@ function vAuth(mode){const cad=mode==='cadastro';return brand()+`<main class="sc
   <p class="err" data-err="form"></p>
   <button type="submit" class="sr-only" tabindex="-1">Enviar</button>
  </form>
+ ${cad?`<p class="small muted mt-4" style="font-weight:500">${ic('lock',14)} Seus dados e seu progresso ficam guardados com segurança para você entrar de qualquer aparelho. Usamos seus dados só para o funcionamento do app.</p>`:''}
  <p class="text-center small muted mt-6">${cad?'Já tem conta? <button class="link" data-act="go" data-to="login">Entrar</button>':'Ainda não tem conta? <button class="link" data-act="go" data-to="cadastro">Criar conta</button>'}</p>
  <button class="btn btn-ghost mt-3" data-act="go" data-to="boas-vindas">${ic('back',18)} Voltar</button>
 </main>
@@ -1634,6 +1690,15 @@ const FORMS={
   if(pass.length<6)setErr(f,'pass','Use pelo menos 6 caracteres.');
   const be=birthErr(birth);if(be)setErr(f,'birth',be);
   if(f.querySelector('.bad'))return nope(f);
+  if(ui.authBusy)return;
+  ui.authBusy=true;await ui.cloudReady;
+  if(CLOUD.on){
+   const r=await cloud('register',{name,email,pass,birth,data:dataOf(blankUser())});ui.authBusy=false;
+   if(!r.ok){if(r.data.error==='exists')setErr(f,'email',r.data.message);else setErr(f,'form',r.status===0?'Sem conexão com a internet. Confira e tente de novo.':(r.data.message||'Não consegui criar sua conta agora. Tente de novo.'));return nope(f)}
+   setToken(r.data.token);const cu=applyCloud(r.data);DB.session=email;saveLocal();
+   sfx('ok');toast(`Conta criada! Bem-vinda, ${esc(first(name))}.`);go(stepFor(cu));return;
+  }
+  ui.authBusy=false;
   const u=blankUser();u.name=name;u.email=email;u.birth=birth;u.pass=await hashPass(pass);
   DB.users[email]=u;DB.session=email;
   const stored=save();
@@ -1643,6 +1708,21 @@ const FORMS={
  async login(f){
   clearErr(f);const email=f.email.value.trim().toLowerCase(),pass=f.pass.value;
   if(!email||!pass){setErr(f,'form','Preencha e-mail e senha.');if(!email)setErr(f,'email','');if(!pass)setErr(f,'pass','');return nope(f)}
+  if(ui.authBusy)return;
+  ui.authBusy=true;await ui.cloudReady;
+  if(CLOUD.on){
+   let r=await cloud('login',{email,pass});
+   const local=DB.users[email];
+   if(r.status===404&&local&&local.pass&&await checkPass(pass,local.pass)){
+    r=await cloud('register',{name:local.name,email,pass,birth:local.birth,data:dataOf(local)});
+    if(r.ok&&local.paid)setTimeout(()=>toast('Se você já tinha liberado o acesso, digite seu código de novo para confirmar.'),1500);
+   }
+   ui.authBusy=false;
+   if(!r.ok){setErr(f,'form',r.status===0?'Sem conexão com a internet. Confira e tente de novo.':(r.data.message||'E-mail ou senha incorretos.'));setErr(f,'pass','');return nope(f)}
+   setToken(r.data.token);const cu=applyCloud(r.data,local);DB.session=email;saveLocal();
+   sfx('ok');toast(`Oi de novo, ${esc(first(cu.name))}!`);go(stepFor(cu));return;
+  }
+  ui.authBusy=false;
   const u=DB.users[email];
   if(!u||!(await checkPass(pass,u.pass))){setErr(f,'form','E-mail ou senha incorretos.');setErr(f,'pass','');return nope(f)}
   DB.session=email;save();sfx('ok');toast(`Oi de novo, ${esc(first(u.name))}!`);go(stepFor(u));
@@ -1664,6 +1744,14 @@ const FORMS={
   if(ui.codeLock&&Date.now()<ui.codeLock){setErr(f,'code','Muitas tentativas. Aguarde alguns segundos e tente de novo.');return nope(f)}
   const c=normCode(f.code.value);
   if(c.length!==15||!c.startsWith('ORV')){setErr(f,'code','O código tem o formato ORV-XXXX-XXXX-XXXX.');return nope(f)}
+  await ui.cloudReady;
+  if(CLOUD.on){
+   if(ui.codeBusy)return;ui.codeBusy=true;
+   const r=await cloud('redeem',{code:c});ui.codeBusy=false;
+   if(r.status===401){sessionExpired();return}
+   if(!r.ok||!r.data.profile||!r.data.profile.paid){setErr(f,'code',r.status===0?'Sem conexão com a internet. Confira e tente de novo.':(r.data.message||'Não consegui verificar o código agora.'));return nope(f)}
+   unlockPaid(u,'codigo');return;
+  }
   let h='';try{h=await codeHash(c)}catch(e){setErr(f,'code','Este navegador não conseguiu verificar o código. Tente pelo Chrome ou Safari atualizados.');return}
   if(!CODE_HASHES.has(h)){ui.codeFails=(ui.codeFails||0)+1;if(ui.codeFails>=5){ui.codeLock=Date.now()+30000;ui.codeFails=0}setErr(f,'code','Código não encontrado. Confira se digitou igual ao que recebeu.');return nope(f)}
   u.accessCode=h.slice(0,10);unlockPaid(u,'codigo');
@@ -1689,9 +1777,12 @@ const FORMS={
   clearErr(f);const u=U();const name=f.name.value.trim(),birth=f.birth.value,cur=f.cur.value,nw=f.nw.value;
   if(name.length<2)setErr(f,'name','Conta pra gente o seu nome.');
   const be=birthErr(birth);if(be)setErr(f,'birth',be);
-  if(nw||cur){if(nw.length<6)setErr(f,'nw','Use pelo menos 6 caracteres.');if(!cur||!(await checkPass(cur,u.pass)))setErr(f,'cur','Senha atual incorreta.')}
+  if(nw||cur){
+   if(nw.length<6)setErr(f,'nw','Use pelo menos 6 caracteres.');
+   else if(CLOUD.on){const r=await cloud('password',{cur,nw});if(!r.ok)setErr(f,'cur',r.data.message||'Não consegui trocar a senha agora.')}
+   else if(!cur||!(await checkPass(cur,u.pass)))setErr(f,'cur','Senha atual incorreta.')}
   if(f.querySelector('.bad'))return nope(f);
-  u.name=name;u.birth=birth;if(nw)u.pass=await hashPass(nw);
+  u.name=name;u.birth=birth;if(nw&&!CLOUD.on)u.pass=await hashPass(nw);
   save();sfx('ok');closeModal();render();toast('Perfil atualizado!');
  }
 };
@@ -1731,7 +1822,7 @@ const ACT={
  closeModal:()=>closeModal(),
  confirmOk:()=>{const f=ui.onOk;ui.onOk=null;closeModal();if(f)f()},
  tab:el=>{ui.reading=null;sfx('tap');go('app-'+el.dataset.v)},
- logout:()=>{DB.session=null;save();closeModal();ui.payTab='pix';go('boas-vindas')},
+ logout:()=>{if(CLOUD.on&&CLOUD.token)cloud('logout',{},5000);setToken(null);clearTimeout(CLOUD.timer);DB.session=null;saveLocal();closeModal();ui.payTab='pix';go('boas-vindas')},
  logoutAsk:()=>confirmBox({title:'Já vai?',text:'Seus dados ficam salvos neste aparelho. Volte logo, tá?',ok:'Sair',cancel:'Ficar mais um pouco',danger:true,onOk:()=>ACT.logout()}),
  payTab:el=>{ui.payTab=el.dataset.v==='card'?'card':'pix';render()},
  copyPix:async()=>{const u=U();const ok=await copyText((u&&u.pix&&u.pix.qr)||PIX_CODE);if(ok){sfx('ok');toast(`${ic('copy',18)} Código copiado!`)}else{const i=$('#pixcode');if(i){i.focus();i.select()}toast('Selecione o código e copie manualmente.')}},
@@ -1904,6 +1995,7 @@ function watchBadge(){const check=()=>{try{document.body.classList.toggle('nl-ba
 watchBadge();
 ui.route=hashRoute();
 PAY.mode=CONFIG.metodo==='codigo'?'code':isDemoHost()?'demo':'checking';
+ui.cloudReady=detectCloud().then(on=>{if(on)return refreshCloud()}).catch(()=>{});
 render();
 detectPay().then(async()=>{const u=U();if(u&&await syncAccess(u)){go(stepFor(u));return}if(route()==='pagamento')render()});
 </script>
