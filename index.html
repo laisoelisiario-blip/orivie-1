@@ -437,6 +437,19 @@ body{font-weight:400}
 .logo-big b{display:block;font-family:var(--f-display);font-weight:500;font-size:44px;line-height:1}
 .logo-big span{display:block;font-size:16px;letter-spacing:.4px;color:var(--texto);margin-top:4px}
 .or-sep{text-align:center;color:var(--muted);margin:14px 0}
+/* Ori assistente */
+.ori-fab{position:fixed;z-index:45;right:max(14px,calc(50% - 215px + 14px));bottom:calc(92px + env(safe-area-inset-bottom));display:flex;align-items:center;gap:6px;padding:8px 14px 8px 8px;border-radius:999px;background:var(--card);border:1px solid var(--line);box-shadow:0 8px 24px rgba(58,46,40,.16);font-weight:700;font-size:15px;color:var(--texto)}
+.ori-fab:active{transform:scale(.96)}
+.chat-log{display:flex;flex-direction:column;gap:10px}
+.msg{max-width:88%;padding:12px 14px;border-radius:18px;font-size:16px;line-height:1.5}
+.msg.ori{align-self:flex-start;background:#E4EBE0;border-bottom-left-radius:6px}
+.msg.me{align-self:flex-end;background:var(--terra-btn);color:#fff;border-bottom-right-radius:6px}
+.msg .btn-outline{background:var(--card)}
+.ori-chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+.ori-chips .chip-f{min-height:38px;font-size:14px;background:#EFE9E1}
+.ori-input{display:flex;gap:8px}
+.ori-input .input{min-height:50px}
+
 /* Combina em card horizontal */
 .hcard{background:var(--card);border:1px solid var(--line);border-radius:20px;box-shadow:var(--shadow);padding:14px}
 .hcard-main{display:flex;gap:14px;width:100%;text-align:left;align-items:flex-start}
@@ -1454,7 +1467,107 @@ function vApp(u,tab){
  const right=`<div class="flex gap-1"><button class="stat" data-act="streakInfo" aria-label="Sequência de ${st} dias">${ic('flame',22)}<b class="${st?'c-terra':'c-gray'}">${st}</b></button><button class="stat" data-act="xpInfo" aria-label="${u.xp} XP no total">${ic('star',22)}<b class="${u.xp?'c-mel':'c-gray'}">${u.xp}</b></button></div>`;
  const body={hoje:tHoje,combina:tCombina,checklist:tCheck,board:tBoard,aprender:tLearn,eu:tEu}[tab]||tHoje;
  return brand(right)+`<main class="screen app">${body(u)}</main>
+ <button class="ori-fab" data-act="oriOpen" aria-label="Falar com a Ori, sua assistente">${leafLogo(30)}<span>Ori</span></button>
  <nav class="tabbar" aria-label="Navegação principal">${TABS.map(t=>`<button data-act="tab" data-v="${t.id}" ${t.id===tab?'aria-current="page"':''} aria-label="${t.n}">${ic(t.ic,28)}<span>${t.n}</span></button>`).join('')}</nav>`;
+}
+
+/* =========================================================
+   ORI ASSISTENTE (sem IA): respostas prontas, personalizadas por perfil e pelos dados da pessoa
+   ========================================================= */
+const ORI_TOPICS=[
+ {id:'ideia',n:'Me dá uma ideia pro dia'},
+ {id:'estresse',n:'Como lido com o estresse?'},
+ {id:'decidir',n:'Me ajuda a decidir algo'},
+ {id:'desanimo',n:'Estou sem ânimo'},
+ {id:'combina',n:'O que combina comigo hoje?'},
+ {id:'frase',n:'Uma frase pra mim'},
+ {id:'forca',n:'Qual é o meu ponto forte?'},
+ {id:'semana',n:'Como está minha semana?'},
+ {id:'texto',n:'Me indica um texto'},
+ {id:'ajuda',n:'Preciso de ajuda séria'}
+];
+const ORI_STRESS={
+ serena:'Quando o mundo fica barulhento, sua sensibilidade sente tudo em dobro. Tente 5 minutos de silêncio, uma música calma e uma única tarefa pequena. Criar algo simples, como desenhar ou escrever três linhas, ajuda a organizar o que você sente.',
+ exploradora:'Você alivia o estresse se movimentando. Uma caminhada curta por um caminho diferente já muda o clima. Depois, escolha só uma coisa para resolver hoje: o resto pode esperar.',
+ analitica:'Sua mente quer resolver tudo de uma vez. Escreva o que está te preocupando em duas colunas: o que depende de você e o que não depende. Foque em um próximo passo concreto e faça uma pausa sem telas.',
+ conectiva:'Você sente o peso de todo mundo. Converse com alguém de confiança, mas lembre: cuidar de você também é prioridade. Hoje, pratique um “agora não posso” sem culpa.',
+ contemplativa:'Você precisa de espaço para digerir as coisas. Respire devagar por 2 minutos (4 segundos inspirando, 6 expirando) e, se puder, fique um pouco ao ar livre. Depois transforme a reflexão em um passo pequeno.',
+ determinada:'Sob pressão, você costuma acelerar. Faça o contrário por 10 minutos: pausa de verdade, água e respiração. Depois escolha a prioridade número 1 e peça ajuda no resto.'
+};
+const ORI_DECIDE={
+ serena:'Imagine cada opção por um minuto e repare como o seu corpo reage: alívio ou aperto? Sua sensibilidade é uma bússola. Depois, dê um prazo para decidir, para não ficar esperando o momento perfeito.',
+ exploradora:'Pergunte: qual opção me faz aprender mais? Se der, teste em pequena escala antes de se comprometer. Escolher também é dizer não para outras aventuras, e tudo bem.',
+ analitica:'Liste prós e contras e dê um peso de 1 a 5 para cada um. Some e veja o resultado. Se empatar, escolha a opção que você conseguiria explicar com orgulho daqui a um ano.',
+ conectiva:'Pense no que você escolheria se ninguém fosse ficar chateado. Ouça quem você ama, mas a decisão final é sua: sua voz importa tanto quanto a dos outros.',
+ contemplativa:'Escreva a pergunta e durma com ela. Sua intuição costuma responder no silêncio. No dia seguinte, faça um pequeno teste prático antes de decidir de vez.',
+ determinada:'Você decide rápido, e isso é ótimo. Antes de bater o martelo, pergunte: o que eu estou deixando de considerar? Ouça uma pessoa de confiança por 5 minutos e então siga em frente.'
+};
+const ORI_DOWN={
+ serena:'Dias assim acontecem e não dizem nada sobre o seu valor. Que tal algo pequeno e gentil: um chá, uma música que você ama e anotar uma coisa bonita que você viu hoje?',
+ exploradora:'Quando a energia some, a rotina pesa ainda mais. Mude um detalhe só: um caminho novo, uma comida diferente, uma playlist nova. Pequenas novidades acordam você.',
+ analitica:'Estar sem ânimo não é falha de planejamento. Hoje, troque a lista longa por uma única tarefa de 10 minutos. Terminar algo pequeno devolve a sensação de controle.',
+ conectiva:'Às vezes o desânimo pede companhia. Mande uma mensagem para alguém querido, mesmo que seja só “pensei em você”. Conexão também cura.',
+ contemplativa:'Respeite o seu ritmo: descansar não é desistir. Escreva o que está sentindo, sem julgar, e depois dê um passo bem pequeno, como abrir a janela ou caminhar 5 minutos.',
+ determinada:'Até quem é forte precisa recarregar. Hoje, celebre o que você já fez nesta semana e descanse sem culpa. O ritmo volta.'
+};
+const ORI_SERIOUS=`Sinto muito que você esteja passando por isso. Eu sou uma assistente simples e não substituo ajuda profissional.<br><br><b>Se você está em perigo ou pensando em se machucar, procure ajuda agora:</b><br>• <b>CVV</b>: ligue <a class="link" href="tel:188">188</a> (grátis, 24 horas) ou acesse <a class="link" href="https://cvv.org.br" target="_blank" rel="noopener">cvv.org.br</a><br>• <b>SAMU</b>: <a class="link" href="tel:192">192</a> · <b>Polícia</b>: <a class="link" href="tel:190">190</a><br><br>Você não precisa passar por isso sem apoio. Conversar com alguém de confiança e com um profissional de saúde mental faz diferença.`;
+const ORI_KEYS=[
+ ['ajuda',/suicid|me matar|quero morrer|vontade de morrer|me machucar|automutil|autoles|me cortar|nao aguento mais|sem saida|violencia|abuso|agredi|apanh/],
+ ['estresse',/estress|ansios|ansiedade|nervos|pressao|sobrecarreg|preocupad|cansad|exaust/],
+ ['decidir',/decid|decisao|escolh|duvida|indecis/],
+ ['desanimo',/triste|desanim|sem animo|pra baixo|para baixo|sozinh|chorar|vazio|desmotiv|chatead/],
+ ['ideia',/ideia|tedio|entediad|o que fazer|sugest|fazer hoje/],
+ ['combina',/combina|roupa|musica|lugar|comida|viagem|livro|look/],
+ ['frase',/frase|motiva|inspira/],
+ ['forca',/forte|forca|qualidade|talento/],
+ ['semana',/semana|progresso|sequencia|como estou|xp/],
+ ['texto',/texto|ler|leitura|aprender|artigo/],
+ ['ajuda',/ajuda|cvv|terapia|psicolog|socorro/],
+ ['oi',/^(oi|ola|bom dia|boa tarde|boa noite|e ai|hey)\b/]
+];
+const normTxt=t=>String(t||'').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').trim();
+function oriTopicOf(text){const t=normTxt(text);for(const [id,re] of ORI_KEYS)if(re.test(t))return id;return null}
+const oriPick=arr=>arr[Math.floor(Math.random()*arr.length)];
+function oriAnswer(id,u){
+ const p=prof(u);const nm=esc(first(u.name));
+ const btn=(act,label,extra='')=>`<button class="btn btn-outline btn-sm mt-3" style="width:auto" data-act="${act}" ${extra}>${label}</button>`;
+ switch(id){
+  case 'oi':return `Oi, ${nm}! Que bom te ver por aqui. Toque num assunto abaixo ou me escreva com suas palavras.`;
+  case 'ideia':{const g=oriPick(GROUPS);const idea=(p.check&&p.check[g.id])||GENERIC_CHECK[g.id];const th=p.themes[isoWeek()%4];
+   return `Uma ideia com a cara de quem é ${p.name}: <b>${g.n.toLowerCase()} ${idea.charAt(0).toLowerCase()+idea.slice(1)}</b>.<br><br>E para combinar com o tema da semana, <i>${th.t}</i>: ${th.d}${btn('oriGo','Ir para o checklist','data-v="checklist"')}`}
+  case 'estresse':return `${ORI_STRESS[p.id]||ORI_STRESS.serena}<br><br><span class="small muted">Se o estresse estiver constante, vale conversar com um profissional de saúde.</span>`;
+  case 'decidir':return ORI_DECIDE[p.id]||ORI_DECIDE.serena;
+  case 'desanimo':return `${ORI_DOWN[p.id]||ORI_DOWN.serena}<br><br><span class="small muted">Se esse desânimo estiver durando semanas ou ficando pesado demais, procure um profissional de saúde. Se precisar conversar agora, o CVV atende de graça pelo <a class="link" href="tel:188">188</a>, 24 horas.</span>`;
+  case 'combina':{const list=ITEMS.map(it=>({...it,m:matchOf(it,p.id)})).sort((a,b)=>b.m-a.m).slice(0,8);const it=list[dayOfYear()%list.length];const cat=CATS.find(c=>c.id===it.c);
+   return `Hoje eu escolhi para você: <b>${it.n}</b> (${cat.n.toLowerCase()}, ${it.m}% combina).<br>${it.d} ${cap(it.w)}${btn('item','Ver detalhes',`data-id="${it.id}"`)}`}
+  case 'frase':return `“${oriPick(p.phrases)}”`;
+  case 'forca':{const f=oriPick(p.forces);return `Um dos seus pontos fortes é <b>${f.toLowerCase()}</b>. Como ${p.name}, isso aparece no seu jeito de ver a vida: ${p.short.charAt(0).toLowerCase()+p.short.slice(1)}<br><br>Hoje, use essa força de propósito em uma situação pequena e repare no resultado.`}
+  case 'semana':{const st=streakOf(u);const cl=u.checklist||{items:[]};const done=cl.items.filter(i=>i.done).length;const days=weekDays().filter(d=>u.days.includes(ymd(d))).length;const reads=u.read.length;
+   const msg=days>=5?'Que semana linda de constância!':days>=2?'Você está construindo um ritmo bonito.':'Toda semana pode recomeçar hoje, sem cobrança.';
+   return `Aqui vai o seu resumo:<br>• <b>${days}</b> ${days===1?'dia ativo':'dias ativos'} nesta semana<br>• Sequência atual: <b>${st}</b> ${st===1?'dia':'dias'}<br>• Checks de hoje: <b>${done}/${cl.items.length}</b><br>• Textos lidos: <b>${reads}</b><br><br>${msg}`}
+  case 'texto':{const vis=visibleTexts(u);const t=vis.find(x=>!u.read.includes(x.id))||vis[0];
+   return t?`Sugiro este: <b>${t.title}</b> (${t.min} min de leitura).${btn('oriText','Ler agora',`data-id="${t.id}"`)}`:'Abra a aba Aprender para ver os textos.'}
+  case 'ajuda':return ORI_SERIOUS;
+ }
+ return `Ainda não sei responder isso, ${nm}. Sou uma assistente simples, com respostas prontas. Toque num dos assuntos abaixo que eu te ajudo.`;
+}
+function oriChips(){return `<div class="ori-chips">${ORI_TOPICS.map(t=>`<button class="chip-f" data-act="oriAsk" data-v="${t.id}">${t.n}</button>`).join('')}</div>`}
+function oriSay(id,label){
+ const u=U();if(!u)return;ui.chat=ui.chat||[];
+ ui.chat.push({me:true,html:esc(label)});ui.chat.push({me:false,html:oriAnswer(id,u)});
+ if(ui.chat.length>40)ui.chat=ui.chat.slice(-40);
+ refreshModal();setTimeout(()=>{const ms=LAYER().querySelectorAll('.msg');const m=ms[ms.length-2];if(m)m.scrollIntoView({block:'start',behavior:reduced()?'auto':'smooth'})},30);
+}
+function oriModal(){
+ const u=U();if(!u)return;
+ if(!ui.chat||!ui.chat.length){const h=new Date().getHours();const g=h>=5&&h<12?'Bom dia':h>=12&&h<18?'Boa tarde':'Boa noite';
+  ui.chat=[{me:false,html:`${g}, ${esc(first(u.name))}! Eu sou a <b>Ori</b>, sua assistente no Orivie. Posso te dar ideias, dicas para o seu perfil e um resumo da sua semana. Toque num assunto ou escreva abaixo.`}]}
+ openModal(()=>`<div class="flex items-center justify-between gap-2"><div class="flex items-center gap-3">${leafLogo(40)}<div><h2 class="h2" style="line-height:1.1">Ori</h2><p class="small muted" style="font-weight:400">Sua assistente · respostas prontas</p></div></div><button class="btn-x" data-act="closeModal" aria-label="Fechar">${ic('x',22)}</button></div>
+  <div class="chat-log mt-4" aria-live="polite">${ui.chat.map(m=>`<div class="msg ${m.me?'me':'ori'}">${m.html}</div>`).join('')}</div>
+  ${oriChips()}
+  <form data-form="ori" class="ori-input mt-4" novalidate><label class="sr-only" for="oriT">Escreva para a Ori</label><input id="oriT" name="t" class="input" maxlength="200" placeholder="Escreva aqui..." autocomplete="off"><button class="btn btn-primary" type="submit" style="width:auto;padding:0 18px" aria-label="Enviar">Enviar</button></form>
+  <p class="small muted mt-3" style="font-weight:400">A Ori não é uma inteligência artificial e não substitui terapia. Em crise, ligue 188 (CVV).</p>`,{full:true});
+ setTimeout(()=>{const s=LAYER().querySelector('.sheet');if(s)s.scrollTop=s.scrollHeight},30);
 }
 
 /* ---- Aba Hoje ---- */
@@ -1939,6 +2052,7 @@ function nope(f){sfx('soft');const b=f.querySelector('.bad');if(b){b.classList.r
 const emailOk=e=>/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(e);
 function birthErr(b){if(!b)return 'Escolha sua data de nascimento.';const d=parseYmd(b);if(isNaN(d)||b>today())return 'Essa data ainda não chegou!';if(d.getFullYear()<1900)return 'Confere o ano para mim?';return ''}
 const FORMS={
+ ori(f){const t=String(f.t.value||'').trim();if(!t)return;oriSay(oriTopicOf(t)||'?',t);const i=document.getElementById('oriT');if(i)i.focus()},
  async cadastro(f){
   clearErr(f);const name=f.name.value.trim(),email=f.email.value.trim().toLowerCase(),pass=f.pass.value,birth=f.birth.value;
   if(name.length<2)setErr(f,'name','Conta pra gente o seu nome.');
@@ -2077,6 +2191,10 @@ const ACT={
  hardHome:()=>{closeModal();const u=U();go(u?stepFor(u):'boas-vindas')},
  closeModal:()=>closeModal(),
  confirmOk:()=>{const f=ui.onOk;ui.onOk=null;closeModal();if(f)f()},
+ oriOpen:()=>{sfx('tap');oriModal()},
+ oriAsk:el=>{const t=ORI_TOPICS.find(x=>x.id===el.dataset.v);oriSay(el.dataset.v,t?t.n:el.textContent)},
+ oriGo:el=>{closeModal();go('app-'+el.dataset.v)},
+ oriText:el=>{closeModal();ui.reading=el.dataset.id;go('app-aprender');window.scrollTo(0,0)},
  togglePass:el=>{const i=document.getElementById(el.dataset.for);if(i){i.type=i.type==='password'?'text':'password';el.setAttribute('aria-label',i.type==='password'?'Mostrar senha':'Esconder senha')}},
  tab:el=>{ui.reading=null;sfx('tap');go('app-'+el.dataset.v)},
  logout:()=>{if(CLOUD.on&&CLOUD.token)cloud('logout',{},5000);setToken(null);clearTimeout(CLOUD.timer);DB.session=null;saveLocal();closeModal();ui.payTab='pix';go('boas-vindas')},
