@@ -362,7 +362,7 @@ const PIX_CODE='00020126580014BR.GOV.BCB.PIX0136orivie-sua-personalidade-pagamen
            'pix'    = sempre PIX automático do Mercado Pago (Netlify Functions + MP_ACCESS_TOKEN)
    ========================================================= */
 const CONFIG={
- metodo:'auto',
+ metodo:'codigo',   // SOMENTE código de acesso libera o app (decisão da dona do app)
  pixCopiaCola:'00020126580014BR.GOV.BCB.PIX01365fef8f52-cb10-4c3c-afdc-7d4384740265520400005303986540512.905802BR5923Lais Oliveira Elisiario6009SAO PAULO62140510DscuVXLO726304D38C',    // cole aqui o PIX copia e cola de R$12,90 gerado no seu banco (use chave aleatória)
  linkPagamento:'',   // ou um link de pagamento, ex.: 'https://mpago.la/abc123' (usado se não houver PIX acima)
  whatsapp:'5591981269910',        // seu WhatsApp só com números, com 55 + DDD, ex.: '5511999998888'
@@ -381,8 +381,8 @@ async function api(path,opt={}){
  catch(e){return{ok:false,status:0,data:{}}}finally{clearTimeout(t)}
 }
 async function detectPay(){
- if(isDemoHost()){PAY.mode='demo';return}
  if(CONFIG.metodo==='codigo'){PAY.mode='code';return}
+ if(isDemoHost()){PAY.mode='demo';return}
  PAY.mode='checking';
  const r=await api('pix-config',{timeout:8000});
  if(r.ok&&r.data.real){PAY.mode='real';if(r.data.price)PAY.price=Number(r.data.price)}
@@ -390,7 +390,7 @@ async function detectPay(){
  else PAY.mode=r.ok?'off':'error';
 }
 async function syncAccess(u){
- if(PAY.mode!=='real'||!u||u.paid)return false;
+ if(CONFIG.metodo==='codigo'||PAY.mode!=='real'||!u||u.paid)return false;
  const r=await api('pix-access?email='+encodeURIComponent(u.email));
  if(r.ok&&r.data.paid){u.paid=true;u.payMethod='pix';u.payDate=u.payDate||today();u.pix=null;save();return true}
  return false;
@@ -1177,6 +1177,7 @@ async function pixCheck(silent){
  if(!silent){if(r.status===0)toast('Sem conexão agora. Tente de novo em instantes.');else infoBox({title:'Ainda não recebemos',text:'Pode levar alguns segundos depois de pagar. Continuamos verificando sozinhos, não precisa gerar outro PIX.',mood:'think'})}
 }
 function unlockPaid(u,method){
+ if(CONFIG.metodo==='codigo'&&method!=='codigo')return;
  u.paid=true;u.payMethod=method;u.payDate=today();u.pix=null;save();clearInterval(ui.pixTimer);
  sfx('win');confetti();
  openModal(()=>`<div class="text-center">${mascot('celebrate',130,'hop')}<h2 class="display mt-3">Pagamento aprovado!</h2><p class="muted mt-2">Seu acesso vitalício está liberado. Agora vem a parte mais gostosa: te conhecer.</p></div><button class="btn btn-primary mt-6" data-act="afterPay" autofocus>Começar o teste</button>`,{center:true,lock:true});
@@ -1902,7 +1903,7 @@ try{loadDB()}catch(e){DB={users:{},session:null}}
 function watchBadge(){const check=()=>{try{document.body.classList.toggle('nl-badge-on',!!document.getElementById('nl-badge-frame'))}catch(e){}};check();try{new MutationObserver(check).observe(document.body,{childList:true})}catch(e){}}
 watchBadge();
 ui.route=hashRoute();
-PAY.mode=isDemoHost()?'demo':CONFIG.metodo==='codigo'?'code':'checking';
+PAY.mode=CONFIG.metodo==='codigo'?'code':isDemoHost()?'demo':'checking';
 render();
 detectPay().then(async()=>{const u=U();if(u&&await syncAccess(u)){go(stepFor(u));return}if(route()==='pagamento')render()});
 </script>
