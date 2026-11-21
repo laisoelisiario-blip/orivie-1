@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>Painel Orivie</title>
+<meta name="theme-color" content="#F7F3EE">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,500;9..40,600;9..40,700;9..40,800&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet">
+<style>
+:root{--creme:#F7F3EE;--terra:#D9A08B;--terra-sh:#B97F6A;--terra-lt:#F8EAE3;--terra-dk:#94553F;--salvia:#A8B8A0;--salvia-lt:#EDF1EA;--salvia-dk:#4F6249;--texto:#3A2E28;--muted:#75655B;--bege:#EAE2D9;--bege-sh:#D5C8BA;--mel-lt:#FBF0DA;--mel-dk:#8A621A;--erro:#B5544A;
+ --f-display:"Playfair Display",Georgia,serif;--f-ui:"DM Sans",system-ui,-apple-system,"Segoe UI",sans-serif}
+*{box-sizing:border-box}
+body{margin:0;background:var(--creme);color:var(--texto);font-family:var(--f-ui);font-weight:500;line-height:1.45;-webkit-font-smoothing:antialiased}
+button,input{font:inherit;color:inherit}
+.wrap{max-width:960px;margin:0 auto;padding:20px max(16px,env(safe-area-inset-right)) 60px max(16px,env(safe-area-inset-left))}
+header{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:20px}
+.brand{font-family:var(--f-display);font-weight:800;font-size:26px}
+.brand small{display:block;font-family:var(--f-ui);font-size:13px;font-weight:700;color:var(--terra-dk);letter-spacing:.4px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;padding:10px 18px;border:2px solid transparent;border-radius:12px;font-weight:800;font-size:13.5px;letter-spacing:.6px;text-transform:uppercase;cursor:pointer;transition:transform 80ms}
+.btn:active{transform:translateY(3px);box-shadow:none!important}
+.btn-primary{background:var(--terra);color:var(--texto);box-shadow:0 4px 0 var(--terra-sh)}
+.btn-outline{background:#fff;color:var(--terra-dk);border-color:var(--bege);box-shadow:0 2px 0 var(--bege-sh)}
+.btn:disabled{background:var(--bege);color:#ADA198;box-shadow:none;cursor:not-allowed}
+.card{background:#fff;border:2px solid var(--bege);border-radius:16px;padding:16px 18px}
+.login{max-width:420px;margin:12vh auto 0}
+.login h1{font-family:var(--f-display);font-size:30px;margin:0 0 6px}
+label{display:block;font-weight:800;font-size:14px;margin:16px 0 6px}
+.input{width:100%;min-height:50px;padding:12px 14px;background:#FBF8F4;border:2px solid var(--bege);border-radius:12px;font-size:16px}
+.input:focus{outline:none;border-color:var(--salvia);background:#fff}
+.err{color:var(--erro);font-weight:700;font-size:14px;margin:10px 0 0;min-height:20px}
+.muted{color:var(--muted)}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-bottom:18px}
+.stat b{display:block;font-family:var(--f-display);font-size:30px;font-weight:800;line-height:1.1;font-variant-numeric:tabular-nums}
+.stat span{font-size:13px;font-weight:700;color:var(--muted)}
+.stat.money b{color:var(--terra-dk)}
+.tools{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:12px}
+.tools .input{flex:1 1 220px;min-height:46px}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+.chip{min-height:40px;padding:0 14px;background:#fff;border:2px solid var(--bege);border-bottom-width:4px;border-radius:12px;font-weight:800;font-size:12.5px;letter-spacing:.4px;text-transform:uppercase;color:var(--muted);cursor:pointer}
+.chip.on{background:var(--salvia-lt);border-color:var(--salvia);color:var(--salvia-dk)}
+.list{display:grid;gap:10px}
+.client{display:grid;grid-template-columns:1fr auto;gap:6px 12px;align-items:start}
+.client .name{font-weight:800;font-size:16px}
+.client .mail{font-size:14px;color:var(--muted);word-break:break-all}
+.client .meta{grid-column:1/-1;display:flex;flex-wrap:wrap;gap:6px 14px;font-size:13px;color:var(--muted);font-weight:600}
+.tag{display:inline-flex;align-items:center;height:26px;padding:0 10px;border-radius:8px;font:800 11.5px var(--f-ui);letter-spacing:.4px;text-transform:uppercase;white-space:nowrap}
+.tag.ok{background:var(--salvia-lt);color:var(--salvia-dk)}
+.tag.wait{background:var(--mel-lt);color:var(--mel-dk)}
+.empty{text-align:center;padding:30px 10px}
+h2{font-size:18px;font-weight:800;margin:28px 0 10px}
+table{width:100%;border-collapse:collapse;font-size:14px}
+th,td{text-align:left;padding:8px 10px;border-bottom:2px solid var(--bege)}
+th{font-size:12px;letter-spacing:.4px;text-transform:uppercase;color:var(--muted)}
+td.n{font-variant-numeric:tabular-nums;font-weight:800}
+.scroll{overflow-x:auto}
+.foot{font-size:12.5px;margin-top:18px}
+[hidden]{display:none!important}
+</style>
+</head>
+<body>
+<div class="wrap">
+ <section id="login" class="login" hidden>
+  <div class="card">
+   <p class="brand">Orivie <small>PAINEL DA DONA</small></p>
+   <h1>Entrar</h1>
+   <p class="muted">Digite a senha do painel (a variável <b>ADMIN_PASSWORD</b> da Netlify).</p>
+   <form id="loginForm">
+    <label for="pw">Senha do painel</label>
+    <input id="pw" class="input" type="password" autocomplete="current-password" required>
+    <p id="loginErr" class="err" role="alert"></p>
+    <button class="btn btn-primary" style="width:100%;margin-top:6px" type="submit">Entrar</button>
+   </form>
+  </div>
+ </section>
+
+ <section id="dash" hidden>
+  <header>
+   <p class="brand">Orivie <small>PAINEL DE CLIENTES</small></p>
+   <div style="display:flex;gap:8px;flex-wrap:wrap">
+    <button class="btn btn-outline" id="refresh" type="button">Atualizar</button>
+    <button class="btn btn-outline" id="csv" type="button">Exportar CSV</button>
+    <button class="btn btn-outline" id="logout" type="button">Sair</button>
+   </div>
+  </header>
+  <div class="stats" id="stats"></div>
+  <div class="tools"><input id="q" class="input" type="search" placeholder="Buscar por nome ou e-mail" aria-label="Buscar cliente"></div>
+  <div class="chips" role="group" aria-label="Filtro">
+   <button class="chip on" data-f="todas" type="button">Todas</button>
+   <button class="chip" data-f="liberadas" type="button">Liberadas</button>
+   <button class="chip" data-f="aguardando" type="button">Aguardando código</button>
+  </div>
+  <div class="list" id="list"></div>
+  <h2>Códigos usados</h2>
+  <div class="card scroll"><table><thead><tr><th>Nº</th><th>Cliente</th><th>Data</th></tr></thead><tbody id="codes"></tbody></table></div>
+  <p class="foot muted" id="foot"></p>
+ </section>
+</div>
+<script>
+'use strict';
+const API='/.netlify/functions/admin';
+const PROFILES={serena:'Serena Criativa',exploradora:'Exploradora Livre',analitica:'Mente Analítica',conectiva:'Alma Conectiva',contemplativa:'Essência Contemplativa',determinada:'Espírito Determinado'};
+const $=s=>document.querySelector(s);
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const brl=v=>'R$'+Number(v||0).toFixed(2).replace('.',',');
+const dt=s=>{if(!s)return '—';const d=new Date(typeof s==='number'?s:(String(s).length===10?s+'T12:00:00':s));return isNaN(d)?'—':d.toLocaleDateString('pt-BR')};
+const dth=n=>{if(!n)return '—';const d=new Date(n);return isNaN(d)?'—':d.toLocaleString('pt-BR',{day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'})};
+let token=null,data=null,filter='todas';
+try{token=sessionStorage.getItem('orivie_admin')}catch(e){}
+async function call(body){
+ try{const r=await fetch(API,{method:'POST',cache:'no-store',headers:{'content-type':'application/json',...(token?{authorization:'Bearer '+token}:{})},body:JSON.stringify(body)});
+  return {ok:r.ok,status:r.status,data:await r.json().catch(()=>({}))}}
+ catch(e){return {ok:false,status:0,data:{message:'Sem conexão. Confira a internet e tente de novo.'}}}
+}
+function show(id){$('#login').hidden=id!=='login';$('#dash').hidden=id!=='dash'}
+async function load(){
+ $('#refresh').disabled=true;$('#refresh').textContent='Carregando…';
+ const r=await call({action:'list'});
+ $('#refresh').disabled=false;$('#refresh').textContent='Atualizar';
+ if(r.status===401){logout('Sua sessão do painel expirou. Entre de novo.');return}
+ if(!r.ok){$('#list').innerHTML=`<div class="card empty"><b>Não consegui carregar</b><p class="muted">${esc(r.data.message||'Tente de novo em instantes.')}</p></div>`;return}
+ data=r.data;render();
+}
+function render(){
+ const s=data.stats;
+ $('#stats').innerHTML=[
+  ['Contas',s.total],['Liberadas',s.paid],['Aguardando código',s.waiting],['Códigos usados',`${s.codesUsed}/${s.codesTotal}`],['Receita estimada',brl(s.revenue),'money']
+ ].map(([k,v,c])=>`<div class="card stat ${c||''}"><b>${v}</b><span>${k}</span></div>`).join('');
+ const q=$('#q').value.trim().toLowerCase();
+ let list=data.clients.filter(c=>filter==='todas'||(filter==='liberadas'?c.paid:!c.paid));
+ if(q)list=list.filter(c=>(c.name+' '+c.email).toLowerCase().includes(q));
+ $('#list').innerHTML=list.length?list.map(c=>`<article class="card client">
+   <div><div class="name">${esc(c.name||'Sem nome')}</div><div class="mail">${esc(c.email)}</div></div>
+   <span class="tag ${c.paid?'ok':'wait'}">${c.paid?'Liberada':'Aguardando código'}</span>
+   <div class="meta"><span>Cadastro: ${dt(c.created)}</span>${c.paid?`<span>Liberada em ${dt(c.payDate)}${c.code?` · código nº ${c.code}`:''}</span>`:''}<span>Perfil: ${c.testDone&&c.profile?esc(PROFILES[c.profile]||c.profile):'teste não feito'}</span><span>XP ${c.xp}</span><span>${c.read} leitura${c.read===1?'':'s'}</span><span>Última atividade: ${dth(c.lastActive)}</span></div>
+  </article>`).join(''):`<div class="card empty"><b>Nenhuma cliente aqui</b><p class="muted">${q||filter!=='todas'?'Tente outra busca ou filtro.':'Quando alguém criar conta no app, aparece aqui.'}</p></div>`;
+ $('#codes').innerHTML=data.codes.length?data.codes.map(c=>`<tr><td class="n">${c.n||'?'}</td><td>${esc(c.email)}</td><td>${dt(c.at)}</td></tr>`).join(''):`<tr><td colspan="3" class="muted">Nenhum código usado ainda.</td></tr>`;
+ $('#foot').textContent=`Atualizado em ${new Date(data.generatedAt).toLocaleString('pt-BR')} · receita estimada = contas liberadas × ${brl(s.price)}`;
+}
+function toCSV(){
+ if(!data)return;
+ const cols=[['nome','name'],['email','email'],['nascimento','birth'],['cadastro','created'],['liberada','paid'],['data_liberacao','payDate'],['codigo_no','code'],['perfil','profile'],['xp','xp'],['leituras','read'],['metas','goals'],['dias_ativos','days'],['ultima_atividade','lastActive']];
+ const val=(c,k)=>k==='paid'?(c.paid?'sim':'não'):k==='profile'?(PROFILES[c.profile]||''):k==='lastActive'?(c.lastActive?new Date(c.lastActive).toISOString():''):(c[k]??'');
+ const q=v=>{const s=String(v);return /[";\n]/.test(s)?'"'+s.replace(/"/g,'""')+'"':s};
+ const rows=[cols.map(c=>c[0]).join(';')].concat(data.clients.map(c=>cols.map(([,k])=>q(val(c,k))).join(';')));
+ const blob=new Blob(['﻿'+rows.join('\n')],{type:'text/csv;charset=utf-8'});
+ const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=`orivie-clientes-${new Date().toISOString().slice(0,10)}.csv`;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),3000);
+}
+function logout(msg){token=null;try{sessionStorage.removeItem('orivie_admin')}catch(e){}show('login');$('#loginErr').textContent=msg||'';$('#pw').value=''}
+$('#loginForm').addEventListener('submit',async e=>{
+ e.preventDefault();$('#loginErr').textContent='';const btn=e.target.querySelector('button');btn.disabled=true;btn.textContent='Entrando…';
+ const r=await call({action:'login',password:$('#pw').value});btn.disabled=false;btn.textContent='Entrar';
+ if(!r.ok){$('#loginErr').textContent=r.data.message||'Não consegui entrar.';return}
+ token=r.data.token;try{sessionStorage.setItem('orivie_admin',token)}catch(e){}show('dash');load();
+});
+$('#refresh').addEventListener('click',load);
+$('#csv').addEventListener('click',toCSV);
+$('#logout').addEventListener('click',()=>logout());
+$('#q').addEventListener('input',()=>data&&render());
+document.querySelectorAll('.chip').forEach(b=>b.addEventListener('click',()=>{filter=b.dataset.f;document.querySelectorAll('.chip').forEach(x=>x.classList.toggle('on',x===b));if(data)render()}));
+if(token){show('dash');load()}else show('login');
+</script>
+</body>
+</html>
