@@ -134,7 +134,7 @@ function render(){
  $('#list').innerHTML=list.length?list.map(c=>`<article class="card client">
    <div><div class="name">${esc(c.name||'Sem nome')}</div><div class="mail">${esc(c.email)}</div></div>
    <span class="tag ${c.paid?'ok':'wait'}">${c.paid?'Liberada':'Aguardando código'}</span>
-   <div class="meta"><span>Cadastro: ${dt(c.created)}</span>${c.paid?`<span>Liberada em ${dt(c.payDate)}${c.code?` · código nº ${c.code}`:''}</span>`:''}<span>Perfil: ${c.testDone&&c.profile?esc(PROFILES[c.profile]||c.profile):'teste não feito'}</span><span>XP ${c.xp}</span><span>${c.read} leitura${c.read===1?'':'s'}</span><span>Última atividade: ${dth(c.lastActive)}</span></div>
+   <div class="meta"><span>Cadastro: ${dt(c.created)}</span>${c.paid?`<span>Liberada em ${dt(c.payDate)}${c.payMethod==='hotmart'?' · pela Hotmart':c.code?` · código nº ${c.code}`:''}</span>`:''}<span>Perfil: ${c.testDone&&c.profile?esc(PROFILES[c.profile]||c.profile):'teste não feito'}</span><span>XP ${c.xp}</span><span>${c.read} leitura${c.read===1?'':'s'}</span><span>Última atividade: ${dth(c.lastActive)}</span></div>
   </article>`).join(''):`<div class="card empty"><b>Nenhuma cliente aqui</b><p class="muted">${q||filter!=='todas'?'Tente outra busca ou filtro.':'Quando alguém criar conta no app, aparece aqui.'}</p></div>`;
  $('#codes').innerHTML=data.codes.length?data.codes.map(c=>`<tr><td class="n">${c.n||'?'}</td><td>${esc(c.email)}</td><td>${dt(c.at)}</td></tr>`).join(''):`<tr><td colspan="3" class="muted">Nenhum código usado ainda.</td></tr>`;
  $('#foot').textContent=`Atualizado em ${new Date(data.generatedAt).toLocaleString('pt-BR')} · receita estimada = contas liberadas × ${brl(s.price)}`;

@@ -10,7 +10,7 @@
 //   logout   (Bearer)                     -> {ok}
 import { getStore } from "@netlify/blobs";
 import { scryptSync, randomBytes, timingSafeEqual, createHash } from "node:crypto";
-import { CODE_HASHES } from "../lib/codes.mjs";
+import { CODE_HASHES, HOTMART_CODE_HASH } from "../lib/codes.mjs";
 
 const json = (data, status = 200) =>
   new Response(JSON.stringify(data), { status, headers: { "content-type": "application/json; charset=utf-8", "cache-control": "no-store" } });
@@ -140,6 +140,17 @@ export default async (req) => {
           const c = String(b.code || "").toUpperCase().replace(/[^A-Z0-9]/g, "");
           if (c.length !== 15 || !c.startsWith("ORV")) return json({ error: "format", message: "O código tem o formato ORV-XXXX-XXXX-XXXX." }, 400);
           const h = sha("orivie-code::" + c).slice(0, 32);
+          if (HOTMART_CODE_HASH && h === HOTMART_CODE_HASH) {
+            const hm = await st.get("hotmart:" + u.email, { type: "json" });
+            if (!hm || hm.status !== "approved") {
+              await fail("code:" + u.email, 5);
+              return json({ error: "hotmart", message: hm && hm.status === "revoked" ? "Essa compra na Hotmart foi cancelada ou reembolsada." : "Esse código é das compras pela Hotmart. Use no Orivie o mesmo e-mail da compra. Se acabou de comprar, aguarde alguns minutos e tente de novo." }, 403);
+            }
+            u.paid = true; u.payMethod = "hotmart"; u.payDate = now().slice(0, 10); u.accessCode = "hotmart"; u.updatedAt = Date.now();
+            await st.setJSON("user:" + u.email, u);
+            await clearFail("code:" + u.email);
+            return json({ profile: profileOf(u) });
+          }
           if (!CODE_HASHES.has(h)) { await fail("code:" + u.email, 5); return json({ error: "invalid", message: "Código não encontrado. Confira se digitou igual ao que recebeu." }, 404); }
           const used = await st.get("code:" + h, { type: "json" });
           if (used && used.email !== u.email) return json({ error: "used", message: "Esse código já foi usado em outra conta. Fale com a gente pelo WhatsApp." }, 409);
