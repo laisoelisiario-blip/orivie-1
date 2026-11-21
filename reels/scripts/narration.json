@@ -1,0 +1,54 @@
+[
+ {
+  "scene": 1,
+  "start": 0.45,
+  "lines": [
+   "Você já sentiu que ainda não sabe",
+   "exatamente quem você é?"
+  ],
+  "speed": 1.08
+ },
+ {
+  "scene": 2,
+  "start": 5.15,
+  "lines": [
+   "Às vezes, você muda de ideia,",
+   "questiona suas escolhas,",
+   "tenta se encaixar…",
+   "e acaba se perdendo de si mesma."
+  ],
+  "speed": 1.1
+ },
+ {
+  "scene": 3,
+  "start": 11.1,
+  "lines": [
+   "Mas e se você pudesse começar",
+   "a entender sua personalidade,",
+   "seus sentimentos",
+   "e o que realmente combina com você?"
+  ],
+  "speed": 1.15
+ },
+ {
+  "scene": 4,
+  "start": 17.3,
+  "lines": [
+   "O Orivie foi criado para isso:",
+   "ajudar você a descobrir sua personalidade",
+   "e transformar esse conhecimento",
+   "em escolhas mais alinhadas com quem você é."
+  ],
+  "speed": 1.2
+ },
+ {
+  "scene": 5,
+  "start": 25.45,
+  "lines": [
+   "Talvez esteja na hora",
+   "de se conhecer de um jeito novo.",
+   "Descubra-se com Orivie."
+  ],
+  "speed": 1.12
+ }
+]
