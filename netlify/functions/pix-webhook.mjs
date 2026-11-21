@@ -1,7 +1,7 @@
 // POST: recebe as notificações do Mercado Pago. Valida a assinatura (se MP_WEBHOOK_SECRET
 // estiver configurada), consulta o pagamento direto na API e registra o acesso se aprovado.
 import { createHmac, timingSafeEqual } from "node:crypto";
-import { json, fetchPayment, isApprovedOrivie, recordApproved, configured } from "../lib/mp.mjs";
+import { json, fetchPayment, isApprovedOrivie, onApproved, configured } from "../lib/mp.mjs";
 
 function signatureOk(req, dataId) {
   const secret = process.env.MP_WEBHOOK_SECRET;
@@ -30,7 +30,7 @@ export default async (req) => {
   if (type && type !== "payment") return json({ ok: true, ignorado: type });
   const p = await fetchPayment(dataId);
   if (p && isApprovedOrivie(p)) {
-    try { await recordApproved(p); } catch (e) { console.error("Falha ao registrar acesso", e); return json({ error: "store" }, 500); }
+    try { await onApproved(p); } catch (e) { console.error("Falha ao registrar acesso", e); return json({ error: "store" }, 500); }
   }
   return json({ ok: true });
 };

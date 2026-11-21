@@ -352,11 +352,13 @@ const DAILY_GOAL=30;
 const PIX_CODE='00020126580014BR.GOV.BCB.PIX0136orivie-sua-personalidade-pagamento-unico520400005303986540512.905802BR5913ORIVIE6009SAO PAULO62070503***6304A1B2';
 /* =========================================================
    CONFIGURAÇÃO DE PAGAMENTO (edite aqui)
-   metodo: 'codigo' = link de pagamento + código de acesso (funciona até no Netlify Drop)
-           'pix'    = PIX automático do Mercado Pago (precisa das Netlify Functions + MP_ACCESS_TOKEN)
+   metodo: 'auto'   = usa o PIX automático quando ele estiver configurado na Netlify;
+                      se não estiver (ex.: Netlify Drop), usa link de pagamento + código de acesso
+           'codigo' = sempre link de pagamento + código de acesso
+           'pix'    = sempre PIX automático do Mercado Pago (Netlify Functions + MP_ACCESS_TOKEN)
    ========================================================= */
 const CONFIG={
- metodo:'codigo',
+ metodo:'auto',
  linkPagamento:'',   // cole aqui o seu link de pagamento, ex.: 'https://mpago.la/abc123'
  whatsapp:'',        // seu WhatsApp só com números, com 55 + DDD, ex.: '5511999998888'
  contato:''          // opcional: outro contato para enviar o comprovante, ex.: '@orivieapp no Instagram'
@@ -379,6 +381,7 @@ async function detectPay(){
  PAY.mode='checking';
  const r=await api('pix-config',{timeout:8000});
  if(r.ok&&r.data.real){PAY.mode='real';if(r.data.price)PAY.price=Number(r.data.price)}
+ else if(CONFIG.metodo==='auto')PAY.mode='code';
  else PAY.mode=r.ok?'off':'error';
 }
 async function syncAccess(u){

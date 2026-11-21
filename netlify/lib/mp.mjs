@@ -4,6 +4,7 @@
 //   MP_WEBHOOK_SECRET -> Assinatura secreta dos webhooks (recomendada)
 //   ORIVIE_PRICE      -> Preço em reais, ex.: 12.90 (opcional; padrão 12.90)
 import { getStore } from "@netlify/blobs";
+import { sendSaleEmails } from "./mail.mjs";
 
 export const PRICE = Math.round(Number(process.env.ORIVIE_PRICE || "12.90") * 100) / 100;
 
@@ -30,7 +31,7 @@ export async function mp(path, opt = {}) {
   return { ok: res.ok, status: res.status, body };
 }
 
-export const store = () => getStore("orivie-pagamentos");
+export const store = () => globalThis.__orivieTestStore || getStore("orivie-pagamentos");
 
 // Um pagamento só libera acesso se for deste app, estiver aprovado e tiver o valor certo.
 export function isApprovedOrivie(p) {
@@ -52,6 +53,18 @@ export async function recordApproved(p) {
     approvedAt: p.date_approved || new Date().toISOString(),
   };
   await store().setJSON("email:" + email, rec);
+  return email;
+}
+
+// Pagamento aprovado: registra o acesso e envia os e-mails uma única vez por pagamento.
+export async function onApproved(p, siteUrl) {
+  const email = await recordApproved(p);
+  if (!email) return null;
+  const key = "mail:" + p.id;
+  const st = store();
+  if (await st.get(key)) return email;
+  await st.setJSON(key, { at: new Date().toISOString() });
+  await sendSaleEmails({ email, amount: p.transaction_amount, paymentId: String(p.id), approvedAt: p.date_approved, siteUrl: siteUrl || process.env.URL });
   return email;
 }
 
