@@ -1053,7 +1053,7 @@ const PUBLIC=['boas-vindas','cadastro','login'];
 const TABS=[{id:'hoje',n:'Hoje',ic:'sun'},{id:'combina',n:'Combina',ic:'heart'},{id:'checklist',n:'Checklist',ic:'check'},{id:'board',n:'Board',ic:'grid'},{id:'aprender',n:'Aprender',ic:'book'},{id:'eu',n:'Eu',ic:'user'}];
 /* A tela é desenhada direto pelo app; o endereço (#) é só um extra para o botão Voltar.
    Assim o app funciona mesmo em visualizadores que bloqueiam ou não avisam mudanças de endereço. */
-function hashRoute(){let h='';try{h=location.hash||''}catch(e){}h=h.replace(/^#\/?/,'').replace('/','-');if(!h){try{const p=location.pathname.replace(/^\/+|\/+$/g,'').replace(/\.html$/,'').replace('/','-').toLowerCase();if(p&&p!=='index')h=p}catch(e){}}return h||'boas-vindas'}
+function hashRoute(){let h='';try{h=location.hash||''}catch(e){}h=h.replace(/^#\/?/,'').replace('/','-');return h||'boas-vindas'}
 const route=()=>ui.route||hashRoute();
 function setHash(r,push){
  try{if(location.hash==='#'+r)return}catch(e){return}

@@ -7,9 +7,3 @@
 [functions]
   directory = "netlify/functions"
   node_bundler = "esbuild"
-
-# Qualquer endereço que não seja um arquivo existente abre o app (ex.: /cadastro, /login).
-[[redirects]]
-  from = "/*"
-  to = "/index.html"
-  status = 200
