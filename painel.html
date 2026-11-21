@@ -109,6 +109,7 @@ const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&
 const brl=v=>'R$'+Number(v||0).toFixed(2).replace('.',',');
 const dt=s=>{if(!s)return '—';const d=new Date(typeof s==='number'?s:(String(s).length===10?s+'T12:00:00':s));return isNaN(d)?'—':d.toLocaleDateString('pt-BR')};
 const dth=n=>{if(!n)return '—';const d=new Date(n);return isNaN(d)?'—':d.toLocaleString('pt-BR',{day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'})};
+const PRICE=19.90; // preço atual do app
 let token=null,data=null,filter='todas';
 try{token=sessionStorage.getItem('orivie_admin')}catch(e){}
 async function sb(path,body){
@@ -136,7 +137,7 @@ async function load(){
  $('#refresh').disabled=false;$('#refresh').textContent='Atualizar';
  if(r.status===401){logout('Sua sessão do painel expirou. Entre de novo.');return}
  if(!r.ok){$('#list').innerHTML=`<div class="card empty"><b>Não consegui carregar</b><p class="muted">${esc(r.data.message||'Tente de novo em instantes.')}</p></div>`;return}
- data=r.data;render();
+ data=r.data;if(data&&data.stats){data.stats.price=PRICE;data.stats.revenue=(data.stats.paid||0)*PRICE}render();
 }
 function render(){
  const s=data.stats;

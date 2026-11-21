@@ -142,8 +142,8 @@ begin
       'waiting', (select count(*) from public.profiles where not paid),
       'codesUsed', (select count(*) from public.access_codes where used_by is not null),
       'codesTotal', (select count(*) from public.access_codes where not multi),
-      'revenue', (select count(*) from public.profiles where paid) * 12.90,
-      'price', 12.90),
+      'revenue', (select count(*) from public.profiles where paid) * 19.90,
+      'price', 19.90),
     'clients', coalesce((select jsonb_agg(jsonb_build_object(
         'name', p.name, 'email', p.email, 'birth', p.birth, 'created', p.created_at,
         'paid', p.paid, 'payDate', p.pay_date, 'payMethod', p.pay_method, 'code', p.code_n,
