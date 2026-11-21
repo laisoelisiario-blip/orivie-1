@@ -1134,6 +1134,7 @@ function fix(u){
  if(u.answers.length!==N_Q||u.answers.some(a=>a&&!TEMP_KEYS[a]))u.answers=Array.from({length:N_Q},(_,i)=>TEMP_KEYS[u.answers[i]]?u.answers[i]:null);
  if(!Array.isArray(u.board.photos))u.board={title:'',photos:[]};
  if(!Array.isArray(u.board.stickers))u.board.stickers=[...DEFAULT_STICKERS];
+ if(!Array.isArray(u.board.grat))u.board.grat=['','',''];
  u.board.stickers=u.board.stickers.filter(id=>STICKERS.some(st=>st.id===id));
  if(!u.board.seed)u.board.seed=newSeed();
  u.boards=u.boards.filter(x=>x&&Array.isArray(x.photos)).map(x=>({...x,stickers:Array.isArray(x.stickers)?x.stickers:[],title:String(x.title||'meu universo')}));
@@ -1854,12 +1855,15 @@ const STICKERS=[
  {id:'hibisco-azul',n:'Hibisco azul',size:280,svg:hibSvg('#E4EEF7','#C9707A')},
  {id:'margarida',n:'Margarida',size:250,svg:daisySvg('#FFFFFF','#E3B65E')},
  {id:'gerbera',n:'Gérbera',size:230,svg:daisySvg('#F2A9BC','#8A5A44')},
- {id:'aviao',n:'Avião',size:320,svg:`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"><g transform="rotate(-18 100 100)"><path d="M95 92L68 38H88L128 92Z" fill="#E8EEF4"/><path d="M95 108L68 162H88L128 108Z" fill="#D2DCE6"/><path d="M28 100Q28 88 48 88H160Q186 92 186 100Q186 108 160 112H48Q28 112 28 100Z" fill="#FFFFFF"/><path d="M40 92L28 64H41L60 92Z" fill="#E8EEF4"/><rect x="64" y="96" width="76" height="5" rx="2.5" fill="#9FB3C8"/><path d="M168 94Q178 96 180 100H168Z" fill="#9FB3C8"/></g></svg>`},
+ {id:'pomba',n:'Pomba',size:300,svg:`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"><path d="M44 118L10 102l9 22-11 17 38-8z" fill="#F4F1EC" stroke="#CFC6BB" stroke-width="3" stroke-linejoin="round"/><path d="M40 120Q66 82 116 90Q146 66 170 76Q162 92 152 100Q170 122 148 142Q108 162 58 142Z" fill="#FFFFFF" stroke="#CFC6BB" stroke-width="3" stroke-linejoin="round"/><path d="M86 106Q104 40 160 26Q142 78 118 108Z" fill="#F7F4EF" stroke="#CFC6BB" stroke-width="3" stroke-linejoin="round"/><path d="M98 96Q112 62 140 46M104 102Q122 74 146 62" stroke="#DED7CD" stroke-width="3" fill="none" stroke-linecap="round"/><circle cx="156" cy="86" r="4" fill="#3A2E28"/><path d="M168 78L186 84L168 90Z" fill="#E3B65E"/><path d="M182 86Q192 98 196 116" stroke="#879A7E" stroke-width="3" fill="none" stroke-linecap="round"/><ellipse cx="190" cy="98" rx="7" ry="3.5" fill="#A8B8A0" transform="rotate(50 190 98)"/><ellipse cx="195" cy="110" rx="7" ry="3.5" fill="#A8B8A0" transform="rotate(70 195 110)"/><ellipse cx="184" cy="104" rx="6" ry="3" fill="#A8B8A0" transform="rotate(-20 184 104)"/></svg>`},
+ {id:'cruz',n:'Cruz',size:190,svg:`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"><rect x="86" y="14" width="28" height="172" rx="5" fill="#B98A5E"/><rect x="46" y="56" width="108" height="26" rx="5" fill="#B98A5E"/><rect x="92" y="18" width="5" height="164" rx="2.5" fill="#D2A77A" opacity=".7"/><rect x="50" y="61" width="100" height="5" rx="2.5" fill="#D2A77A" opacity=".7"/><path d="M100 120v40M95 30v20" stroke="#8E6440" stroke-width="2" opacity=".5"/><circle cx="72" cy="182" r="9" fill="#FFFFFF"/><circle cx="72" cy="182" r="3.5" fill="#E3B65E"/><circle cx="128" cy="184" r="8" fill="#F2C9C0"/><circle cx="128" cy="184" r="3" fill="#E3B65E"/><ellipse cx="90" cy="188" rx="10" ry="4" fill="#A8B8A0"/><ellipse cx="112" cy="190" rx="10" ry="4" fill="#A8B8A0"/></svg>`},
+ {id:'lirio',n:'Lírio',size:300,svg:`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"><path d="M100 108Q96 150 100 198" stroke="#879A7E" stroke-width="5" fill="none" stroke-linecap="round"/><path d="M100 160Q60 150 44 118Q80 124 100 156Z" fill="#A8B8A0"/><path d="M100 176Q138 168 156 140Q120 142 100 172Z" fill="#94A98C"/>${[0,60,120,180,240,300].map(a=>`<path d="M100 84Q86 52 100 10Q114 52 100 84Z" fill="#FFFFFF" stroke="#E2D9CC" stroke-width="2" transform="rotate(${a} 100 84) translate(0 ${a%120?6:0})"/>`).join('')}<path d="M100 84Q96 60 100 30" stroke="#F1EBE1" stroke-width="2" fill="none"/><path d="M100 84L90 58M100 84L100 54M100 84L110 58" stroke="#C9A24E" stroke-width="2"/><ellipse cx="90" cy="56" rx="3" ry="5" fill="#C47A5F"/><ellipse cx="100" cy="52" rx="3" ry="5" fill="#C47A5F"/><ellipse cx="110" cy="56" rx="3" ry="5" fill="#C47A5F"/></svg>`},
+ {id:'biblia',n:'Bíblia',size:240,svg:`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"><path d="M14 64Q58 48 100 66Q142 48 186 64V164Q142 150 100 168Q58 150 14 164Z" fill="#6B4A3A"/><path d="M22 58Q60 44 98 62V156Q60 140 22 154Z" fill="#FBF6EA"/><path d="M178 58Q140 44 102 62V156Q140 140 178 154Z" fill="#FBF6EA"/><path d="M98 62V156M102 62V156" stroke="#D9CDBA" stroke-width="2"/>${[78,90,102,114,126].map(y=>`<path d="M34 ${y}Q60 ${y-9} 88 ${y+2}M112 ${y+2}Q140 ${y-9} 166 ${y}" stroke="#C9BBA6" stroke-width="2.5" fill="none" stroke-linecap="round"/>`).join('')}<path d="M118 60V180L124 172L130 180V58" fill="#C47A5F"/></svg>`},
  {id:'coracao',n:'Coração',size:170,svg:`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"><path d="M100 176S24 130 18 82C14 50 36 26 64 26c16 0 28 9 36 21 8-12 20-21 36-21 28 0 50 24 46 56-6 48-82 94-82 94z" fill="#D9A08B"/><ellipse cx="62" cy="62" rx="14" ry="9" fill="#fff" opacity=".45" transform="rotate(-30 62 62)"/></svg>`},
  {id:'brilho',n:'Brilho',size:160,svg:`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"><path d="M90 14c6 46 18 60 64 70-46 10-58 24-64 70-6-46-18-60-64-70 46-10 58-24 64-70z" fill="#E3B65E"/><path d="M160 120c3 20 8 26 28 30-20 4-25 10-28 30-3-20-8-26-28-30 20-4 25-10 28-30z" fill="#F4B3A6"/></svg>`},
  {id:'fita',n:'Fita',size:300,ar:.3,svg:`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 60"><defs><pattern id="st" width="16" height="16" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="8" height="16" fill="#fff" opacity=".35"/></pattern></defs><path d="M6 4L194 2L188 12L196 22L189 32L197 42L190 52L195 58L4 58L10 48L2 38L9 28L1 18L8 8Z" fill="#A8B8A0" opacity=".88"/><path d="M6 4L194 2L188 12L196 22L189 32L197 42L190 52L195 58L4 58L10 48L2 38L9 28L1 18L8 8Z" fill="url(#st)"/></svg>`}
 ];
-const DEFAULT_STICKERS=['hibisco','margarida','aviao'];
+const DEFAULT_STICKERS=['margarida','coracao'];
 const PAPERS=['#F4C7C3','#D9A08B','#A8B8A0','#E3B65E','#EAE2D9','#FFFFFF','#3A2E28','#C9D9E8','#B7A6C4','#5C6B4F','#F2A9BC'];
 const DARK_PAPERS=['#3A2E28','#5C6B4F'];
 const TITLE_FONTS=['400 {s}px "Abril Fatface", Georgia, serif','800 {s}px "Playfair Display", Georgia, serif','900 {s}px "DM Sans", Arial, sans-serif','400 {s}px "Special Elite", "Courier New", monospace','400 {s}px "Archivo Black", "Arial Black", sans-serif','700 {s}px "Courier Prime", "Courier New", monospace'];
@@ -2003,6 +2007,38 @@ function verseNote(ctx,x,y,rot,text,ref){
  ctx.font='700 22px "DM Sans", Arial, sans-serif';ctx.fillStyle='#94553F';ctx.fillText(ref.toUpperCase(),0,h/2-32);
  ctx.restore();tape(ctx,x-8,y-h/2+6,140,40,rot-.08,'#F5D35E');
 }
+function bibleOpen(ctx,cx,cy,w,h,verse,grat){
+ const x=cx-w/2,y=cy-h/2;ctx.save();
+ shadowOn(ctx,40,16,.38);ctx.fillStyle='#6B4A3A';rrect(ctx,x-22,y-6,w+44,h+30,26);ctx.fill();shadowOff(ctx);
+ const page=(dir)=>{ctx.beginPath();if(dir<0){ctx.moveTo(x+6,y+16);ctx.quadraticCurveTo(x+w*.25,y-8,cx,y+14);ctx.lineTo(cx,y+h-4);ctx.quadraticCurveTo(x+w*.25,y+h-26,x+6,y+h-6)}else{ctx.moveTo(x+w-6,y+16);ctx.quadraticCurveTo(x+w*.75,y-8,cx,y+14);ctx.lineTo(cx,y+h-4);ctx.quadraticCurveTo(x+w*.75,y+h-26,x+w-6,y+h-6)}ctx.closePath()};
+ for(let k=3;k>=0;k--){ctx.save();ctx.translate(0,k*4);ctx.fillStyle=k?'#E9E0CF':'#FBF6EA';page(-1);ctx.fill();page(1);ctx.fill();ctx.restore()}
+ const g=ctx.createLinearGradient(cx-60,0,cx+60,0);g.addColorStop(0,'rgba(0,0,0,0)');g.addColorStop(.5,'rgba(90,60,40,.22)');g.addColorStop(1,'rgba(0,0,0,0)');ctx.fillStyle=g;ctx.fillRect(cx-60,y+8,120,h-12);
+ /* fita marcadora */
+ ctx.fillStyle='#C47A5F';ctx.beginPath();ctx.moveTo(cx+18,y+10);ctx.lineTo(cx+40,y+10);ctx.lineTo(cx+40,y+h+70);ctx.lineTo(cx+29,y+h+56);ctx.lineTo(cx+18,y+h+70);ctx.closePath();ctx.fill();
+ /* página da esquerda: versículo grifado */
+ const pw=w/2-80,lx=x+48;
+ ctx.fillStyle='#94553F';ctx.font='700 18px "DM Sans", Arial, sans-serif';ctx.textAlign='left';ctx.textBaseline='middle';ctx.fillText('VERSÍCULO DA SEMANA',lx,y+56);
+ let size=62,lines;for(;size>=24;size-=2){ctx.font=`700 ${size}px "Caveat", "Segoe Script", cursive`;lines=wrapLines(ctx,'“'+verse.t+'”',pw);if(lines.length*size*1.12<=h-170)break}
+ const lh=size*1.12;lines.forEach((l,i)=>{const yy=y+96+i*lh+lh/2;const lw=ctx.measureText(l).width;ctx.fillStyle='rgba(244,211,102,.55)';ctx.fillRect(lx-6,yy-size*.32,lw+12,size*.62);ctx.fillStyle='#2A211C';ctx.fillText(l,lx,yy)});
+ ctx.fillStyle='#94553F';ctx.font='700 22px "DM Sans", Arial, sans-serif';ctx.fillText(verse.r.toUpperCase(),lx,y+h-46);
+ /* página da direita: Sou grata por... */
+ const rx=cx+60,rw=w/2-100;
+ ctx.fillStyle='#2A211C';ctx.font='700 46px "Caveat", "Segoe Script", cursive';ctx.fillText('Sou grata por...',rx,y+70);
+ const items=(grat||[]).map(t=>String(t||'').trim());
+ for(let n=0;n<3;n++){const ly=y+150+n*92;ctx.strokeStyle='rgba(168,184,160,.7)';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(rx,ly+22);ctx.lineTo(rx+rw,ly+22);ctx.stroke();
+  ctx.fillStyle='#C47A5F';ctx.beginPath();ctx.moveTo(rx+10,ly+10);ctx.bezierCurveTo(rx+10,ly+4,rx+2,ly+2,rx+2,ly+8);ctx.bezierCurveTo(rx+2,ly+12,rx+10,ly+16,rx+10,ly+18);ctx.bezierCurveTo(rx+10,ly+16,rx+18,ly+12,rx+18,ly+8);ctx.bezierCurveTo(rx+18,ly+2,rx+10,ly+4,rx+10,ly+10);ctx.fill();
+  if(items[n]){ctx.fillStyle='#2A211C';fitText(ctx,items[n],rw-34,'700 {s}px "Caveat", "Segoe Script", cursive',36,22);ctx.fillText(items[n],rx+30,ly+6)}}
+ ctx.restore();
+}
+function banner(ctx,cx,cy,l1,l2){
+ ctx.save();ctx.font='700 30px "DM Sans", Arial, sans-serif';const w1=ctx.measureText(l1).width;ctx.font='700 34px "Caveat", "Segoe Script", cursive';const w2=ctx.measureText(l2).width;
+ const w=Math.min(960,Math.max(w1,w2)+120),h=104;shadowOn(ctx,14,6,.25);ctx.fillStyle='#C47A5F';
+ ctx.beginPath();ctx.moveTo(cx-w/2,cy-h/2);ctx.lineTo(cx+w/2,cy-h/2);ctx.lineTo(cx+w/2-26,cy);ctx.lineTo(cx+w/2,cy+h/2);ctx.lineTo(cx-w/2,cy+h/2);ctx.lineTo(cx-w/2+26,cy);ctx.closePath();ctx.fill();shadowOff(ctx);
+ ctx.fillStyle='#fff';ctx.textAlign='center';ctx.textBaseline='middle';fitText(ctx,l1,w-90,'700 {s}px "DM Sans", Arial, sans-serif',30,18);ctx.fillText(l1,cx,cy-18);
+ ctx.fillStyle='#FBE9DF';fitText(ctx,l2,w-90,'700 {s}px "Caveat", "Segoe Script", cursive',34,20);ctx.fillText(l2,cx,cy+22);ctx.restore();
+}
+function sprig(ctx,x,y,len,rot){ctx.save();ctx.translate(x,y);ctx.rotate(rot);ctx.strokeStyle='#879A7E';ctx.lineWidth=4;ctx.lineCap='round';ctx.beginPath();ctx.moveTo(0,0);ctx.quadraticCurveTo(len*.1,-len*.5,0,-len);ctx.stroke();
+ ctx.fillStyle='#A8B8A0';for(let i=1;i<6;i++){const t=i/6;const py=-len*t;[-1,1].forEach(sd=>{ctx.save();ctx.translate(len*.05*Math.sin(t*3),py);ctx.rotate(sd*.9);ctx.beginPath();ctx.ellipse(sd*14,0,16,6,0,0,7);ctx.fill();ctx.restore()})}ctx.restore()}
 function fish(ctx,x,y,len,rot){
  ctx.save();ctx.translate(x,y);ctx.rotate(rot);shadowOn(ctx,6,3,.2);const h=len*.2;
  ctx.fillStyle='#6E95CC';ctx.beginPath();ctx.moveTo(-len/2,0);ctx.quadraticCurveTo(-len*.1,-h,len*.36,-h*.25);ctx.lineTo(len/2,-h*.75);ctx.lineTo(len*.44,0);ctx.lineTo(len/2,h*.75);ctx.lineTo(len*.36,h*.25);ctx.quadraticCurveTo(-len*.1,h,-len/2,0);ctx.closePath();ctx.fill();shadowOff(ctx);
@@ -2028,28 +2064,28 @@ async function drawBoard(cv,b){
   ctx.fillStyle='#F7F3EE';ctx.fillRect(0,0,1080,1920);
   if(order.length){coverImg(ctx,pick(order.length>7?7:0),0,0,1080,1920);ctx.fillStyle='rgba(255,255,255,.28)';ctx.fillRect(0,0,1080,1920)}
   else{const g=ctx.createLinearGradient(0,0,0,1920);g.addColorStop(0,'#DCE6D6');g.addColorStop(1,'#F1ECE4');ctx.fillStyle=g;ctx.fillRect(0,0,1080,1920)}
-  /* estrelas de fundo e explosões */
-  starCluster(ctx,40,40,1.1);
-  burst(ctx,190,360,150,9,j()*.4,'#F4D366',r);
-  burst(ctx,990,1290,130,8,j()*.4,'#F4D366',r);
-  burst(ctx,200,1660,120,8,j()*.4,'#F4D366',r);
-  cdDisc(ctx,110,1080,140,j());
+  /* enfeites cristãos (desenhados a partir dos adesivos) */
+  const deco={};for(const id of ['pomba','cruz','lirio','margarida','gerbera','coracao']){const st=STICKERS.find(x=>x.id===id);if(st)deco[id]=await loadImg(svgUrl(st.svg))}
+  if(cv._tok!==tok)return;
+  const put=(id,x,y,w,rot)=>{const im=deco[id];if(!im)return;ctx.save();ctx.translate(x,y);ctx.rotate(rot);shadowOn(ctx,12,5,.22);ctx.drawImage(im,-w/2,-w/2,w,w);ctx.restore()};
+  sprig(ctx,120,560,260,-.5);sprig(ctx,990,1380,240,.4);sprig(ctx,70,1700,220,-.2);
+  let uu=null,pp=null;try{uu=U();pp=prof(uu)}catch(e){}
   /* polaroids de cima */
-  polaroid(ctx,pick(1),590,350,380,320,.05+j()*.04,'',0,'#EBC2B2');
-  polaroid(ctx,pick(2),250,640,330,300,-.1+j()*.04,'',0,'#C9D5C3');
-  polaroid(ctx,pick(3),860,640,300,300,.06+j()*.04,'',0,'#EAE2D9',true);
-  tape(ctx,960,470,150,44,.6,'#F5D35E');
-  disposableCam(ctx,200,350,-.12);
-  /* câmera digital no centro */
-  digiCam(ctx,540,1020,800,470,pick(0));
+  polaroid(ctx,pick(0),560,390,380,320,.04+j()*.04,'',0,'#EBC2B2');
+  polaroid(ctx,pick(1),230,650,320,290,-.1+j()*.04,'',0,'#C9D5C3');
+  polaroid(ctx,pick(2),870,650,290,290,.06+j()*.04,'',0,'#EAE2D9',true);
+  tape(ctx,970,480,150,44,.6,'#F5D35E');
+  put('cruz',120,330,170,-.12);put('pomba',900,290,250,-.08);
+  /* faixa com o temperamento */
+  banner(ctx,540,110,uu?pname(uu):'Mural da fé',pp?pp.title:'Do seu jeito, com Deus');
+  /* Bíblia aberta com o versículo e a gratidão */
+  let vv=null;try{vv=pp.verses[isoWeek()%pp.verses.length]}catch(e){}if(!vv)vv={t:'Eu te louvo porque me fizeste de modo especial e admirável.',r:'Salmos 139:14'};
+  bibleOpen(ctx,540,1040,900,460,vv,b.grat||[]);
   /* polaroids de baixo */
-  polaroid(ctx,pick(4),270,1430,330,300,-.03+j()*.05,'',0,'#EAE2D9');
-  polaroid(ctx,pick(5),820,1420,330,300,.05+j()*.05,'',0,'#EBC2B2');
-  polaroid(ctx,pick(6),560,1680,380,300,-.02+j()*.04,String(b.title||'').trim()||'minha semana',72,'#C9D5C3');
-  /* adesivos fixos */
-  [[150,1520],[170,1585],[150,1650]].forEach(([fx,fy])=>fish(ctx,fx,fy,230,-.05+j()*.06));
-  {let vv=null;try{const uu=U();const pp=prof(uu);vv=pp.verses[isoWeek()%pp.verses.length]}catch(e){}if(!vv)vv={t:'Eu te louvo porque me fizeste de modo especial e admirável.',r:'Salmos 139:14'};verseNote(ctx,830,1690,-.07,vv.t,vv.r)}
-  paperStar(ctx,560,190,34,.2);paperStar(ctx,700,650,30,-.3);paperStar(ctx,90,1820,30,.1);paperStar(ctx,1030,1860,26,.4);
+  polaroid(ctx,pick(3),260,1470,320,290,-.04+j()*.05,'',0,'#EAE2D9');
+  polaroid(ctx,pick(4),830,1460,320,290,.05+j()*.05,'',0,'#EBC2B2');
+  polaroid(ctx,pick(5),540,1690,380,300,-.02+j()*.04,String(b.title||'').trim()||'minha semana',72,'#C9D5C3');
+  put('lirio',930,1720,300,.08);put('margarida',90,1300,130,.2);put('gerbera',1010,830,120,-.2);put('margarida',140,1860,110,0);put('coracao',380,1250,90,-.2);
   /* adesivos escolhidos */
   const spots=[[80,820],[1000,860],[540,560],[1000,1550],[60,1300],[540,1880],[380,1240],[700,1240]].sort(()=>r()-.5);
   stk.forEach(({st,im},i)=>{const [px,py]=spots[i%spots.length];const w=st.size*(.6+r()*.2),h=w*(st.ar||1);
@@ -2075,6 +2111,7 @@ function tBoard(u){
  <section class="mt-6"><h2 class="h2">Sua colagem</h2>
  <div class="board-wrap mt-3"><canvas id="bprev" class="board-canvas" width="540" height="960" role="img" aria-label="Prévia da colagem ${esc(b.title||'meu universo')} com ${n} foto${n===1?'':'s'}"></canvas></div>
  <button class="btn btn-outline mt-4" data-act="shuffleBoard">${ic('refresh',18)} Embaralhar</button>
+ <div class="mt-5"><p class="lbl-f">Sou grata por...</p><div class="flex flex-col gap-2">${[0,1,2].map(n=>`<input class="input" maxlength="40" aria-label="Gratidão ${n+1}" placeholder="${['Ex.: a saúde da minha família','Ex.: uma conversa que me fez bem','Ex.: a fidelidade de Deus'][n]}" value="${esc((b.grat||[])[n]||'')}" data-in="bgrat" data-i="${n}">`).join('')}</div></div>
  <div class="mt-5"><label class="lbl-f" for="btitle">Título da colagem</label><input id="btitle" class="input" maxlength="40" placeholder="Ex.: minha semana" value="${esc(b.title)}" data-in="btitle"></div>
  <div class="flex justify-between items-center mt-5"><h3 class="h3">Adesivos</h3><span class="small muted">${b.stickers.length} escolhido${b.stickers.length===1?'':'s'}</span></div>
  <div class="grid grid-cols-4 gap-2 mt-3">${STICKERS.map(st=>{const on=b.stickers.includes(st.id);return `<button class="stk ${on?'on':''}" data-act="toggleSticker" data-v="${st.id}" aria-pressed="${on}" aria-label="${st.n}"><img src="${svgUrl(st.svg)}" alt=""><span>${st.n}</span></button>`}).join('')}</div>
@@ -2505,8 +2542,8 @@ const ACT={
   celebrate({title:'Baú aberto!',sub:'Missões do dia completas. Você é incrível!',icon:ic('chest',110),stats:[{k:'XP',v:20,ic:'star',c:'sc-mel'}]})},
  delPhoto:el=>{const u=U();const i=+el.dataset.i;u.board.photos.splice(i,1);save();render()},
  saveBoard:()=>{const u=U();const b=u.board;if(!b.photos.length)return;
-  const entry={id:uid(),title:b.title.trim()||'meu universo',date:today(),photos:[...b.photos],stickers:[...b.stickers],seed:b.seed};
-  u.boards.unshift(entry);u.board={title:'',photos:[],stickers:[...b.stickers],seed:newSeed()};
+  const entry={id:uid(),title:b.title.trim()||'minha semana',date:today(),photos:[...b.photos],stickers:[...b.stickers],seed:b.seed,grat:[...(b.grat||[])]};
+  u.boards.unshift(entry);u.board={title:'',photos:[],stickers:[...b.stickers],seed:newSeed(),grat:['','','']};
   if(!save()){u.boards.shift();u.board=b;LS.set(K_USERS,DB.users);return}
   addXP(15);markActive();checkAch();save();render();sfx('win');confetti(50);
   openModal(()=>`<div class="text-center">${mascot('celebrate',110,'hop')}<h2 class="h1 mt-2">Board salvo!</h2><p class="muted mt-2">Seu universo da semana está guardado em “Meus boards anteriores”. Quer enviar a colagem para alguém?</p></div>
@@ -2566,6 +2603,7 @@ document.addEventListener('input',e=>{
  if(el.classList.contains('bad')){el.classList.remove('bad');const er=el.parentElement&&el.parentElement.querySelector('.err');if(er)er.textContent=''}
  const k=el.dataset.in;if(!k)return;const u=U();if(!u)return;
  if(k==='note'){const it=u.checklist&&u.checklist.items.find(i=>i.id===el.dataset.id);if(it){it.note=el.value.slice(0,200);save()}}
+ if(k==='bgrat'){const n=+el.dataset.i;if(!Array.isArray(u.board.grat))u.board.grat=['','',''];u.board.grat[n]=el.value.slice(0,40);save();clearTimeout(ui.bt);ui.bt=setTimeout(()=>{const c=$('#bprev');if(c)drawBoard(c,u.board)},250)}
  if(k==='btitle'){u.board.title=el.value.slice(0,40);save();clearTimeout(ui.bt);ui.bt=setTimeout(()=>{const c=$('#bprev');if(c)drawBoard(c,u.board)},180)}
 });
 document.addEventListener('change',async e=>{
