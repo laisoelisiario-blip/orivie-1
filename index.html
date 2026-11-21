@@ -344,6 +344,28 @@ body.modal-open{overflow:hidden}
 const K_USERS='orivie_users', K_SESSION='orivie_session';
 const DAILY_GOAL=30;
 const PIX_CODE='00020126580014BR.GOV.BCB.PIX0136orivie-sua-personalidade-pagamento-unico520400005303986540512.905802BR5913ORIVIE6009SAO PAULO62070503***6304A1B2';
+/* Pagamento: demonstração no Claude/arquivo local; PIX real (Mercado Pago) quando publicado na Netlify com as funções */
+const PAY={mode:'checking',price:12.90};
+const fmtBRL=v=>'R$'+Number(v).toFixed(2).replace('.',',');
+function isDemoHost(){try{return location.protocol==='file:'||/claude/i.test(location.hostname)||!location.hostname}catch(e){return true}}
+async function api(path,opt={}){
+ const ctl=window.AbortController?new AbortController():null;const t=setTimeout(()=>ctl&&ctl.abort(),opt.timeout||12000);
+ try{const r=await fetch('/.netlify/functions/'+path,{method:opt.method||'GET',body:opt.body,signal:ctl&&ctl.signal,cache:'no-store',headers:{'content-type':'application/json'}});const j=await r.json().catch(()=>({}));return{ok:r.ok,status:r.status,data:j||{}}}
+ catch(e){return{ok:false,status:0,data:{}}}finally{clearTimeout(t)}
+}
+async function detectPay(){
+ if(isDemoHost()){PAY.mode='demo';return}
+ PAY.mode='checking';
+ const r=await api('pix-config',{timeout:8000});
+ if(r.ok&&r.data.real){PAY.mode='real';if(r.data.price)PAY.price=Number(r.data.price)}
+ else PAY.mode=r.ok?'off':'error';
+}
+async function syncAccess(u){
+ if(PAY.mode!=='real'||!u||u.paid)return false;
+ const r=await api('pix-access?email='+encodeURIComponent(u.email));
+ if(r.ok&&r.data.paid){u.paid=true;u.payMethod='pix';u.payDate=u.payDate||today();u.pix=null;save();return true}
+ return false;
+}
 const C={T:'#3A2E28',TE:'#D9A08B',TS:'#B97F6A',SA:'#A8B8A0',SS:'#879A7E',ME:'#E3B65E',BE:'#EAE2D9',BS:'#D5C8BA'};
 
 /* =========================================================
@@ -747,7 +769,7 @@ const imgUrl=(id,w=800)=>`https://images.unsplash.com/${id}?auto=format&fit=crop
 function blankUser(){return{name:'',email:'',pass:'',birth:'',created:today(),paid:false,payMethod:'',payDate:'',
  answers:Array(10).fill(null),testDone:false,testDate:'',testXP:false,profile:null,scores:{},prefs:[],prefsDone:false,resultSeen:false,
  favs:[],favLog:{},read:[],readLog:{},readXP:[],checklist:null,history:[],board:{title:'',photos:[],stickers:[...DEFAULT_STICKERS],seed:newSeed()},boards:[],goals:[],photo:'',
- xp:0,xpLog:{},days:[],best:0,chest:{},ach:[],sound:true}}
+ xp:0,xpLog:{},days:[],best:0,chest:{},ach:[],sound:true,pix:null}}
 function fix(u){
  const b=blankUser();
  if(!u||typeof u!=='object'||Array.isArray(u))return b;
@@ -970,6 +992,7 @@ function allowed(r,u){
 }
 const APP=()=>document.getElementById('app');
 function render(){
+ clearInterval(ui.pixTimer);
  try{
   const u=U();const want=route();const r=allowed(want,u);
   if(r!==want){ui.route=r;setHash(r,false)}
@@ -995,6 +1018,7 @@ function render(){
 function after(r,u){
  countUp();ui.justPicked=false;
  if(r==='app-board')paintBoards();
+ if(r==='pagamento'&&PAY.mode==='real'&&u&&u.pix)ui.pixTimer=setInterval(()=>pixCheck(true),5000);
  if(r==='resultado'&&u&&!u.resultSeen){u.resultSeen=true;save();setTimeout(()=>{confetti();sfx('win')},250)}
  if(ui.scrollTo){const el=document.getElementById(ui.scrollTo);ui.scrollTo=null;if(el)setTimeout(()=>el.scrollIntoView({behavior:reduced()?'auto':'smooth',block:'start'}),80)}
 }
@@ -1042,7 +1066,7 @@ function qrSvg(){
  const fin=(x,y)=>`<rect x="${x}" y="${y}" width="7" height="7" fill="${C.T}"/><rect x="${x+1}" y="${y+1}" width="5" height="5" fill="#fff"/><rect x="${x+2}" y="${y+2}" width="3" height="3" fill="${C.T}"/>`;
  return `<svg viewBox="-1 -1 ${n+2} ${n+2}" width="190" height="190" shape-rendering="crispEdges" role="img" aria-label="QR Code PIX"><rect x="-1" y="-1" width="${n+2}" height="${n+2}" fill="#fff"/><g fill="${C.T}">${r}</g>${fin(0,0)}${fin(n-7,0)}${fin(0,n-7)}</svg>`;
 }
-function vPay(u){const pix=ui.payTab!=='card';return brand()+`<main class="screen">
+function vPayDemo(u){const pix=ui.payTab!=='card';return brand()+`<main class="screen">
  <section class="premium-card">
   <div class="flex items-center gap-3">${mascot('proud',76,'floaty')}<div><span class="tag tag-premium">Pagamento único</span><h1 class="h1 mt-2">Desbloqueie seu Orivie - Sua Personalidade</h1></div></div>
   <p class="price">R$12,90</p>
@@ -1071,6 +1095,48 @@ function vPay(u){const pix=ui.payTab!=='card';return brand()+`<main class="scree
  <button class="btn btn-ghost mt-5" data-act="logout">${ic('logout',18)} Sair da conta</button>
 </main>
 <footer class="footbar">${pix?`<button class="btn btn-primary" data-act="payPix">Já paguei, liberar acesso</button>`:`<button class="btn btn-primary" type="submit" form="cardform">Pagar R$12,90 e entrar</button>`}</footer>`}
+
+function payHero(price){return `<section class="premium-card">
+  <div class="flex items-center gap-3">${mascot('proud',76,'floaty')}<div><span class="tag tag-premium">Pagamento único</span><h1 class="h1 mt-2">Desbloqueie seu Orivie - Sua Personalidade</h1></div></div>
+  <p class="price">${price}</p>
+  <p class="h3">Acesso vitalício, sem mensalidade</p>
+  <ul class="benefits">${['Teste completo','Recomendações','Checklist','Board','Aprender','Metas'].map(b=>`<li>${ic('check',22)}<span>${b}</span></li>`).join('')}</ul>
+ </section>`}
+function vPay(u){if(PAY.mode==='demo')return vPayDemo(u);if(PAY.mode==='real')return vPayReal(u);return vPayWait(u)}
+function vPayWait(u){
+ const msg=PAY.mode==='checking'?['Conectando ao pagamento seguro…','Só um instantinho.']:PAY.mode==='off'?['Pagamento em configuração','O PIX ainda não foi ativado nesta página. Tente novamente mais tarde.']:['Não consegui conectar ao pagamento','Verifique sua internet e tente de novo.'];
+ return brand()+`<main class="screen">${payHero(fmtBRL(PAY.price))}
+ <div class="card mt-6 text-center">${PAY.mode==='checking'?'<div class="dots"><i></i><i></i><i></i></div>':mascot('think',80)}<h2 class="h3 mt-3">${msg[0]}</h2><p class="muted mt-1">${msg[1]}</p>${PAY.mode==='checking'?'':'<button class="btn btn-outline mt-4" data-act="payRetry">Tentar de novo</button>'}</div>
+ <button class="btn btn-ghost mt-5" data-act="logout">${ic('logout',18)} Sair da conta</button></main>
+ <footer class="footbar"><button class="btn btn-primary" disabled>Gerar PIX de ${fmtBRL(PAY.price)}</button></footer>`;
+}
+function vPayReal(u){
+ const px=u.pix;const price=fmtBRL(PAY.price);
+ return brand()+`<main class="screen">${payHero(price)}
+ <div class="mt-6">${px?`<div class="card text-center"><span class="tag tag-mel">Aguardando pagamento</span>
+   ${px.qrBase64?`<div class="qr-box mt-4"><img src="data:image/png;base64,${px.qrBase64}" alt="QR Code do PIX de ${price}" width="220" height="220"></div>`:''}
+   <p class="small muted mt-4">Abra o app do seu banco, escolha <b>PIX</b> e escaneie o QR Code ou use o código copia e cola. Assim que o pagamento cair, o acesso é liberado sozinho.</p>
+   <label class="lbl-f mt-4 text-left" for="pixcode">Código copia e cola</label>
+   <div class="code-box"><input id="pixcode" class="input" readonly value="${esc(px.qr)}"><button class="btn btn-outline btn-sm" style="min-height:50px" data-act="copyPix">${ic('copy',18)} Copiar</button></div>
+   <div class="flex items-center justify-center gap-3 mt-5 small muted"><div class="dots"><i></i><i></i><i></i></div>Verificando o pagamento automaticamente</div>
+   <button class="btn btn-ghost mt-3" data-act="pixNew">Gerar um novo PIX</button></div>`
+ :`<div class="card"><div class="flex items-center gap-3">${ic('lock',26,'c-sage')}<h2 class="h3">Pagamento seguro com PIX</h2></div><p class="muted mt-2">Gere o código, pague no app do seu banco e o acesso é liberado automaticamente em instantes. O pagamento é processado pelo Mercado Pago.</p>${ui.pixErr?`<p class="err mt-3">${esc(ui.pixErr)}</p>`:''}</div>`}</div>
+ <button class="btn btn-ghost mt-5" data-act="logout">${ic('logout',18)} Sair da conta</button></main>
+ <footer class="footbar">${px?`<button class="btn btn-primary" data-act="pixCheck">Já paguei, verificar</button>`:`<button class="btn btn-primary" data-act="pixCreate" ${ui.pixBusy?'disabled':''}>${ui.pixBusy?'Gerando PIX…':'Gerar PIX de '+price}</button>`}</footer>`;
+}
+async function pixCheck(silent){
+ const u=U();if(!u||!u.pix||ui.pixChecking)return;
+ ui.pixChecking=true;const r=await api('pix-status?id='+encodeURIComponent(u.pix.id));ui.pixChecking=false;
+ if(r.ok&&r.data.paid){unlockPaid(u,'pix');return}
+ const st=r.data&&r.data.status;
+ if(['cancelled','rejected','expired','refunded','charged_back'].includes(st)){u.pix=null;save();render();toast('Esse PIX expirou ou foi cancelado. Gere um novo para continuar.');return}
+ if(!silent){if(r.status===0)toast('Sem conexão agora. Tente de novo em instantes.');else infoBox({title:'Ainda não recebemos',text:'Pode levar alguns segundos depois de pagar. Continuamos verificando sozinhos, não precisa gerar outro PIX.',mood:'think'})}
+}
+function unlockPaid(u,method){
+ u.paid=true;u.payMethod=method;u.payDate=today();u.pix=null;save();clearInterval(ui.pixTimer);
+ sfx('win');confetti();
+ openModal(()=>`<div class="text-center">${mascot('celebrate',130,'hop')}<h2 class="display mt-3">Pagamento aprovado!</h2><p class="muted mt-2">Seu acesso vitalício está liberado. Agora vem a parte mais gostosa: te conhecer.</p></div><button class="btn btn-primary mt-6" data-act="afterPay" autofocus>Começar o teste</button>`,{center:true,lock:true});
+}
 
 /* 4. Teste (formato lição) */
 function vTest(u){
@@ -1527,6 +1593,7 @@ const FORMS={
   DB.users[email]=u;DB.session=email;
   const stored=save();
   sfx('ok');toast(stored?`Conta criada! Bem-vinda, ${esc(first(name))}.`:'Conta criada! Este navegador não está guardando dados, então seu progresso vale só até fechar a página.');go(stepFor(u));
+  syncAccess(u).then(ok=>{if(ok){toast('Encontramos seu pagamento! Acesso liberado.');go(stepFor(u))}});
  },
  async login(f){
   clearErr(f);const email=f.email.value.trim().toLowerCase(),pass=f.pass.value;
@@ -1534,6 +1601,7 @@ const FORMS={
   const u=DB.users[email];
   if(!u||!(await checkPass(pass,u.pass))){setErr(f,'form','E-mail ou senha incorretos.');setErr(f,'pass','');return nope(f)}
   DB.session=email;save();sfx('ok');toast(`Oi de novo, ${esc(first(u.name))}!`);go(stepFor(u));
+  syncAccess(u).then(ok=>{if(ok)go(stepFor(u))});
  },
  card(f){
   clearErr(f);const num=f.cnum.value.replace(/\D/g,''),exp=f.cexp.value,cvv=f.ccvv.value.replace(/\D/g,''),nm=f.cname.value.trim();
@@ -1544,7 +1612,7 @@ const FORMS={
   if(cvv.length<3||cvv.length>4)setErr(f,'ccvv','3 ou 4 dígitos.');
   if(nm.length<3)setErr(f,'cname','Digite o nome como está no cartão.');
   if(f.querySelector('.bad'))return nope(f);
-  f.reset();processPayment('cartao');
+  f.reset();if(PAY.mode==='demo')processPayment('cartao');
  },
  act(f){
   clearErr(f);const t=f.t.value.trim();if(!t){setErr(f,'t','Escreva a atividade.');return nope(f)}
@@ -1583,9 +1651,7 @@ function processPayment(method){
  openModal(()=>`<div class="text-center" style="padding:16px 0">${mascot('think',110,'floaty')}<h2 class="h2 mt-3">Processando pagamento...</h2><p class="muted mt-1">Só um instantinho.</p><div class="dots mt-5"><i></i><i></i><i></i></div></div>`,{center:true,lock:true});
  setTimeout(()=>{
   const u=U();if(!u){closeModal();go('boas-vindas');return}
-  u.paid=true;u.payMethod=method;u.payDate=today();save();
-  sfx('win');confetti();
-  openModal(()=>`<div class="text-center">${mascot('celebrate',130,'hop')}<h2 class="display mt-3">Pagamento aprovado!</h2><p class="muted mt-2">Seu acesso vitalício está liberado. Agora vem a parte mais gostosa: te conhecer.</p></div><button class="btn btn-primary mt-6" data-act="afterPay" autofocus>Começar o teste</button>`,{center:true,lock:true});
+  unlockPaid(u,method);
  },1500);
 }
 async function copyText(txt){
@@ -1613,8 +1679,16 @@ const ACT={
  logout:()=>{DB.session=null;save();closeModal();ui.payTab='pix';go('boas-vindas')},
  logoutAsk:()=>confirmBox({title:'Já vai?',text:'Seus dados ficam salvos neste aparelho. Volte logo, tá?',ok:'Sair',cancel:'Ficar mais um pouco',danger:true,onOk:()=>ACT.logout()}),
  payTab:el=>{ui.payTab=el.dataset.v==='card'?'card':'pix';render()},
- copyPix:async()=>{const ok=await copyText(PIX_CODE);if(ok){sfx('ok');toast(`${ic('copy',18)} Código copiado!`)}else{const i=$('#pixcode');if(i){i.focus();i.select()}toast('Selecione o código e copie manualmente.')}},
- payPix:()=>processPayment('pix'),
+ copyPix:async()=>{const u=U();const ok=await copyText((u&&u.pix&&u.pix.qr)||PIX_CODE);if(ok){sfx('ok');toast(`${ic('copy',18)} Código copiado!`)}else{const i=$('#pixcode');if(i){i.focus();i.select()}toast('Selecione o código e copie manualmente.')}},
+ payPix:()=>{if(PAY.mode==='demo')processPayment('pix')},
+ payRetry:async()=>{PAY.mode='checking';render();await detectPay();const u=U();if(u&&await syncAccess(u)){go(stepFor(u));return}render()},
+ pixCreate:async()=>{const u=U();if(!u||ui.pixBusy||PAY.mode!=='real')return;ui.pixBusy=true;ui.pixErr='';render();
+  const r=await api('pix-create',{method:'POST',body:JSON.stringify({email:u.email,name:u.name})});ui.pixBusy=false;
+  if(r.ok&&r.data.id&&r.data.qr){u.pix={id:r.data.id,qr:r.data.qr,qrBase64:r.data.qrBase64||'',created:Date.now()};save();sfx('ok')}
+  else ui.pixErr=(r.data&&r.data.message)||'Não consegui gerar o PIX. Verifique sua internet e tente de novo.';
+  render()},
+ pixCheck:()=>pixCheck(false),
+ pixNew:()=>confirmBox({title:'Gerar um novo PIX?',text:'Use só se o código anterior expirou ou não funcionou. Se você já pagou, toque em “Já paguei, verificar”.',ok:'Gerar novo',mood:'think',onOk:()=>{const u=U();u.pix=null;save();ACT.pixCreate()}}),
  afterPay:()=>{closeModal();go('teste')},
  answer:el=>pickAnswer(el.dataset.k),
  qBack:()=>{if(ui.q>0){ui.q--;sfx('tap');render()}},
@@ -1771,7 +1845,9 @@ window.addEventListener('storage',e=>{if(e.key===K_USERS||e.key===K_SESSION){loa
    ========================================================= */
 try{loadDB()}catch(e){DB={users:{},session:null}}
 ui.route=hashRoute();
+PAY.mode=isDemoHost()?'demo':'checking';
 render();
+detectPay().then(async()=>{const u=U();if(u&&await syncAccess(u)){go(stepFor(u));return}if(route()==='pagamento')render()});
 </script>
 </body>
 </html>

@@ -1,0 +1,9 @@
+{
+  "name": "orivie-sua-personalidade",
+  "private": true,
+  "type": "module",
+  "description": "Orivie - Sua Personalidade: app de página única com pagamento PIX via Mercado Pago (Netlify Functions).",
+  "dependencies": {
+    "@netlify/blobs": "11.1.4"
+  }
+}

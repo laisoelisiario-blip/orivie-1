@@ -1,0 +1,8 @@
+# Publicação na Netlify ligada ao GitHub (o Netlify Drop não publica as funções de pagamento).
+[build]
+  publish = "."
+  command = "echo 'Orivie: sem etapa de build'"
+
+[functions]
+  directory = "netlify/functions"
+  node_bundler = "esbuild"
