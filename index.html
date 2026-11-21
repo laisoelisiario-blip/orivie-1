@@ -315,6 +315,11 @@ body.modal-open{overflow:hidden}
 .cf-box{position:fixed;inset:0;pointer-events:none;z-index:200;overflow:hidden}
 .cf{position:absolute;top:-16px;width:9px;height:14px;border-radius:3px;animation-name:fall;animation-timing-function:linear;animation-fill-mode:forwards}
 
+/* Selo "Powered by Netlify" (plano gratuito): sobe o rodapé e as abas para o selo não cobrir os botões */
+body.nl-badge-on .footbar{padding-bottom:calc(70px + env(safe-area-inset-bottom))}
+body.nl-badge-on .tabbar{padding-bottom:calc(64px + env(safe-area-inset-bottom))}
+body.nl-badge-on .screen{padding-bottom:250px}
+body.nl-badge-on .screen.app{padding-bottom:180px}
 @keyframes wave{0%,100%{transform:rotate(0)}50%{transform:rotate(-22deg)}}
 @keyframes floaty{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
 @keyframes hop{from{transform:translateY(0)}to{transform:translateY(-10px)}}
@@ -1844,6 +1849,8 @@ window.addEventListener('storage',e=>{if(e.key===K_USERS||e.key===K_SESSION){loa
    INÍCIO
    ========================================================= */
 try{loadDB()}catch(e){DB={users:{},session:null}}
+function watchBadge(){const check=()=>{try{document.body.classList.toggle('nl-badge-on',!!document.getElementById('nl-badge-frame'))}catch(e){}};check();try{new MutationObserver(check).observe(document.body,{childList:true})}catch(e){}}
+watchBadge();
 ui.route=hashRoute();
 PAY.mode=isDemoHost()?'demo':'checking';
 render();
