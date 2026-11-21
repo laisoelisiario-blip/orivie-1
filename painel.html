@@ -66,9 +66,11 @@ td.n{font-variant-numeric:tabular-nums;font-weight:800}
   <div class="card">
    <p class="brand">Orivie <small>PAINEL DA DONA</small></p>
    <h1>Entrar</h1>
-   <p class="muted">Digite a senha do painel (a variável <b>ADMIN_PASSWORD</b> da Netlify).</p>
+   <p class="muted">Entre com o e-mail e a senha da sua conta no app Orivie (o e-mail precisa estar liberado como dona do painel).</p>
    <form id="loginForm">
-    <label for="pw">Senha do painel</label>
+    <label for="em">E-mail</label>
+    <input id="em" class="input" type="email" autocomplete="email" required>
+    <label for="pw">Senha</label>
     <input id="pw" class="input" type="password" autocomplete="current-password" required>
     <p id="loginErr" class="err" role="alert"></p>
     <button class="btn btn-primary" style="width:100%;margin-top:6px" type="submit">Entrar</button>
@@ -100,8 +102,8 @@ td.n{font-variant-numeric:tabular-nums;font-weight:800}
 </div>
 <script>
 'use strict';
-const API='/.netlify/functions/admin';
-const PROFILES={serena:'Serena Criativa',exploradora:'Exploradora Livre',analitica:'Mente Analítica',conectiva:'Alma Conectiva',contemplativa:'Essência Contemplativa',determinada:'Espírito Determinado'};
+const SB={url:'https://tsjnozxvhisftzqztlcm.supabase.co',key:'sb_publishable_7dN-SjnCsAjsjGFCZcMJ_g_h2RjgmJq'};
+const PROFILES={sanguinea:'Sanguínea',colerica:'Colérica',melancolica:'Melancólica',fleumatica:'Fleumática',serena:'Serena Criativa (versão antiga)',exploradora:'Exploradora Livre (versão antiga)',analitica:'Mente Analítica (versão antiga)',conectiva:'Alma Conectiva (versão antiga)',contemplativa:'Essência Contemplativa (versão antiga)',determinada:'Espírito Determinado (versão antiga)'};
 const $=s=>document.querySelector(s);
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const brl=v=>'R$'+Number(v||0).toFixed(2).replace('.',',');
@@ -109,10 +111,23 @@ const dt=s=>{if(!s)return '—';const d=new Date(typeof s==='number'?s:(String(s
 const dth=n=>{if(!n)return '—';const d=new Date(n);return isNaN(d)?'—':d.toLocaleString('pt-BR',{day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'})};
 let token=null,data=null,filter='todas';
 try{token=sessionStorage.getItem('orivie_admin')}catch(e){}
-async function call(body){
- try{const r=await fetch(API,{method:'POST',cache:'no-store',headers:{'content-type':'application/json',...(token?{authorization:'Bearer '+token}:{})},body:JSON.stringify(body)});
-  return {ok:r.ok,status:r.status,data:await r.json().catch(()=>({}))}}
+async function sb(path,body){
+ try{const r=await fetch(SB.url+path,{method:'POST',cache:'no-store',headers:{apikey:SB.key,'content-type':'application/json',...(token?{authorization:'Bearer '+token}:{})},body:JSON.stringify(body||{})});
+  const j=await r.json().catch(()=>({}));return {ok:r.ok,status:r.status,data:j}}
  catch(e){return {ok:false,status:0,data:{message:'Sem conexão. Confira a internet e tente de novo.'}}}
+}
+async function call(body){
+ if(body.action==='login'){
+  const r=await sb('/auth/v1/token?grant_type=password',{email:body.email,password:body.password});
+  if(!r.ok)return {ok:false,status:401,data:{message:r.status===0?r.data.message:'E-mail ou senha incorretos.'}};
+  token=r.data.access_token;const t=await sb('/rest/v1/rpc/admin_list',{});
+  if(!t.ok||t.data.error){token=null;return {ok:false,status:403,data:{message:(t.data&&t.data.message)||'Este e-mail não tem acesso ao painel.'}}}
+  return {ok:true,status:200,data:{token:r.data.access_token}};
+ }
+ const r=await sb('/rest/v1/rpc/admin_list',{});
+ if(r.status===401)return {ok:false,status:401,data:{}};
+ if(r.ok&&r.data.error)return {ok:false,status:403,data:r.data};
+ return r;
 }
 function show(id){$('#login').hidden=id!=='login';$('#dash').hidden=id!=='dash'}
 async function load(){
@@ -134,7 +149,7 @@ function render(){
  $('#list').innerHTML=list.length?list.map(c=>`<article class="card client">
    <div><div class="name">${esc(c.name||'Sem nome')}</div><div class="mail">${esc(c.email)}</div></div>
    <span class="tag ${c.paid?'ok':'wait'}">${c.paid?'Liberada':'Aguardando código'}</span>
-   <div class="meta"><span>Cadastro: ${dt(c.created)}</span>${c.paid?`<span>Liberada em ${dt(c.payDate)}${c.payMethod==='hotmart'?' · pela Hotmart':c.code?` · código nº ${c.code}`:''}</span>`:''}<span>Perfil: ${c.testDone&&c.profile?esc(PROFILES[c.profile]||c.profile):'teste não feito'}</span><span>XP ${c.xp}</span><span>${c.read} leitura${c.read===1?'':'s'}</span><span>Última atividade: ${dth(c.lastActive)}</span></div>
+   <div class="meta"><span>Cadastro: ${dt(c.created)}</span>${c.paid?`<span>Liberada em ${dt(c.payDate)}${c.payMethod==='hotmart'?' · pela Hotmart':c.code?` · código nº ${c.code}`:''}</span>`:''}<span>Temperamento: ${c.testDone&&c.profile?esc((PROFILES[c.profile]||c.profile)+(c.profile2&&PROFILES[c.profile2]?' + '+PROFILES[c.profile2]:'')):'teste não feito'}</span>${c.prayers?`<span>${c.prayers} pedido${c.prayers===1?'':'s'} de oração</span>`:''}<span>XP ${c.xp}</span><span>${c.read} leitura${c.read===1?'':'s'}</span><span>Última atividade: ${dth(c.lastActive)}</span></div>
   </article>`).join(''):`<div class="card empty"><b>Nenhuma cliente aqui</b><p class="muted">${q||filter!=='todas'?'Tente outra busca ou filtro.':'Quando alguém criar conta no app, aparece aqui.'}</p></div>`;
  $('#codes').innerHTML=data.codes.length?data.codes.map(c=>`<tr><td class="n">${c.n||'?'}</td><td>${esc(c.email)}</td><td>${dt(c.at)}</td></tr>`).join(''):`<tr><td colspan="3" class="muted">Nenhum código usado ainda.</td></tr>`;
  $('#foot').textContent=`Atualizado em ${new Date(data.generatedAt).toLocaleString('pt-BR')} · receita estimada = contas liberadas × ${brl(s.price)}`;
@@ -151,7 +166,7 @@ function toCSV(){
 function logout(msg){token=null;try{sessionStorage.removeItem('orivie_admin')}catch(e){}show('login');$('#loginErr').textContent=msg||'';$('#pw').value=''}
 $('#loginForm').addEventListener('submit',async e=>{
  e.preventDefault();$('#loginErr').textContent='';const btn=e.target.querySelector('button');btn.disabled=true;btn.textContent='Entrando…';
- const r=await call({action:'login',password:$('#pw').value});btn.disabled=false;btn.textContent='Entrar';
+ const r=await call({action:'login',email:$('#em').value.trim().toLowerCase(),password:$('#pw').value});btn.disabled=false;btn.textContent='Entrar';
  if(!r.ok){$('#loginErr').textContent=r.data.message||'Não consegui entrar.';return}
  token=r.data.token;try{sessionStorage.setItem('orivie_admin',token)}catch(e){}show('dash');load();
 });

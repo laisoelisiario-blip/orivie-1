@@ -1160,21 +1160,103 @@ function loadDB(){
 }
 function U(){return DB.session?DB.users[DB.session]||null:null}
 /* =========================================================
-   NUVEM: contas e progresso guardados no servidor (Netlify Functions + Netlify Blobs).
+   NUVEM: contas e progresso guardados no Supabase.
    Liga sozinha quando o servidor de contas responde; senão o app guarda só no aparelho.
    ========================================================= */
 const K_TOKEN='orivie_token';
 const CLOUD={on:false,token:null,timer:null,pushing:false,again:false};
 const LOCAL_ONLY=['email','pass','paid','payMethod','payDate','accessCode','pix','_localAt','_cloudAt'];
 function dataOf(u){const d={};for(const k in u)if(!LOCAL_ONLY.includes(k))d[k]=u[k];return d}
-const cloud=(action,body={},timeout)=>api('account',{method:'POST',body:JSON.stringify({action,...body}),token:CLOUD.token,timeout:timeout||15000});
+/* Servidor: Supabase (contas, dados e códigos de acesso). A chave abaixo é a chave PÚBLICA do projeto. */
+const SB={url:'https://tsjnozxvhisftzqztlcm.supabase.co',key:'sb_publishable_7dN-SjnCsAjsjGFCZcMJ_g_h2RjgmJq'};
+const K_REFRESH='orivie_refresh',K_EXP='orivie_exp';
+async function sbFetch(path,{method='GET',body,auth=true,timeout=15000}={}){
+ const ctl=window.AbortController?new AbortController():null;const t=setTimeout(()=>ctl&&ctl.abort(),timeout);
+ try{const h={apikey:SB.key,'content-type':'application/json'};if(auth&&CLOUD.token)h.authorization='Bearer '+CLOUD.token;
+  const r=await fetch(SB.url+path,{method,body:body===undefined?undefined:JSON.stringify(body),headers:h,signal:ctl&&ctl.signal,cache:'no-store'});
+  const txt=await r.text();let j={};try{j=txt?JSON.parse(txt):{}}catch(e){}
+  return{ok:r.ok,status:r.status,data:j}}
+ catch(e){return{ok:false,status:0,data:{}}}finally{clearTimeout(t)}
+}
+function setSession(d){if(d&&d.access_token){CLOUD.token=d.access_token;LS.set(K_TOKEN,d.access_token);LS.set(K_REFRESH,d.refresh_token||'');LS.set(K_EXP,Date.now()+((Number(d.expires_in)||3600)-90)*1000)}}
+function setToken(t){if(!t){CLOUD.token=null;LS.del(K_TOKEN);LS.del(K_REFRESH);LS.del(K_EXP);return}if(typeof t==='object')setSession(t);else{CLOUD.token=t;LS.set(K_TOKEN,t)}}
+async function ensureFresh(){
+ if(!CLOUD.token)return false;const exp=LS.get(K_EXP,0);if(exp&&Date.now()<exp)return true;
+ const rt=LS.get(K_REFRESH,'');if(!rt)return true;
+ const r=await sbFetch('/auth/v1/token?grant_type=refresh_token',{method:'POST',auth:false,body:{refresh_token:rt}});
+ if(r.ok){setSession(r.data);return true}
+ return !(r.status>=400&&r.status<500);
+}
+const rpc=(fn,args={})=>sbFetch('/rest/v1/rpc/'+fn,{method:'POST',body:args});
+const sbCode=d=>String((d&&(d.error_code||d.code||d.error))||'');
+const fail=(status,message,error)=>({ok:false,status,data:{error:error||'',message}});
+const trimData=d=>{const o={...(d||{})};if(Array.isArray(o.boards)&&o.boards.length>6)o.boards=o.boards.slice(0,6);return o};
+async function sbCall(fn,args){
+ if(!await ensureFresh())return fail(401,'Sua sessão expirou. Entre de novo.','auth');
+ const r=await rpc(fn,args);
+ if(r.status===401||(r.ok&&r.data&&r.data.error==='auth'))return fail(401,'Sua sessão expirou. Entre de novo.','auth');
+ if(r.status===413)return fail(413,'Seus dados ficaram grandes demais para salvar. Apague murais antigos.');
+ if(!r.ok)return fail(r.status||0,r.status===0?'Sem conexão com a internet. Confira e tente de novo.':'Tivemos um problema agora. Tente de novo em instantes.');
+ return r;
+}
+async function cloud(action,body={}){
+ try{switch(action){
+  case 'ping':{const r=await sbFetch('/auth/v1/settings',{auth:false,timeout:7000});return{ok:r.ok,status:r.status,data:{ok:r.ok}}}
+  case 'register':{
+   const r=await sbFetch('/auth/v1/signup',{method:'POST',auth:false,body:{email:body.email,password:body.pass,data:{name:body.name,birth:body.birth}}});
+   const c=sbCode(r.data)+' '+String(r.data.msg||r.data.message||'');
+   if(!r.ok){
+    if(/already|exists|registered/i.test(c))return fail(409,'Esse e-mail já tem conta. Que tal entrar?','exists');
+    if(/weak|password/i.test(c))return fail(400,'Use uma senha mais forte, com pelo menos 6 caracteres.','pass');
+    if(r.status===429)return fail(429,'Muitas tentativas agora. Espere alguns minutos e tente de novo.','locked');
+    return fail(r.status||0,r.status===0?'Sem conexão com a internet. Confira e tente de novo.':'Não consegui criar sua conta agora. Tente de novo.');
+   }
+   if(!r.data.access_token){
+    const u=r.data.user||r.data;if(u&&Array.isArray(u.identities)&&!u.identities.length)return fail(409,'Esse e-mail já tem conta. Que tal entrar?','exists');
+    return fail(403,'Enviamos um e-mail de confirmação. Confirme e depois entre no app.','confirm');
+   }
+   setSession(r.data);
+   await rpc('save_me',{p_data:trimData(body.data),p_name:body.name||'',p_birth:body.birth||''});
+   const m=await sbCall('get_me',{});if(!m.ok)return m;
+   return{ok:true,status:200,data:{token:CLOUD.token,...m.data}};
+  }
+  case 'login':{
+   const r=await sbFetch('/auth/v1/token?grant_type=password',{method:'POST',auth:false,body:{email:body.email,password:body.pass}});
+   if(!r.ok){
+    const c=sbCode(r.data);
+    if(/email_not_confirmed/.test(c))return fail(403,'Confirme seu e-mail antes de entrar (veja sua caixa de entrada e o spam).');
+    if(r.status===429)return fail(429,'Muitas tentativas. Espere alguns minutos e tente de novo.','locked');
+    if(r.status===0)return fail(0,'Sem conexão com a internet. Confira e tente de novo.');
+    return fail(404,'E-mail ou senha incorretos.','wrong');
+   }
+   setSession(r.data);const m=await sbCall('get_me',{});if(!m.ok)return m;
+   return{ok:true,status:200,data:{token:CLOUD.token,...m.data}};
+  }
+  case 'me':return await sbCall('get_me',{});
+  case 'save':return await sbCall('save_me',{p_data:trimData(body.data),p_name:body.name||'',p_birth:body.birth||''});
+  case 'redeem':{
+   const m=await sbCall('redeem_code',{p_code:body.code});if(!m.ok)return m;
+   const e=m.data&&m.data.error;
+   if(e)return fail({locked:429,format:400,invalid:404,used:409,auth:401}[e]||400,m.data.message||'Não consegui verificar o código agora.',e);
+   return m;
+  }
+  case 'password':{
+   const u=U();const v=await sbFetch('/auth/v1/token?grant_type=password',{method:'POST',auth:false,body:{email:u&&u.email,password:body.cur}});
+   if(!v.ok)return fail(401,'Senha atual incorreta.','wrong');
+   setSession(v.data);
+   const r=await sbFetch('/auth/v1/user',{method:'PUT',body:{password:body.nw}});
+   return r.ok?{ok:true,status:200,data:{ok:true}}:fail(r.status,'Não consegui trocar a senha agora. Use pelo menos 6 caracteres.');
+  }
+  case 'logout':{await sbFetch('/auth/v1/logout',{method:'POST',timeout:5000});return{ok:true,status:200,data:{ok:true}}}
+ }}catch(e){console.error(e)}
+ return fail(400,'Ação desconhecida.');
+}
 async function detectCloud(){
- CLOUD.token=LS.get(K_TOKEN,null);if(typeof CLOUD.token!=='string')CLOUD.token=null;
- if(isDemoHost()){CLOUD.on=false;return false}
- const r=await api('account',{method:'POST',body:JSON.stringify({action:'ping'}),timeout:7000});
+ CLOUD.token=LS.get(K_TOKEN,null);if(typeof CLOUD.token!=='string'||!CLOUD.token)CLOUD.token=null;
+ if(isDemoHost()&&!window.ORIVIE_FORCE_CLOUD){CLOUD.on=false;return false}
+ const r=await cloud('ping');
  CLOUD.on=!!(r.ok&&r.data&&r.data.ok);return CLOUD.on;
 }
-function setToken(t){CLOUD.token=t||null;if(t)LS.set(K_TOKEN,t);else LS.del(K_TOKEN)}
 function saveLocal(){LS.set(K_USERS,DB.users);LS.set(K_SESSION,DB.session)}
 /* Aplica no aparelho o que veio da nuvem. O status de pagamento é SEMPRE o do servidor. */
 function applyCloud(res,local){
