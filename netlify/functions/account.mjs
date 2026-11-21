@@ -14,7 +14,8 @@ import { CODE_HASHES } from "../lib/codes.mjs";
 
 const json = (data, status = 200) =>
   new Response(JSON.stringify(data), { status, headers: { "content-type": "application/json; charset=utf-8", "cache-control": "no-store" } });
-const store = () => globalThis.__orivieTestStore || getStore("orivie-contas");
+// Consistência forte: o que acabou de ser gravado (ex.: sessão nova) aparece na hora para a próxima chamada.
+const store = () => globalThis.__orivieTestStore || getStore({ name: "orivie-contas", consistency: "strong" });
 const normEmail = (e) => String(e || "").trim().toLowerCase();
 const validEmail = (e) => /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(e);
 const sha = (s) => createHash("sha256").update(s).digest("hex");

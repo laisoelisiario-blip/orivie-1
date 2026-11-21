@@ -884,7 +884,8 @@ async function refreshCloud(){
  if(JSON.stringify([nu.paid,nu.testDone,nu.prefsDone])!==before){go(stepFor(nu))}else render();
  return true;
 }
-function sessionExpired(){setToken(null);DB.session=null;saveLocal();closeModal();toast('Sua sessão expirou. Entre de novo.');go('login')}
+async function stillValid(){for(const ms of [1500,4000]){await new Promise(r=>setTimeout(r,ms));const r=await cloud('me');if(r.ok)return true;if(r.status!==401)return true}return false}
+async function sessionExpired(){if(await stillValid())return;setToken(null);DB.session=null;saveLocal();closeModal();toast('Sua sessão expirou. Entre de novo.');go('login')}
 function save(){
  schedulePush();
  const ok=LS.set(K_USERS,DB.users);

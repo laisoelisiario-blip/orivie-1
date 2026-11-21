@@ -32,7 +32,7 @@ export async function mp(path, opt = {}) {
   return { ok: res.ok, status: res.status, body };
 }
 
-export const store = () => globalThis.__orivieTestStore || getStore("orivie-pagamentos");
+export const store = () => globalThis.__orivieTestStore || getStore({ name: "orivie-pagamentos", consistency: "strong" });
 
 // Um pagamento só libera acesso se for deste app, estiver aprovado e tiver o valor certo.
 export function isApprovedOrivie(p) {
