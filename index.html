@@ -990,7 +990,8 @@ const ACH=[
  {id:'fav1',n:'De olho no que combina',d:'Favoritou o primeiro item.',ic:'heart',ok:u=>u.favs.length>=1},
  {id:'dia',n:'Dia concluído',d:'Concluiu um dia no checklist.',ic:'check',ok:u=>u.history.length>=1},
  {id:'leitora',n:'Leitura em dia',d:'Leu 3 textos.',ic:'book',ok:u=>u.read.length>=3},
- {id:'board',n:'Meu universo',d:'Salvou o primeiro board.',ic:'grid',ok:u=>u.boards.length>=1},
+ {id:'oracao',n:'Coração que ora',d:'Registrou o primeiro pedido no Diário de oração.',ic:'journal',ok:u=>u.prayers.length>=1},
+ {id:'board',n:'Mural da fé',d:'Salvou o primeiro mural.',ic:'grid',ok:u=>u.boards.length>=1},
  {id:'meta',n:'Meta cumprida',d:'Concluiu uma meta ou hábito.',ic:'target',ok:u=>u.goals.some(g=>g.done)},
  {id:'seq3',n:'Três dias seguidos',d:'Manteve 3 dias de sequência.',ic:'flame',ok:u=>u.best>=3},
  {id:'bau',n:'Baú aberto',d:'Completou as missões do dia.',ic:'chest',ok:u=>Object.keys(u.chest).length>=1},
@@ -1047,6 +1048,7 @@ const ICONS={
  brush:`<path fill="${C.SA}" d="M19.5 3a1.6 1.6 0 0 1 1.5 2.2c-1.3 3.2-4.1 7-6.7 8.6l-2.3-2.3c1.6-2.6 5.4-5.4 7.5-8.5z"/><path fill="${C.TE}" d="M10.5 12.8l1.7 1.7c.4 2.9-1.7 5.5-6.7 5.5 1.5-1 1.2-2.6 1.6-4.2.5-1.7 1.9-3 3.4-3z"/>`,
  refresh:`<path d="M19.5 12a7.5 7.5 0 1 1-2.2-5.3" fill="none" stroke="${C.SS}" stroke-width="2.8" stroke-linecap="round"/><path fill="${C.SS}" d="M20.5 3.5v6h-6z"/>`,
  pencil:`<path fill="${C.ME}" d="M4 20l.9-4.6L15.6 4.7a2.2 2.2 0 0 1 3.1 0l.6.6a2.2 2.2 0 0 1 0 3.1L8.6 19.1z"/><path fill="${C.TS}" d="M4 20l.9-4.6 3.7 3.7z"/>`,
+ journal:`<rect x="4" y="2.5" width="15" height="19" rx="3" fill="${C.TE}"/><rect x="4" y="2.5" width="4" height="19" rx="2" fill="${C.TS}"/><path d="M10.5 8h5.5M10.5 11.5h5.5M10.5 15h3.5" stroke="#fff" stroke-width="1.8" stroke-linecap="round"/><path d="M19 6.5h1.5M19 10h1.5M19 13.5h1.5" stroke="${C.SA}" stroke-width="2" stroke-linecap="round"/>`,
  heartline:`<path fill="none" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round" d="M12 20s-7.2-4.4-9.2-8.8C1.5 8.2 3.4 5 6.7 5c2 0 3.3 1.1 4.3 2.4C12 6.1 13.3 5 15.3 5c3.3 0 5.2 3.2 3.9 6.2C17.2 15.6 12 20 12 20z"/>`,
  mail:`<rect x="3" y="5.5" width="18" height="13" rx="2.5" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M3.8 7l8.2 6.2L20.2 7" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/>`,
  eye:`<path d="M2.5 12S6 5.5 12 5.5 21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12z" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="12" r="3.2" fill="currentColor"/>`,
@@ -1118,7 +1120,7 @@ const $=(s,el=document)=>el.querySelector(s);
 const imgUrl=(id,w=800)=>`https://images.unsplash.com/${id}?auto=format&fit=crop&w=${w}&q=70`;
 
 function blankUser(){return{name:'',email:'',pass:'',birth:'',created:today(),paid:false,payMethod:'',payDate:'',
- answers:Array(N_Q).fill(null),testDone:false,testDate:'',testXP:false,profile:null,profile2:null,migrated:false,scores:{},prefs:[],prefsDone:false,resultSeen:false,
+ prayers:[],answers:Array(N_Q).fill(null),testDone:false,testDate:'',testXP:false,profile:null,profile2:null,migrated:false,scores:{},prefs:[],prefsDone:false,resultSeen:false,
  favs:[],favLog:{},read:[],readLog:{},readXP:[],checklist:null,history:[],board:{title:'',photos:[],stickers:[...DEFAULT_STICKERS],seed:newSeed()},boards:[],goals:[],photo:'',
  xp:0,xpLog:{},days:[],best:0,chest:{},ach:[],sound:true,pix:null}}
 function fix(u){
@@ -1142,6 +1144,7 @@ function fix(u){
  if(u.testDone&&!u.profile)u.profile='sanguinea';
  u.prefs=u.prefs.filter(p=>PREFS.includes(p));
  u.read=u.read.filter(id=>TEXTS.some(t=>t.id===id));u.readXP=u.readXP.filter(id=>TEXTS.some(t=>t.id===id));
+ u.prayers=u.prayers.filter(x=>x&&typeof x.t==='string').map(x=>({id:x.id||uid(),t:x.t,cat:x.cat||'Outros',date:x.date||today(),answered:!!x.answered,ansDate:x.ansDate||'',note:typeof x.note==='string'?x.note:'',prayed:Number(x.prayed)||0,last:x.last||''}));
  u.xp=Number(u.xp)||0;u.best=Number(u.best)||0;
  return u;
 }
@@ -1370,7 +1373,7 @@ function showMilestone(){
    ROTEADOR (hash) + guard
    ========================================================= */
 const PUBLIC=['boas-vindas','cadastro','login'];
-const TABS=[{id:'hoje',n:'Hoje',ic:'sun'},{id:'combina',n:'Combina',ic:'heart'},{id:'checklist',n:'Checklist',ic:'check'},{id:'board',n:'Board',ic:'grid'},{id:'aprender',n:'Aprender',ic:'book'},{id:'eu',n:'Eu',ic:'user'}];
+const TABS=[{id:'hoje',n:'Hoje',ic:'sun'},{id:'combina',n:'Combina',ic:'heart'},{id:'checklist',n:'Checklist',ic:'check'},{id:'diario',n:'Diário',ic:'journal'},{id:'aprender',n:'Aprender',ic:'book'},{id:'eu',n:'Eu',ic:'user'}];
 /* A tela é desenhada direto pelo app; o endereço (#) é só um extra para o botão Voltar.
    Assim o app funciona mesmo em visualizadores que bloqueiam ou não avisam mudanças de endereço. */
 function hashRoute(){let h='';try{h=location.hash||''}catch(e){}h=h.replace(/^#\/?/,'').replace('/','-');return h||'boas-vindas'}
@@ -1393,7 +1396,7 @@ function allowed(r,u){
  if(r==='personalizacao')return r;
  if(!u.prefsDone)return 'personalizacao';
  if(r==='resultado')return r;
- if(TABS.some(t=>'app-'+t.id===r))return r;
+ if(TABS.some(t=>'app-'+t.id===r)||r==='app-board')return r;
  return 'app-hoje';
 }
 const APP=()=>document.getElementById('app');
@@ -1651,7 +1654,7 @@ function vApp(u,tab){
  ensureChecklist(u);
  const st=streakOf(u);
  const right=`<div class="flex gap-1"><button class="stat" data-act="streakInfo" aria-label="Sequência de ${st} dias">${ic('flame',22)}<b class="${st?'c-terra':'c-gray'}">${st}</b></button><button class="stat" data-act="xpInfo" aria-label="${u.xp} XP no total">${ic('star',22)}<b class="${u.xp?'c-mel':'c-gray'}">${u.xp}</b></button></div>`;
- const body={hoje:tHoje,combina:tCombina,checklist:tCheck,board:tBoard,aprender:tLearn,eu:tEu}[tab]||tHoje;
+ const body={hoje:tHoje,combina:tCombina,checklist:tCheck,board:tBoard,diario:tDiario,aprender:tLearn,eu:tEu}[tab]||tHoje;
  return brand(right)+`<main class="screen app">${body(u)}</main>
  <button class="ori-fab" data-act="oriOpen" aria-label="Falar com a Ori, sua assistente">${leafLogo(30)}<span>Ori</span></button>
  <nav class="tabbar" aria-label="Navegação principal">${TABS.map(t=>`<button data-act="tab" data-v="${t.id}" ${t.id===tab?'aria-current="page"':''} aria-label="${t.n}">${ic(t.ic,28)}<span>${t.n}</span></button>`).join('')}</nav>`;
@@ -2063,7 +2066,7 @@ function boardBlob(b){return new Promise(res=>{try{const c=document.createElemen
 function tBoard(u){
  const b=u.board;const n=b.photos.length;const full=n>=BOARD_MAX;
  const ph=['#C9D5C3','#EBC2B2','#EAE2D9','#DCD3C6'];
- return `<h1 class="display">Mural da fé da semana</h1><p class="body mt-2">Suas fotos e o versículo da semana viram uma colagem.</p>
+ return `<button class="btn btn-ghost btn-sm mb-2" style="width:auto" data-act="tab" data-v="eu">${ic('back',18)} Voltar</button><h1 class="display">Mural da fé da semana</h1><p class="body mt-2">Suas fotos e o versículo da semana viram uma colagem.</p>
  <div class="grid grid-cols-2 gap-3 mt-5">${n?b.photos.map((p,i)=>`<div class="bcell2"><img src="${p}" alt="Foto ${i+1} do board"><button class="bdel" data-act="delPhoto" data-i="${i}" aria-label="Remover foto ${i+1}">${ic('x',14)}</button></div>`).join('')
   :ph.map(c=>`<label class="bcell2 empty-ph" for="bfile" style="background:${c}">${ic('camera',28)}</label>`).join('')}</div>
  <input type="file" id="bfile" accept="image/*" multiple class="sr-only" data-file="board" ${full?'disabled':''}>
@@ -2109,6 +2112,54 @@ function boardModal(id){
   <div class="board-wrap mt-4"><canvas id="bview" data-id="${b.id}" class="board-canvas" width="540" height="960" role="img" aria-label="Colagem ${esc(b.title)}"></canvas></div>
   <div class="flex flex-col gap-3 mt-5"><button class="btn btn-primary" data-act="shareBoard" data-id="${b.id}">${ic('share',20)} Enviar</button><button class="btn btn-outline" data-act="delBoard" data-id="${b.id}" style="color:var(--erro)">${ic('trash',18)} Excluir board</button></div>`});
  paintBoards();
+}
+
+
+/* ---- Aba Diário de oração ---- */
+const PRAYER_CATS=['Família','Saúde','Trabalho','Relacionamentos','Igreja','Eu mesma','Outros'];
+function prayerCard(x){
+ const prayedToday=x.last===today();
+ return `<article class="card mt-3" ${x.answered?'style="background:#E4EBE0;border:0"':''}>
+  <div class="flex items-center justify-between gap-2"><span class="tag ${x.answered?'':'tag-terra'}">${esc(x.cat)}</span><span class="small muted" style="font-weight:400;margin-left:auto">${x.answered?`Respondido em ${fmtBR(x.ansDate)}`:`Desde ${fmtBR(x.date)}`}</span><button class="ibtn" style="width:36px;height:36px" data-act="prayEdit" data-id="${x.id}" aria-label="Editar pedido">${ic('edit',16)}</button><button class="ibtn danger" style="width:36px;height:36px" data-act="prayDel" data-id="${x.id}" aria-label="Excluir pedido">${ic('trash',16)}</button></div>
+  <p class="mt-3" style="font-size:17px;line-height:1.5;white-space:pre-wrap">${esc(x.t)}</p>
+  ${x.answered&&x.note?`<p class="mt-3" style="font-style:italic">“${esc(x.note)}”</p>`:''}
+  ${!x.answered&&x.prayed?`<p class="small c-sage mt-2" style="font-weight:500">Você orou por isso ${x.prayed} ${x.prayed===1?'vez':'vezes'}</p>`:''}
+  <div class="flex items-center gap-2 mt-3 flex-wrap">
+   ${x.answered?`<button class="btn btn-outline btn-sm" style="width:auto" data-act="prayReopen" data-id="${x.id}">Voltar a orar</button>`
+   :`<button class="btn ${prayedToday?'btn-sage':'btn-primary'} btn-sm" style="width:auto" data-act="prayToday" data-id="${x.id}" ${prayedToday?'disabled':''}>${prayedToday?`${ic('tick',16)} Orei hoje`:'Orei hoje'}</button><button class="btn btn-outline btn-sm" style="width:auto" data-act="prayAnswered" data-id="${x.id}">Deus respondeu</button>`}
+  </div></article>`;
+}
+function tDiario(u){
+ const f=ui.prayF||'orando';const open=u.prayers.filter(x=>!x.answered),ans=u.prayers.filter(x=>x.answered);
+ const list=(f==='orando'?open:ans).slice().sort((a,b)=>(b.answered?b.ansDate:b.date).localeCompare(a.answered?a.ansDate:a.date));
+ const cat=ui.prayCat||'Família';
+ return `<h1 class="display">Diário de oração</h1><p class="body mt-2">Escreva seus pedidos e veja a fidelidade de Deus ao longo do tempo.</p>
+ <section class="ori-card mt-4" style="display:block"><p class="ph" style="margin-top:0">“Não andem ansiosos por coisa alguma, mas em tudo, pela oração e súplicas, e com ação de graças, apresentem seus pedidos a Deus.”</p><p class="small mt-1" style="font-weight:600">Filipenses 4:6</p></section>
+ <div class="grid grid-cols-2 gap-3 mt-4"><div class="stile">${ic('journal',28)}<div><b>${open.length}</b><span>Orando</span></div></div><div class="stile">${ic('check',28)}<div><b>${ans.length}</b><span>Respondidos</span></div></div></div>
+ <form data-form="prayer" class="card mt-4 flex flex-col gap-3" novalidate>
+  <label class="lbl-f" for="prayT" style="margin-left:0">Novo pedido de oração</label>
+  <textarea id="prayT" name="t" class="input" rows="3" maxlength="400" placeholder="Ex.: Pela saúde da minha mãe" style="resize:vertical;min-height:90px">${esc(ui.prayDraft||'')}</textarea><p class="err" data-err="t"></p>
+  <div class="flex flex-wrap gap-2">${PRAYER_CATS.map(c=>`<button type="button" class="chip-f ${cat===c?'on':''}" style="min-height:36px;font-size:14px" aria-pressed="${cat===c}" data-act="prayCat" data-v="${c}">${c}</button>`).join('')}</div>
+  <button class="btn btn-primary" type="submit">${ic('plus',18)} Guardar pedido</button>
+ </form>
+ <div class="seg mt-6" role="tablist"><button class="${f==='orando'?'on':''}" data-act="prayF" data-v="orando" role="tab" aria-selected="${f==='orando'}">Orando (${open.length})</button><button class="${f==='respondidos'?'on':''}" data-act="prayF" data-v="respondidos" role="tab" aria-selected="${f==='respondidos'}">Respondidos (${ans.length})</button></div>
+ ${list.length?list.map(prayerCard).join(''):`<div class="empty card mt-3"><p class="h3">${f==='orando'?'Nenhum pedido por enquanto':'Ainda nenhum pedido respondido'}</p><p class="small muted mt-1">${f==='orando'?'Escreva acima o seu primeiro pedido. Deus ouve cada palavra.':'Quando Deus responder um pedido, toque em "Deus respondeu" e guarde aqui o testemunho.'}</p></div>`}
+ <p class="small muted mt-5" style="font-weight:400">Seus pedidos ficam salvos na sua conta, só para você.</p>`;
+}
+function prayerAnsweredModal(id){
+ const u=U();const x=u.prayers.find(p=>p.id===id);if(!x)return;
+ openModal(()=>`<div class="flex items-center justify-between"><h2 class="h1">Deus respondeu!</h2><button class="btn-x" data-act="closeModal" aria-label="Fechar">${ic('x',22)}</button></div>
+ <p class="muted mt-2">Que alegria! Conte como foi, para lembrar da fidelidade de Deus sempre que reler.</p>
+ <form data-form="prayerAns" data-id="${id}" class="flex flex-col gap-3 mt-4" novalidate><label class="sr-only" for="prayN">Como Deus respondeu</label><textarea id="prayN" name="n" class="input" rows="3" maxlength="400" placeholder="Como Deus respondeu? (opcional)" style="min-height:90px"></textarea>
+ <button class="btn btn-primary" type="submit">Guardar testemunho</button><button class="btn btn-ghost" type="button" data-act="closeModal">Cancelar</button></form>`);
+}
+function prayerEditModal(id){
+ const u=U();const x=u.prayers.find(p=>p.id===id);if(!x)return;
+ openModal(()=>`<div class="flex items-center justify-between"><h2 class="h1">Editar pedido</h2><button class="btn-x" data-act="closeModal" aria-label="Fechar">${ic('x',22)}</button></div>
+ <form data-form="prayerEdit" data-id="${id}" class="flex flex-col gap-3 mt-4" novalidate><label class="sr-only" for="prayE">Pedido</label><textarea id="prayE" name="t" class="input" rows="4" maxlength="400" style="min-height:110px">${esc(x.t)}</textarea><p class="err" data-err="t"></p>
+ <select name="c" class="input" aria-label="Categoria">${PRAYER_CATS.map(c=>`<option ${c===x.cat?'selected':''}>${c}</option>`).join('')}</select>
+ ${x.answered?`<textarea name="n" class="input" rows="3" maxlength="400" placeholder="Como Deus respondeu?" style="min-height:80px">${esc(x.note)}</textarea>`:''}
+ <button class="btn btn-primary" type="submit">Salvar</button><button class="btn btn-ghost" type="button" data-act="closeModal">Cancelar</button></form>`);
 }
 
 /* ---- Aba Aprender ---- */
@@ -2178,6 +2229,7 @@ function tEu(u){
   <div class="grid grid-cols-3 gap-3 mt-3">${ACH.map(a=>{const on=u.ach.includes(a.id);return `<button class="badge ${on?'':'locked'}" data-act="achInfo" data-id="${a.id}" aria-label="${a.n}${on?'':' (bloqueada)'}"><span class="badge-ic">${ic(on?a.ic:'lock',28,on?'':'c-gray')}</span>${a.n}</button>`}).join('')}</div></section>
  <section class="mt-6 flex flex-col gap-3 eu-menu">
   ${menuTile('metas','target','Metas e hábitos espirituais',`${u.goals.length} cadastrada${u.goals.length===1?'':'s'} · ${u.goals.filter(g=>g.done).length} concluída${u.goals.filter(g=>g.done).length===1?'':'s'}`)}
+  ${menuTile('openBoard','grid','Mural da fé da semana',`${u.board.photos.length} foto${u.board.photos.length===1?'':'s'} · ${u.boards.length} salvo${u.boards.length===1?'':'s'}`)}
   ${menuTile('favs','heart','Meus favoritos',`${u.favs.length} ite${u.favs.length===1?'m':'ns'}`)}
   ${menuTile('editPrefs','brush','Editar escolhas',`${u.prefs.length} temas selecionados`)}
   ${menuTile('seeResult','sparkle','Ver meu resultado',pname(u))}
@@ -2221,6 +2273,13 @@ function nope(f){sfx('soft');const b=f.querySelector('.bad');if(b){b.classList.r
 const emailOk=e=>/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(e);
 function birthErr(b){if(!b)return 'Escolha sua data de nascimento.';const d=parseYmd(b);if(isNaN(d)||b>today())return 'Essa data ainda não chegou!';if(d.getFullYear()<1900)return 'Confere o ano para mim?';return ''}
 const FORMS={
+ prayer(f){clearErr(f);const t=String(f.t.value||'').trim();if(t.length<3){setErr(f,'t','Escreva o seu pedido.');return nope(f)}
+  const u=U();u.prayers.unshift({id:uid(),t,cat:ui.prayCat||'Família',date:today(),answered:false,ansDate:'',note:'',prayed:0,last:''});ui.prayDraft='';ui.prayF='orando';
+  addXP(5);markActive();checkAch();save();sfx('ok');toast('Pedido guardado no seu diário.');render()},
+ prayerAns(f){const u=U();const x=u.prayers.find(p=>p.id===f.dataset.id);if(!x)return;x.answered=true;x.ansDate=today();x.note=String(f.n.value||'').trim();
+  closeModal();addXP(10);markActive();save();confetti();sfx('win');ui.prayF='respondidos';toast('Glória a Deus! Testemunho guardado.');render()},
+ prayerEdit(f){clearErr(f);const u=U();const x=u.prayers.find(p=>p.id===f.dataset.id);if(!x)return;const t=String(f.t.value||'').trim();if(t.length<3){setErr(f,'t','Escreva o seu pedido.');return nope(f)}
+  x.t=t;x.cat=PRAYER_CATS.includes(f.c.value)?f.c.value:x.cat;if(f.n)x.note=String(f.n.value||'').trim();save();closeModal();render();toast('Pedido atualizado.')},
  ori(f){const t=String(f.t.value||'').trim();if(!t)return;oriSay(oriTopicOf(t)||'?',t);const i=document.getElementById('oriT');if(i)i.focus()},
  async cadastro(f){
   clearErr(f);const name=f.name.value.trim(),email=f.email.value.trim().toLowerCase(),pass=f.pass.value,birth=f.birth.value;
@@ -2360,6 +2419,14 @@ const ACT={
  hardHome:()=>{closeModal();const u=U();go(u?stepFor(u):'boas-vindas')},
  closeModal:()=>closeModal(),
  confirmOk:()=>{const f=ui.onOk;ui.onOk=null;closeModal();if(f)f()},
+ openBoard:()=>{sfx('tap');go('app-board')},
+ prayF:el=>{ui.prayF=el.dataset.v;sfx('tap');render()},
+ prayCat:el=>{const t=document.getElementById('prayT');if(t)ui.prayDraft=t.value;ui.prayCat=el.dataset.v;sfx('tap');render();const t2=document.getElementById('prayT');if(t2){t2.focus();t2.setSelectionRange(t2.value.length,t2.value.length)}},
+ prayToday:el=>{const u=U();const x=u.prayers.find(p=>p.id===el.dataset.id);if(!x||x.last===today())return;x.prayed++;x.last=today();addXP(5);markActive();save();sfx('ok');toast('Oração registrada. Deus ouviu!');render()},
+ prayAnswered:el=>prayerAnsweredModal(el.dataset.id),
+ prayReopen:el=>{const u=U();const x=u.prayers.find(p=>p.id===el.dataset.id);if(!x)return;x.answered=false;x.ansDate='';save();ui.prayF='orando';render();toast('O pedido voltou para a lista de oração.')},
+ prayEdit:el=>prayerEditModal(el.dataset.id),
+ prayDel:el=>{const u=U();const x=u.prayers.find(p=>p.id===el.dataset.id);if(!x)return;confirmBox({title:'Excluir pedido?',text:'Esse pedido vai sair do seu diário.',ok:'Excluir',danger:true,onOk:()=>{u.prayers=u.prayers.filter(p=>p.id!==x.id);save();render();toast('Pedido excluído.')}})},
  oriOpen:()=>{sfx('tap');oriModal()},
  oriAsk:el=>{const t=ORI_TOPICS.find(x=>x.id===el.dataset.v);oriSay(el.dataset.v,t?t.n:el.textContent)},
  oriGo:el=>{closeModal();go('app-'+el.dataset.v)},
