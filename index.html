@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Orivie - Sua Personalidade</title>
-<meta name="description" content="Descubra quem você é e viva o que combina com você.">
+<meta name="description" content="Descubra quem você é, do seu jeito, e viva o que combina com você.">
 <meta name="theme-color" content="#F7F3EE">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cellipse cx='32' cy='38' rx='22' ry='23' fill='%23D9A08B'/%3E%3Cellipse cx='24' cy='10' rx='9' ry='4.5' fill='%23A8B8A0' transform='rotate(-25 24 10)'/%3E%3Cellipse cx='40' cy='9' rx='9' ry='4.5' fill='%23A8B8A0' transform='rotate(25 40 9)'/%3E%3Ccircle cx='25' cy='35' r='6' fill='%23fff'/%3E%3Ccircle cx='39' cy='35' r='6' fill='%23fff'/%3E%3Ccircle cx='25' cy='36' r='3.4' fill='%233A2E28'/%3E%3Ccircle cx='39' cy='36' r='3.4' fill='%233A2E28'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -334,6 +334,111 @@ body.nl-badge-on .screen.app{padding-bottom:180px}
 @keyframes xpUp{0%{transform:translate(-50%,10px) scale(.7);opacity:0}20%{transform:translate(-50%,0) scale(1.08);opacity:1}70%{opacity:1}100%{transform:translate(-50%,-60px) scale(1);opacity:0}}
 @keyframes fall{to{transform:translate3d(var(--dx),110vh,0) rotate(var(--r))}}
 @keyframes dot{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+
+/* =========================================================
+   NOVO VISUAL (2026-11): limpo, neutro e premium
+   Botões terracota lisos, campos com borda sálvia, cards suaves
+   ========================================================= */
+:root{--terra-btn:#C47A5F;--terra-btn-dk:#A9634A;--card:#FBF8F4;--line:#E6DDD3;--shadow:0 6px 22px rgba(58,46,40,.07)}
+body{font-weight:400}
+.display,.h1{font-family:var(--f-ui);font-weight:700;letter-spacing:-.6px}
+.display{font-size:34px;line-height:40px}
+.h1{font-size:28px;line-height:34px}
+.h2{font-weight:700;font-size:20px}
+.brandbar{justify-content:center;border-bottom:0;min-height:56px;position:relative}
+.brandbar .brand{font-size:15px;font-weight:500;gap:8px}
+.brandbar .brand b{font-family:var(--f-display);font-weight:500;font-size:19px}
+.brandbar.has-right{justify-content:space-between}
+.brandbar>.ibtn{position:absolute;right:8px;top:50%;transform:translateY(-50%)}
+.unit-head.sage,.unit-head{box-shadow:var(--shadow)}
+.brand-dot{color:var(--muted);margin:0 2px}
+/* botões */
+.btn{border-radius:14px;min-height:54px;text-transform:none;letter-spacing:0;font:600 17px/1.15 var(--f-ui)}
+.btn:active:not(:disabled){transform:scale(.98)}
+.btn-primary,.btn-premium{background:var(--terra-btn);color:#fff;box-shadow:0 6px 16px rgba(196,122,95,.28)}
+.btn-primary:hover:not(:disabled){background:var(--terra-btn-dk);filter:none}
+.btn-sage{background:var(--salvia);color:var(--texto);box-shadow:0 6px 16px rgba(168,184,160,.3)}
+.btn-mel{box-shadow:none}
+.btn-outline{background:transparent;color:var(--texto);border:1.5px solid var(--salvia);box-shadow:none}
+.btn-outline:active:not(:disabled){background:var(--salvia-lt);transform:scale(.98)}
+.btn-ghost{color:var(--texto);font-weight:500}
+.btn-sm{min-height:40px;font-size:14px;border-radius:12px}
+.btn:disabled,.btn.is-disabled{background:#E9E2DA;color:#A99E95;box-shadow:none}
+/* campos */
+.lbl-f{font-weight:500;font-size:15px;margin:0 0 8px 4px}
+.input{background:transparent;border:1.5px solid #B9C6B2;border-radius:14px;min-height:54px;padding:14px 16px;font-size:17px}
+.input:focus{border-color:var(--salvia-dk);background:#fff}
+.field-ic{position:relative}.field-ic>svg{position:absolute;left:16px;top:16px;color:var(--salvia-dk);pointer-events:none}.field-ic .input{padding-left:50px}
+/* cards e opções */
+.card,.crow,.stile,.prev,.prev-card,.tcard,.icard,.badge{background:var(--card);border:1px solid var(--line);border-bottom-width:1px;border-radius:18px;box-shadow:var(--shadow)}
+.tile{background:var(--card);border:1px solid var(--line);border-bottom-width:1px;border-radius:16px;box-shadow:0 3px 12px rgba(58,46,40,.05);font-weight:400;font-size:17px;padding:16px}
+.tile:active,.icard:active,.tcard:active,.prev:active,.prev-card:active,.badge:active{transform:scale(.99);border-bottom-width:1px;margin-bottom:0}
+.tile .key{width:46px;height:46px;border-radius:50%;border:1.5px solid var(--texto);font-size:20px;font-weight:400;color:var(--texto)}
+.tile.sel{background:var(--card);border-color:var(--terra);color:var(--texto)}
+.tile.sel .key{background:var(--terra-btn);border-color:var(--terra-btn);color:#fff}
+.tile.chip .key,.tile.chip .cbox{width:26px;height:26px;border-radius:8px}
+.check-dot{display:none}
+.cbox{border:1.5px solid #CFC5BB;border-radius:8px;background:transparent}
+.tile.sel .cbox,.cbox.on{background:var(--salvia);border-color:var(--salvia);color:#fff}
+.crow.is-done{background:var(--card);border-color:var(--line)}
+.tag{text-transform:none;letter-spacing:0;font-weight:600;font-size:13px;height:28px;border-radius:999px;padding:0 12px}
+.tag-terra{background:#E8B5A3;color:var(--texto)}
+.sec-h{text-transform:none;letter-spacing:0;font-weight:700;font-size:18px}
+/* progresso */
+.prog{height:12px;background:#E9E2D6}
+.prog>i{background:var(--salvia)}.prog>i::after{display:none}
+.prog.mel>i{background:var(--mel)}
+.pct{font-size:14px;color:var(--muted);min-width:38px}
+/* chips */
+.chip-f{border:0;border-radius:14px;background:#C9D5C3;color:var(--texto);text-transform:none;letter-spacing:0;font-weight:500;font-size:15px;min-height:44px;padding:0 16px}
+.chip-f:active{transform:scale(.97);border-bottom-width:0;margin-bottom:0}
+.chip-f.on{background:#E0A58F;color:#fff}
+.chip-f b{color:inherit}
+.seg{background:#EAE4DC;border-radius:16px}
+.seg button{text-transform:none;letter-spacing:0;font-weight:600;font-size:16px}
+.seg button.on{background:var(--card);color:var(--texto);box-shadow:inset 0 -3px 0 var(--salvia)}
+/* falas da Ori */
+.bubble{background:var(--card);border:1px solid var(--line);font-weight:400}
+.bubble::before{background:var(--card);border-color:var(--line)}
+.ori-card{display:flex;align-items:center;gap:14px;padding:20px 18px;border-radius:22px;background:#C3CFBC}
+.ori-card h2{font-weight:700;font-size:24px}
+.ori-card p{font-size:16px;line-height:1.45}
+.ori-card .ph{font-style:italic;margin-top:8px}
+/* lista de checks (Hoje) */
+.mini-check{display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:14px;background:#F1ECE5;margin-top:8px;width:100%;text-align:left}
+.mini-check .dot{display:grid;place-items:center;width:30px;height:30px;border-radius:50%;border:1.5px solid var(--salvia);color:#fff;flex:none}
+.mini-check.on .dot{background:var(--terra-btn);border-color:var(--terra-btn)}
+.mini-check .ok{margin-left:auto;font-size:13px;padding:3px 10px;border-radius:999px;background:#C9D5C3}
+/* grupos do checklist */
+.gico{display:grid;place-items:center;flex:none;width:44px;height:44px;border-radius:12px;border:1.5px solid var(--salvia)}
+/* trilha da semana e unidade */
+.unit-head{background:var(--card);border:1px solid var(--line);box-shadow:var(--shadow);color:var(--texto)}
+.unit-head.sage{background:var(--card)}
+.unit-title{font-family:var(--f-ui);font-weight:700}
+.node{box-shadow:0 5px 0 var(--terra-sh)}
+.node-cap,.unit-kicker{text-transform:none;letter-spacing:0}
+.balloon{text-transform:none;letter-spacing:0}
+/* menu da aba Eu */
+.eu-menu .tile{border:0;box-shadow:0 3px 12px rgba(58,46,40,.05)}
+.eu-menu .tile:nth-child(odd){background:#C9D5C3}
+.eu-menu .tile:nth-child(even){background:#EBC2B2}
+.eu-menu .menu-ic{background:rgba(255,255,255,.45);border-radius:50%}
+.prof-card{display:flex;align-items:center;gap:16px}
+.prof-card .avatar{width:96px;height:96px;font-size:40px;box-shadow:none;flex:none}
+.pill{display:inline-block;padding:5px 14px;border-radius:999px;background:#C47A5F;color:#fff;font-size:15px;font-weight:500}
+.paid{background:#B9C7B2;color:var(--texto);border-radius:18px;padding:14px 16px;font-weight:600;width:100%}
+/* abas */
+.tabbar{background:var(--card);border-top:1px solid var(--line);box-shadow:0 -4px 18px rgba(58,46,40,.05)}
+.tabbar button{text-transform:none;letter-spacing:0;font-weight:500;font-size:11px;border:0}
+.tabbar button[aria-current="page"]{background:transparent;color:var(--salvia-dk);font-weight:700}
+.footbar{border-top:0;background:linear-gradient(to top,var(--creme) 70%,rgba(247,243,238,0))}
+/* logo */
+.logo-big{display:flex;align-items:center;justify-content:center;gap:12px}
+.logo-big b{display:block;font-family:var(--f-display);font-weight:500;font-size:44px;line-height:1}
+.logo-big span{display:block;font-size:16px;letter-spacing:.4px;color:var(--texto);margin-top:4px}
+.or-sep{text-align:center;color:var(--muted);margin:14px 0}
+.price{font-family:var(--f-ui);font-weight:700;letter-spacing:-1px;color:var(--terra-btn)}
+
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:1ms!important;animation-iteration-count:1!important;transition-duration:1ms!important}}
 </style>
 </head>
@@ -404,10 +509,10 @@ const C={T:'#3A2E28',TE:'#D9A08B',TS:'#B97F6A',SA:'#A8B8A0',SS:'#879A7E',ME:'#E3
 const QUESTIONS=[
  {q:'Como você reage às emoções?',o:['Analiso antes de reagir','Sinto tudo intensamente','Resolvo e sigo em frente','Converso sobre o que sinto','Guardo minhas emoções']},
  {q:'Como funciona sua mente?',o:['Imagino possibilidades futuras','Questiono a vida e a existência','Analiso fatos e informações','Penso sobre o passado','Vivo mais o presente']},
- {q:'Como você é socialmente?',o:['Comunicativa e espontânea','Observadora e reservada','Seletiva com amizades','Sociável com pessoas íntimas','Prefiro minha própria companhia']},
+ {q:'Como você é socialmente?',o:['Converso fácil e sou espontâneo(a) com todo mundo','Observo mais do que falo','Escolho bem minhas amizades','Me solto com pessoas próximas','Prefiro minha própria companhia']},
  {q:'Como toma decisões?',o:['Pela lógica','Pela intuição','Pelos sentimentos','Pelos meus valores','Pela segurança']},
  {q:'Como lida com novidades?',o:['Adoro experimentar','Gosto de pesquisar primeiro','Avalio vantagens e riscos','Tenho curiosidade, mas insegurança','Prefiro minha rotina']},
- {q:'Como você recarrega sua energia?',o:['Sozinha, em silêncio','Com pessoas que amo','Na natureza','Criando algo','Dormindo e descansando']},
+ {q:'Como você recarrega sua energia?',o:['No meu canto, em silêncio','Com pessoas que amo','Na natureza','Criando algo','Dormindo e descansando']},
  {q:'O que mais te deixa feliz?',o:['Liberdade','Amor e conexão','Conquistas','Paz e leveza','Descobrir coisas novas']},
  {q:'Como você lida com conflitos?',o:['Falo na hora','Penso antes de falar','Evito para não brigar','Tento entender o outro lado','Fico em silêncio e me afasto']},
  {q:'Como é seu dia ideal?',o:['Aventura e movimento','Rotina calma e organizada','Tempo com quem amo','Dia criativo, sem pressa','Dia de autocuidado']},
@@ -429,20 +534,20 @@ const SCORING=[
 ];
 
 const PROFILES=[
-{id:'serena',name:'Serena Criativa',dims:['CRI','SEN','INT'],
- short:'Sensível, imaginativa e cheia de mundos por dentro.',
+{id:'serena',name:'Alma Serena Criativa',dims:['CRI','SEN','INT'],
+ short:'Sensibilidade, imaginação e muitos mundos por dentro.',
  desc:['Você é daquelas pessoas que percebem o que quase ninguém vê: a luz entrando pela janela, a mudança no tom de voz de alguém, a beleza escondida no simples. Sua sensibilidade não é fragilidade — é uma lente rara para enxergar a vida.',
   'Sua criatividade nasce do silêncio. Você precisa de tempo só seu para organizar o que sente e transformar isso em ideias, projetos, palavras ou pequenos rituais. Quando respeita esse ritmo, floresce de um jeito único.',
   'Seu caminho é unir calma e expressão: criar sem pressa, sentir sem se perder e mostrar ao mundo a delicadeza que existe em você.'],
  forces:['Imaginação fértil','Empatia profunda','Olhar estético apurado','Calma que acolhe'],
  challenges:['Absorver demais as emoções dos outros','Adiar projetos esperando o momento perfeito','Se cobrar quando a inspiração não vem'],
- phrases:['Sua sensibilidade é o seu superpoder mais bonito.','Criar devagar também é criar.','Hoje, repare em uma beleza pequena.','O silêncio é onde suas ideias nascem.','Você não precisa ter pressa para florescer.','Sentir muito é sinal de que você está viva.','Seu jeito delicado muda ambientes.'],
+ phrases:['Sua sensibilidade é o seu superpoder mais bonito.','Criar devagar também é criar.','Hoje, repare em uma beleza pequena.','O silêncio é onde suas ideias nascem.','Você não precisa ter pressa para florescer.','Sentir muito é sinal de que você está vivendo de verdade.','Seu jeito delicado muda ambientes.'],
  themes:[{t:'Beleza no simples',d:'Esta semana, registre três detalhes bonitos do seu dia.'},{t:'Criar sem cobrança',d:'Faça algo criativo só pelo prazer, sem precisar ficar perfeito.'},{t:'Limites gentis',d:'Pratique dizer não com carinho para proteger sua energia.'},{t:'Ritual de calma',d:'Crie um pequeno ritual diário só seu: um chá, uma música, uma página.'}],
  why:'Combina com sua alma criativa e sensível:',
  check:{provei:'Um chá novo, tomado com calma',ouvi:'Um álbum instrumental inteiro',visitei:'Um ateliê ou exposição',li:'Um poema antes de dormir'}},
-{id:'exploradora',name:'Exploradora Livre',dims:['ABE','IND','SOC'],
- short:'Curiosa, corajosa e movida por novas experiências.',
- desc:['Você foi feita para o movimento. Novos lugares, ideias e pessoas acendem algo em você, e a rotina repetida demais parece pequena para o tamanho da sua curiosidade.',
+{id:'exploradora',name:'Alma Exploradora Livre',dims:['ABE','IND','SOC'],
+ short:'Curiosidade, coragem e sede de novas experiências.',
+ desc:['Você nasceu para o movimento. Novos lugares, ideias e pessoas acendem algo em você, e a rotina repetida demais parece pequena para o tamanho da sua curiosidade.',
   'Sua liberdade é um valor, não um capricho. Você aprende experimentando, se conecta com facilidade e tem coragem de começar o que outras pessoas só imaginam.',
   'Seu caminho é explorar com intenção: escolher aventuras que alimentam a alma e criar raízes leves que te sustentam sem prender.'],
  forces:['Coragem para o novo','Adaptabilidade','Energia contagiante','Mente aberta'],
@@ -452,18 +557,18 @@ const PROFILES=[
  why:'Combina com seu espírito livre:',
  check:{provei:'Uma comida que nunca experimentei',ouvi:'Um gênero musical novo',visitei:'Uma rua ou bairro desconhecido',li:'Um relato de viagem'}},
 {id:'analitica',name:'Mente Analítica',dims:['RAC','ORG','INT'],
- short:'Lógica, estratégica e apaixonada por entender o porquê.',
+ short:'Lógica, estratégia e paixão por entender o porquê.',
  desc:['Sua mente é um laboratório. Você observa, compara, questiona e só se convence quando as peças se encaixam. Essa clareza faz de você alguém em quem as pessoas confiam para resolver problemas.',
   'Você valoriza organização e profundidade. Prefere entender bem um assunto a saber um pouco de tudo, e se sente em paz quando tem um plano.',
   'Seu caminho é unir razão e acolhimento: usar sua inteligência a seu favor sem esquecer que sentimentos também são dados importantes.'],
  forces:['Raciocínio claro','Planejamento','Foco profundo','Senso crítico'],
- challenges:['Pensar demais antes de agir','Exigir perfeição de si mesma','Deixar as emoções para depois'],
+ challenges:['Pensar demais antes de agir','Exigir perfeição de si','Deixar as emoções para depois'],
  phrases:['Nem tudo precisa estar resolvido hoje.','Sua clareza é um presente para quem está perto.','Planeje, mas deixe espaço para o acaso.','Errar também é coletar dados.','Uma decisão boa hoje vale mais que a perfeita amanhã.','Sentir também é uma forma de entender.','Sua mente merece descanso.'],
  themes:[{t:'Feito é melhor que perfeito',d:'Entregue algo esta semana sem revisar mil vezes.'},{t:'Sentir sem analisar',d:'Anote uma emoção por dia, sem tentar explicá-la.'},{t:'Plano da semana',d:'Organize três prioridades e celebre quando concluir.'},{t:'Pausas que recarregam',d:'Faça pausas curtas e sem telas entre os blocos de foco.'}],
  why:'Combina com sua mente analítica:',
  check:{provei:'Uma receita seguindo cada passo',ouvi:'Um podcast sobre algo que quero entender',visitei:'Um museu de ciência ou história',li:'Um capítulo de não ficção'}},
 {id:'conectiva',name:'Alma Conectiva',dims:['AFE','SOC','SEN'],
- short:'Afetuosa, calorosa e feita para criar laços.',
+ short:'Afeto, calor humano e talento para criar laços.',
  desc:['Você enxerga a vida através das pessoas. Um abraço, uma conversa sincera, uma mesa cheia — é ali que você se sente em casa e mostra quem é.',
   'Sua empatia acolhe e sua presença aquece. As pessoas se sentem vistas ao seu lado, porque você escuta de verdade e lembra do que importa para cada uma.',
   'Seu caminho é cuidar dos outros sem se esquecer: dar amor também a você e escolher relações que te devolvem o mesmo carinho.'],
@@ -474,23 +579,23 @@ const PROFILES=[
  why:'Combina com seu coração conectivo:',
  check:{provei:'Uma receita para dividir com alguém',ouvi:'A música favorita de alguém que amo',visitei:'Alguém querido',li:'Uma carta ou mensagem antiga'}},
 {id:'contemplativa',name:'Essência Contemplativa',dims:['INT','INU','SEN'],
- short:'Profunda, intuitiva e conectada ao que é essencial.',
+ short:'Profundidade, intuição e conexão com o essencial.',
  desc:['Você vive em camadas. Enquanto muitos olham a superfície, você mergulha nas perguntas grandes: quem sou eu, o que importa, para onde estou indo.',
   'Sua intuição é afiada e sua presença é tranquila. Você precisa de silêncio, natureza e tempo para digerir a vida — e é desse lugar quieto que nasce sua sabedoria.',
-  'Seu caminho é confiar na sua voz interior e trazê-la para o mundo, sem medo de ser profunda num mundo apressado.'],
+  'Seu caminho é confiar na sua voz interior e trazê-la para o mundo, sem medo da sua profundidade num mundo apressado.'],
  forces:['Intuição','Profundidade','Serenidade','Autoconhecimento'],
- challenges:['Se isolar demais','Ficar presa no passado','Dificuldade em agir sem certeza'],
+ challenges:['Se isolar demais','Viver muito no passado','Dificuldade em agir sem certeza'],
  phrases:['Sua intuição sabe o caminho.','O silêncio também responde.','Desacelerar é um ato de coragem.','Você não precisa explicar sua profundidade.','Hoje, escute o que o seu corpo diz.','O essencial cabe em pouco.','Sua calma é sabedoria.'],
- themes:[{t:'Escuta interior',d:'Comece o dia com cinco minutos de silêncio antes do celular.'},{t:'Natureza que cura',d:'Passe um tempo ao ar livre, nem que seja numa praça.'},{t:'Do pensamento à ação',d:'Transforme uma reflexão em um pequeno passo concreto.'},{t:'Leveza com o passado',d:'Escreva sobre algo que você está pronta para soltar.'}],
+ themes:[{t:'Escuta interior',d:'Comece o dia com cinco minutos de silêncio antes do celular.'},{t:'Natureza que cura',d:'Passe um tempo ao ar livre, nem que seja numa praça.'},{t:'Do pensamento à ação',d:'Transforme uma reflexão em um pequeno passo concreto.'},{t:'Leveza com o passado',d:'Escreva sobre algo que você já pode soltar.'}],
  why:'Combina com sua essência contemplativa:',
  check:{provei:'Uma refeição em silêncio, com atenção',ouvi:'Sons da natureza por 10 minutos',visitei:'Um parque, praia ou jardim',li:'Algumas páginas de filosofia'}},
 {id:'determinada',name:'Espírito Determinado',dims:['IND','RAC','ORG'],
- short:'Forte, independente e movida por conquistas.',
+ short:'Força, independência e foco em conquistas.',
  desc:['Você tem fogo nos olhos. Quando decide algo, vai até o fim — e é essa determinação que faz você chegar onde muitos desistem no meio do caminho.',
   'Independente e prática, você confia na própria capacidade, resolve problemas com rapidez e gosta de ver resultados concretos do seu esforço.',
   'Seu caminho é conquistar sem se esgotar: celebrar cada vitória, pedir ajuda quando precisar e lembrar que descanso também faz parte da jornada.'],
  forces:['Determinação','Autonomia','Praticidade','Liderança'],
- challenges:['Dificuldade em descansar','Impaciência com processos lentos','Querer resolver tudo sozinha'],
+ challenges:['Dificuldade em descansar','Impaciência com processos lentos','Querer resolver tudo sem ajuda'],
  phrases:['Sua força também mora no descanso.','Celebre o quanto você já caminhou.','Um passo firme por dia já é vitória.','Pedir ajuda também é coragem.','Você é capaz — e não precisa provar isso a ninguém.','Hoje, foque no que realmente importa.','Disciplina é amor pelo seu futuro.'],
  themes:[{t:'Celebrar vitórias',d:'Anote uma conquista por dia, por menor que pareça.'},{t:'Descanso estratégico',d:'Agende pausas como agenda reuniões importantes.'},{t:'Pedir ajuda',d:'Delegue ou peça apoio em uma tarefa esta semana.'},{t:'Uma meta, foco total',d:'Escolha uma única prioridade e dedique a ela sua melhor energia.'}],
  why:'Combina com seu espírito determinado:',
@@ -504,9 +609,9 @@ const ITEMS=[
  {id:'r1',c:'roupas',n:'Linho e tons terrosos',d:'Peças leves e naturais em areia, oliva e terracota.',w:'elas trazem calma, textura e uma beleza discreta, do jeito que você gosta.',p:['serena','contemplativa'],img:'photo-1490481651871-ab68de25d43d'},
  {id:'r2',c:'roupas',n:'Jaqueta utilitária',d:'Bolsos, tecido resistente e estilo para qualquer roteiro.',w:'ela acompanha seu ritmo e está pronta para o inesperado.',p:['exploradora','determinada'],img:'photo-1551028719-00167b16eac5'},
  {id:'r3',c:'roupas',n:'Alfaiataria minimalista',d:'Cortes limpos, cores neutras e zero excesso.',w:'o visual organizado reflete a clareza da sua mente.',p:['analitica','determinada'],img:'photo-1594633312681-425c7b97ccd1'},
- {id:'r4',c:'roupas',n:'Vestido floral fluido',d:'Estampas delicadas e tecidos que dançam com o vento.',w:'ele expressa doçura e deixa você acolhedora e leve.',p:['conectiva','serena'],img:'photo-1515372039744-b8f02a3ae446'},
+ {id:'r4',c:'roupas',n:'Camisa de linho',d:'Tecido fresco, caimento solto e tons claros.',w:'ela traz leveza e conforto, do jeito que um bom encontro pede.',p:['conectiva','serena'],img:'photo-1596755094514-f87e34085b2c'},
  {id:'r5',c:'roupas',n:'Tricô aconchegante',d:'Malhas macias para dias de chá e introspecção.',w:'é como um abraço que você pode vestir.',p:['contemplativa','conectiva'],img:'photo-1434389677669-e08b4cac3105'},
- {id:'r6',c:'roupas',n:'Tênis colorido',d:'Conforto com um toque de ousadia para o dia todo.',w:'ele deixa você pronta para o próximo passo — literalmente.',p:['exploradora','determinada'],img:'photo-1542291026-7eec264c27ff'},
+ {id:'r6',c:'roupas',n:'Tênis confortável',d:'Conforto com um toque de estilo para o dia todo.',w:'ele prepara você para o próximo passo — literalmente.',p:['exploradora','determinada'],img:'photo-1542291026-7eec264c27ff'},
  {id:'m1',c:'musicas',n:'Lo-fi para criar',d:'Batidas suaves que ajudam a mente a fluir.',w:'cria o clima perfeito para suas ideias nascerem.',p:['serena','analitica'],img:'photo-1511379938547-c1f69419868d'},
  {id:'m2',c:'musicas',n:'MPB acústica',d:'Voz e violão para cantar junto ou só sentir.',w:'fala de afeto, memória e conexão.',p:['conectiva','contemplativa'],img:'photo-1510915361894-db8b60106cad'},
  {id:'m3',c:'musicas',n:'Indie de estrada',d:'Guitarras leves para ouvir de janela aberta.',w:'é trilha sonora de quem vive em movimento.',p:['exploradora','serena'],img:'photo-1470225620780-dba8ba36b745'},
@@ -536,7 +641,7 @@ const ITEMS=[
  {id:'b3',c:'livros',n:'Ensaios sobre a mente',d:'Ciência e reflexão sobre como pensamos.',w:'satisfaz sua sede de entender o porquê das coisas.',p:['analitica'],img:'photo-1481627834876-b7833e8f5570'},
  {id:'b4',c:'livros',n:'Romances sobre amizade',d:'Personagens que se encontram e se transformam.',w:'celebra os laços que você tanto valoriza.',p:['conectiva'],img:'photo-1544947950-fa07a98d237f'},
  {id:'b5',c:'livros',n:'Filosofia para o dia a dia',d:'Grandes perguntas em linguagem simples.',w:'acompanha seus pensamentos mais profundos.',p:['contemplativa','analitica'],img:'photo-1457369804613-52c61a468e7d'},
- {id:'b6',c:'livros',n:'Biografias inspiradoras',d:'Trajetórias de mulheres que fizeram acontecer.',w:'mostra que a sua determinação pode ir longe.',p:['determinada'],img:'photo-1589829085413-56de8ae18c73'}
+ {id:'b6',c:'livros',n:'Biografias inspiradoras',d:'Trajetórias de pessoas que fizeram acontecer.',w:'mostra que a sua determinação pode ir longe.',p:['determinada'],img:'photo-1589829085413-56de8ae18c73'}
 ];
 
 const LCATS=[{id:'todos',n:'Todos'},{id:'forcas',n:'Forças'},{id:'emocoes',n:'Emoções'},{id:'relacionamentos',n:'Relacionamentos'},{id:'rotina',n:'Rotina'},{id:'proposito',n:'Propósito'}];
@@ -545,7 +650,7 @@ const LCATS=[{id:'todos',n:'Todos'},{id:'forcas',n:'Forças'},{id:'emocoes',n:'E
 const TEXTS=[
  {id:'a1',title:"Os 5 Grandes Traços (Big Five)",cat:'forcas',min:4,img:'photo-1499209974431-9dddcece7f88',prefs:['Essência','Mente','Estilo','Novidades'],
   body:["O Big Five é o modelo de personalidade mais estudado da psicologia. Ele nasceu de uma ideia simples: se uma característica é importante, a língua cria palavras para ela. Agrupando milhares de adjetivos, pesquisadores chegaram a cinco grandes traços.",
-   "São eles: Abertura (curiosidade e imaginação), Conscienciosidade (organização e disciplina), Extroversão (energia social), Amabilidade (cooperação e empatia) e Neuroticismo (tendência a sentir emoções negativas com intensidade). Cada traço é uma escala: ninguém é só “organizada” ou só “extrovertida”.",
+   "São eles: Abertura (curiosidade e imaginação), Conscienciosidade (organização e disciplina), Extroversão (energia social), Amabilidade (cooperação e empatia) e Neuroticismo (tendência a sentir emoções negativas com intensidade). Cada traço é uma escala: ninguém é 100% organização ou 100% extroversão.",
    "Estudos com gêmeos indicam que cerca de 40% a 50% das diferenças nesses traços têm influência genética. O resto vem da vida: relações, trabalho, experiências. E a personalidade muda: com os anos, a maioria das pessoas fica um pouco mais organizada, gentil e emocionalmente estável.",
    "Nenhum traço é bom ou ruim por si só. O que importa é conhecer seu ponto de partida para fazer escolhas que combinem com ele."],
   try:"Dê uma nota de 1 a 5 para você em cada um dos cinco traços. Depois peça para alguém próximo fazer o mesmo sobre você e compare as respostas.",
@@ -579,8 +684,8 @@ const TEXTS=[
   body:["As cinco linguagens do amor foram propostas em 1992 pelo conselheiro Gary Chapman: palavras de afirmação, tempo de qualidade, presentes, atos de serviço e toque físico. A ideia é que cada pessoa tem um jeito preferido de dar e receber carinho.",
    "Em 2024, pesquisadoras da Universidade de Toronto revisaram os estudos sobre o tema e encontraram pouco apoio científico. Muita gente valoriza várias linguagens ao mesmo tempo, e não houve evidência de que casais que “falam a mesma língua” sejam mais felizes.",
    "Elas propõem outra imagem: uma alimentação equilibrada. Relações saudáveis precisam de vários nutrientes, como companhia, apoio emocional, afeto e cuidado prático, e não de uma única linguagem.",
-   "O valor do conceito está na conversa que ele abre: contar o que faz você se sentir amada e perguntar o que faz o outro se sentir assim."],
-  try:"Pergunte a alguém próximo: qual foi a última vez que você se sentiu muito cuidada(o) por mim? A resposta costuma surpreender.",
+   "O valor do conceito está na conversa que ele abre: contar o que faz você sentir amor e perguntar o que faz o outro sentir o mesmo."],
+  try:"Pergunte a alguém próximo: qual foi a última vez que você sentiu muito carinho vindo de mim? A resposta costuma surpreender.",
   src:"Chapman (1992); Impett, Park & Muise (2024), revisão na Current Directions in Psychological Science.",
   you:{serena:"Você expressa afeto em gestos e detalhes. Diga também em palavras o que precisa receber.",exploradora:"Experiências juntos te alimentam. O cotidiano também precisa de pequenos cuidados.",analitica:"Você ama resolvendo. Um elogio sincero ou um abraço completam o cuidado prático.",conectiva:"Palavras e presença te nutrem muito. Variar os nutrientes deixa a relação ainda mais rica.",contemplativa:"Presença silenciosa diz muito para você. Conte isso a quem você ama, porque nem todo mundo lê o silêncio.",determinada:"Você demonstra amor apoiando metas. Reservar tempo sem agenda também é uma forma de amar."}},
  {id:'a6',title:"Sua energia social: extroversão e introversão",cat:'relacionamentos',min:4,img:'photo-1529156069898-49953e39b3ac',prefs:['Vida social','Energia','Essência'],
@@ -619,15 +724,15 @@ const TEXTS=[
   body:["Pesquisadores como Joachim Stoeber separam dois lados do perfeccionismo. Os esforços perfeccionistas são padrões altos e dedicação. As preocupações perfeccionistas são o medo de errar, a autocrítica dura e a sensação de nunca estar bom o bastante.",
    "O primeiro lado pode impulsionar. O segundo está ligado a ansiedade, procrastinação e esgotamento. E o perfeccionismo está crescendo: uma metanálise com mais de 41 mil universitários mostrou aumento contínuo entre 1989 e 2016.",
    "A saída não é baixar todos os padrões, e sim mudar o tom. Num estudo de Juliana Breines e Serena Chen, quem olhou para um erro com autocompaixão estudou mais para a prova seguinte do que quem só tentou elevar a autoestima.",
-   "Autocompaixão, como define a psicóloga Kristin Neff, é tratar a si mesma como trataria uma amiga: reconhecer o erro, lembrar que errar é humano e seguir com gentileza."],
-  try:"Na próxima vez que se criticar, pergunte: eu falaria isso para uma amiga? Reescreva a frase do jeito que falaria com ela.",
+   "Autocompaixão, como define a psicóloga Kristin Neff, é tratar a si com a gentileza que teria com alguém querido: reconhecer o erro, lembrar que errar é humano e seguir com gentileza."],
+  try:"Na próxima vez que se criticar, pergunte: eu falaria isso para alguém que amo? Reescreva a frase do jeito que falaria com essa pessoa.",
   src:"Stoeber & Otto (2006); Curran & Hill (2019), Psychological Bulletin; Breines & Chen (2012), Personality and Social Psychology Bulletin; Neff (2003).",
   you:{serena:"Você pode esperar o momento perfeito para criar. Feito com carinho vale mais do que perfeito e parado.",exploradora:"Você começa muita coisa. Aceitar versões imperfeitas te ajuda a terminar.",analitica:"Padrões altos fazem parte de você. Fique atenta quando o detalhe deixar de ajudar e começar a travar.",conectiva:"Você pode temer decepcionar os outros. Quem te ama não espera perfeição.",contemplativa:"Você reflete muito sobre os próprios erros. Transforme a reflexão em aprendizado e solte o resto.",determinada:"Seu nível de exigência é alto. Celebrar o progresso evita que a cobrança vire esgotamento."}},
  {id:'a11',title:"Inteligência emocional",cat:'emocoes',min:4,img:'photo-1457369804613-52c61a468e7d',prefs:['Emoções','Conflitos','Vida social','Mente'],
   body:["O conceito foi proposto em 1990 pelos psicólogos Peter Salovey e John Mayer e ficou famoso em 1995 com o livro de Daniel Goleman. No modelo original, inteligência emocional é um conjunto de habilidades, e não um traço fixo.",
    "São quatro habilidades: perceber emoções (em você e nos outros), usar as emoções para pensar, entender de onde elas vêm e como mudam, e regular o que você sente. Por serem habilidades, podem ser treinadas.",
    "Um exemplo simples: num estudo de Matthew Lieberman, colocar em palavras o que se sente diminuiu a atividade da amígdala, região do cérebro ligada às reações de alarme. Nomear a emoção já ajuda a acalmá-la.",
-   "Quanto mais preciso o nome, melhor: “frustrada” ou “sobrecarregada” dizem mais do que “mal”. Ampliar seu vocabulário emocional é um treino que vale a pena."],
+   "Quanto mais preciso o nome, melhor: “frustração” ou “sobrecarga” dizem mais do que “estou mal”. Ampliar seu vocabulário emocional é um treino que vale a pena."],
   try:"Três vezes hoje, pare e complete: agora eu me sinto... Use uma palavra mais específica do que bem ou mal.",
   src:"Salovey & Mayer (1990); Mayer & Salovey (1997), modelo das quatro habilidades; Lieberman et al. (2007), Psychological Science; estudos de Lisa Feldman Barrett sobre granularidade emocional.",
   you:{serena:"Perceber emoções é natural para você. Seu treino é regular o que sente sem se afogar nelas.",exploradora:"Você lê ambientes rápido. Tente nomear também o que sente quando o entusiasmo baixa.",analitica:"Entender emoções combina com sua mente curiosa. O desafio é senti-las antes de explicá-las.",conectiva:"Você lê muito bem o que os outros sentem. Aplique essa mesma atenção a você.",contemplativa:"Você observa seu mundo interno com profundidade. Compartilhar o que percebe aproxima quem você ama.",determinada:"Regular emoções sob pressão é seu forte. Perceber o cansaço cedo também é inteligência emocional."}},
@@ -644,14 +749,14 @@ const TEXTS=[
    "Nenhum estilo é sempre o certo. Evitar pode ser sábio numa discussão sem importância; colaborar é ótimo quando a relação e o resultado importam. O problema é usar um estilo só, em todas as situações.",
    "O psicólogo John Gottman observou casais por décadas. Segundo ele, a maior parte dos conflitos de um casal se repete ao longo do tempo, porque nasce de diferenças de personalidade. O segredo não é eliminá-los, e sim conversar sobre eles com respeito.",
    "Gottman aponta quatro hábitos que mais prejudicam: crítica, desprezo, defensividade e silêncio punitivo. E um que mais ajuda: as tentativas de reparo, como uma pausa, um toque de humor ou um “vamos recomeçar?”."],
-  try:"No próximo desentendimento, comece pelo que você sente, e não pelo que o outro fez: “eu fiquei chateada quando...” em vez de “você sempre...”.",
+  try:"No próximo desentendimento, comece pelo que você sente, e não pelo que o outro fez: “eu me chateei quando...” em vez de “você sempre...”.",
   src:"Thomas & Kilmann (1974), instrumento de modos de conflito; Gottman (1994); Gottman & Silver, “Os Sete Princípios para o Casamento Dar Certo” (1999).",
   you:{serena:"Você tende a evitar conflitos para manter a paz. Dizer o que sente com calma também protege a relação.",exploradora:"Você fala na hora e segue em frente. Confira se o outro também já está pronto para seguir.",analitica:"Você pensa antes de falar, o que é ótimo. Só não deixe a lógica soar como frieza.",conectiva:"Você busca entender o outro lado. Cuide para não ceder sempre e esquecer o que você precisa.",contemplativa:"Você se afasta para processar. Avise que vai voltar à conversa, para o silêncio não virar punição.",determinada:"Você defende seu ponto com firmeza. Colaborar pode trazer soluções melhores do que vencer."}},
  {id:'a14',title:"Resiliência: como você se levanta",cat:'forcas',min:4,img:'photo-1551632811-561732d1e306',prefs:['Emoções','Novidades','Felicidade','Essência'],
   body:["Por muito tempo se achou que resiliência era rara, coisa de pessoas excepcionais. Os estudos do psicólogo George Bonanno mostraram o contrário: depois de perdas e eventos difíceis, em média cerca de dois terços das pessoas mantêm um funcionamento estável ao longo do tempo.",
    "A psicóloga Ann Masten chamou isso de “mágica comum”: a resiliência vem de recursos do dia a dia, como vínculos próximos, sensação de capacidade, esperança e sentido.",
    "Ser resiliente não significa não sofrer. Significa sofrer e, aos poucos, voltar a funcionar. E muitos desses recursos podem ser fortalecidos: cultivar relações, cuidar do corpo, praticar um otimismo realista e lembrar do que você já superou.",
-   "Pedir ajuda faz parte da resiliência. Ninguém se levanta sozinha o tempo todo."],
+   "Pedir ajuda faz parte da resiliência. Ninguém se levanta sem apoio o tempo todo."],
   try:"Lembre de uma dificuldade que você já superou. Anote três coisas que te ajudaram naquela época: elas são seus recursos de hoje.",
   src:"Bonanno (2004), American Psychologist; Galatzer-Levy, Huang & Bonanno (2018), revisão de trajetórias após eventos potencialmente traumáticos; Masten (2001), “Ordinary Magic”.",
   you:{serena:"Sua criatividade é um recurso de resiliência: transformar dor em expressão ajuda a seguir.",exploradora:"Sua adaptabilidade te ajuda a recomeçar. Dê tempo também para sentir o que mudou.",analitica:"Entender o que aconteceu te acalma. Combine essa clareza com o apoio de pessoas próximas.",conectiva:"Seus vínculos são seu maior escudo. Deixe as pessoas cuidarem de você também.",contemplativa:"Encontrar sentido é seu jeito de se reerguer. Escrever ajuda a organizar o que você viveu.",determinada:"Você se levanta rápido. Cuide para não pular a parte de sentir, ela também faz parte."}},
@@ -672,12 +777,12 @@ const ACH=[
  {id:'teste',n:'Primeiro passo',d:'Concluiu o teste de personalidade.',ic:'sparkle',ok:u=>u.testDone},
  {id:'fav1',n:'De olho no que combina',d:'Favoritou o primeiro item.',ic:'heart',ok:u=>u.favs.length>=1},
  {id:'dia',n:'Dia concluído',d:'Concluiu um dia no checklist.',ic:'check',ok:u=>u.history.length>=1},
- {id:'leitora',n:'Leitora curiosa',d:'Leu 3 textos.',ic:'book',ok:u=>u.read.length>=3},
+ {id:'leitora',n:'Leitura em dia',d:'Leu 3 textos.',ic:'book',ok:u=>u.read.length>=3},
  {id:'board',n:'Meu universo',d:'Salvou o primeiro board.',ic:'grid',ok:u=>u.boards.length>=1},
  {id:'meta',n:'Meta cumprida',d:'Concluiu uma meta ou hábito.',ic:'target',ok:u=>u.goals.some(g=>g.done)},
  {id:'seq3',n:'Três dias seguidos',d:'Manteve 3 dias de sequência.',ic:'flame',ok:u=>u.best>=3},
  {id:'bau',n:'Baú aberto',d:'Completou as missões do dia.',ic:'chest',ok:u=>Object.keys(u.chest).length>=1},
- {id:'colecao',n:'Colecionadora',d:'Favoritou 5 itens.',ic:'heart',ok:u=>u.favs.length>=5},
+ {id:'colecao',n:'Coleção do coração',d:'Favoritou 5 itens.',ic:'heart',ok:u=>u.favs.length>=5},
  {id:'sabia',n:'Mente iluminada',d:'Leu todos os textos da biblioteca.',ic:'trophy',ok:u=>TEXTS.every(t=>u.read.includes(t.id))},
  {id:'seq7',n:'Semana florida',d:'Manteve 7 dias de sequência.',ic:'flame',ok:u=>u.best>=7},
  {id:'xp200',n:'Brilho próprio',d:'Somou 200 XP.',ic:'star',ok:u=>u.xp>=200}
@@ -730,13 +835,18 @@ const ICONS={
  brush:`<path fill="${C.SA}" d="M19.5 3a1.6 1.6 0 0 1 1.5 2.2c-1.3 3.2-4.1 7-6.7 8.6l-2.3-2.3c1.6-2.6 5.4-5.4 7.5-8.5z"/><path fill="${C.TE}" d="M10.5 12.8l1.7 1.7c.4 2.9-1.7 5.5-6.7 5.5 1.5-1 1.2-2.6 1.6-4.2.5-1.7 1.9-3 3.4-3z"/>`,
  refresh:`<path d="M19.5 12a7.5 7.5 0 1 1-2.2-5.3" fill="none" stroke="${C.SS}" stroke-width="2.8" stroke-linecap="round"/><path fill="${C.SS}" d="M20.5 3.5v6h-6z"/>`,
  pencil:`<path fill="${C.ME}" d="M4 20l.9-4.6L15.6 4.7a2.2 2.2 0 0 1 3.1 0l.6.6a2.2 2.2 0 0 1 0 3.1L8.6 19.1z"/><path fill="${C.TS}" d="M4 20l.9-4.6 3.7 3.7z"/>`,
+ mail:`<rect x="3" y="5.5" width="18" height="13" rx="2.5" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M3.8 7l8.2 6.2L20.2 7" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/>`,
+ eye:`<path d="M2.5 12S6 5.5 12 5.5 21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12z" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="12" r="3.2" fill="currentColor"/>`,
  exit:`<path d="M10 4.5H6.5A2.5 2.5 0 0 0 4 7v10a2.5 2.5 0 0 0 2.5 2.5H10" fill="none" stroke="${C.TS}" stroke-width="2.8" stroke-linecap="round"/><path d="M14 8l4 4-4 4M18 12H9.5" fill="none" stroke="${C.TS}" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/>`
 };
 function ic(n,s=24,cls=''){return `<svg class="ic ${cls}" width="${s}" height="${s}" viewBox="0 0 24 24" aria-hidden="true" focusable="false">${ICONS[n]||ICONS.sparkle}</svg>`}
 
 /* Ori: sementinha com broto de duas folhas (assinatura), olhos grandes, pés soltos */
+/* Evolução da Ori pelo XP: Semente > Broto > Flor > Frutinha */
+const ORI_STAGES=[{id:'semente',n:'Semente',min:0},{id:'broto',n:'Broto',min:100},{id:'flor',n:'Flor',min:300},{id:'fruta',n:'Frutinha',min:600}];
+function oriStage(xp){try{if(xp==null){const u=U();if(!u)return 1;xp=u.xp}xp=Number(xp)||0;let k=0;ORI_STAGES.forEach((s,i)=>{if(xp>=s.min)k=i});return k}catch(e){return 1}}
 function mascot(mood='happy',size=96,extra=''){
- const {T,TE,TS,SA,SS,ME,BE}=C;
+ const {T,TE,TS,SA,SS,ME,BE}=C;const stg=oriStage();
  const look=mood==='think'?{x:3,y:-5}:{x:0,y:0};
  const eyes=mood==='sleep'
   ?`<path d="M37 63q9 7 18 0M65 63q9 7 18 0" stroke="${T}" stroke-width="3.6" fill="none" stroke-linecap="round"/>`
@@ -763,11 +873,14 @@ function mascot(mood='happy',size=96,extra=''){
  return `<svg class="mascot ${extra}" viewBox="0 0 120 132" width="${size}" height="${Math.round(size*1.1)}" role="img" aria-label="Ori, a mascote do Orivie">
   <rect x="36" y="118" width="20" height="10" rx="5" fill="${TS}"/><rect x="64" y="118" width="20" height="10" rx="5" fill="${TS}"/>
   ${arms}
-  <rect x="57.8" y="16" width="4.6" height="20" rx="2.3" fill="${SS}"/>
+  ${stg===0?`<rect x="57.8" y="24" width="4.6" height="12" rx="2.3" fill="${SS}"/><ellipse cx="68" cy="24" rx="9" ry="4.6" fill="${SA}" transform="rotate(-20 68 24)"/>`
+  :`<rect x="57.8" y="16" width="4.6" height="20" rx="2.3" fill="${SS}"/>
   <ellipse cx="47" cy="19" rx="12" ry="6" fill="${SA}" transform="rotate(-28 47 19)"/>
-  <ellipse cx="73" cy="16" rx="13" ry="6.5" fill="${SA}" transform="rotate(24 73 16)"/>
+  <ellipse cx="73" cy="16" rx="13" ry="6.5" fill="${SA}" transform="rotate(24 73 16)"/>`}
+  ${stg===2?`<g transform="translate(60 12)">${[0,72,144,216,288].map(a=>`<ellipse cx="0" cy="-6" rx="4" ry="6" fill="#fff" stroke="${BE}" stroke-width="1" transform="rotate(${a})"/>`).join('')}<circle r="3.6" fill="${ME}"/></g>`:''}
   <ellipse cx="60" cy="74" rx="40" ry="42" fill="${TE}"/>
   <ellipse cx="60" cy="94" rx="23" ry="17" fill="${BE}"/>
+  ${stg===3?`<ellipse cx="40" cy="45" rx="13" ry="6.5" fill="#fff" opacity=".45" transform="rotate(-35 40 45)"/><ellipse cx="60" cy="35" rx="9" ry="4" fill="${SS}" opacity=".9"/>${[[25,98],[95,98],[33,108],[87,108],[24,86],[96,86]].map(([x,y])=>`<ellipse cx="${x}" cy="${y}" rx="2.6" ry="3.8" fill="${ME}"/>`).join('')}`:''}
   <ellipse cx="32" cy="78" rx="6" ry="4" fill="${TS}" opacity=".55"/><ellipse cx="88" cy="78" rx="6" ry="4" fill="${TS}" opacity=".55"/>
   ${brows}${eyes}${mouths[mood]||mouths.happy}${extras}${zz}
  </svg>`;
@@ -931,8 +1044,9 @@ function markActive(){
 }
 function addXP(n){
  const u=U();if(!u||!n)return;const t=today();
- const before=u.xpLog[t]||0;
+ const before=u.xpLog[t]||0;const st0=oriStage(u.xp);
  u.xp+=n;u.xpLog[t]=before+n;
+ const st1=oriStage(u.xp);if(st1>st0)setTimeout(()=>{toast(`${ic('sparkle',20)} A Ori evoluiu! Agora ela é <b>${ORI_STAGES[st1].n}</b>.`);sfx('win')},1400);
  xpPill(n);
  if(before<DAILY_GOAL&&before+n>=DAILY_GOAL)setTimeout(()=>toast(`${ic('target',20)} Meta do dia batida! Que orgulho.`),900);
 }
@@ -1042,7 +1156,7 @@ function showMilestone(){
  const n=ui.milestone;ui.milestone=null;if(!n)return;
  sfx('win');confetti(110);
  openModal(()=>`<div class="text-center">${mascot('proud',140,'hop')}<p class="bignum mt-2">${n}</p><h2 class="h1">dias seguidos!</h2>
-  <p class="muted mt-2">Você está florescendo! Cada dia que você volta é um presente para você mesma.</p></div>
+  <p class="muted mt-2">Você está florescendo! Cada dia que você volta é um presente para você.</p></div>
   <div class="flex flex-col gap-3 mt-6"><button class="btn btn-premium" data-act="shareStreak" data-n="${n}">${ic('share',20)} Compartilhar</button><button class="btn btn-ghost" data-act="closeModal">Continuar</button></div>`,{center:true});
 }
 
@@ -1112,37 +1226,55 @@ function after(r,u){
 /* =========================================================
    TELAS
    ========================================================= */
-function brand(right=''){return `<header class="brandbar"><div class="brand">${mascot('happy',28)}<span><b>Orivie</b> - Sua Personalidade</span></div>${right}</header>`}
+function leafLogo(s=24){return `<svg width="${s}" height="${s}" viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="21" fill="none" stroke="${C.SS}" stroke-width="2.4"/><path d="M24 40c-9-4-12-12-9-22 7 2 11 8 9 22z" fill="${C.SA}" opacity=".85"/><path d="M24 40c9-4 12-12 9-22-7 2-11 8-9 22z" fill="${C.SA}"/><path d="M24 40V20" stroke="${C.SS}" stroke-width="1.6"/></svg>`}
+function brand(right=''){return `<header class="brandbar${right?' has-right':''}"><div class="brand">${leafLogo(22)}<span><b>Orivie</b> <span class="brand-dot">·</span> Sua Personalidade</span></div>${right}</header>`}
+function bigLogo(){return `<div class="logo-big">${leafLogo(64)}<div class="text-left"><b>Orivie</b><span>Sua Personalidade</span></div></div>`}
 function field(name,label,type,ph,ac,val=''){return `<div><label class="lbl-f" for="f-${name}">${label}</label><input class="input" id="f-${name}" name="${name}" type="${type}" placeholder="${ph}" autocomplete="${ac}" value="${esc(val)}" ${type==='date'?`max="${today()}" min="1900-01-01"`:''}><p class="err" data-err="${name}"></p></div>`}
 
 /* 1. Boas-vindas */
-function vWelcome(){return brand()+`<main class="screen center-col">
- <div class="welcome-art">${mascot('wave',150,'floaty')}<span class="spark s1">${ic('sparkle',24)}</span><span class="spark s2">${ic('leaf',24)}</span></div>
- <div class="bubble up mb-6" style="flex:none;max-width:320px;text-align:center">Oi! Eu sou a <b>Ori</b>, sua sementinha guia. Bora descobrir sua essência juntas?</div>
- <h1 class="display text-center">Descubra quem você é e viva o que combina com você</h1>
+function vWelcome(){return `<main class="screen center-col" style="padding-top:44px">
+ ${bigLogo()}
+ <div class="welcome-art mt-6">${mascot('wave',120,'floaty')}</div>
+ <p class="text-center muted mb-5" style="max-width:300px">Oi! Eu sou a <b style="color:var(--texto)">Ori</b>, sua sementinha guia.</p>
+ <h1 class="display text-center">Descubra quem você é, do seu jeito</h1>
  <p class="lead text-center mt-3">Um espaço para conhecer sua essência e construir uma vida que tenha a sua identidade.</p>
- <div class="flex justify-center gap-2 mt-5 flex-wrap"><span class="tag">10 perguntas</span><span class="tag tag-terra">3 minutos</span><span class="tag tag-mel">6 perfis</span></div>
+ <p class="small muted mt-5" style="font-weight:400">10 perguntas · 3 minutos · 6 perfis</p>
 </main>
 <footer class="footbar stack"><button class="btn btn-primary" data-act="go" data-to="cadastro">Começar meu teste</button><button class="btn btn-outline" data-act="go" data-to="login">Já tenho conta</button></footer>`}
 
 /* 2. Cadastro / Login */
-function vAuth(mode){const cad=mode==='cadastro';return brand()+`<main class="screen">
- <div class="seg mb-6" role="tablist" aria-label="Acesso"><button class="${cad?'on':''}" role="tab" aria-selected="${cad}" data-act="go" data-to="cadastro">Criar conta</button><button class="${cad?'':'on'}" role="tab" aria-selected="${!cad}" data-act="go" data-to="login">Entrar</button></div>
- <div class="speech mb-5">${mascot(cad?'happy':'wave',64)}<div class="bubble">${cad?'Que bom te ver por aqui! Vamos criar o seu cantinho.':'Que saudade! Entra aí que eu guardei tudo pra você.'}</div></div>
- <h1 class="h1 mb-5">${cad?'Crie sua conta':'Bem-vinda de volta'}</h1>
- <form id="authform" data-form="${mode}" novalidate class="flex flex-col gap-4">
-  ${cad?field('name','Nome','text','Como você quer ser chamada?','name'):''}
-  ${field('email','E-mail','email','voce@email.com','email')}
-  ${field('pass','Senha','password',cad?'Mínimo de 6 caracteres':'Sua senha',cad?'new-password':'current-password')}
-  ${cad?field('birth','Data de nascimento','date','','bday'):''}
+function authField(name,label,type,ph,ac,icon){return `<div><label class="${icon?'sr-only':'lbl-f'}" for="f-${name}">${label}</label><div class="${icon?'field-ic':''}" style="position:relative">${icon?ic(icon,22):''}<input class="input" id="f-${name}" name="${name}" type="${type}" placeholder="${ph}" autocomplete="${ac}" ${type==='date'?`max="${today()}" min="1900-01-01"`:''} ${type==='password'?'style="padding-right:52px"':''}>${type==='password'?`<button type="button" class="ibtn" data-act="togglePass" data-for="f-${name}" aria-label="Mostrar senha" style="position:absolute;right:4px;top:5px;color:var(--salvia-dk)">${ic('eye',22)}</button>`:''}</div><p class="err" data-err="${name}"></p></div>`}
+function vAuth(mode){const cad=mode==='cadastro';
+ if(cad)return brand()+`<main class="screen">
+ <h1 class="display mt-3">Crie sua conta</h1>
+ <p class="body mt-2">Crie sua conta para começar sua jornada</p>
+ <form id="authform" data-form="cadastro" novalidate class="flex flex-col gap-4 mt-6">
+  ${authField('name','Nome','text','Digite seu nome completo','name')}
+  ${authField('email','E-mail','email','seuemail@exemplo.com','email')}
+  ${authField('pass','Senha','password','Crie uma senha (mín. 6 caracteres)','new-password')}
+  ${authField('birth','Data de nascimento','date','','bday')}
   <p class="err" data-err="form"></p>
-  <button type="submit" class="sr-only" tabindex="-1">Enviar</button>
+  <button type="submit" class="btn btn-primary">Continuar</button>
  </form>
- ${cad?`<p class="small muted mt-4" style="font-weight:500">${ic('lock',14)} Seus dados e seu progresso ficam guardados com segurança para você entrar de qualquer aparelho. Usamos seus dados só para o funcionamento do app.</p>`:''}
- <p class="text-center small muted mt-6">${cad?'Já tem conta? <button class="link" data-act="go" data-to="login">Entrar</button>':'Ainda não tem conta? <button class="link" data-act="go" data-to="cadastro">Criar conta</button>'}</p>
+ <p class="text-center mt-5"><button class="link" style="color:var(--texto);font-weight:500" data-act="go" data-to="login">Já tenho conta</button></p>
+ <p class="small muted mt-6 text-center" style="font-weight:400">${ic('lock',14)} Seus dados ficam guardados com segurança para você entrar de qualquer aparelho.</p>
+ <button class="btn btn-ghost mt-2" data-act="go" data-to="boas-vindas">${ic('back',18)} Voltar</button>
+</main>`;
+ return `<main class="screen" style="padding-top:48px">
+ ${bigLogo()}
+ <h1 class="h1 text-center mt-8">Que bom ter você de volta</h1>
+ <p class="text-center body mt-2">Entre para continuar sua jornada</p>
+ <form id="authform" data-form="login" novalidate class="flex flex-col gap-3 mt-6">
+  ${authField('email','E-mail','email','E-mail','email','mail')}
+  ${authField('pass','Senha','password','Senha','current-password','lock')}
+  <p class="err" data-err="form"></p>
+  <p class="text-center"><a class="link" style="font-weight:500" href="https://wa.me/${String(CONFIG.whatsapp||'').replace(/\D/g,'')}?text=${encodeURIComponent('Olá! Esqueci minha senha do Orivie. Meu e-mail é: ')}" target="_blank" rel="noopener">Esqueci minha senha</a></p>
+  <button type="submit" class="btn btn-primary mt-3">Entrar</button>
+ </form>
+ <p class="or-sep">ou</p>
+ <button class="btn btn-outline" data-act="go" data-to="cadastro">Criar conta</button>
  <button class="btn btn-ghost mt-3" data-act="go" data-to="boas-vindas">${ic('back',18)} Voltar</button>
-</main>
-<footer class="footbar"><button class="btn btn-primary" type="submit" form="authform">${cad?'Continuar':'Entrar'}</button></footer>`}
+</main>`}
 
 /* 3. Pagamento (MODO DEMONSTRAÇÃO: nenhuma cobrança real é feita e nenhum dado de cartão é salvo.
    Para cobrança real, integrar Mercado Pago/Stripe via backend, por exemplo Netlify Functions.) */
@@ -1157,7 +1289,7 @@ function vPayDemo(u){const pix=ui.payTab!=='card';return brand()+`<main class="s
  <section class="premium-card">
   <div class="flex items-center gap-3">${mascot('proud',76,'floaty')}<div><span class="tag tag-premium">Pagamento único</span><h1 class="h1 mt-2">Desbloqueie seu Orivie - Sua Personalidade</h1></div></div>
   <p class="price">R$12,90</p>
-  <p class="h3">Acesso vitalício, sem mensalidade</p>
+  <p class="h3">Pagamento único · 1 ano de acesso</p>
   <ul class="benefits">${['Teste completo','Recomendações','Checklist','Board','Aprender','Metas'].map(b=>`<li>${ic('check',22)}<span>${b}</span></li>`).join('')}</ul>
  </section>
  <div class="seg mt-6" role="tablist" aria-label="Forma de pagamento"><button class="${pix?'on':''}" role="tab" aria-selected="${pix}" data-act="payTab" data-v="pix">PIX</button><button class="${pix?'':'on'}" role="tab" aria-selected="${!pix}" data-act="payTab" data-v="card">Cartão</button></div>
@@ -1186,7 +1318,7 @@ function vPayDemo(u){const pix=ui.payTab!=='card';return brand()+`<main class="s
 function payHero(price){return `<section class="premium-card">
   <div class="flex items-center gap-3">${mascot('proud',76,'floaty')}<div><span class="tag tag-premium">Pagamento único</span><h1 class="h1 mt-2">Desbloqueie seu Orivie - Sua Personalidade</h1></div></div>
   <p class="price">${price}</p>
-  <p class="h3">Acesso vitalício, sem mensalidade</p>
+  <p class="h3">Pagamento único · 1 ano de acesso</p>
   <ul class="benefits">${['Teste completo','Recomendações','Checklist','Board','Aprender','Metas'].map(b=>`<li>${ic('check',22)}<span>${b}</span></li>`).join('')}</ul>
  </section>`}
 function vPay(u){if(PAY.mode==='demo')return vPayDemo(u);if(PAY.mode==='code')return vPayCode(u);if(PAY.mode==='real')return vPayReal(u);return vPayWait(u)}
@@ -1195,7 +1327,7 @@ function vPayCode(u){
  const msg=encodeURIComponent(`Oi! Paguei ${price} do Orivie - Sua Personalidade. Segue o comprovante. Meu e-mail no app: ${u.email}`);
  const step=(n,t,body)=>`<div class="card mt-4"><div class="flex items-center gap-3"><span class="step-n">${n}</span><h2 class="h3">${t}</h2></div><div class="mt-3">${body}</div></div>`;
  if(hotmartOk())return brand()+`<main class="screen">${payHero(price)}
- ${step(1,'Compre pela Hotmart',`<p class="muted">Pagamento seguro pela Hotmart: PIX, cartão ou boleto. <b>Use na compra o mesmo e-mail da sua conta no Orivie:</b> ${esc(u.email)}</p><a class="btn btn-primary mt-4" href="${esc(hotmartUrl(u))}" target="_blank" rel="noopener">${ic('lock',18)} Ir para o pagamento</a>`)}
+ ${step(1,'Compre pela Hotmart',`<p class="muted">Pagamento seguro pela Hotmart: PIX, cartão ou boleto. <b>Use na compra o mesmo e-mail da sua conta no Orivie:</b> ${esc(u.email)}</p><a class="btn btn-primary mt-4" href="${esc(hotmartUrl(u))}" target="_blank" rel="noopener">${ic('lock',18)} Comprar pela Hotmart</a>`)}
  ${step(2,'Receba seu código no e-mail',`<p class="muted">Assim que a compra for aprovada, a Hotmart envia para o seu e-mail o código de acesso do Orivie. Confira também a caixa de spam e promoções.</p>${wa?`<a class="btn btn-outline mt-3" href="https://wa.me/${wa}?text=${encodeURIComponent(`Oi! Comprei o Orivie - Sua Personalidade pela Hotmart com o e-mail ${u.email} e ainda não recebi meu código.`)}" target="_blank" rel="noopener">Pagou e não recebeu? Fale no WhatsApp</a>`:''}`)}
  ${step(3,'Digite seu código de acesso',`<form id="codeform" data-form="code" novalidate><label class="lbl-f" for="f-code">Código de acesso</label><input class="input" id="f-code" name="code" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="ORV-XXXX-XXXX-XXXX" data-mask="code" style="font-family:ui-monospace,Menlo,monospace;letter-spacing:1px"><p class="err" data-err="code"></p><button type="submit" class="sr-only" tabindex="-1">Liberar</button></form>`)}
  <button class="btn btn-ghost mt-5" data-act="logout">${ic('logout',18)} Sair da conta</button></main>
@@ -1246,7 +1378,7 @@ function unlockPaid(u,method){
  if(CONFIG.metodo==='codigo'&&method!=='codigo')return;
  u.paid=true;u.payMethod=method;u.payDate=today();u.pix=null;save();clearInterval(ui.pixTimer);
  sfx('win');confetti();
- openModal(()=>`<div class="text-center">${mascot('celebrate',130,'hop')}<h2 class="display mt-3">Pagamento aprovado!</h2><p class="muted mt-2">Seu acesso vitalício está liberado. Agora vem a parte mais gostosa: te conhecer.</p></div><button class="btn btn-primary mt-6" data-act="afterPay" autofocus>Começar o teste</button>`,{center:true,lock:true});
+ openModal(()=>`<div class="text-center">${mascot('celebrate',130,'hop')}<h2 class="display mt-3">Pagamento aprovado!</h2><p class="muted mt-2">Seu acesso de 1 ano está liberado. Agora vem a parte mais gostosa: te conhecer.</p></div><button class="btn btn-primary mt-6" data-act="afterPay" autofocus>Começar o teste</button>`,{center:true,lock:true});
 }
 
 /* 4. Teste (formato lição) */
@@ -1257,13 +1389,13 @@ function vTest(u){
  const lines=['Sem resposta certa ou errada, tá? Só a sua verdade.','Respira e escolhe o que mais parece você.','A primeira ideia costuma ser a mais sincera!','Tô adorando te conhecer!','Metade do caminho! Você está indo super bem.','Essa aqui diz muito sobre a sua energia.','Pensa no que faz seu coração sorrir.','Sem julgamentos aqui, prometo.','Quase lá! Faltam só duas.','Última! Capricha.'];
  const reacts=['Anotado!','Faz todo sentido.','Hmm, interessante!','Adorei saber disso.','Isso é tão você!'];
  const say=a?reacts['ABCDE'.indexOf(a)]:lines[i];
- return brand()+`<div class="lesson-bar"><button class="btn-icon-plain" data-act="quitTest" aria-label="Pausar teste">${ic('x',26)}</button><div class="prog" role="progressbar" aria-label="Progresso do teste" aria-valuenow="${pct}" aria-valuemin="0" aria-valuemax="100"><i style="width:${pct}%"></i></div><span class="small muted">${answered}/10</span></div>
- <main class="screen pt-4">
-  <span class="tag tag-terra">Pergunta ${i+1} de 10</span>
-  <div class="speech mt-4">${mascot(a?'happy':'think',72)}<div class="bubble ${ui.justPicked?'pop':''}">${say}</div></div>
-  <h1 class="h1 mt-5 mb-5">${q.q}</h1>
+ return brand(`<button class="ibtn" data-act="quitTest" aria-label="Pausar teste">${ic('x',22)}</button>`)+`<main class="screen pt-4">
+  <h2 class="h1" style="font-size:26px">Pergunta ${i+1} de 10</h2>
+  <div class="flex items-center gap-3 mt-3"><div class="prog" role="progressbar" aria-label="Progresso do teste" aria-valuenow="${pct}" aria-valuemin="0" aria-valuemax="100"><i style="width:${pct}%"></i></div><span class="pct">${pct}%</span></div>
+  <h1 class="h1 mt-6 mb-5">${q.q}</h1>
   <div class="flex flex-col gap-3" role="radiogroup" aria-label="${esc(q.q)}">
-   ${q.o.map((o,j)=>{const k='ABCDE'[j];const sel=a===k;return `<button class="tile ${sel?'sel':''} ${sel&&ui.justPicked?'pop':''}" role="radio" aria-checked="${sel}" data-act="answer" data-k="${k}"><span class="key">${k}</span><span style="flex:1">${o}</span>${sel?`<span class="check-dot">${ic('tick',16)}</span>`:''}</button>`}).join('')}
+   ${q.o.map((o,j)=>{const k='ABCDE'[j];const sel=a===k;return `<button class="tile ${sel?'sel':''} ${sel&&ui.justPicked?'pop':''}" role="radio" aria-checked="${sel}" data-act="answer" data-k="${k}"><span class="key">${k}</span><span style="flex:1">${o}</span></button>`}).join('')}
+  <p class="small muted text-center mt-5" style="font-weight:400">${say}</p>
   </div>
  </main>
  <footer class="footbar"><button class="btn btn-outline" style="flex:0 0 36%" data-act="qBack" ${i===0?'disabled':''}>Voltar</button><button class="btn btn-primary" data-act="qNext" ${a?'':'disabled'}>${i===9?'Finalizar':'Continuar'}</button></footer>`;
@@ -1334,15 +1466,15 @@ function tHoje(u){
  const mood=h>=22||h<5?'sleep':h<12?'wave':'happy';
  const checkMsg=done===0?'Comece por uma atividade pequena. Já conta!':done===tot?'Tudo marcado! Bora concluir o dia?':`Faltam ${tot-done}. Você está indo muito bem!`;
  return `
- <h1 class="h1">${g}, ${esc(first(u.name))}</h1>
- <p class="muted">${dateL}</p>
- <div class="speech mt-4">${mascot(mood,72)}<div class="bubble"><span class="tag tag-mel">Frase do dia</span><p class="mt-2">${phrase}</p></div></div>
- ${weekTrail(u)}
- <section class="card mt-6"><div class="flex items-center justify-between gap-2"><h2 class="h2">Meus checks de hoje</h2><span class="tag">${done}/${tot}</span></div>
-  <div class="prog sage mt-3" role="progressbar" aria-valuenow="${pct}" aria-valuemin="0" aria-valuemax="100" aria-label="Checks de hoje"><i style="width:${pct}%"></i></div>
-  <p class="small muted mt-2">${checkMsg}</p>
+ <div class="text-center"><h1 class="h1">Hoje</h1><p class="muted">${dateL}</p></div>
+ <section class="ori-card mt-5">${mascot(mood,92)}<div style="flex:1"><h2>${g}, ${esc(first(u.name))}!</h2><p class="mt-1">Frase do dia da Ori:</p><p class="ph">“${phrase}”</p></div></section>
+ <section class="mt-6"><span class="tag tag-terra">Tema da semana</span><h2 class="h2 mt-2">${th.t}</h2><p class="muted mt-1">${th.d}</p></section>
+ <section class="mt-6"><div class="flex items-center justify-between gap-2"><h2 class="h2">Meus checks</h2><span class="c-sage" style="font-weight:500">${done}/${tot} concluídos</span></div>
+  <div class="flex items-center gap-3 mt-3"><div class="prog" role="progressbar" aria-valuenow="${pct}" aria-valuemin="0" aria-valuemax="100" aria-label="Checks de hoje"><i style="width:${pct}%"></i></div><span class="pct">${pct}%</span></div>
+  <div class="mt-2">${cl.items.slice(0,4).map(i=>`<button class="mini-check ${i.done?'on':''}" role="checkbox" aria-checked="${i.done}" data-act="toggleCheck" data-id="${i.id}"><span class="dot">${i.done?ic('tick',16):''}</span><span><span class="block">${esc(i.t)}</span>${i.done?'':'<span class="block small muted" style="font-weight:400">Pendente</span>'}</span>${i.done?'<span class="ok">Concluído</span>':''}</button>`).join('')}</div>
+  <p class="small muted mt-3" style="font-weight:400">${checkMsg}</p>
   <button class="btn btn-primary mt-4" data-act="tab" data-v="checklist">Ir para checklist</button></section>
- <section class="card mt-4"><span class="tag tag-terra">Tema da semana</span><h3 class="h3 mt-2">${th.t}</h3><p class="muted mt-1">${th.d}</p></section>
+ ${weekTrail(u)}
  <section class="card mt-4"><div class="flex items-center gap-3">${ic('target',36)}<div style="flex:1"><div class="flex justify-between"><h2 class="h3">Meta do dia</h2><b class="c-mel">${Math.min(xpT,DAILY_GOAL)}/${DAILY_GOAL} XP</b></div><div class="prog mel mt-2"><i style="width:${Math.min(100,Math.round(xpT/DAILY_GOAL*100))}%"></i></div></div></div></section>
  <section class="card mt-4"><div class="flex items-center justify-between"><h2 class="h2">Missões do dia</h2><span class="tag tag-mel">${ms.filter(m=>m.cur>=m.max).length}/3</span></div>
   ${ms.map(m=>`<div class="mission">${ic(m.ic,30)}<div class="mission-txt"><p>${m.n}</p><div class="flex items-center gap-2"><div class="prog mel"><i style="width:${Math.round(m.cur/m.max*100)}%"></i></div><b class="small c-mel">${m.cur}/${m.max}</b></div></div></div>`).join('')}
@@ -1388,9 +1520,9 @@ function checkRow(i){return `<div class="crow ${i.done?'is-done':''}">
 function tCheck(u){
  const cl=u.checklist;const done=cl.items.filter(i=>i.done).length,tot=cl.items.length;const pct=tot?Math.round(done/tot*100):0;
  const concl=u.history.some(h=>h.date===today());
- return `<h1 class="h1">Seu dia, do seu jeito.</h1><p class="muted mt-1">Marque o que você viveu hoje e anote como foi.</p>
+ return `<h1 class="display">Seu dia, do seu jeito</h1><p class="body mt-2">Marque as atividades que você viveu hoje e anote como foi.</p>
  <div class="card mt-4"><div class="flex justify-between items-center gap-2"><b>${done} de ${tot} concluídos</b>${concl?`<span class="tag">${ic('tick',14)} Dia concluído</span>`:''}</div><div class="prog sage mt-3" role="progressbar" aria-valuenow="${pct}" aria-valuemin="0" aria-valuemax="100" aria-label="Progresso do dia"><i style="width:${pct}%"></i></div></div>
- ${GROUPS.map(g=>{const its=cl.items.filter(i=>i.g===g.id);return `<section class="mt-6"><h2 class="sec-h">${ic(g.ic,24)} ${g.n} <span class="muted" style="margin-left:auto">${its.filter(i=>i.done).length}/${its.length}</span></h2>
+ ${GROUPS.map(g=>{const its=cl.items.filter(i=>i.g===g.id);return `<section class="mt-6"><h2 class="sec-h"><span class="gico">${ic(g.ic,24)}</span> ${g.n} <span class="muted" style="margin-left:auto">${its.filter(i=>i.done).length}/${its.length}</span></h2>
   <div class="flex flex-col gap-3 mt-3">${its.length?its.map(checkRow).join(''):`<p class="small muted">Nada aqui ainda. Que tal criar uma atividade?</p>`}</div></section>`}).join('')}
  <button class="btn btn-outline mt-6" data-act="newAct">${ic('plus',18)} Nova atividade</button>
  <button class="btn btn-primary mt-4" data-act="concludeDay">${concl?'Atualizar dia concluído':'Concluir dia'}</button>
@@ -1536,7 +1668,7 @@ function paintBoards(){
 function boardBlob(b){return new Promise(res=>{try{const c=document.createElement('canvas');c.width=1080;c.height=1920;drawBoard(c,b).then(()=>c.toBlob(x=>res(x),'image/jpeg',.9)).catch(()=>res(null))}catch(e){res(null)}})}
 function tBoard(u){
  const b=u.board;const n=b.photos.length;
- return `<h1 class="h1">Seu universo da semana.</h1><p class="muted mt-1">Escolha fotos, um título e adesivos. A colagem se monta sozinha.</p>
+ return `<h1 class="display">Seu universo da semana</h1><p class="body mt-2">Escolha fotos, um título e adesivos. A colagem se monta sozinha.</p>
  <div class="board-wrap mt-4"><canvas id="bprev" class="board-canvas" width="540" height="960" role="img" aria-label="Prévia da colagem ${esc(b.title||'meu universo')} com ${n} foto${n===1?'':'s'}"></canvas></div>
  <div class="flex gap-3 mt-4"><button class="btn btn-outline" data-act="shuffleBoard">${ic('refresh',18)} Embaralhar</button><label for="bfile" class="btn btn-outline ${n>=BOARD_MAX?'is-disabled':''}">${ic('camera',20)} Adicionar foto</label></div>
  <input type="file" id="bfile" accept="image/*" multiple class="sr-only" data-file="board" ${n>=BOARD_MAX?'disabled':''}>
@@ -1588,15 +1720,12 @@ function tLearn(u){
  const p=prof(u);const vis=visibleTexts(u);const readN=vis.filter(t=>u.read.includes(t.id)).length;const pct=Math.round(readN/vis.length*100);
  const f=ui.learn||'todos';const list=f==='todos'?vis:vis.filter(t=>t.cat===f);const cur=list.find(t=>!u.read.includes(t.id));
  const offs=[0,45,70,45,0,-45,-70,-45];
- return `<div class="unit-head sage"><div><p class="unit-kicker">Trilha de leitura</p><h1 class="unit-title">Sua personalidade: ${p.name}</h1></div><button class="btn btn-outline btn-sm" data-act="guide" data-v="aprender">${ic('bookc',16)} Guia</button></div>
- <div class="card mt-4"><b>Você leu ${readN} de ${vis.length} textos</b><div class="prog sage mt-3" role="progressbar" aria-valuenow="${pct}" aria-valuemin="0" aria-valuemax="100" aria-label="Textos lidos"><i style="width:${pct}%"></i></div></div>
+ return `<div class="unit-head sage"><div><p class="unit-kicker">Sua personalidade</p><h1 class="unit-title">${p.name}</h1></div><button class="btn btn-outline btn-sm" data-act="guide" data-v="aprender">${ic('bookc',16)} Guia</button></div>
+ <div class="mt-5"><p class="text-center">Você leu ${readN} de ${vis.length} textos</p><div class="flex items-center gap-3 mt-2"><span class="pct">${pct}%</span><div class="prog" role="progressbar" aria-valuenow="${pct}" aria-valuemin="0" aria-valuemax="100" aria-label="Textos lidos"><i style="width:${pct}%"></i></div></div></div>
  <div class="chips mt-4" role="group" aria-label="Filtros de tema">${LCATS.map(c=>`<button class="chip-f ${f===c.id?'on':''}" aria-pressed="${f===c.id}" data-act="learn" data-v="${c.id}">${c.n}</button>`).join('')}</div>
  ${list.length?`
- <div class="trail">${list.map((t,i)=>{const rd=u.read.includes(t.id);const isCur=cur&&cur.id===t.id;const cls=rd?'done':isCur?'':'todo';
-  return `<div class="trow" style="transform:translateX(${offs[i%8]}px)">${isCur?`<span class="balloon">Começar</span>`:''}<button class="node ${cls}" data-act="textPop" data-id="${t.id}" aria-label="${t.title}${rd?' (lido)':''}">${rd?ic('tick',30):isCur?ic('bookc',30):ic('book',30)}</button><span class="node-cap">${t.title}</span></div>`}).join('')}
-  ${list.length>=3?`<div class="trail-pal left" style="top:170px">${mascot('happy',58,'floaty')}</div>`:''}</div>
- <h2 class="h2 mt-6">Todos os textos</h2>
- <div class="flex flex-col gap-3 mt-3">${list.map(t=>{const rd=u.read.includes(t.id);return `<button class="tcard" data-act="openText" data-id="${t.id}"><div class="img-box thumb">${ic('book',28)}<img src="${imgUrl(t.img,200)}" alt="" loading="lazy" onerror="this.remove()"></div><div style="flex:1;min-width:0"><p class="h3">${t.title}</p><div class="flex gap-2 mt-1 flex-wrap"><span class="tag">${LCATS.find(c=>c.id===t.cat).n}</span><span class="tag tag-mel">${t.min} min</span>${rd?`<span class="tag tag-terra">${ic('tick',12)} Lido</span>`:''}</div></div></button>`}).join('')}</div>`
+ <h2 class="h2 mt-6">Textos para você</h2>
+ <div class="flex flex-col gap-3 mt-3">${list.map(t=>{const rd=u.read.includes(t.id);return `<button class="tcard" data-act="openText" data-id="${t.id}" style="padding:16px"><span class="mini-check ${rd?'on':''}" style="all:unset;display:contents"><span class="dot" style="display:grid;place-items:center;width:32px;height:32px;border-radius:50%;flex:none;border:1.5px solid var(--salvia);${rd?'background:var(--salvia);':''}color:#fff">${rd?ic('tick',16):''}</span></span><div style="flex:1;min-width:0"><p class="h3" style="font-weight:600">${t.title}</p><p class="small muted" style="font-weight:400">${rd?'Lido · ':''}${t.min} min · ${LCATS.find(c=>c.id===t.cat).n}</p></div><span class="c-gray">${ic('chev',18)}</span></button>`}).join('')}</div>`
  :`<div class="empty card mt-4">${mascot('think',96)}<h2 class="h2 mt-3">Nenhum texto deste tema</h2><p class="muted mt-1">Esse tema não está nas suas escolhas. Quer incluir?</p><button class="btn btn-primary mt-5" data-act="editPrefs">Editar escolhas</button></div>`}`;
 }
 function textModal(id){
@@ -1632,13 +1761,17 @@ function calendar(u){
 function menuTile(act,icon,label,sub='',right=''){return `<button class="tile" data-act="${act}"><span class="menu-ic">${ic(icon,24)}</span><span style="flex:1"><span class="block">${label}</span>${sub?`<span class="block small muted" style="font-weight:600">${sub}</span>`:''}</span>${right||`<span class="c-gray">${ic('chev',20)}</span>`}</button>`}
 function tEu(u){
  const p=prof(u);const st=streakOf(u);const nAch=ACH.filter(a=>u.ach.includes(a.id)).length;
- return `<section class="text-center">
-  <div class="avatar mx-auto">${u.photo?`<img src="${u.photo}" alt="Sua foto de perfil">`:`<span aria-hidden="true">${esc(first(u.name).charAt(0).toUpperCase()||'O')}</span>`}<label for="afile" class="avatar-edit" aria-label="Trocar foto">${ic('camera',20)}</label></div>
+ return `<h1 class="h1 text-center">Eu</h1>
+ <section class="card mt-5"><div class="prof-card">
+  <div class="avatar">${u.photo?`<img src="${u.photo}" alt="Sua foto de perfil">`:`<span aria-hidden="true">${esc(first(u.name).charAt(0).toUpperCase()||'O')}</span>`}<label for="afile" class="avatar-edit" aria-label="Trocar foto">${ic('camera',20)}</label></div>
   <input type="file" id="afile" accept="image/*" class="sr-only" data-file="avatar">
-  <h1 class="h1 mt-4">${esc(u.name)}</h1><p class="muted">${esc(u.email)}</p>
-  <div class="flex justify-center mt-3"><span class="tag tag-terra">${p.name}</span></div>
-  <p class="paid mt-4">${ic('check',20)} Acesso vitalício - Pago R$12,90${u.payDate?` em ${fmtBR(u.payDate)}`:''}</p>
- </section>
+  <div style="min-width:0"><h2 class="h2" style="font-size:22px;overflow-wrap:anywhere">${esc(u.name)}</h2><span class="pill mt-2">${p.name}</span><p class="small muted mt-1" style="font-weight:400;overflow-wrap:anywhere">${esc(u.email)}</p></div></div>
+  <p class="mt-3">${p.short}</p></section>
+  <p class="paid mt-4">${ic('check',20)} Acesso ativo · 1 ano · Pago ${fmtBRL(PAY.price)}${u.payDate?` em ${fmtBR(u.payDate)}`:''}</p>
+ ${(()=>{const k=oriStage(u.xp),cur=ORI_STAGES[k],nx=ORI_STAGES[k+1];const pc=nx?Math.round((u.xp-cur.min)/(nx.min-cur.min)*100):100;
+  return `<section class="card mt-6"><div class="flex items-center gap-3">${mascot('happy',64)}<div style="flex:1"><span class="tag tag-mel">Nível da Ori</span><h2 class="h2 mt-1">${cur.n}</h2>
+  <div class="prog mel mt-2" role="progressbar" aria-valuenow="${pc}" aria-valuemin="0" aria-valuemax="100" aria-label="Progresso até o próximo nível"><i style="width:${pc}%"></i></div>
+  <p class="small muted mt-2">${nx?`Faltam ${nx.min-u.xp} XP para virar ${nx.n}.`:'Nível máximo! A Ori virou frutinha.'}</p></div></div></section>`})()}
  <section class="grid grid-cols-2 gap-3 mt-6">
   <div class="stile">${ic('flame',28)}<div><b>${st}</b><span>Dias seguidos</span></div></div>
   <div class="stile">${ic('star',28)}<div><b>${u.xp}</b><span>XP total</span></div></div>
@@ -1648,7 +1781,7 @@ function tEu(u){
  <section class="card mt-5"><div class="flex justify-between items-center"><h2 class="h2">Sua sequência</h2><span class="tag tag-terra">Recorde: ${u.best}</span></div>${calendar(u)}</section>
  <section class="mt-6"><div class="flex justify-between items-center"><h2 class="h2">Conquistas</h2><span class="tag tag-mel">${nAch}/${ACH.length}</span></div>
   <div class="grid grid-cols-3 gap-3 mt-3">${ACH.map(a=>{const on=u.ach.includes(a.id);return `<button class="badge ${on?'':'locked'}" data-act="achInfo" data-id="${a.id}" aria-label="${a.n}${on?'':' (bloqueada)'}"><span class="badge-ic">${ic(on?a.ic:'lock',28,on?'':'c-gray')}</span>${a.n}</button>`}).join('')}</div></section>
- <section class="mt-6 flex flex-col gap-3">
+ <section class="mt-6 flex flex-col gap-3 eu-menu">
   ${menuTile('metas','target','Metas e hábitos',`${u.goals.length} cadastrada${u.goals.length===1?'':'s'} · ${u.goals.filter(g=>g.done).length} concluída${u.goals.filter(g=>g.done).length===1?'':'s'}`)}
   ${menuTile('favs','heart','Meus favoritos',`${u.favs.length} ite${u.favs.length===1?'m':'ns'}`)}
   ${menuTile('editPrefs','brush','Editar escolhas',`${u.prefs.length} temas selecionados`)}
@@ -1706,13 +1839,13 @@ const FORMS={
    const r=await cloud('register',{name,email,pass,birth,data:dataOf(blankUser())});ui.authBusy=false;
    if(!r.ok){if(r.data.error==='exists')setErr(f,'email',r.data.message);else setErr(f,'form',r.status===0?'Sem conexão com a internet. Confira e tente de novo.':(r.data.message||'Não consegui criar sua conta agora. Tente de novo.'));return nope(f)}
    setToken(r.data.token);const cu=applyCloud(r.data);DB.session=email;saveLocal();
-   sfx('ok');toast(`Conta criada! Bem-vinda, ${esc(first(name))}.`);go(stepFor(cu));return;
+   sfx('ok');toast(`Conta criada! Que bom ter você aqui, ${esc(first(name))}.`);go(stepFor(cu));return;
   }
   ui.authBusy=false;
   const u=blankUser();u.name=name;u.email=email;u.birth=birth;u.pass=await hashPass(pass);
   DB.users[email]=u;DB.session=email;
   const stored=save();
-  sfx('ok');toast(stored?`Conta criada! Bem-vinda, ${esc(first(name))}.`:'Conta criada! Este navegador não está guardando dados, então seu progresso vale só até fechar a página.');go(stepFor(u));
+  sfx('ok');toast(stored?`Conta criada! Que bom ter você aqui, ${esc(first(name))}.`:'Conta criada! Este navegador não está guardando dados, então seu progresso vale só até fechar a página.');go(stepFor(u));
   syncAccess(u).then(ok=>{if(ok){toast('Encontramos seu pagamento! Acesso liberado.');go(stepFor(u))}});
  },
  async login(f){
@@ -1831,6 +1964,7 @@ const ACT={
  hardHome:()=>{closeModal();const u=U();go(u?stepFor(u):'boas-vindas')},
  closeModal:()=>closeModal(),
  confirmOk:()=>{const f=ui.onOk;ui.onOk=null;closeModal();if(f)f()},
+ togglePass:el=>{const i=document.getElementById(el.dataset.for);if(i){i.type=i.type==='password'?'text':'password';el.setAttribute('aria-label',i.type==='password'?'Mostrar senha':'Esconder senha')}},
  tab:el=>{ui.reading=null;sfx('tap');go('app-'+el.dataset.v)},
  logout:()=>{if(CLOUD.on&&CLOUD.token)cloud('logout',{},5000);setToken(null);clearTimeout(CLOUD.timer);DB.session=null;saveLocal();closeModal();ui.payTab='pix';go('boas-vindas')},
  logoutAsk:()=>confirmBox({title:'Já vai?',text:'Seus dados ficam salvos neste aparelho. Volte logo, tá?',ok:'Sair',cancel:'Ficar mais um pouco',danger:true,onOk:()=>ACT.logout()}),
@@ -1854,7 +1988,7 @@ const ACT={
  prefToggle:el=>{const v=el.dataset.v;ui.prefs=ui.prefs.includes(v)?ui.prefs.filter(x=>x!==v):[...ui.prefs,v];sfx('tap');render()},
  prefsAll:()=>{ui.prefs=[...PREFS];render()},
  prefsNone:()=>{ui.prefs=[];render()},
- prefsSave:()=>{const u=U();let p=ui.prefs||[];if(!p.length){p=[...PREFS];toast('Marquei todos para você não perder nada!')}const editing=u.prefsDone;u.prefs=PREFS.filter(x=>p.includes(x));u.prefsDone=true;ui.prefs=null;save();sfx('ok');if(editing){toast('Escolhas salvas!');go('app-eu')}else go('resultado')},
+ prefsSave:()=>{const u=U();let p=ui.prefs||[];if(!p.length){sfx('soft');toast('Escolha pelo menos 1 tema para continuar.');return}const editing=u.prefsDone;u.prefs=PREFS.filter(x=>p.includes(x));u.prefsDone=true;ui.prefs=null;save();sfx('ok');if(editing){toast('Escolhas salvas!');go('app-eu')}else go('resultado')},
  prefsCancel:()=>{ui.prefs=null;go('app-eu')},
  toWeek:()=>{ui.scrollTo='semana';go('app-hoje')},
  toLearn:()=>{ui.reading=null;ui.learn='todos';go('app-aprender')},
@@ -1869,7 +2003,7 @@ const ACT={
   <ul class="list mt-4">${[['sparkle','Concluir o teste','+50'],['check','Concluir o dia','+20'],['chest','Abrir o baú das missões','+20'],['book','Ler um texto','+15'],['grid','Salvar um board','+15'],['target','Cumprir uma meta','+10']].map(([i,n,v])=>`<li>${ic(i,24)}<span style="flex:1">${n}</span><span class="tag tag-mel">${v} XP</span></li>`).join('')}</ul>
   <button class="btn btn-primary mt-5" data-act="closeModal">Entendi</button>`,{center:true})},
  dayInfo:el=>{const u=U();const k=el.dataset.d;const st=dayState(u,k);const d=parseYmd(k);
-  const txt={before:'Esse dia foi antes de você chegar por aqui. Sua jornada começou depois — e começou linda!',done:'Dia concluído! Você cuidou de você.',missed:'Esse dia passou em branco. Tudo bem: recomeçar também faz parte.',current:'Hoje é dia de florescer! Conclua uma atividade para acender este dia.',locked:'Esse dia ainda vai chegar. Te espero lá!'}[st];
+  const txt={before:'Esse dia foi antes de você chegar por aqui. Sua jornada começou depois — e começou do jeito certo!',done:'Dia concluído! Você cuidou de você.',missed:'Esse dia passou em branco. Tudo bem: recomeçar também faz parte.',current:'Hoje é dia de florescer! Conclua uma atividade para acender este dia.',locked:'Esse dia ainda vai chegar. Te espero lá!'}[st];
   const mood={before:'happy',done:'celebrate',missed:'sad',current:'wave',locked:'sleep'}[st];
   openModal(()=>`<div class="text-center">${mascot(mood,100)}<p class="tag tag-terra mt-2">${DIAS_L[d.getDay()]} · ${fmtBR(k)}</p><h2 class="h2 mt-3">${txt}</h2></div>
   <div class="flex flex-col gap-3 mt-6">${st==='current'?`<button class="btn btn-primary" data-act="goChecklist">Ir para checklist</button><button class="btn btn-ghost" data-act="closeModal">Agora não</button>`:`<button class="btn btn-primary" data-act="closeModal">Entendi</button>`}</div>`,{center:true})},
