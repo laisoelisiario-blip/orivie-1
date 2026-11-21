@@ -59,16 +59,16 @@ html,body{width:1080px;height:1920px;overflow:hidden;background:#2a211b}
 
 /* ---------- CENA 4: app ---------- */
 #s4{background:radial-gradient(110% 80% at 50% 30%,#FBF8F4 0%,#F1E8DE 55%,#E3D3C3 100%)}
-.shot{position:absolute;left:0;top:46px;width:100%;opacity:0}
+.shot{position:absolute;left:0;top:0;width:100%;height:100%;object-fit:cover;object-position:center top;opacity:0}
 #screen{background:#F7F3EE!important}
 .status{position:absolute;left:0;right:0;top:0;height:46px;display:flex;justify-content:space-between;align-items:center;padding:6px 40px 0 44px;font-family:DMSans;font-weight:600;font-size:17px;color:#3A2E28;z-index:4}
 .status .sb{display:flex;gap:4px}.status .sb i{display:block;width:18px;height:10px;border-radius:3px;background:#3A2E28}
 #tap{position:absolute;width:90px;height:90px;border-radius:50%;background:rgba(79,98,73,.25);opacity:0;z-index:6}
 #s4 .orb{position:absolute;border-radius:50%;filter:blur(60px)}
-#phone{position:absolute;left:300px;top:350px;width:480px;height:1052px;border-radius:84px;background:#1d1a17;padding:16px;
+#phone{position:absolute;left:300px;top:355px;width:480px;height:1003px;border-radius:84px;background:#1d1a17;padding:16px;
   box-shadow:0 60px 120px rgba(90,60,40,.32),0 0 0 2px #3a332d inset}
 #phone .screen{position:relative;width:100%;height:100%;border-radius:70px;overflow:hidden;background:var(--branco)}
-#phone .notch{position:absolute;left:50%;top:18px;width:150px;height:40px;margin-left:-75px;border-radius:20px;background:#111;z-index:5}
+#phone .notch{position:absolute;left:50%;top:12px;width:120px;height:34px;margin-left:-60px;border-radius:20px;background:#111;z-index:5}
 .app{position:absolute;inset:0;padding:96px 38px 40px;font-family:DMSans;color:var(--marrom-esc)}
 .app .bar{display:flex;justify-content:space-between;align-items:center;margin-bottom:34px}
 .app .logo{font-family:Playfair;font-weight:500;letter-spacing:7px;font-size:30px;color:var(--marrom-esc)}
@@ -159,12 +159,13 @@ html,body{width:1080px;height:1920px;overflow:hidden;background:#2a211b}
     <div class="orb" style="left:-260px;top:260px;width:760px;height:760px;background:#F3D9CC"></div>
     <div class="orb" style="right:-280px;bottom:260px;width:780px;height:780px;background:#C9D6C1"></div>
     <div id="phone"><div class="screen" id="screen">
-      <div class="status"><span>9:41</span><span class="sb"><i></i><i></i><i></i></span></div><div class="notch"></div>
-      <img class="shot" id="a1" src="../assets/app/01-boas-vindas.png">
-      <img class="shot" id="a2" src="../assets/app/03-teste-pergunta.png">
-      <img class="shot" id="a2b" src="../assets/app/04-teste-selecionada.png">
-      <img class="shot" id="a3" src="../assets/app/05-resultado.png">
-      <img class="shot" id="a4" src="../assets/app/06-app-combina.png">
+      <div class="notch"></div>
+      <img class="shot" id="a1" src="../assets/app-real/01-hoje.png">
+      <img class="shot" id="a2" src="../assets/app-real/02-combina.png">
+      <img class="shot" id="a3" src="../assets/app-real/03-checklist.png">
+      <img class="shot" id="a4" src="../assets/app-real/04-board.png">
+      <img class="shot" id="a5" src="../assets/app-real/05-aprender.png">
+      <img class="shot" id="a6" src="../assets/app-real/06-eu.png">
       <div id="tap"></div>
     </div></div>
   </div>
@@ -288,11 +289,12 @@ window.render=function(t){
   const k4=clamp((t-16.7)/8.6);
   const enter=ease((t-16.9)/1.2);
   $("#phone").style.transform=`translateY(${(1-enter)*260}px) rotate(${(1-enter)*-4+Math.sin(t*0.6)*0.6}deg) scale(${0.96+0.04*k4})`;
-  const SCR=[["#a1",16.5,19.2],["#a2",19.2,20.45],["#a2b",20.45,21.5],["#a3",21.5,23.4],["#a4",23.4,26]];
-  SCR.forEach(([id,a,b])=>{const e=$(id);const vis=t>=a&&t<b;const soft=id==="#a2b";
-    const i=id==="#a1"?1:(soft?1:ss(a,a+0.4,t));
-    e.style.opacity=vis?i:0;e.style.transform=`translateX(${soft||id==="#a1"?0:(1-ease((t-a)/0.5))*80}px)`});
-  const tp=$("#tap");const tk=(t-20.3)/0.5;tp.style.opacity=tk>0&&tk<1?(1-tk)*0.9:0;tp.style.left="95px";tp.style.top="395px";tp.style.transform=`scale(${0.4+tk*1.2})`;
+  const SW=[16.5,18.55,19.85,21.15,22.45,23.75,26];
+  for(let i=0;i<6;i++){const e=$("#a"+(i+1));const a=SW[i],b=SW[i+1];const vis=t>=a&&t<b;
+    const f=i===0?1:ease((t-a)/0.35);e.style.opacity=vis?(i===0?1:Math.min(1,f*1.4)):0;e.style.transform=`translateX(${i===0?0:(1-f)*60}px)`}
+  const TX=[106,295,489,682,873,1062];const tp=$("#tap");let tv=0;
+  for(let i=1;i<6;i++){const k=(t-(SW[i]-0.3))/0.55;if(k>0&&k<1){tv=(1-k)*0.9;tp.style.left=(TX[i]*0.3829-45)+"px";tp.style.top=(2140*0.3829-45)+"px";tp.style.transform=`scale(${0.4+k*1.1})`}}
+  tp.style.opacity=tv;
   /* Cena 5 — luz do sol, depois assinatura */
   const k5=clamp((t-24.6)/3.2);
   $("#sun").style.transform=`translate(${-160+260*k5}px,${-520+60*k5}px) scale(${0.9+0.3*k5})`;

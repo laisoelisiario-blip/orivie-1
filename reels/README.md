@@ -14,8 +14,8 @@ Vídeo final: `output/orivie_reels_30s.mp4` · Legenda da publicação: `output/
 Texto e tempos da narração: `scripts/narration.json`.
 
 ## Telas do app e marca
-A cena 4 usa capturas reais do app (`index.html` deste repositório), feitas com Playwright em 393×852 @3x,
-salvas em `assets/app/`: boas-vindas, pergunta do teste (com resposta marcada), resultado e aba "Combina".
+A cena 4 usa capturas reais do app publicado (iPhone), em `assets/app-real/`: Hoje, Combina, Checklist,
+Board, Aprender e Eu — com a barra do Safari removida e o e-mail desfocado na tela "Eu".
 O encerramento usa o logo oficial `marca/orivie-logo-horizontal.png` e as fontes/cores do app
 (Playfair Display, DM Sans, creme #F7F3EE, terra #D9A08B, sálvia #A8B8A0).
 
