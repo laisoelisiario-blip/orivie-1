@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Orivie - Teste de temperamento cristão para mulheres</title>
+<meta name="description" content="Descubra quem Deus te criou para ser: teste dos 4 temperamentos à luz da Bíblia, com versículos, diário de oração e conteúdos para o seu jeito.">
+<meta property="og:title" content="Orivie - Descubra quem Deus te criou para ser">
+<meta property="og:description" content="Teste de temperamento cristão para mulheres, com versículos, diário de oração e conteúdos para o seu jeito.">
+<meta property="og:image" content="tela-resultado.jpg">
+<meta name="theme-color" content="#F7F3EE">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E%3Ccircle cx='24' cy='24' r='21' fill='%23F7F3EE' stroke='%23879A7E' stroke-width='2.4'/%3E%3Cpath d='M24 40c-9-4-12-12-9-22 7 2 11 8 9 22z' fill='%23A8B8A0'/%3E%3Cpath d='M24 40c9-4 12-12 9-22-7 2-11 8-9 22z' fill='%23A8B8A0'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700;9..40,800&family=Playfair+Display:wght@500;600&family=Caveat:wght@700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#F7F3EE;--card:#FBF8F4;--line:#EAE2D9;--sage:#A8B8A0;--sage-lt:#E4EBE0;--sage-dk:#4F6249;--terra:#C47A5F;--terra-dk:#A9634A;--terra-lt:#F6E3DA;--txt:#3A2E28;--muted:#6B5D54;--gold:#E8B04A;--shadow:0 10px 30px rgba(58,46,40,.08)}
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--txt);font-family:"DM Sans",system-ui,sans-serif;font-size:17px;line-height:1.55;-webkit-font-smoothing:antialiased}
+img{max-width:100%;display:block}a{color:inherit}
+.wrap{max-width:1080px;margin:0 auto;padding:0 20px}
+.hand{font-family:"Caveat",cursive;font-weight:700;color:var(--terra)}
+h1,h2,h3{margin:0;letter-spacing:-.5px;line-height:1.12}
+h1{font-size:clamp(38px,6vw,62px);font-weight:800}
+h2{font-size:clamp(30px,4.4vw,44px);font-weight:800}
+h3{font-size:21px;font-weight:700}
+p{margin:0}
+.muted{color:var(--muted)}
+section{padding:72px 0}
+.kicker{display:inline-block;background:var(--terra);color:#fff;font-weight:700;font-size:14px;letter-spacing:.6px;text-transform:uppercase;padding:7px 16px;border-radius:999px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:60px;padding:16px 34px;border-radius:16px;background:var(--terra);color:#fff;font-weight:700;font-size:19px;text-decoration:none;box-shadow:0 10px 24px rgba(196,122,95,.32);transition:transform .15s,background .15s}
+.btn:hover{background:var(--terra-dk)}.btn:active{transform:scale(.98)}
+.btn.outline{background:transparent;color:var(--txt);border:1.5px solid var(--sage);box-shadow:none}
+.center{text-align:center}
+/* topo */
+header{position:sticky;top:0;z-index:20;background:rgba(247,243,238,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+header .wrap{display:flex;align-items:center;justify-content:space-between;min-height:64px;gap:12px}
+.logo{display:flex;align-items:center;gap:10px;text-decoration:none}
+.logo b{font-family:"Playfair Display",serif;font-weight:600;font-size:24px;line-height:1}
+.logo span{display:block;font-size:12px;color:var(--muted)}
+header .btn{min-height:44px;padding:10px 18px;font-size:15px;box-shadow:none}
+/* hero */
+.hero{padding:56px 0 64px;overflow:hidden}
+body{overflow-x:hidden}
+.hero .wrap{display:grid;grid-template-columns:1.1fr .9fr;gap:40px;align-items:center}
+.hero p.lead{font-size:20px;color:var(--muted);margin-top:18px;max-width:520px}
+.hero .cta{margin-top:30px;display:flex;flex-direction:column;align-items:flex-start;gap:10px}
+.hero small{color:var(--muted);font-size:15px}
+.phones{position:relative;height:560px}
+.phone{position:absolute;width:250px;border-radius:38px;background:#2B2420;padding:10px;box-shadow:0 30px 60px rgba(58,46,40,.25)}
+.phone img{border-radius:30px;width:100%}
+.phone.a{left:0;top:30px;transform:rotate(-5deg);z-index:2}
+.phone.b{right:0;top:0;transform:rotate(5deg)}
+.blob{position:absolute;border-radius:50%;z-index:-1}
+/* cards */
+.grid{display:grid;gap:16px}
+.g2{grid-template-columns:repeat(2,1fr)}.g3{grid-template-columns:repeat(3,1fr)}.g4{grid-template-columns:repeat(4,1fr)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:22px;padding:24px;box-shadow:var(--shadow)}
+.pain{display:flex;gap:14px;align-items:flex-start;font-size:18px}
+.pain i{flex:none;width:34px;height:34px;border-radius:50%;background:var(--terra-lt);display:grid;place-items:center;color:var(--terra);font-style:normal;font-weight:800}
+.temp{border:0;color:var(--txt)}
+.temp .tag{display:inline-block;font-size:13px;font-weight:700;padding:4px 12px;border-radius:999px;background:rgba(255,255,255,.6)}
+.temp h3{margin-top:12px}.temp .t{font-family:"Caveat";font-size:28px;color:var(--terra-dk);line-height:1}
+.temp p{margin-top:8px;font-size:16px}
+.feat{display:flex;gap:14px;align-items:flex-start}
+.feat .ic{flex:none;width:46px;height:46px;border-radius:14px;background:var(--sage-lt);display:grid;place-items:center;font-size:22px}
+.feat p{font-size:16px;color:var(--muted);margin-top:4px}
+.shots{display:flex;gap:18px;overflow-x:auto;padding:8px 4px 20px;scroll-snap-type:x mandatory}
+.shots figure{flex:none;width:230px;margin:0;scroll-snap-align:center;text-align:center}
+.shots figure img{border-radius:26px;border:8px solid #2B2420;box-shadow:var(--shadow)}
+.shots figcaption{margin-top:10px;font-weight:600;font-size:15px}
+.steps{counter-reset:s}
+.step{display:flex;gap:16px;align-items:flex-start}
+.step b.n{flex:none;width:44px;height:44px;border-radius:50%;background:var(--terra);color:#fff;display:grid;place-items:center;font-size:20px}
+/* preço */
+.price-card{max-width:520px;margin:34px auto 0;background:#fff;border:2px solid var(--terra);border-radius:28px;padding:32px 28px;box-shadow:0 20px 50px rgba(196,122,95,.18);text-align:center}
+.price{font-size:68px;font-weight:800;letter-spacing:-2px;color:var(--terra);line-height:1;margin-top:10px}
+.price small{font-size:26px;letter-spacing:0}
+.checks{list-style:none;padding:0;margin:22px 0 26px;text-align:left;display:grid;gap:10px}
+.checks li{display:flex;gap:10px;align-items:flex-start}
+.checks li::before{content:"";flex:none;width:22px;height:22px;margin-top:2px;border-radius:7px;background:var(--sage) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M6 12.5l4 4 8-8.5' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/16px no-repeat}
+/* faq */
+details{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:18px 22px}
+details+details{margin-top:12px}
+summary{cursor:pointer;font-weight:700;font-size:18px;list-style:none;display:flex;justify-content:space-between;gap:12px}
+summary::after{content:"+";font-size:24px;line-height:1;color:var(--terra)}
+details[open] summary::after{content:"–"}
+details p{margin-top:10px;color:var(--muted)}
+.final{background:var(--sage-lt);border-radius:32px;padding:56px 24px;text-align:center}
+footer{padding:40px 0 100px;text-align:center;color:var(--muted);font-size:15px}
+.wa{position:fixed;right:18px;bottom:18px;z-index:30;width:60px;height:60px;border-radius:50%;background:#25D366;display:grid;place-items:center;box-shadow:0 10px 24px rgba(0,0,0,.2)}
+.note{font-size:14px;color:var(--muted);max-width:640px;margin:18px auto 0}
+@media (max-width:860px){
+ .hero .wrap{grid-template-columns:1fr}
+ .phones{height:470px;max-width:420px;margin:0 auto;width:100%}
+ .phone{width:210px}
+ .g3,.g4{grid-template-columns:1fr 1fr}
+}
+@media (max-width:560px){
+ section{padding:56px 0}
+ .g2,.g3,.g4{grid-template-columns:1fr}
+ .phones{height:420px}.phone{width:185px}
+ .hero .cta,.hero .cta .btn{width:100%}
+ header .logo span{display:none}
+}
+</style>
+</head>
+<body>
+<header><div class="wrap">
+ <a class="logo" href="#topo" aria-label="Orivie - Sua Personalidade"><svg width="38" height="38" viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="21" fill="none" stroke="#879A7E" stroke-width="2.4"/><path d="M24 40c-9-4-12-12-9-22 7 2 11 8 9 22z" fill="#A8B8A0" opacity=".85"/><path d="M24 40c9-4 12-12 9-22-7 2-11 8-9 22z" fill="#A8B8A0"/><path d="M24 40V20" stroke="#879A7E" stroke-width="1.6"/></svg><div><b>Orivie</b><span>Sua Personalidade</span></div></a>
+ <a class="btn" href="https://laisoelisiario-blip.github.io/orivie-1/">Fazer meu teste</a>
+</div></header>
+
+<main id="topo">
+<section class="hero"><div class="wrap">
+ <div>
+  <span class="kicker">Teste de temperamento cristão</span>
+  <h1 style="margin-top:20px">Descubra quem <span class="hand" style="font-size:1.2em;margin-right:.12em">Deus</span> te criou para ser</h1>
+  <p class="lead">Conheça o seu temperamento à luz da Bíblia, entenda suas forças e seus desafios e cresça no caráter de Cristo, um dia de cada vez.</p>
+  <div class="cta"><a class="btn" href="https://laisoelisiario-blip.github.io/orivie-1/">Fazer meu teste agora</a><small>12 perguntas · 3 minutos · resultado na hora</small></div>
+ </div>
+ <div class="phones" aria-hidden="true">
+  <div class="blob" style="width:420px;height:420px;background:var(--sage-lt);right:-40px;top:60px"></div>
+  <div class="phone a"><img src="tela-resultado.jpg" alt="" loading="eager"></div>
+  <div class="phone b"><img src="tela-hoje.jpg" alt="" loading="eager"></div>
+ </div>
+</div></section>
+
+<section style="padding-top:24px"><div class="wrap">
+ <h2 class="center">Você já se sentiu assim?</h2>
+ <div class="grid g2" style="margin-top:32px">
+  <div class="card pain"><i>1</i><span>Me comparo com outras mulheres da igreja e das redes.</span></div>
+  <div class="card pain"><i>2</i><span>Sinto ansiedade e medo de não cumprir o propósito de Deus.</span></div>
+  <div class="card pain"><i>3</i><span>Me cobro demais e nunca me sinto boa o bastante.</span></div>
+  <div class="card pain"><i>4</i><span>Sirvo tanto que fico esgotada, em casa e no ministério.</span></div>
+ </div>
+ <p class="center" style="font-size:20px;margin-top:30px;max-width:680px;margin-left:auto;margin-right:auto">Você não está sozinha. Conhecer o jeito com que Deus te criou é o primeiro passo para crescer <span class="hand" style="font-size:1.3em">com leveza</span>.</p>
+</div></section>
+
+<section style="background:#fff"><div class="wrap">
+ <div class="center" style="max-width:720px;margin:0 auto">
+  <h2>Um app para você se conhecer e crescer com Deus</h2>
+  <p class="muted" style="margin-top:16px;font-size:19px">O Orivie une os 4 temperamentos (sanguíneo, colérico, melancólico e fleumático), uma ferramenta antiga de autoconhecimento popularizada no meio cristão, com a Palavra de Deus. Você descobre seu temperamento principal e secundário e recebe conteúdos, versículos e práticas pensados para o seu jeito.</p>
+ </div>
+ <div class="grid g4" style="margin-top:36px">
+  <div class="card temp" style="background:#FBF0DA"><span class="tag">Sanguínea</span><h3>Alegria que encoraja</h3><p>Alegre, comunicativa e cheia de vida.</p><p class="t" style="margin-top:12px">a mulher samaritana</p></div>
+  <div class="card temp" style="background:#F6E3DA"><span class="tag">Colérica</span><h3>Coragem que lidera</h3><p>Determinada, prática e corajosa.</p><p class="t" style="margin-top:12px">Débora</p></div>
+  <div class="card temp" style="background:#E6ECF1"><span class="tag">Melancólica</span><h3>Profundidade que adora</h3><p>Sensível, profunda e detalhista.</p><p class="t" style="margin-top:12px">Ana</p></div>
+  <div class="card temp" style="background:var(--sage-lt)"><span class="tag">Fleumática</span><h3>Paz que sustenta</h3><p>Calma, leal e pacificadora.</p><p class="t" style="margin-top:12px">Rute</p></div>
+ </div>
+ <p class="center" style="margin-top:26px;font-weight:600">Temperamento não é destino: o Espírito Santo transforma o caráter (Gálatas 5:22-23).</p>
+</div></section>
+
+<section><div class="wrap">
+ <h2 class="center">O que você recebe</h2>
+ <div class="grid g2" style="margin-top:36px">
+  <div class="card feat"><div class="ic">📝</div><div><h3>Teste de temperamento</h3><p>12 perguntas e o resultado com o seu temperamento principal e secundário.</p></div></div>
+  <div class="card feat"><div class="ic">🌿</div><div><h3>Resultado completo</h3><p>Suas forças, seus desafios, o fruto do Espírito em foco, versículos e personagens bíblicas com o seu jeito.</p></div></div>
+  <div class="card feat"><div class="ic">📖</div><div><h3>Versículo e oração do dia</h3><p>Escolhidos para o seu temperamento, todos os dias.</p></div></div>
+  <div class="card feat"><div class="ic">💛</div><div><h3>Biblioteca Aprender</h3><p>Mais de 35 textos: mulheres da Bíblia, temperamentos e as dores do dia a dia, como ansiedade, comparação, perdão e cansaço.</p></div></div>
+  <div class="card feat"><div class="ic">🙏</div><div><h3>Diário de oração</h3><p>Registre pedidos, marque quando orou e guarde os testemunhos quando Deus responder.</p></div></div>
+  <div class="card feat"><div class="ic">✅</div><div><h3>Checklist da fé</h3><p>Orei, Li a Palavra, Servi e Agradeci, com sugestões para o seu jeito.</p></div></div>
+  <div class="card feat"><div class="ic">🌸</div><div><h3>Mural da fé</h3><p>Uma colagem com suas fotos, o versículo da semana e "Sou grata por...", pronta para postar no story.</p></div></div>
+  <div class="card feat"><div class="ic">🍃</div><div><h3>Ori, sua assistente</h3><p>Versículos, orações e dicas para quando você estiver ansiosa, cansada ou se comparando.</p></div></div>
+ </div>
+</div></section>
+
+<section style="background:#fff;padding-bottom:48px"><div class="wrap">
+ <h2 class="center">Veja por dentro</h2>
+ <div class="shots" style="margin-top:30px">
+  <figure><img src="tela-teste.jpg" alt="Tela do teste de temperamento" loading="lazy"><figcaption>O teste</figcaption></figure>
+  <figure><img src="tela-resultado.jpg" alt="Tela de resultado com o temperamento" loading="lazy"><figcaption>Seu resultado</figcaption></figure>
+  <figure><img src="tela-hoje.jpg" alt="Tela Hoje com versículo e oração do dia" loading="lazy"><figcaption>Versículo e oração do dia</figcaption></figure>
+  <figure><img src="tela-diario.jpg" alt="Diário de oração com pedidos e testemunhos" loading="lazy"><figcaption>Diário de oração</figcaption></figure>
+  <figure><img src="tela-aprender.jpg" alt="Biblioteca de textos" loading="lazy"><figcaption>Biblioteca Aprender</figcaption></figure>
+  <figure><img src="mural.jpg" alt="Mural da fé com versículo e gratidão" loading="lazy" style="background:#fff"><figcaption>Mural da fé</figcaption></figure>
+ </div>
+</div></section>
+
+<section><div class="wrap">
+ <h2 class="center">Como funciona</h2>
+ <div class="grid g3 steps" style="margin-top:36px">
+  <div class="card step"><b class="n">1</b><div><h3>Crie sua conta</h3><p class="muted" style="margin-top:6px">E faça o pagamento por PIX direto no app.</p></div></div>
+  <div class="card step"><b class="n">2</b><div><h3>Receba seu código</h3><p class="muted" style="margin-top:6px">Envie o comprovante pelo WhatsApp e receba o seu código de acesso.</p></div></div>
+  <div class="card step"><b class="n">3</b><div><h3>Comece sua jornada</h3><p class="muted" style="margin-top:6px">Faça o teste e descubra o seu temperamento à luz da Bíblia.</p></div></div>
+ </div>
+</div></section>
+
+<section id="preco" style="background:#fff"><div class="wrap">
+ <h2 class="center">Acesso completo ao Orivie</h2>
+ <div class="price-card">
+  <span class="kicker">Pagamento único</span>
+  <p class="price"><small>R$</small>19,90</p>
+  <p class="muted" style="margin-top:8px">1 ano de acesso · sem mensalidade</p>
+  <ul class="checks">
+   <li>Teste de temperamento cristão</li><li>Resultado completo com versículos e personagens bíblicas</li><li>Biblioteca com mais de 35 textos</li><li>Diário de oração</li><li>Checklist da fé</li><li>Mural da fé</li><li>Ori, sua assistente</li><li>Seus dados salvos na nuvem: entre de qualquer celular</li>
+  </ul>
+  <a class="btn" style="width:100%" href="https://laisoelisiario-blip.github.io/orivie-1/">Quero conhecer meu temperamento</a>
+  <p class="muted" style="font-size:15px;margin-top:14px">Pagamento por PIX. Dúvidas? <a href="https://wa.me/5591981269910?text=Ol%C3%A1!%20Quero%20saber%20mais%20sobre%20o%20Orivie" target="_blank" rel="noopener">Fale com a gente no WhatsApp</a>.</p>
+ </div>
+</div></section>
+
+<section><div class="wrap" style="max-width:780px">
+ <h2 class="center">Perguntas frequentes</h2>
+ <div style="margin-top:32px">
+  <details><summary>O Orivie é para católicas ou evangélicas?</summary><p>Para as duas. O conteúdo é baseado na Bíblia, sem doutrinas de uma denominação específica.</p></details>
+  <details><summary>Os 4 temperamentos são bíblicos?</summary><p>Não. Eles são uma ferramenta antiga de autoconhecimento, popularizada no meio cristão por autores como Tim LaHaye e Florence Littauer. No Orivie, eles são um mapa para você se conhecer, sempre à luz da Palavra.</p></details>
+  <details><summary>Como recebo o acesso?</summary><p>Crie sua conta no app, pague o PIX de R$19,90, envie o comprovante pelo WhatsApp e você recebe o seu código de acesso.</p></details>
+  <details><summary>Funciona no celular?</summary><p>Sim. É só abrir o link no navegador, sem precisar baixar nada. Seus dados ficam salvos na nuvem, então você pode entrar de qualquer aparelho.</p></details>
+  <details><summary>Por quanto tempo tenho acesso?</summary><p>Por 1 ano a partir da liberação do seu código, sem mensalidade.</p></details>
+  <details><summary>O app substitui terapia ou acompanhamento pastoral?</summary><p>Não. O Orivie é uma ferramenta de autoconhecimento e devoção. Em momentos difíceis, procure sua liderança e um profissional de saúde. Se precisar conversar agora, o CVV atende pelo 188, 24 horas.</p></details>
+  <details><summary>E se eu me arrepender da compra?</summary><p>Você pode pedir o reembolso em até 7 dias após a compra, como garante o Código de Defesa do Consumidor. É só falar com a gente pelo WhatsApp.</p></details>
+ </div>
+</div></section>
+
+<section style="padding-top:8px"><div class="wrap">
+ <div class="final">
+  <p class="hand" style="font-size:30px">Salmos 139:14</p>
+  <h2 style="margin-top:6px">Você foi feita de modo especial e admirável.</h2>
+  <p class="muted" style="margin-top:14px;font-size:19px">Descubra o seu temperamento e comece hoje a sua jornada com Deus.</p>
+  <a class="btn" style="margin-top:26px" href="https://laisoelisiario-blip.github.io/orivie-1/">Fazer meu teste agora</a>
+ </div>
+</div></section>
+</main>
+
+<footer><div class="wrap">
+ <p style="font-family:'Playfair Display',serif;font-size:22px;color:var(--txt)">Orivie</p>
+ <p>Sua Personalidade</p>
+ <p style="margin-top:12px"><a href="mailto:oriviesuapersonalidade@gmail.com">oriviesuapersonalidade@gmail.com</a> · <a href="https://wa.me/5591981269910" target="_blank" rel="noopener">WhatsApp</a></p>
+ <p style="margin-top:12px;font-size:13px">© 2026 Orivie. Todos os direitos reservados.</p>
+</div></footer>
+
+<a class="wa" href="https://wa.me/5591981269910?text=Ol%C3%A1!%20Quero%20saber%20mais%20sobre%20o%20Orivie" target="_blank" rel="noopener" aria-label="Falar no WhatsApp"><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><path fill="#fff" d="M16 3a13 13 0 0 0-11.2 19.6L3 29l6.6-1.7A13 13 0 1 0 16 3zm0 23.6a10.6 10.6 0 0 1-5.4-1.5l-.4-.2-3.9 1 1-3.8-.2-.4A10.6 10.6 0 1 1 16 26.6zm5.8-7.9c-.3-.2-1.9-.9-2.2-1s-.5-.2-.7.2-.8 1-1 1.2-.4.2-.7.1a8.7 8.7 0 0 1-4.3-3.8c-.3-.6.3-.5.9-1.7.1-.2 0-.4 0-.5l-1-2.4c-.3-.6-.5-.5-.7-.5h-.6a1.2 1.2 0 0 0-.9.4 3.6 3.6 0 0 0-1.1 2.7 6.3 6.3 0 0 0 1.3 3.3 14.4 14.4 0 0 0 5.5 4.9c2 .9 2.8.9 3.8.8a3.3 3.3 0 0 0 2.1-1.5 2.7 2.7 0 0 0 .2-1.5c-.1-.2-.3-.3-.6-.4z"/></svg></a>
+</body>
+</html>
