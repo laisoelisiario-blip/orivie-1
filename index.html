@@ -364,6 +364,7 @@ const PIX_CODE='00020126580014BR.GOV.BCB.PIX0136orivie-sua-personalidade-pagamen
 const CONFIG={
  metodo:'codigo',   // SOMENTE código de acesso libera o app (decisão da dona do app)
  pixCopiaCola:'00020126580014BR.GOV.BCB.PIX01365fef8f52-cb10-4c3c-afdc-7d4384740265520400005303986540512.905802BR5923Lais Oliveira Elisiario6009SAO PAULO62140510DscuVXLO726304D38C',    // cole aqui o PIX copia e cola de R$12,90 gerado no seu banco (use chave aleatória)
+ hotmartCheckout:'', // link do checkout da Hotmart, ex.: 'https://pay.hotmart.com/A12345678B' (tem prioridade sobre o PIX)
  linkPagamento:'',   // ou um link de pagamento, ex.: 'https://mpago.la/abc123' (usado se não houver PIX acima)
  whatsapp:'5591981269910',        // seu WhatsApp só com números, com 55 + DDD, ex.: '5511999998888'
  contato:''          // opcional: outro contato para enviar o comprovante, ex.: '@orivieapp no Instagram'
@@ -1193,6 +1194,12 @@ function vPayCode(u){
  const price=fmtBRL(PAY.price);const wa=String(CONFIG.whatsapp||'').replace(/\D/g,'');
  const msg=encodeURIComponent(`Oi! Paguei ${price} do Orivie - Sua Personalidade. Segue o comprovante. Meu e-mail no app: ${u.email}`);
  const step=(n,t,body)=>`<div class="card mt-4"><div class="flex items-center gap-3"><span class="step-n">${n}</span><h2 class="h3">${t}</h2></div><div class="mt-3">${body}</div></div>`;
+ if(hotmartOk())return brand()+`<main class="screen">${payHero(price)}
+ ${step(1,'Pague pela Hotmart',`<p class="muted">Pagamento seguro pela Hotmart: PIX, cartão ou boleto. Use o mesmo e-mail da sua conta no Orivie: <b>${esc(u.email)}</b>.</p><a class="btn btn-primary mt-4" href="${esc(hotmartUrl(u))}" target="_blank" rel="noopener">${ic('lock',18)} Ir para o pagamento</a>`)}
+ ${step(2,'Receba seu código',`<p class="muted">Assim que a Hotmart confirmar o pagamento, você recebe seu código de acesso no e-mail ou no WhatsApp.</p>${wa?`<a class="btn btn-outline mt-3" href="https://wa.me/${wa}?text=${encodeURIComponent(`Oi! Comprei o Orivie - Sua Personalidade pela Hotmart com o e-mail ${u.email} e ainda não recebi meu código.`)}" target="_blank" rel="noopener">Pagou e não recebeu? Fale no WhatsApp</a>`:''}`)}
+ ${step(3,'Digite seu código de acesso',`<form id="codeform" data-form="code" novalidate><label class="lbl-f" for="f-code">Código de acesso</label><input class="input" id="f-code" name="code" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="ORV-XXXX-XXXX-XXXX" data-mask="code" style="font-family:ui-monospace,Menlo,monospace;letter-spacing:1px"><p class="err" data-err="code"></p><button type="submit" class="sr-only" tabindex="-1">Liberar</button></form>`)}
+ <button class="btn btn-ghost mt-5" data-act="logout">${ic('logout',18)} Sair da conta</button></main>
+ <footer class="footbar"><button class="btn btn-outline" type="submit" form="codeform">Liberar acesso</button></footer>`;
  return brand()+`<main class="screen">${payHero(price)}
  ${step(1,'Pague '+price,pixManualOk()?(()=>{const qr=pixQrSvg(String(CONFIG.pixCopiaCola).trim());return `<p class="muted">Pague com PIX pelo app do seu banco: escaneie o QR Code ou use o copia e cola.</p>${qr?`<div class="qr-box mt-3" style="width:220px">${qr}</div>`:''}<label class="lbl-f mt-4" for="pixmanual">PIX copia e cola</label><div class="code-box"><input id="pixmanual" class="input" readonly value="${esc(String(CONFIG.pixCopiaCola).trim())}"><button class="btn btn-outline btn-sm" style="min-height:50px" data-act="copyPixManual">${ic('copy',18)} Copiar</button></div>`})():CONFIG.linkPagamento?`<p class="muted">Pagamento único por PIX ou cartão, pelo link seguro.</p><a class="btn btn-outline mt-3" href="${esc(CONFIG.linkPagamento)}" target="_blank" rel="noopener">${ic('lock',18,'c-sage')} Abrir link de pagamento</a>`:`<p class="muted">O link de pagamento ainda não foi configurado. Fale com a gente pelo contato abaixo.</p>`)}
  ${step(2,'Envie o comprovante',`<p class="muted">Mande o comprovante e o e-mail que você usou no app. Você recebe seu código de acesso em seguida.</p>${wa?`<a class="btn btn-outline mt-3" href="https://wa.me/${wa}?text=${msg}" target="_blank" rel="noopener">Enviar pelo WhatsApp</a>`:''}${CONFIG.contato?`<p class="small mt-3">Contato: <b>${esc(CONFIG.contato)}</b></p>`:''}${!wa&&!CONFIG.contato?'<p class="small muted mt-2">Envie para o contato informado na página onde você conheceu o Orivie.</p>':''}`)}
@@ -1200,6 +1207,8 @@ function vPayCode(u){
  <button class="btn btn-ghost mt-5" data-act="logout">${ic('logout',18)} Sair da conta</button></main>
  <footer class="footbar"><button class="btn btn-primary" type="submit" form="codeform">Liberar acesso</button></footer>`;
 }
+const hotmartOk=()=>/^https:\/\/([a-z0-9-]+\.)*hotmart\.com\//i.test(String(CONFIG.hotmartCheckout||'').trim());
+function hotmartUrl(u){try{const url=new URL(String(CONFIG.hotmartCheckout).trim());if(u&&u.email)url.searchParams.set('email',u.email);if(u&&u.name)url.searchParams.set('name',u.name);return url.toString()}catch(e){return String(CONFIG.hotmartCheckout||'')}}
 const pixManualOk=()=>{const c=String(CONFIG.pixCopiaCola||'').trim();return /^000201/.test(c)&&/BR\.GOV\.BCB\.PIX/i.test(c)};
 function pixQrSvg(code){try{if(typeof qrcode!=='function')return '';const q=qrcode(0,'M');q.addData(code);q.make();return q.createSvgTag({cellSize:5,margin:2,scalable:true,alt:'QR Code PIX'})}catch(e){return ''}}
 function normCode(v){return String(v||'').toUpperCase().replace(/[^A-Z0-9]/g,'')}
