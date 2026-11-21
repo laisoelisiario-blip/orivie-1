@@ -9,7 +9,7 @@ const FROM_DEFAULT = "Orivie <onboarding@resend.dev>";
 const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
 const brl = (v) => "R$" + Number(v || 0).toFixed(2).replace(".", ",");
 
-export const mailConfigured = () => Boolean(process.env.RESEND_API_KEY);
+export const mailConfigured = () => /^re_[\w]{10,}$/.test(String(process.env.RESEND_API_KEY || "").trim());
 const fromAddr = () => process.env.ORIVIE_EMAIL_FROM || FROM_DEFAULT;
 const usingTestSender = () => !process.env.ORIVIE_EMAIL_FROM;
 
@@ -18,7 +18,7 @@ export async function sendEmail({ to, subject, html, text, replyTo, key }) {
   const res = await fetch("https://api.resend.com/emails", {
     method: "POST",
     headers: {
-      Authorization: "Bearer " + process.env.RESEND_API_KEY,
+      Authorization: "Bearer " + String(process.env.RESEND_API_KEY || "").trim(),
       "Content-Type": "application/json",
       ...(key ? { "Idempotency-Key": key } : {}),
     },

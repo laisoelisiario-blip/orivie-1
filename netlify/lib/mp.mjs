@@ -16,13 +16,14 @@ export const json = (data, status = 200) =>
 
 export const normEmail = (e) => String(e || "").trim().toLowerCase();
 export const validEmail = (e) => /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(e);
-export const configured = () => Boolean(process.env.MP_ACCESS_TOKEN);
+// Só considera configurado com um token no formato do Mercado Pago (evita textos de exemplo colados por engano).
+export const configured = () => /^(APP_USR|TEST)-[\w-]{20,}$/.test(String(process.env.MP_ACCESS_TOKEN || "").trim());
 
 export async function mp(path, opt = {}) {
   const res = await fetch("https://api.mercadopago.com" + path, {
     ...opt,
     headers: {
-      Authorization: "Bearer " + process.env.MP_ACCESS_TOKEN,
+      Authorization: "Bearer " + String(process.env.MP_ACCESS_TOKEN || "").trim(),
       "Content-Type": "application/json",
       ...(opt.headers || {}),
     },
