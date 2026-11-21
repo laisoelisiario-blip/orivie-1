@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Orivie - Sua Personalidade</title>
-<meta name="description" content="Descubra quem você é, do seu jeito, e viva o que combina com você.">
+<meta name="description" content="Descubra quem Deus te criou para ser: teste de temperamento cristão para mulheres.">
 <meta name="theme-color" content="#F7F3EE">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cellipse cx='32' cy='38' rx='22' ry='23' fill='%23D9A08B'/%3E%3Cellipse cx='24' cy='10' rx='9' ry='4.5' fill='%23A8B8A0' transform='rotate(-25 24 10)'/%3E%3Cellipse cx='40' cy='9' rx='9' ry='4.5' fill='%23A8B8A0' transform='rotate(25 40 9)'/%3E%3Ccircle cx='25' cy='35' r='6' fill='%23fff'/%3E%3Ccircle cx='39' cy='35' r='6' fill='%23fff'/%3E%3Ccircle cx='25' cy='36' r='3.4' fill='%233A2E28'/%3E%3Ccircle cx='39' cy='36' r='3.4' fill='%233A2E28'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -539,272 +539,451 @@ const C={T:'#3A2E28',TE:'#D9A08B',TS:'#B97F6A',SA:'#A8B8A0',SS:'#879A7E',ME:'#E3
 /* =========================================================
    DADOS
    ========================================================= */
+/* =========================================================
+   VERSÃO CRISTÃ: teste dos 4 temperamentos (12 perguntas)
+   S = sanguínea, C = colérica, M = melancólica, F = fleumática
+   ========================================================= */
+const N_Q=12;
 const QUESTIONS=[
- {q:'Como você reage às emoções?',o:['Analiso antes de reagir','Sinto tudo intensamente','Resolvo e sigo em frente','Converso sobre o que sinto','Guardo minhas emoções']},
- {q:'Como funciona sua mente?',o:['Imagino possibilidades futuras','Questiono a vida e a existência','Analiso fatos e informações','Penso sobre o passado','Vivo mais o presente']},
- {q:'Como você é socialmente?',o:['Converso fácil e sou espontâneo(a) com todo mundo','Observo mais do que falo','Escolho bem minhas amizades','Me solto com pessoas próximas','Prefiro minha própria companhia']},
- {q:'Como toma decisões?',o:['Pela lógica','Pela intuição','Pelos sentimentos','Pelos meus valores','Pela segurança']},
- {q:'Como lida com novidades?',o:['Adoro experimentar','Gosto de pesquisar primeiro','Avalio vantagens e riscos','Tenho curiosidade, mas insegurança','Prefiro minha rotina']},
- {q:'Como você recarrega sua energia?',o:['No meu canto, em silêncio','Com pessoas que amo','Na natureza','Criando algo','Dormindo e descansando']},
- {q:'O que mais te deixa feliz?',o:['Liberdade','Amor e conexão','Conquistas','Paz e leveza','Descobrir coisas novas']},
- {q:'Como você lida com conflitos?',o:['Falo na hora','Penso antes de falar','Evito para não brigar','Tento entender o outro lado','Fico em silêncio e me afasto']},
- {q:'Como é seu dia ideal?',o:['Aventura e movimento','Rotina calma e organizada','Tempo com quem amo','Dia criativo, sem pressa','Dia de autocuidado']},
- {q:'O que mais te define?',o:['Minha sensibilidade','Minha força','Minha criatividade','Minha lealdade','Minha calma']}
+ {q:'Quando algo forte acontece, você...',o:[{k:'S',t:'Expresso na hora e logo passa'},{k:'C',t:'Transformo em ação para resolver'},{k:'M',t:'Sinto fundo e fico pensando por dias'},{k:'F',t:'Guardo pra mim e mantenho a calma por fora'}]},
+ {q:'Na igreja, você costuma ser a que...',o:[{k:'S',t:'Conversa com todo mundo e acolhe quem chega'},{k:'C',t:'Organiza, lidera e faz acontecer'},{k:'M',t:'Observa, se conecta com poucas e capricha nos detalhes'},{k:'F',t:'Ajuda nos bastidores e mantém o clima em paz'}]},
+ {q:'Seu jeito preferido de servir a Deus é...',o:[{k:'S',t:'No louvor, na recepção e nos eventos'},{k:'C',t:'Liderando projetos e ministérios'},{k:'M',t:'Em intercessão, ensino, arte ou organização cuidadosa'},{k:'F',t:'Cuidando das pessoas uma a uma, com constância'}]},
+ {q:'Quando surge um conflito, você...',o:[{k:'S',t:'Falo na hora e depois esqueço'},{k:'C',t:'Enfrento e defendo meu ponto'},{k:'M',t:'Fico magoada e remoo por dentro'},{k:'F',t:'Evito e cedo para manter a paz'}]},
+ {q:'Na hora de tomar uma decisão, você...',o:[{k:'S',t:'Vou pelo entusiasmo do momento'},{k:'C',t:'Decido rápido, pensando no objetivo'},{k:'M',t:'Analiso tudo, oro muito e demoro'},{k:'F',t:'Espero, peço conselho e prefiro não arriscar'}]},
+ {q:'Seu jeito de orar é mais...',o:[{k:'S',t:'Conversar com Deus como com uma amiga, em qualquer lugar'},{k:'C',t:'Orar com propósito, com pedidos e metas claras'},{k:'M',t:'Orar com profundidade, às vezes com lágrimas e diário'},{k:'F',t:'Ficar em silêncio, com calma, só na presença'}]},
+ {q:'Quando recebe uma crítica, você...',o:[{k:'S',t:'Fico chateada, mas logo levanto o astral'},{k:'C',t:'Rebato ou provo que consigo'},{k:'M',t:'Me machuca e fico me cobrando'},{k:'F',t:'Aceito em silêncio, mesmo sem concordar'}]},
+ {q:'Com a rotina, você...',o:[{k:'S',t:'Me canso fácil, preciso de novidade'},{k:'C',t:'Planejo e cumpro, gosto de produtividade'},{k:'M',t:'Gosto de tudo organizado e no detalhe'},{k:'F',t:'Gosto de uma rotina tranquila e previsível'}]},
+ {q:'O que mais te cansa?',o:[{k:'S',t:'Ficar sozinha e sem conversar'},{k:'C',t:'Lentidão e coisas que não dão resultado'},{k:'M',t:'Barulho, bagunça e superficialidade'},{k:'F',t:'Pressão, cobrança e conflito'}]},
+ {q:'O que mais te alegra?',o:[{k:'S',t:'Pessoas, risadas e celebração'},{k:'C',t:'Ver um objetivo cumprido'},{k:'M',t:'Algo bonito, profundo e bem feito'},{k:'F',t:'Paz, descanso e todo mundo bem'}]},
+ {q:'Sob pressão, você...',o:[{k:'S',t:'Me distraio e deixo para depois'},{k:'C',t:'Acelero e assumo o controle'},{k:'M',t:'Fico ansiosa e penso no pior'},{k:'F',t:'Travo e espero passar'}]},
+ {q:'Para descansar, você prefere...',o:[{k:'S',t:'Sair e encontrar as amigas'},{k:'C',t:'Fazer algo útil ou desafiador'},{k:'M',t:'Ficar sozinha com um livro, música ou diário'},{k:'F',t:'Ficar em casa, sem compromisso, no meu ritmo'}]}
 ];
-const DIMS=['SEN','RAC','CRI','SOC','INT','INU','ORG','ABE','IND','AFE'];
-const DIM_N={SEN:'Sensibilidade',RAC:'Racionalidade',CRI:'Criatividade',SOC:'Sociabilidade',INT:'Introspecção',INU:'Intuição',ORG:'Organização',ABE:'Abertura',IND:'Independência',AFE:'Afetividade'};
-const SCORING=[
- {A:{RAC:2,INT:1},B:{SEN:2,AFE:1},C:{IND:2,ORG:1},D:{SOC:2,AFE:1},E:{INT:2,IND:1}},
- {A:{CRI:2,ABE:1},B:{INU:2,INT:1},C:{RAC:2,ORG:1},D:{INT:2,SEN:1},E:{ABE:2,SOC:1}},
- {A:{SOC:2,ABE:1},B:{INT:2,RAC:1},C:{IND:1,ORG:1,RAC:1},D:{AFE:2,SOC:1},E:{IND:2,INT:1}},
- {A:{RAC:2,ORG:1},B:{INU:2,CRI:1},C:{SEN:2,AFE:1},D:{IND:1,INU:1,INT:1},E:{ORG:2,RAC:1}},
- {A:{ABE:2,IND:1},B:{RAC:1,ORG:1,INT:1},C:{RAC:2,IND:1},D:{SEN:1,ABE:1,INT:1},E:{ORG:2,INT:1}},
- {A:{INT:2,INU:1},B:{AFE:2,SOC:1},C:{INU:1,ABE:1,SEN:1},D:{CRI:2,INT:1},E:{SEN:1,ORG:1,INT:1}},
- {A:{IND:2,ABE:1},B:{AFE:2,SOC:1},C:{IND:1,ORG:1,RAC:1},D:{SEN:1,INU:1,INT:1},E:{ABE:2,CRI:1}},
- {A:{IND:2,SOC:1},B:{RAC:2,INT:1},C:{SEN:1,AFE:1},D:{AFE:1,SEN:1,INU:1},E:{INT:2,IND:1}},
- {A:{ABE:2,SOC:1},B:{ORG:2,RAC:1},C:{AFE:2,SOC:1},D:{CRI:2,INU:1},E:{SEN:1,INT:1,INU:1}},
- {A:{SEN:2,AFE:1},B:{IND:2,ORG:1},C:{CRI:2,ABE:1},D:{AFE:2,ORG:1},E:{INU:2,INT:1}}
-];
+const TEMP_KEYS={S:'sanguinea',C:'colerica',M:'melancolica',F:'fleumatica'};
+const TEMP_ORDER=['S','C','M','F']; // desempate fixo
 
 const PROFILES=[
-{id:'serena',name:'Alma Serena Criativa',dims:['CRI','SEN','INT'],
- short:'Sensibilidade, imaginação e muitos mundos por dentro.',
- desc:['Você é daquelas pessoas que percebem o que quase ninguém vê: a luz entrando pela janela, a mudança no tom de voz de alguém, a beleza escondida no simples. Sua sensibilidade não é fragilidade — é uma lente rara para enxergar a vida.',
-  'Sua criatividade nasce do silêncio. Você precisa de tempo só seu para organizar o que sente e transformar isso em ideias, projetos, palavras ou pequenos rituais. Quando respeita esse ritmo, floresce de um jeito único.',
-  'Seu caminho é unir calma e expressão: criar sem pressa, sentir sem se perder e mostrar ao mundo a delicadeza que existe em você.'],
- forces:['Imaginação fértil','Empatia profunda','Olhar estético apurado','Calma que acolhe'],
- challenges:['Absorver demais as emoções dos outros','Adiar projetos esperando o momento perfeito','Se cobrar quando a inspiração não vem'],
- phrases:['Sua sensibilidade é o seu superpoder mais bonito.','Criar devagar também é criar.','Hoje, repare em uma beleza pequena.','O silêncio é onde suas ideias nascem.','Você não precisa ter pressa para florescer.','Sentir muito é sinal de que você está vivendo de verdade.','Seu jeito delicado muda ambientes.'],
- themes:[{t:'Beleza no simples',d:'Esta semana, registre três detalhes bonitos do seu dia.'},{t:'Criar sem cobrança',d:'Faça algo criativo só pelo prazer, sem precisar ficar perfeito.'},{t:'Limites gentis',d:'Pratique dizer não com carinho para proteger sua energia.'},{t:'Ritual de calma',d:'Crie um pequeno ritual diário só seu: um chá, uma música, uma página.'}],
- why:'Combina com sua alma criativa e sensível:',
- check:{provei:'Um chá novo, tomado com calma',ouvi:'Um álbum instrumental inteiro',visitei:'Um ateliê ou exposição',li:'Um poema antes de dormir'}},
-{id:'exploradora',name:'Alma Exploradora Livre',dims:['ABE','IND','SOC'],
- short:'Curiosidade, coragem e sede de novas experiências.',
- desc:['Você nasceu para o movimento. Novos lugares, ideias e pessoas acendem algo em você, e a rotina repetida demais parece pequena para o tamanho da sua curiosidade.',
-  'Sua liberdade é um valor, não um capricho. Você aprende experimentando, se conecta com facilidade e tem coragem de começar o que outras pessoas só imaginam.',
-  'Seu caminho é explorar com intenção: escolher aventuras que alimentam a alma e criar raízes leves que te sustentam sem prender.'],
- forces:['Coragem para o novo','Adaptabilidade','Energia contagiante','Mente aberta'],
- challenges:['Perder o interesse quando vira rotina','Começar muitas coisas ao mesmo tempo','Dificuldade com compromissos longos'],
- phrases:['O mundo é grande e você também.','Diga sim a uma pequena aventura hoje.','Curiosidade é a sua bússola.','Liberdade também é escolher onde ficar.','Toda rota nova começa com um passo.','Hoje é um bom dia para estrear algo.','Sua energia abre caminhos.'],
- themes:[{t:'Pequenas aventuras',d:'Faça uma coisa nova por dia, mesmo que seja um caminho diferente para casa.'},{t:'Raízes leves',d:'Escolha um hábito simples e mantenha por 7 dias seguidos.'},{t:'Conexões novas',d:'Puxe conversa com alguém fora da sua bolha.'},{t:'Terminar o que começou',d:'Escolha um projeto parado e dê o próximo passo.'}],
- why:'Combina com seu espírito livre:',
- check:{provei:'Uma comida que nunca experimentei',ouvi:'Um gênero musical novo',visitei:'Uma rua ou bairro desconhecido',li:'Um relato de viagem'}},
-{id:'analitica',name:'Mente Analítica',dims:['RAC','ORG','INT'],
- short:'Lógica, estratégia e paixão por entender o porquê.',
- desc:['Sua mente é um laboratório. Você observa, compara, questiona e só se convence quando as peças se encaixam. Essa clareza faz de você alguém em quem as pessoas confiam para resolver problemas.',
-  'Você valoriza organização e profundidade. Prefere entender bem um assunto a saber um pouco de tudo, e se sente em paz quando tem um plano.',
-  'Seu caminho é unir razão e acolhimento: usar sua inteligência a seu favor sem esquecer que sentimentos também são dados importantes.'],
- forces:['Raciocínio claro','Planejamento','Foco profundo','Senso crítico'],
- challenges:['Pensar demais antes de agir','Exigir perfeição de si','Deixar as emoções para depois'],
- phrases:['Nem tudo precisa estar resolvido hoje.','Sua clareza é um presente para quem está perto.','Planeje, mas deixe espaço para o acaso.','Errar também é coletar dados.','Uma decisão boa hoje vale mais que a perfeita amanhã.','Sentir também é uma forma de entender.','Sua mente merece descanso.'],
- themes:[{t:'Feito é melhor que perfeito',d:'Entregue algo esta semana sem revisar mil vezes.'},{t:'Sentir sem analisar',d:'Anote uma emoção por dia, sem tentar explicá-la.'},{t:'Plano da semana',d:'Organize três prioridades e celebre quando concluir.'},{t:'Pausas que recarregam',d:'Faça pausas curtas e sem telas entre os blocos de foco.'}],
- why:'Combina com sua mente analítica:',
- check:{provei:'Uma receita seguindo cada passo',ouvi:'Um podcast sobre algo que quero entender',visitei:'Um museu de ciência ou história',li:'Um capítulo de não ficção'}},
-{id:'conectiva',name:'Alma Conectiva',dims:['AFE','SOC','SEN'],
- short:'Afeto, calor humano e talento para criar laços.',
- desc:['Você enxerga a vida através das pessoas. Um abraço, uma conversa sincera, uma mesa cheia — é ali que você se sente em casa e mostra quem é.',
-  'Sua empatia acolhe e sua presença aquece. As pessoas se sentem vistas ao seu lado, porque você escuta de verdade e lembra do que importa para cada uma.',
-  'Seu caminho é cuidar dos outros sem se esquecer: dar amor também a você e escolher relações que te devolvem o mesmo carinho.'],
- forces:['Empatia','Comunicação afetuosa','Lealdade','Talento para unir pessoas'],
- challenges:['Colocar todos antes de si','Dificuldade em dizer não','Sentir demais as críticas'],
- phrases:['Você também merece o cuidado que oferece.','Uma mensagem carinhosa pode mudar o dia de alguém.','Conexões verdadeiras são o seu tesouro.','Dizer não também é amor-próprio.','Seu abraço é casa para muita gente.','Hoje, cuide de quem cuida: você.','Amar é o seu talento natural.'],
- themes:[{t:'Amor-próprio primeiro',d:'Reserve um momento por dia só para você, sem culpa.'},{t:'Conversas que nutrem',d:'Marque um encontro com alguém que te faz bem.'},{t:'Limites com carinho',d:'Pratique dizer “agora não posso” sem se justificar demais.'},{t:'Gratidão compartilhada',d:'Conte para três pessoas o quanto elas importam.'}],
- why:'Combina com seu coração conectivo:',
- check:{provei:'Uma receita para dividir com alguém',ouvi:'A música favorita de alguém que amo',visitei:'Alguém querido',li:'Uma carta ou mensagem antiga'}},
-{id:'contemplativa',name:'Essência Contemplativa',dims:['INT','INU','SEN'],
- short:'Profundidade, intuição e conexão com o essencial.',
- desc:['Você vive em camadas. Enquanto muitos olham a superfície, você mergulha nas perguntas grandes: quem sou eu, o que importa, para onde estou indo.',
-  'Sua intuição é afiada e sua presença é tranquila. Você precisa de silêncio, natureza e tempo para digerir a vida — e é desse lugar quieto que nasce sua sabedoria.',
-  'Seu caminho é confiar na sua voz interior e trazê-la para o mundo, sem medo da sua profundidade num mundo apressado.'],
- forces:['Intuição','Profundidade','Serenidade','Autoconhecimento'],
- challenges:['Se isolar demais','Viver muito no passado','Dificuldade em agir sem certeza'],
- phrases:['Sua intuição sabe o caminho.','O silêncio também responde.','Desacelerar é um ato de coragem.','Você não precisa explicar sua profundidade.','Hoje, escute o que o seu corpo diz.','O essencial cabe em pouco.','Sua calma é sabedoria.'],
- themes:[{t:'Escuta interior',d:'Comece o dia com cinco minutos de silêncio antes do celular.'},{t:'Natureza que cura',d:'Passe um tempo ao ar livre, nem que seja numa praça.'},{t:'Do pensamento à ação',d:'Transforme uma reflexão em um pequeno passo concreto.'},{t:'Leveza com o passado',d:'Escreva sobre algo que você já pode soltar.'}],
- why:'Combina com sua essência contemplativa:',
- check:{provei:'Uma refeição em silêncio, com atenção',ouvi:'Sons da natureza por 10 minutos',visitei:'Um parque, praia ou jardim',li:'Algumas páginas de filosofia'}},
-{id:'determinada',name:'Espírito Determinado',dims:['IND','RAC','ORG'],
- short:'Força, independência e foco em conquistas.',
- desc:['Você tem fogo nos olhos. Quando decide algo, vai até o fim — e é essa determinação que faz você chegar onde muitos desistem no meio do caminho.',
-  'Independente e prática, você confia na própria capacidade, resolve problemas com rapidez e gosta de ver resultados concretos do seu esforço.',
-  'Seu caminho é conquistar sem se esgotar: celebrar cada vitória, pedir ajuda quando precisar e lembrar que descanso também faz parte da jornada.'],
- forces:['Determinação','Autonomia','Praticidade','Liderança'],
- challenges:['Dificuldade em descansar','Impaciência com processos lentos','Querer resolver tudo sem ajuda'],
- phrases:['Sua força também mora no descanso.','Celebre o quanto você já caminhou.','Um passo firme por dia já é vitória.','Pedir ajuda também é coragem.','Você é capaz — e não precisa provar isso a ninguém.','Hoje, foque no que realmente importa.','Disciplina é amor pelo seu futuro.'],
- themes:[{t:'Celebrar vitórias',d:'Anote uma conquista por dia, por menor que pareça.'},{t:'Descanso estratégico',d:'Agende pausas como agenda reuniões importantes.'},{t:'Pedir ajuda',d:'Delegue ou peça apoio em uma tarefa esta semana.'},{t:'Uma meta, foco total',d:'Escolha uma única prioridade e dedique a ela sua melhor energia.'}],
- why:'Combina com seu espírito determinado:',
- check:{provei:'Um café da manhã nutritivo antes de começar',ouvi:'Uma playlist que me dá energia',visitei:'Uma academia, trilha ou aula nova',li:'Um capítulo sobre carreira ou finanças'}}
+{id:'sanguinea',key:'S',name:'Sanguínea',traits:'Sanguíneos',title:'Alegria que Encoraja',color:'#E8B04A',
+ palette:['#F4D366','#E8B04A','#F6E3DA','#3A2E28'],
+ short:'Alegre, comunicativa e cheia de vida: você enche os lugares de calor.',
+ desc:['Você é aquela que puxa conversa, lembra o nome de quem chegou pela primeira vez na igreja e transforma qualquer encontro em festa. Sua alegria contagia e faz as pessoas se sentirem bem-vindas. No meio cristão, esse jeito costuma ser chamado de temperamento sanguíneo.',
+  'Você vive o presente com intensidade. Sente muito, fala o que sente e esquece rápido as ofensas. Isso é um presente: poucas pessoas têm a sua facilidade de perdoar e recomeçar. Ao mesmo tempo, o entusiasmo do momento pode fazer você prometer mais do que consegue cumprir.',
+  'Seu desafio é transformar a empolgação em constância. Deus não quer apagar a sua alegria, e sim dar raízes a ela, para que ela continue quando a novidade passar e as emoções esfriarem.',
+  'Pedro, que andou sobre as águas e também afundou, mostra que um coração impulsivo pode ser moldado por Jesus até se tornar firme como uma rocha.'],
+ forces:['Alegria que contagia','Comunicação calorosa','Entusiasmo para começar','Facilidade de acolher pessoas'],
+ challenges:['Impulsividade nas palavras e decisões','Começar muitas coisas e não terminar','Ficar na superfície quando a vida pede profundidade'],
+ fruit:{n:'Domínio próprio e fidelidade',t:'O Espírito Santo não diminui a sua alegria: ele dá a ela firmeza. O domínio próprio ajuda você a pensar antes de falar e a dizer sim só ao que consegue cumprir. A fidelidade transforma o seu entusiasmo em constância, para continuar orando, servindo e amando mesmo quando a emoção passa.'},
+ verses:[{r:'Neemias 8:10',t:'A alegria do Senhor os fortalecerá.'},{r:'Tiago 1:19',t:'Sejam todos prontos para ouvir, tardios para falar e tardios para irar-se.'},{r:'Gálatas 6:9',t:'E não nos cansemos de fazer o bem, pois no tempo próprio colheremos, se não desanimarmos.'},{r:'Provérbios 17:22',t:'O coração bem disposto é remédio eficiente.'},{r:'Romanos 12:15',t:'Alegrem-se com os que se alegram; chorem com os que choram.'},{r:'1 Tessalonicenses 5:11',t:'Exortem-se e edifiquem-se uns aos outros.'},{r:'Lamentações 3:22-23',t:'As suas misericórdias são inesgotáveis. Renovam-se cada manhã; grande é a sua fidelidade!'}],
+ prayers:['Senhor, que a minha alegria aponte para ti hoje.','Pai, guarda a minha boca e me ensina a ouvir antes de falar.','Jesus, me ajuda a terminar o que eu comecei com amor.','Espírito Santo, dá raízes profundas à minha fé.','Senhor, usa as minhas palavras para encorajar alguém hoje.','Pai, que eu seja constante mesmo quando a emoção passar.','Jesus, obrigada pela alegria que vem de ti.'],
+ phrases:['Sua alegria é uma forma de servir.','Encorajar alguém hoje também é obra de Deus.','Constância transforma entusiasmo em fruto.','Antes de falar, respire e ore por um segundo.','Termine uma coisinha hoje e celebre.','Deus ama o seu riso.','Sua voz pode ser abrigo para alguém hoje.'],
+ chars:[{n:'Pedro',ref:'Mateus 14:28-31; João 21:15-17',story:'Pedro pediu para andar sobre as águas, deu os primeiros passos e afundou quando olhou para o vento. Depois prometeu nunca negar Jesus e negou três vezes. Mesmo assim, Jesus o restaurou perguntando três vezes: "Você me ama?".',lesson:'Mostra traços sanguíneos: coragem e impulso. A lição é que Jesus não desiste de corações impulsivos: ele os transforma em rocha.'},
+  {n:'A mulher samaritana',ref:'João 4:28-30, 39',story:'Depois de conversar com Jesus no poço, ela deixou o cântaro e correu para a cidade dizendo: "Venham ver um homem que me disse tudo o que tenho feito". Muitos creram por causa do seu testemunho.',lesson:'Lembra o temperamento sanguíneo: comunicação espontânea. A lição é que a sua história, entregue a Jesus, vira testemunho.'},
+  {n:'Miriã',ref:'Êxodo 15:20-21; Números 12',story:'Depois da travessia do mar, Miriã pegou o tamborim e liderou as mulheres em louvor e dança. Em outro momento, falou contra Moisés e precisou ser corrigida por Deus.',lesson:'Mostra traços sanguíneos: alegria que contagia e palavras rápidas. A lição é que a mesma boca que louva precisa aprender a guardar as palavras.'}],
+ themes:[{t:'Constância com Deus',d:'Escolha um horário fixo de oração e mantenha por 7 dias.',txt:'d12'},{t:'Palavras que edificam',d:'Antes de comentar algo, pergunte: isso edifica?',txt:'d7'},{t:'Terminar o que começou',d:'Escolha um projeto parado e dê o próximo passo.',txt:'d12'},{t:'Profundidade',d:'Leia um capítulo da Bíblia devagar e anote uma frase.',txt:'d15'}],
+ why:'Combina com seu jeito sanguíneo:',
+ check:{orei:'Orar enquanto caminho, conversando com Deus',li:'Ler um salmo de louvor em voz alta',servi:'Mandar uma mensagem de encorajamento',agradeci:'Agradecer em voz alta por 3 pessoas'}},
+{id:'colerica',key:'C',name:'Colérica',traits:'Coléricos',title:'Coragem que Lidera',color:'#C47A5F',
+ palette:['#C47A5F','#3A2E28','#EBC2B2','#E8B04A'],
+ short:'Determinada, prática e corajosa: você faz as coisas acontecerem.',
+ desc:['Quando todos ainda estão pensando, você já está agindo. Você enxerga o objetivo, organiza as pessoas e não desiste diante do primeiro obstáculo. No meio cristão, esse jeito costuma ser chamado de temperamento colérico.',
+  'Sua coragem é um presente para a igreja, para a família e para o trabalho. Muitos ministérios existem porque alguém como você teve iniciativa. Mas a mesma força que move montanhas pode atropelar pessoas, e a pressa pode deixar pouco espaço para ouvir, descansar e esperar em Deus.',
+  'Seu desafio é unir firmeza e mansidão. Liderar como Jesus é servir, não controlar. E descansar não é perder tempo: é confiar que o resultado está nas mãos de Deus.',
+  'Paulo, que perseguia a igreja com zelo e depois se tornou o apóstolo mais incansável, mostra que Deus não apaga a sua determinação: ele a direciona.'],
+ forces:['Liderança natural','Determinação diante de obstáculos','Iniciativa para começar','Praticidade para resolver'],
+ challenges:['Impaciência com o ritmo dos outros','Querer controlar tudo e todos','Dificuldade de descansar e de pedir ajuda'],
+ fruit:{n:'Paciência, mansidão e amor',t:'O Espírito Santo transforma a sua força em força com ternura. A paciência ajuda você a respeitar o tempo dos outros e o tempo de Deus. A mansidão não é fraqueza: é força sob controle. E o amor lembra que as pessoas valem mais do que as metas.'},
+ verses:[{r:'Mateus 11:29',t:'Aprendam de mim, pois sou manso e humilde de coração, e vocês encontrarão descanso para as suas almas.'},{r:'Provérbios 16:32',t:'Melhor é o homem paciente do que o guerreiro, mais vale controlar o seu espírito do que conquistar uma cidade.'},{r:'Provérbios 16:9',t:'Em seu coração o homem planeja o seu caminho, mas o Senhor determina os seus passos.'},{r:'Salmos 46:10',t:'Parem de lutar! Saibam que eu sou Deus!'},{r:'Filipenses 3:13-14',t:'Esquecendo-me das coisas que ficaram para trás e avançando para as que estão adiante, prossigo para o alvo.'},{r:'1 Coríntios 13:4',t:'O amor é paciente, o amor é bondoso.'},{r:'Colossenses 3:23',t:'Tudo o que fizerem, façam de todo o coração, como para o Senhor.'}],
+ prayers:['Senhor, que a minha força sirva às pessoas e não as atropele.','Pai, me ensina a descansar confiando em ti.','Jesus, me dá paciência com quem caminha em outro ritmo.','Espírito Santo, guarda a minha boca de palavras duras.','Senhor, que os meus planos se alinhem aos teus.','Pai, me ajuda a pedir ajuda sem orgulho.','Jesus, que eu lidere servindo, como tu.'],
+ phrases:['Força com mansidão é força de Cristo.','Descansar também é obediência.','Pessoas valem mais do que metas.','Peça ajuda hoje: isso é sabedoria.','Seus planos ficam melhores nas mãos de Deus.','Uma palavra gentil abre portas que a pressa fecha.','Você não precisa provar nada a ninguém.'],
+ chars:[{n:'Paulo',ref:'Atos 9; Filipenses 3:13-14; 2 Timóteo 4:11',story:'Paulo perseguia os cristãos com zelo até encontrar Jesus no caminho para Damasco. Depois viajou, plantou igrejas e escreveu cartas. Chegou a se separar de Barnabé por causa de Marcos e, anos depois, pediu: "Traga Marcos, porque ele me é útil".',lesson:'Mostra traços coléricos: zelo, foco e firmeza. A lição é que Deus redireciona a determinação e ensina a liderar com graça e reconciliação.'},
+  {n:'Débora',ref:'Juízes 4-5',story:'Débora era profetisa e julgava Israel debaixo de uma palmeira. Chamou Baraque para a batalha e, quando ele hesitou, respondeu: "Irei com você". Depois da vitória, cantou louvores a Deus.',lesson:'Lembra o temperamento colérico: coragem e liderança. A lição é que a liderança dela era cheia de fé e dava os créditos a Deus.'},
+  {n:'Marta',ref:'Lucas 10:38-42; João 11:20-27',story:'Marta recebeu Jesus em casa e se agitou com tantas tarefas que reclamou da irmã. Jesus respondeu com carinho que só uma coisa era necessária. Mais tarde, foi ela quem correu ao encontro de Jesus e declarou: "Eu tenho crido que tu és o Cristo, o Filho de Deus".',lesson:'Mostra traços coléricos: praticidade e iniciativa. A lição é que servir é lindo, mas estar com Jesus vem primeiro.'}],
+ themes:[{t:'Descanso que é fé',d:'Separe um período desta semana sem produtividade, só para estar com Deus.',txt:'d5'},{t:'Força com mansidão',d:'Responda a uma situação difícil com calma, antes de agir.',txt:'d7'},{t:'Soltar o controle',d:'Entregue a Deus, em oração, algo que você não controla.',txt:'d11'},{t:'Liderar servindo',d:'Ajude alguém num projeto que não é seu.',txt:'d14'}],
+ why:'Combina com seu jeito colérico:',
+ check:{orei:'Entregar a Deus a minha lista do dia',li:'Ler um capítulo de Provérbios',servi:'Ajudar alguém num projeto que não é meu',agradeci:'Agradecer por algo que não dependeu de mim'}},
+{id:'melancolica',key:'M',name:'Melancólica',traits:'Melancólicos',title:'Profundidade que Adora',color:'#8FA5B8',
+ palette:['#A8B8A0','#8FA5B8','#EAE2D9','#3A2E28'],
+ short:'Sensível, profunda e detalhista: você sente e pensa com o coração inteiro.',
+ desc:['Você percebe o que quase ninguém vê: um olhar triste, uma palavra fora do lugar, a beleza escondida numa letra de louvor. Você ama com profundidade, é fiel aos seus valores e faz tudo com capricho. No meio cristão, esse jeito costuma ser chamado de temperamento melancólico.',
+  'Sua sensibilidade torna você uma intercessora natural, uma amiga leal e, muitas vezes, uma artista. Você precisa de tempo e silêncio para processar a vida. O outro lado é que essa mesma profundidade pode virar autocrítica, perfeccionismo e tristeza guardada.',
+  'Seu desafio é receber a graça. Deus não espera perfeição de você: ele já a ama inteira. A alegria e a paz do Espírito Santo podem iluminar os lugares onde a sua mente costuma ver só o que falta.',
+  'Moisés, que se achava incapaz de falar, e Ana, que derramou a alma em oração, mostram que Deus usa corações sensíveis de maneiras poderosas.'],
+ forces:['Sensibilidade e empatia profundas','Fidelidade e lealdade','Organização e capricho','Criatividade e senso de beleza'],
+ challenges:['Perfeccionismo e autocrítica','Tristeza e pessimismo nos dias difíceis','Guardar mágoas por muito tempo'],
+ fruit:{n:'Alegria e paz',t:'O Espírito Santo não tira a sua profundidade: ele a enche de luz. A alegria lembra que a sua história não termina na tristeza. A paz acalma a mente que pensa demais e ensina você a descansar na graça, e não na perfeição.'},
+ verses:[{r:'Salmos 139:14',t:'Eu te louvo porque me fizeste de modo especial e admirável.'},{r:'2 Coríntios 12:9',t:'Minha graça é suficiente a você, pois o meu poder se aperfeiçoa na fraqueza.'},{r:'Salmos 34:18',t:'O Senhor está perto dos que têm o coração quebrantado e salva os de espírito abatido.'},{r:'Filipenses 4:6-7',t:'Não andem ansiosos por coisa alguma, mas em tudo, pela oração e súplicas, e com ação de graças, apresentem seus pedidos a Deus.'},{r:'Romanos 8:1',t:'Agora já não há condenação para os que estão em Cristo Jesus.'},{r:'João 14:27',t:'Deixo-lhes a paz; a minha paz lhes dou.'},{r:'Romanos 15:13',t:'Que o Deus da esperança os encha de toda alegria e paz, por sua confiança nele.'}],
+ prayers:['Senhor, que a tua graça seja maior do que a minha autocrítica.','Pai, acalma a minha mente e me dá a tua paz.','Jesus, me ajuda a soltar as mágoas que eu guardo.','Espírito Santo, enche de alegria os meus pensamentos hoje.','Senhor, usa a minha sensibilidade para cuidar de alguém.','Pai, eu não preciso ser perfeita para ser amada por ti.','Jesus, obrigada por me fazer de modo especial e admirável.'],
+ phrases:['Você não precisa ser perfeita para ser amada.','Sua sensibilidade é um dom, não um defeito.','A graça de Deus cobre o que falta em você.','Hoje, repare em três coisas boas.','Feito com amor vale mais do que perfeito.','Deus escuta até as orações sem palavras.','Sua profundidade é lugar de encontro com Deus.'],
+ chars:[{n:'Moisés',ref:'Êxodo 3-4; Números 12:3',story:'Diante da sarça ardente, Moisés perguntou: "Quem sou eu?" e disse que nunca teve facilidade para falar. Deus prometeu estar com ele. Mais tarde, a Bíblia o descreve como um homem muito manso e humilde.',lesson:'Mostra traços melancólicos: insegurança e profundidade. A lição é que Deus usa quem se sente incapaz, porque a força vem dele.'},
+  {n:'Ana',ref:'1 Samuel 1:10-18',story:'Ana sofria por não ter filhos e era provocada. No templo, orou em silêncio, só mexendo os lábios, a ponto de o sacerdote achar que estava embriagada. Ela explicou que estava derramando a alma diante do Senhor. Depois daquela oração, seu rosto já não estava triste.',lesson:'Lembra o temperamento melancólico: dor profunda e oração intensa. A lição é que entregar a dor a Deus traz paz antes mesmo da resposta.'},
+  {n:'Ester',ref:'Ester 4:14-16',story:'Diante de uma ameaça ao seu povo, Ester não agiu por impulso: pediu três dias de jejum, planejou com sabedoria e só então foi até o rei, dizendo: "Se eu tiver que morrer, morrerei".',lesson:'Mostra traços melancólicos: cautela e planejamento. A lição é que a prudência, somada à fé, vira coragem.'},
+  {n:'Elias',ref:'1 Reis 19:4-8',story:'Depois de uma grande vitória, Elias ficou exausto e desanimado a ponto de pedir para morrer. Deus não o repreendeu: deixou-o dormir, mandou comida e disse: "Levante-se e coma, pois a sua viagem será muito longa".',lesson:'Lembra o temperamento melancólico: altos e baixos emocionais. A lição é que Deus cuida do corpo e da alma cansada com ternura.'}],
+ themes:[{t:'Graça, não perfeição',d:'Faça algo bem feito, mas não perfeito, e entregue.',txt:'d3'},{t:'Ansiedade entregue a Deus',d:'Escreva suas preocupações e ore por cada uma.',txt:'d2'},{t:'Soltar mágoas',d:'Ore por alguém que te feriu, mesmo que com poucas palavras.',txt:'d8'},{t:'Gratidão que ilumina',d:'Anote três motivos de gratidão todas as noites.',txt:'d16'}],
+ why:'Combina com seu jeito melancólico:',
+ check:{orei:'Escrever uma oração no meu diário',li:'Ler um salmo devagar e meditar',servi:'Orar por alguém que está sofrendo',agradeci:'Anotar 3 coisas bonitas de hoje'}},
+{id:'fleumatica',key:'F',name:'Fleumática',traits:'Fleumáticos',title:'Paz que Sustenta',color:'#A8B8A0',
+ palette:['#A8B8A0','#C9D5C3','#F7F3EE','#3A2E28'],
+ short:'Calma, leal e pacificadora: você é porto seguro para quem está por perto.',
+ desc:['Você é aquela presença tranquila que acalma o ambiente. Ouve sem julgar, evita brigas, cumpre o que promete e está sempre lá. As pessoas confiam em você porque você é constante. No meio cristão, esse jeito costuma ser chamado de temperamento fleumático.',
+  'Sua paz é um presente raro num mundo apressado. Você serve sem precisar de holofote e mantém a unidade nos grupos. Mas, para evitar conflitos, pode guardar o que sente, adiar decisões e deixar de usar os dons que Deus colocou em você.',
+  'Seu desafio é sair da zona de conforto com fé. Deus quer usar a sua calma, mas também a sua voz e a sua iniciativa. A fidelidade que você já tem pode florescer em bondade ativa.',
+  'Abraão, que saiu sem saber para onde ia, e Rute, que permaneceu fiel quando tudo era incerto, mostram que corações constantes podem dar grandes passos de fé.'],
+ forces:['Calma que acalma','Lealdade e constância','Escuta paciente','Dom de pacificar'],
+ challenges:['Passividade e medo de mudanças','Procrastinação nas decisões','Dificuldade de dizer o que sente'],
+ fruit:{n:'Fidelidade com iniciativa e bondade ativa',t:'O Espírito Santo transforma a sua constância em fidelidade que age. Bondade não é só não fazer mal: é ir até o outro. Deus dá coragem para você falar, decidir e dar o próximo passo, sem perder a paz que é a sua marca.'},
+ verses:[{r:'Isaías 41:10',t:'Por isso não tema, pois estou com você; não tenha medo, pois sou o seu Deus.'},{r:'Josué 1:9',t:'Seja forte e corajoso! Não se apavore nem desanime, pois o Senhor, o seu Deus, estará com você por onde você andar.'},{r:'2 Timóteo 1:7',t:'Pois Deus não nos deu espírito de covardia, mas de poder, de amor e de equilíbrio.'},{r:'Mateus 5:9',t:'Bem-aventurados os pacificadores, pois serão chamados filhos de Deus.'},{r:'Salmos 37:7',t:'Descanse no Senhor e aguarde por ele com paciência.'},{r:'Tiago 2:17',t:'A fé, por si só, se não for acompanhada de obras, está morta.'},{r:'Isaías 40:31',t:'Aqueles que esperam no Senhor renovam as suas forças.'}],
+ prayers:['Senhor, me dá coragem para dar o próximo passo hoje.','Pai, me ajuda a falar o que sinto com amor.','Jesus, que a minha paz seja ativa e generosa.','Espírito Santo, me tira da zona de conforto com fé.','Senhor, obrigada pela calma que vem de ti.','Pai, me ensina a decidir sem medo de errar.','Jesus, usa a minha constância para abençoar alguém.'],
+ phrases:['Sua paz é um presente para quem está perto.','Um pequeno passo de fé hoje já é muito.','Sua voz também importa.','Fidelidade é bonita quando vira ação.','Decida uma coisa pendente hoje.','Deus está com você no próximo passo.','Pacificar é diferente de se calar.'],
+ chars:[{n:'Abraão',ref:'Gênesis 12:1-4; 13:8-9; Hebreus 11:8',story:'Abraão saiu da sua terra sem saber para onde ia, apenas confiando em Deus. Em um conflito com o sobrinho Ló, deixou que ele escolhesse a terra primeiro, para manter a paz. Também teve momentos de medo, mas aprendeu a confiar.',lesson:'Mostra traços fleumáticos: paciência e espírito pacificador. A lição é que a fé tranquila também sabe dar passos ousados.'},
+  {n:'Rute',ref:'Rute 1:16-17; 2:2-3',story:'Depois de perder o marido, Rute decidiu ficar com a sogra Noemi: "Aonde você for, irei; o seu povo será o meu povo e o seu Deus será o meu Deus". Trabalhou com humildade nos campos e foi reconhecida como mulher de valor.',lesson:'Lembra o temperamento fleumático: lealdade e constância. A lição é que a fidelidade silenciosa é vista e honrada por Deus.'},
+  {n:'Maria de Betânia',ref:'Lucas 10:39; João 12:3',story:'Enquanto a irmã se agitava, Maria sentou-se aos pés de Jesus para ouvi-lo. Mais tarde, derramou um perfume caro sobre ele, num gesto de adoração.',lesson:'Mostra traços fleumáticos: calma e presença. A lição é que estar aos pés de Jesus é a "boa parte" que ninguém tira de você.'},
+  {n:'Abigail',ref:'1 Samuel 25',story:'Quando o marido insensato ofendeu Davi, Abigail agiu rápido: levou provisões, falou com sabedoria e evitou uma tragédia. Davi louvou a Deus e reconheceu o bom senso dela.',lesson:'Lembra o temperamento fleumático no melhor sentido: uma pacificadora com iniciativa. A lição é que buscar a paz às vezes exige agir.'}],
+ themes:[{t:'Um passo de fé',d:'Escolha uma decisão que você vem adiando e dê o primeiro passo.',txt:'d12'},{t:'Sua voz importa',d:'Diga com carinho algo que você sente e costuma guardar.',txt:'d6'},{t:'Bondade ativa',d:'Faça um gesto concreto de cuidado por alguém.',txt:'d10'},{t:'Coragem para servir',d:'Ofereça um dom seu na igreja ou em casa.',txt:'d10'}],
+ why:'Combina com seu jeito fleumático:',
+ check:{orei:'5 minutos de oração em silêncio',li:'Ler um capítulo dos Evangelhos',servi:'Dar um passo de serviço que eu vinha adiando',agradeci:'Agradecer a alguém pessoalmente'}}
 ];
+const PREFS=['Temperamentos','Mulheres da Bíblia','Ansiedade','Identidade','Comparação','Perdão','Relacionamentos','Casamento','Servir na igreja','Propósito','Rotina com Deus','Fé e dúvidas','Saúde emocional','Limites'];
 
-const PREFS=['Emoções','Mente','Vida social','Decisões','Novidades','Energia','Felicidade','Conflitos','Dia ideal','Essência','Estilo','Rotina','Amor','Carreira','Autocuidado'];
-
-const CATS=[{id:'todos',n:'Todos',ic:'sparkle'},{id:'roupas',n:'Roupas',ic:'shirt'},{id:'musicas',n:'Músicas',ic:'music'},{id:'lugares',n:'Lugares',ic:'pin'},{id:'comidas',n:'Comidas',ic:'food'},{id:'viagens',n:'Viagens',ic:'plane'},{id:'livros',n:'Livros',ic:'books'},{id:'favoritos',n:'Favoritos',ic:'heart'}];
+const CATS=[{id:'todos',n:'Todos',ic:'sparkle'},{id:'louvores',n:'Louvores',ic:'music'},{id:'livros',n:'Livros',ic:'books'},{id:'devocionais',n:'Devocionais',ic:'book'},{id:'podcasts',n:'Podcasts',ic:'sound'},{id:'lugares',n:'Lugares',ic:'pin'},{id:'estilo',n:'Estilo',ic:'shirt'},{id:'favoritos',n:'Favoritos',ic:'heart'}];
 const ITEMS=[
- {id:'r1',c:'roupas',n:'Linho e tons terrosos',d:'Peças leves e naturais em areia, oliva e terracota.',w:'elas trazem calma, textura e uma beleza discreta, do jeito que você gosta.',p:['serena','contemplativa'],img:'photo-1490481651871-ab68de25d43d'},
- {id:'r2',c:'roupas',n:'Jaqueta utilitária',d:'Bolsos, tecido resistente e estilo para qualquer roteiro.',w:'ela acompanha seu ritmo e está pronta para o inesperado.',p:['exploradora','determinada'],img:'photo-1551028719-00167b16eac5'},
- {id:'r3',c:'roupas',n:'Alfaiataria minimalista',d:'Cortes limpos, cores neutras e zero excesso.',w:'o visual organizado reflete a clareza da sua mente.',p:['analitica','determinada'],img:'photo-1594633312681-425c7b97ccd1'},
- {id:'r4',c:'roupas',n:'Camisa de linho',d:'Tecido fresco, caimento solto e tons claros.',w:'ela traz leveza e conforto, do jeito que um bom encontro pede.',p:['conectiva','serena'],img:'photo-1596755094514-f87e34085b2c'},
- {id:'r5',c:'roupas',n:'Tricô aconchegante',d:'Malhas macias para dias de chá e introspecção.',w:'é como um abraço que você pode vestir.',p:['contemplativa','conectiva'],img:'photo-1434389677669-e08b4cac3105'},
- {id:'r6',c:'roupas',n:'Tênis confortável',d:'Conforto com um toque de estilo para o dia todo.',w:'ele prepara você para o próximo passo — literalmente.',p:['exploradora','determinada'],img:'photo-1542291026-7eec264c27ff'},
- {id:'m1',c:'musicas',n:'Lo-fi para criar',d:'Batidas suaves que ajudam a mente a fluir.',w:'cria o clima perfeito para suas ideias nascerem.',p:['serena','analitica'],img:'photo-1511379938547-c1f69419868d'},
- {id:'m2',c:'musicas',n:'MPB acústica',d:'Voz e violão para cantar junto ou só sentir.',w:'fala de afeto, memória e conexão.',p:['conectiva','contemplativa'],img:'photo-1510915361894-db8b60106cad'},
- {id:'m3',c:'musicas',n:'Indie de estrada',d:'Guitarras leves para ouvir de janela aberta.',w:'é trilha sonora de quem vive em movimento.',p:['exploradora','serena'],img:'photo-1470225620780-dba8ba36b745'},
- {id:'m4',c:'musicas',n:'Piano para focar',d:'Clássicos e neoclássicos sem pressa.',w:'acalma o ruído e aprofunda sua concentração.',p:['analitica','contemplativa'],img:'photo-1507838153414-b4b713384a76'},
- {id:'m5',c:'musicas',n:'Pop para dançar junto',d:'Refrões que pedem amigos e uma sala livre.',w:'transforma qualquer encontro em celebração.',p:['conectiva','exploradora'],img:'photo-1493225457124-a3eb161ffa5f'},
- {id:'m6',c:'musicas',n:'Playlist de energia',d:'Batidas fortes para treinar e conquistar.',w:'acompanha sua força e o seu ritmo de quem vai até o fim.',p:['determinada'],img:'photo-1571019613454-1cb2f99b2d8b'},
- {id:'l1',c:'lugares',n:'Café com livros',d:'Mesas de madeira, aroma de café e estantes cheias.',w:'é um refúgio para pensar, criar e desacelerar.',p:['serena','analitica'],img:'photo-1495474472287-4d71bcdd2085'},
- {id:'l2',c:'lugares',n:'Trilha com mirante',d:'Subida desafiadora e uma vista que recompensa.',w:'une aventura, esforço e a sensação de conquista.',p:['exploradora','determinada'],img:'photo-1551632811-561732d1e306'},
- {id:'l3',c:'lugares',n:'Jardim botânico',d:'Verde, silêncio e tempo para respirar.',w:'a natureza conversa com sua alma tranquila.',p:['contemplativa','serena'],img:'photo-1441974231531-c6227db76b6e'},
- {id:'l4',c:'lugares',n:'Feira de rua',d:'Cores, cheiros, conversas e descobertas.',w:'é cheia de gente, histórias e surpresas.',p:['conectiva','exploradora'],img:'photo-1488459716781-31db52582fe9'},
- {id:'l5',c:'lugares',n:'Museu interativo',d:'Exposições para tocar, testar e entender.',w:'alimenta sua curiosidade com profundidade.',p:['analitica','serena'],img:'photo-1554907984-15263bfd63bd'},
- {id:'l6',c:'lugares',n:'Rooftop ao pôr do sol',d:'Céu alaranjado e boa companhia lá de cima.',w:'é o lugar perfeito para celebrar suas vitórias com quem você ama.',p:['determinada','conectiva'],img:'photo-1514933651103-005eec06c04b'},
- {id:'c1',c:'comidas',n:'Bowl colorido',d:'Grãos, folhas e proteínas em equilíbrio.',w:'nutre seu corpo para dar conta de tudo o que você quer fazer.',p:['determinada','analitica'],img:'photo-1512621776951-a57141f2eefd'},
- {id:'c2',c:'comidas',n:'Massa caseira para dividir',d:'Receita de família, mesa cheia e conversa longa.',w:'comida boa é desculpa para reunir quem você ama.',p:['conectiva'],img:'photo-1551183053-bf91a1d81141'},
- {id:'c3',c:'comidas',n:'Comida de rua do mundo',d:'Sabores de outros países, sem sair da cidade.',w:'cada prato é uma pequena viagem.',p:['exploradora'],img:'photo-1504674900247-0877df9cc836'},
- {id:'c4',c:'comidas',n:'Chá e bolo da tarde',d:'Um ritual simples para uma pausa gostosa.',w:'transforma o fim de tarde em um momento de calma criativa.',p:['serena','contemplativa'],img:'photo-1544787219-7f47ccb76574'},
- {id:'c5',c:'comidas',n:'Café especial',d:'Grãos selecionados e métodos de preparo diferentes.',w:'tem técnica, detalhe e muito sabor para analisar.',p:['analitica','determinada'],img:'photo-1509042239860-f550ce710b93'},
- {id:'c6',c:'comidas',n:'Frutas da estação',d:'O que a natureza oferece agora, fresco e simples.',w:'respeita o tempo das coisas, como você.',p:['contemplativa','serena'],img:'photo-1610832958506-aa56368176cf'},
- {id:'v1',c:'viagens',n:'Mochilão sem roteiro',d:'Uma mochila, um mapa e muita vontade de descobrir.',w:'deixa espaço para o inesperado que você tanto ama.',p:['exploradora'],img:'photo-1488646953014-85cb44e25828'},
- {id:'v2',c:'viagens',n:'Retiro na montanha',d:'Silêncio, ar puro e tempo para você.',w:'é o cenário ideal para se reencontrar.',p:['contemplativa','serena'],img:'photo-1506905925346-21bda4d32df4'},
- {id:'v3',c:'viagens',n:'Cidade histórica',d:'Ruas antigas, museus e histórias em cada esquina.',w:'une beleza e conhecimento em cada passeio.',p:['analitica','serena'],img:'photo-1467269204594-9661b134dd2b'},
- {id:'v4',c:'viagens',n:'Praia com amigos',d:'Sol, risadas e lembranças para a vida toda.',w:'as melhores memórias são aquelas compartilhadas.',p:['conectiva','exploradora'],img:'photo-1507525428034-b723cf961d3e'},
- {id:'v5',c:'viagens',n:'Trekking desafiador',d:'Dias de caminhada e metas a cada quilômetro.',w:'é a viagem perfeita para quem ama superar limites.',p:['determinada','exploradora'],img:'photo-1464822759023-fed622ff2c3b'},
- {id:'v6',c:'viagens',n:'Vila no interior',d:'Ritmo lento, comida caseira e gente acolhedora.',w:'lembra que a vida pode ser simples e cheia de afeto.',p:['contemplativa','conectiva'],img:'photo-1476514525535-07fb3b4ae5f1'},
- {id:'b1',c:'livros',n:'Poesia contemporânea',d:'Versos curtos que cabem num respiro.',w:'conversa direto com a sua sensibilidade.',p:['serena','contemplativa'],img:'photo-1474932430478-367dbb6832c1'},
- {id:'b2',c:'livros',n:'Relatos de viagem',d:'Histórias reais de quem saiu pelo mundo.',w:'alimenta sua vontade de explorar.',p:['exploradora'],img:'photo-1512820790803-83ca734da794'},
- {id:'b3',c:'livros',n:'Ensaios sobre a mente',d:'Ciência e reflexão sobre como pensamos.',w:'satisfaz sua sede de entender o porquê das coisas.',p:['analitica'],img:'photo-1481627834876-b7833e8f5570'},
- {id:'b4',c:'livros',n:'Romances sobre amizade',d:'Personagens que se encontram e se transformam.',w:'celebra os laços que você tanto valoriza.',p:['conectiva'],img:'photo-1544947950-fa07a98d237f'},
- {id:'b5',c:'livros',n:'Filosofia para o dia a dia',d:'Grandes perguntas em linguagem simples.',w:'acompanha seus pensamentos mais profundos.',p:['contemplativa','analitica'],img:'photo-1457369804613-52c61a468e7d'},
- {id:'b6',c:'livros',n:'Biografias inspiradoras',d:'Trajetórias de pessoas que fizeram acontecer.',w:'mostra que a sua determinação pode ir longe.',p:['determinada'],img:'photo-1589829085413-56de8ae18c73'}
+ {id:'l1',c:'louvores',n:'Louvor congregacional animado',d:'Músicas para cantar junto, com palmas e celebração.',w:'é adoração em comunidade, do jeito que enche o seu coração de alegria.',p:['sanguinea','colerica'],img:'photo-1493225457124-a3eb161ffa5f'},
+ {id:'l2',c:'louvores',n:'Adoração acústica',d:'Voz, violão e letras para cantar de olhos fechados.',w:'abre espaço para uma adoração profunda e sem pressa.',p:['melancolica','fleumatica'],img:'photo-1510915361894-db8b60106cad'},
+ {id:'l3',c:'louvores',n:'Hinos clássicos',d:'Hinos antigos com letras cheias de doutrina e história.',w:'são letras profundas, que você pode meditar palavra por palavra.',p:['melancolica','fleumatica'],img:'photo-1507838153414-b4b713384a76'},
+ {id:'l4',c:'louvores',n:'Playlist para orar em movimento',d:'Louvores de fé e vitória para caminhar, treinar ou dirigir.',w:'acompanha seu ritmo e transforma tarefas em oração.',p:['colerica','sanguinea'],img:'photo-1470225620780-dba8ba36b745'},
+ {id:'k1',c:'livros',n:'Biografias de missionárias',d:'Histórias reais de mulheres que levaram o evangelho longe.',w:'mostra coragem e fé em ação, do jeito que inspira você a agir.',p:['colerica','sanguinea'],img:'photo-1589829085413-56de8ae18c73'},
+ {id:'k2',c:'livros',n:'Clássicos cristãos',d:'Obras como "Cristianismo puro e simples", de C. S. Lewis.',w:'alimenta sua sede de entender a fé com profundidade.',p:['melancolica','colerica'],img:'photo-1481627834876-b7833e8f5570'},
+ {id:'k3',c:'livros',n:'Estudo sobre mulheres da Bíblia',d:'Personagens bíblicas estudadas uma a uma, com aplicação.',w:'ajuda você a se ver nas histórias e aprender com elas.',p:['fleumatica','melancolica'],img:'photo-1544947950-fa07a98d237f'},
+ {id:'k4',c:'livros',n:'Livro sobre temperamentos e fé',d:'Leituras sobre como o Espírito Santo transforma o caráter.',w:'conversa direto com a sua vontade de se conhecer e crescer.',p:['sanguinea','fleumatica'],img:'photo-1512820790803-83ca734da794'},
+ {id:'v1',c:'devocionais',n:'Devocional de 5 minutos',d:'Um versículo, uma reflexão curta e uma oração por dia.',w:'é rápido, leve e cabe na sua rotina cheia.',p:['sanguinea','colerica'],img:'photo-1499209974431-9dddcece7f88'},
+ {id:'v2',c:'devocionais',n:'Diário de oração',d:'Caderno para escrever orações, respostas e gratidão.',w:'dá forma ao que você sente e mostra a fidelidade de Deus ao longo do tempo.',p:['melancolica','fleumatica'],img:'photo-1474932430478-367dbb6832c1'},
+ {id:'v3',c:'devocionais',n:'Plano de leitura bíblica anual',d:'A Bíblia inteira em um ano, com metas diárias.',w:'combina com sua disciplina e com o gosto por cumprir metas.',p:['colerica','melancolica'],img:'photo-1457369804613-52c61a468e7d'},
+ {id:'v4',c:'devocionais',n:'Leitura lenta dos Salmos',d:'Um salmo por dia, lido devagar e em voz baixa.',w:'é oração sem pressa, do jeito que traz paz.',p:['fleumatica','melancolica'],img:'photo-1441974231531-c6227db76b6e'},
+ {id:'p1',c:'podcasts',n:'Podcast de conversa entre amigas cristãs',d:'Papo leve sobre fé, rotina, amizade e vida real.',w:'parece uma conversa de café com gente que pensa como você.',p:['sanguinea','fleumatica'],img:'photo-1495474472287-4d71bcdd2085'},
+ {id:'p2',c:'podcasts',n:'Podcast de estudo bíblico',d:'Episódios que explicam livros da Bíblia em profundidade.',w:'satisfaz sua vontade de entender o contexto e o porquê.',p:['melancolica','colerica'],img:'photo-1511379938547-c1f69419868d'},
+ {id:'p3',c:'podcasts',n:'Podcast sobre liderança cristã',d:'Liderar com propósito, humildade e visão.',w:'ajuda você a liderar com força e coração de serva.',p:['colerica'],img:'photo-1551632811-561732d1e306'},
+ {id:'g1',c:'lugares',n:'Retiro de mulheres',d:'Um fim de semana de louvor, palavra e descanso.',w:'é pausa, comunhão e encontro com Deus num só lugar.',p:['fleumatica','sanguinea'],img:'photo-1506905925346-21bda4d32df4'},
+ {id:'g2',c:'lugares',n:'Café para estudo bíblico',d:'Mesa tranquila, Bíblia aberta e um café quentinho.',w:'é o refúgio perfeito para estudar e meditar sem pressa.',p:['melancolica','fleumatica'],img:'photo-1544787219-7f47ccb76574'},
+ {id:'g3',c:'lugares',n:'Trilha para orar ao ar livre',d:'Natureza, silêncio e passos que viram oração.',w:'une movimento e contemplação da criação de Deus.',p:['colerica','fleumatica'],img:'photo-1464822759023-fed622ff2c3b'},
+ {id:'g4',c:'lugares',n:'Pequeno grupo em casa',d:'Célula ou grupo de estudo com lanche e conversa.',w:'é comunhão de verdade, com gente que caminha junto.',p:['sanguinea','fleumatica'],img:'photo-1488459716781-31db52582fe9'},
+ {id:'g5',c:'lugares',n:'Ação social da igreja',d:'Servir quem precisa: doação, visita, cuidado.',w:'transforma sua energia em amor concreto.',p:['colerica','sanguinea'],img:'photo-1504674900247-0877df9cc836'},
+ {id:'e1',c:'estilo',n:'Linho e tons terrosos',d:'Peças leves e naturais em areia, oliva e terracota.',w:'trazem calma, textura e uma beleza discreta.',p:['melancolica','fleumatica'],img:'photo-1490481651871-ab68de25d43d'},
+ {id:'e2',c:'estilo',n:'Look de domingo com cor',d:'Uma peça de cor alegre com acessórios delicados.',w:'expressa a sua alegria sem perder a elegância.',p:['sanguinea'],img:'photo-1515372039744-b8f02a3ae446'},
+ {id:'e3',c:'estilo',n:'Alfaiataria leve',d:'Cortes limpos e confortáveis para servir e liderar.',w:'reflete a sua praticidade e presença.',p:['colerica','melancolica'],img:'photo-1594633312681-425c7b97ccd1'},
+ {id:'e4',c:'estilo',n:'Tricô aconchegante',d:'Malhas macias para dias de chá e leitura.',w:'é como um abraço que você pode vestir.',p:['fleumatica','melancolica'],img:'photo-1434389677669-e08b4cac3105'}
 ];
+const GROUPS=[{id:'orei',n:'Orei',ic:'sparkle'},{id:'li',n:'Li a Palavra',ic:'book'},{id:'servi',n:'Servi',ic:'heart'},{id:'agradeci',n:'Agradeci',ic:'star'}];
+const GENERIC_CHECK={orei:'5 minutos de oração antes de começar o dia',li:'Ler um capítulo da Bíblia',servi:'Ajudar alguém sem esperar nada em troca',agradeci:'Anotar 3 motivos de gratidão'};
+const LCATS=[{id:'todos',n:'Todos'},{id:'temperamentos',n:'Temperamentos'},{id:'mulheres',n:'Mulheres da Bíblia'},{id:'dores',n:'Dores'},{id:'fruto',n:'Fruto do Espírito'},{id:'relacionamentos',n:'Relacionamentos'}];
 
-const LCATS=[{id:'todos',n:'Todos'},{id:'forcas',n:'Forças'},{id:'emocoes',n:'Emoções'},{id:'relacionamentos',n:'Relacionamentos'},{id:'rotina',n:'Rotina'},{id:'proposito',n:'Propósito'}];
-/* Biblioteca de leitura: 15 temas com base em pesquisas de psicologia.
-   Cada texto: corpo (4 parágrafos), "Experimente hoje", base científica e um parágrafo por perfil. */
+/* Biblioteca cristã: temperamentos, mulheres da Bíblia e dores. Cada texto: corpo, "Para você", "Experimente hoje", oração e fontes. */
+const TEMP_NOTE='Os 4 temperamentos são uma ferramenta antiga de autoconhecimento, popularizada no meio cristão por Tim LaHaye e Florence Littauer. Não são verdade bíblica nem científica: são um mapa simples para você se observar e crescer com Deus.';
+const BIBLE_NOTE='Citações bíblicas adaptadas de traduções em português (principalmente NVI).';
 const TEXTS=[
- {id:'a1',title:"Os 5 Grandes Traços (Big Five)",cat:'forcas',min:4,img:'photo-1499209974431-9dddcece7f88',prefs:['Essência','Mente','Estilo','Novidades'],
-  body:["O Big Five é o modelo de personalidade mais estudado da psicologia. Ele nasceu de uma ideia simples: se uma característica é importante, a língua cria palavras para ela. Agrupando milhares de adjetivos, pesquisadores chegaram a cinco grandes traços.",
-   "São eles: Abertura (curiosidade e imaginação), Conscienciosidade (organização e disciplina), Extroversão (energia social), Amabilidade (cooperação e empatia) e Neuroticismo (tendência a sentir emoções negativas com intensidade). Cada traço é uma escala: ninguém é 100% organização ou 100% extroversão.",
-   "Estudos com gêmeos indicam que cerca de 40% a 50% das diferenças nesses traços têm influência genética. O resto vem da vida: relações, trabalho, experiências. E a personalidade muda: com os anos, a maioria das pessoas fica um pouco mais organizada, gentil e emocionalmente estável.",
-   "Nenhum traço é bom ou ruim por si só. O que importa é conhecer seu ponto de partida para fazer escolhas que combinem com ele."],
-  try:"Dê uma nota de 1 a 5 para você em cada um dos cinco traços. Depois peça para alguém próximo fazer o mesmo sobre você e compare as respostas.",
-  src:"Costa & McCrae, modelo dos Cinco Fatores; Vukasović & Bratko (2015), metanálise sobre herdabilidade da personalidade; Roberts, Walton & Viechtbauer (2006), mudança da personalidade ao longo da vida.",
-  you:{serena:"No seu perfil, Abertura costuma aparecer alta: imaginação e sensibilidade estética são a sua marca.",exploradora:"Seu perfil tende a pontuar alto em Abertura e Extroversão: você busca novidade e gente.",analitica:"Conscienciosidade costuma ser alta no seu perfil: planejamento e foco são seus pontos fortes.",conectiva:"Amabilidade e Extroversão tendem a ser altas no seu perfil: você cria laços com facilidade.",contemplativa:"Seu perfil costuma unir Abertura alta e Extroversão mais baixa: profundidade e uma vida interior rica.",determinada:"Conscienciosidade costuma ser seu traço mais forte: quando decide algo, você executa."}},
- {id:'a2',title:"Como você toma decisões",cat:'forcas',min:4,img:'photo-1506784983877-45594efa4cbe',prefs:['Decisões','Mente','Carreira'],
-  body:["O psicólogo Daniel Kahneman, Nobel de Economia, descreveu dois modos de pensar. O Sistema 1 é rápido, automático e intuitivo. O Sistema 2 é lento, deliberado e analítico. Usamos os dois o tempo todo.",
-   "O Sistema 1 resolve a maior parte do dia usando atalhos mentais. Eles ajudam muito, mas geram vieses: dar peso demais ao que aconteceu por último, ou temer mais perder do que desejar ganhar.",
-   "E a emoção? O neurocientista António Damásio estudou pacientes com lesões em áreas que processam emoções: eles raciocinavam bem, mas tinham enorme dificuldade para decidir. Emoção não é inimiga da boa decisão, ela sinaliza o que importa para você.",
-   "Em decisões grandes, combine os dois sistemas: escute o que sente e depois confira os fatos. Segundo Kahneman, a intuição merece mais confiança em áreas nas quais você já tem muita experiência."],
-  try:"Na próxima decisão importante, anote sua primeira impressão. Depois liste prós e contras e veja se os dois caminhos concordam.",
-  src:"Kahneman, “Rápido e Devagar” (2011); Kahneman & Klein (2009), sobre quando confiar na intuição; Damásio (1994), hipótese do marcador somático.",
-  you:{serena:"Você tende a decidir sentindo o clima das coisas. Dê tempo ao Sistema 2 antes de respostas grandes.",exploradora:"Seu entusiasmo acelera o Sistema 1. Uma pausa curta antes de dizer sim evita arrependimentos.",analitica:"Você confia no Sistema 2. Lembre que a emoção também é informação, não só ruído.",conectiva:"Você decide pensando em como os outros vão se sentir. Coloque na conta o que você sente também.",contemplativa:"Sua intuição é forte. Ela funciona melhor quando você a testa com um pequeno passo concreto.",determinada:"Você decide rápido e com firmeza. Em escolhas difíceis de desfazer, vale conferir os fatos com calma."}},
- {id:'a3',title:"Como você lida com o estresse",cat:'emocoes',min:4,img:'photo-1506126613408-eca07ce68773',prefs:['Emoções','Autocuidado','Energia','Conflitos'],
-  body:["Para os psicólogos Richard Lazarus e Susan Folkman, o estresse surge quando sentimos que uma situação exige mais do que temos para enfrentá-la. O jeito como reagimos a isso se chama enfrentamento.",
-   "Existem dois grandes caminhos. O enfrentamento focado no problema age sobre a situação: planejar, resolver, buscar informação. O focado na emoção cuida do que você sente: desabafar, respirar, enxergar o que aconteceu por outro ângulo.",
-   "Uma revisão de dezenas de estudos encontrou que agir sobre o problema está ligado a melhor saúde física e mental, enquanto fugir da situação ou só torcer para ela sumir está ligado a pior saúde. Mas nenhuma estratégia funciona sempre: quando dá para mudar a situação, agir costuma ser melhor; quando não dá, cuidar da emoção é o mais sábio.",
-   "Se o estresse estiver constante e intenso, procurar ajuda profissional é um gesto de cuidado, não de fraqueza."],
-  try:"Pense no que está pesando hoje e pergunte: isso depende de mim? Se sim, escolha um passo pequeno. Se não, escolha um gesto de cuidado com você.",
-  src:"Lazarus & Folkman (1984), modelo transacional do estresse; Penley, Tomaka & Wiebe (2002), metanálise sobre enfrentamento e saúde; estudos de Bonanno sobre flexibilidade de enfrentamento.",
-  you:{serena:"Você tende a absorver tudo. Escrever ou criar ajuda a transformar o que sente em algo que dá para olhar de fora.",exploradora:"Quando aperta, você tende a fugir para o novo. Movimento ajuda, mas volte para resolver o que ficou pendente.",analitica:"Focar no problema é seu forte. Quando não houver o que resolver, permita-se cuidar da emoção.",conectiva:"Você busca pessoas no estresse. Isso ajuda mais quando a conversa termina num próximo passo.",contemplativa:"Você se recolhe para processar. Só cuide para que o recolhimento não vire evitar a situação.",determinada:"Você parte para a ação. Lembre que descansar também é estratégia, não perda de tempo."}},
- {id:'a4',title:"Seu estilo de apego",cat:'relacionamentos',min:5,img:'photo-1518199266791-5375a83190b7',prefs:['Amor','Vida social','Emoções'],
-  body:["A teoria do apego nasceu com o psiquiatra John Bowlby e a psicóloga Mary Ainsworth, que estudaram como bebês reagem à separação de quem cuida deles. Nos anos 1980, Cindy Hazan e Phillip Shaver mostraram que padrões parecidos aparecem nos relacionamentos adultos.",
-   "No estudo deles, mais da metade das pessoas se descreveu como segura, e o restante se dividiu entre evitativa e ansiosa. No apego seguro, há confiança e proximidade tranquila. No ansioso, há medo de abandono e necessidade de muita confirmação. No evitativo, a proximidade incomoda e a independência vira proteção.",
-   "Hoje os pesquisadores preferem pensar em duas escalas, ansiedade e evitação, em vez de caixinhas. Você pode estar mais perto de um padrão com uma pessoa e de outro com outra.",
-   "A boa notícia: apego não é sentença. Relações seguras, autoconhecimento e terapia ajudam muita gente a construir o que os estudos chamam de segurança conquistada."],
-  try:"Quando sentir insegurança numa relação, observe: você tende a buscar mais contato ou a se afastar? Só perceber o padrão já é um passo.",
-  src:"Bowlby (1969); Ainsworth et al. (1978); Hazan & Shaver (1987); Brennan, Clark & Shaver (1998), modelo de duas dimensões do apego adulto.",
-  you:{serena:"Sua sensibilidade capta pequenos sinais de distância. Antes de concluir algo, pergunte o que a outra pessoa quis dizer.",exploradora:"Seu amor pela liberdade pode parecer distância. Diga com palavras que precisar de espaço não é falta de carinho.",analitica:"Você pode racionalizar o que sente numa relação. Nomear a emoção em voz alta aproxima.",conectiva:"Você investe muito nos laços, e a falta de resposta pode doer. O silêncio do outro nem sempre é rejeição.",contemplativa:"Você precisa de espaço para processar. Avise quando estiver se recolhendo, para o outro não ler como afastamento.",determinada:"Sua independência é força, mas deixar alguém te ajudar também é uma forma de confiança."}},
- {id:'a5',title:"Sua linguagem do amor",cat:'relacionamentos',min:4,img:'photo-1516589178581-6cd7833ae3b2',prefs:['Amor','Felicidade','Vida social'],
-  body:["As cinco linguagens do amor foram propostas em 1992 pelo conselheiro Gary Chapman: palavras de afirmação, tempo de qualidade, presentes, atos de serviço e toque físico. A ideia é que cada pessoa tem um jeito preferido de dar e receber carinho.",
-   "Em 2024, pesquisadoras da Universidade de Toronto revisaram os estudos sobre o tema e encontraram pouco apoio científico. Muita gente valoriza várias linguagens ao mesmo tempo, e não houve evidência de que casais que “falam a mesma língua” sejam mais felizes.",
-   "Elas propõem outra imagem: uma alimentação equilibrada. Relações saudáveis precisam de vários nutrientes, como companhia, apoio emocional, afeto e cuidado prático, e não de uma única linguagem.",
-   "O valor do conceito está na conversa que ele abre: contar o que faz você sentir amor e perguntar o que faz o outro sentir o mesmo."],
-  try:"Pergunte a alguém próximo: qual foi a última vez que você sentiu muito carinho vindo de mim? A resposta costuma surpreender.",
-  src:"Chapman (1992); Impett, Park & Muise (2024), revisão na Current Directions in Psychological Science.",
-  you:{serena:"Você expressa afeto em gestos e detalhes. Diga também em palavras o que precisa receber.",exploradora:"Experiências juntos te alimentam. O cotidiano também precisa de pequenos cuidados.",analitica:"Você ama resolvendo. Um elogio sincero ou um abraço completam o cuidado prático.",conectiva:"Palavras e presença te nutrem muito. Variar os nutrientes deixa a relação ainda mais rica.",contemplativa:"Presença silenciosa diz muito para você. Conte isso a quem você ama, porque nem todo mundo lê o silêncio.",determinada:"Você demonstra amor apoiando metas. Reservar tempo sem agenda também é uma forma de amar."}},
- {id:'a6',title:"Sua energia social: extroversão e introversão",cat:'relacionamentos',min:4,img:'photo-1529156069898-49953e39b3ac',prefs:['Vida social','Energia','Essência'],
-  body:["Os termos foram popularizados por Carl Jung em 1921. Hoje a extroversão é um dos cinco grandes traços de personalidade e funciona como uma escala: a maioria das pessoas fica no meio do caminho.",
-   "Introversão não é timidez. Timidez é medo do julgamento dos outros; introversão é preferir menos estímulo, como conversas a dois e ambientes calmos. O psicólogo Hans Eysenck sugeriu que introvertidos já têm um nível de ativação interna mais alto, por isso buscam menos estímulo de fora.",
-   "Um achado curioso: estudos de William Fleeson mostram que, nos momentos em que agem de forma mais sociável, até pessoas introvertidas relatam mais emoções positivas. Não é sobre se forçar, e sim sobre conexão fazer bem a todos, cada um na sua dose.",
-   "Conhecer sua energia social ajuda a planejar a semana: encontros que nutrem, intervalos para recarregar e menos culpa por precisar de silêncio."],
-  try:"Depois de cada encontro desta semana, anote de 1 a 5 como ficou sua energia. Em poucos dias você descobre sua dose ideal.",
-  src:"Jung, “Tipos Psicológicos” (1921); Eysenck (1967), teoria da ativação; Fleeson, Malanos & Achille (2002), Journal of Personality and Social Psychology.",
-  you:{serena:"Você tende ao lado introvertido: encontros pequenos e profundos te fazem melhor que festas grandes.",exploradora:"Você tende à extroversão: gente e movimento te energizam. Só não esqueça das pausas.",analitica:"Você provavelmente prefere grupos menores e conversas com propósito. Isso é estilo, não falta de habilidade social.",conectiva:"Pessoas te energizam muito. Cuide para que a agenda cheia não roube seu descanso.",contemplativa:"Silêncio é seu combustível. Planeje encontros curtos e significativos, sem culpa.",determinada:"Você usa a energia social com objetivo. Reserve também encontros sem pauta, só pelo prazer."}},
- {id:'a7',title:"Pessoa Altamente Sensível",cat:'emocoes',min:4,img:'photo-1441974231531-c6227db76b6e',prefs:['Emoções','Essência','Energia','Autocuidado'],
-  body:["Em 1997, a psicóloga Elaine Aron chamou de Pessoa Altamente Sensível quem processa estímulos e emoções com mais profundidade. O nome científico do traço é sensibilidade de processamento sensorial.",
-   "A estimativa inicial era de 15% a 20% das pessoas. Um estudo de 2018 com 906 adultos encontrou três grupos: cerca de 31% de alta sensibilidade (as orquídeas), 40% de sensibilidade média (as tulipas) e 29% de baixa sensibilidade (os dentes-de-leão).",
-   "Estudos de imagem cerebral indicam que pessoas muito sensíveis ativam mais áreas ligadas à atenção e à empatia. Por isso podem se cansar em lugares barulhentos, mas também percebem detalhes e se comovem com a beleza.",
-   "Pesquisadores falam em suscetibilidade diferencial: pessoas sensíveis sofrem mais em ambientes difíceis, mas florescem mais em ambientes bons. Sensibilidade não é fraqueza, é um traço que pede um ambiente que cuide de você."],
-  try:"Crie um pequeno refúgio no seu dia: dez minutos sem telas, com luz baixa e silêncio. Observe como você volta.",
-  src:"Aron & Aron (1997); Lionetti et al. (2018), Translational Psychiatry; Acevedo et al. (2014), sensibilidade e empatia no cérebro.",
-  you:{serena:"A sensibilidade é central no seu perfil. Proteger sua energia é o que deixa sua criatividade florescer.",exploradora:"Mesmo buscando novidade, você pode ter momentos de sobrecarga. Respeite os sinais do corpo depois de dias intensos.",analitica:"Talvez você sinta mais do que demonstra. Dar nome às emoções ajuda a processá-las sem analisar demais.",conectiva:"Você sente muito o que os outros sentem. Separar o que é seu do que é do outro evita cansaço emocional.",contemplativa:"Você provavelmente se reconhece como orquídea. Natureza e silêncio são seus melhores reguladores.",determinada:"Você talvez não se veja como sensível, mas notar a sobrecarga cedo evita esgotamento."}},
- {id:'a8',title:"Autocontrole e força de vontade",cat:'rotina',min:4,img:'photo-1484480974693-6ca0a78fb36b',prefs:['Rotina','Carreira','Decisões'],
-  body:["No famoso teste do marshmallow, Walter Mischel ofereceu a crianças um doce agora ou dois se elas esperassem. As que esperaram mais pareciam ter melhores resultados anos depois.",
-   "Em 2018, uma replicação com mais de 900 crianças encontrou uma relação bem menor, que quase desapareceu ao considerar a renda e o ambiente da família. O contexto pesa muito mais do que se pensava.",
-   "Outra ideia popular, a de que a força de vontade se esgota como um músculo cansado, não se confirmou num grande teste feito em 23 laboratórios em 2016. E pesquisas de Angela Duckworth mostram que pessoas com bom autocontrole não resistem mais às tentações: elas criam hábitos e ambientes que evitam a tentação.",
-   "Autocontrole tem menos a ver com ser forte e mais a ver com estratégia: deixar fácil o que você quer fazer e difícil o que você quer evitar."],
-  try:"Escolha um hábito e deixe o caminho pronto hoje: o tênis ao lado da cama, o livro na bolsa, o celular fora do quarto.",
-  src:"Mischel, Shoda & Rodriguez (1989); Watts, Duncan & Quan (2018), Psychological Science; Hagger et al. (2016), replicação em vários laboratórios; Galla & Duckworth (2015), sobre hábitos e autocontrole.",
-  you:{serena:"Rituais bonitos funcionam melhor para você do que regras rígidas. Associe o hábito a algo prazeroso.",exploradora:"A rotina repetida te entedia. Varie o jeito de cumprir o hábito e mantenha o horário.",analitica:"Planos detalhados são seu forte. Acrescente gatilhos concretos: quando X acontecer, eu faço Y.",conectiva:"Hábitos em companhia funcionam melhor para você. Combine metas com alguém querido.",contemplativa:"Comece pequeno e com significado. Um hábito ligado a um valor seu dura mais.",determinada:"Você tende a confiar na disciplina. Ambientes bem preparados poupam sua energia para o que importa."}},
- {id:'a9',title:"Sua relação com dinheiro",cat:'rotina',min:4,img:'photo-1509042239860-f550ce710b93',prefs:['Carreira','Decisões','Estilo','Rotina'],
-  body:["A economia comportamental mostra que não decidimos sobre dinheiro como calculadoras. Daniel Kahneman e Amos Tversky descobriram, por exemplo, que a dor de perder costuma pesar cerca de duas vezes mais do que a alegria de ganhar o mesmo valor.",
-   "A personalidade também entra na conta. Pessoas mais organizadas e disciplinadas tendem a poupar e planejar mais. E emoções fortes, como tristeza e ansiedade, aumentam as compras por impulso.",
-   "E o que traz bem-estar? Estudos de Elizabeth Dunn e colegas sugerem que gastar com outras pessoas e com experiências costuma trazer mais satisfação do que comprar objetos para si. Já valorizar demais bens materiais aparece ligado a menos bem-estar em várias pesquisas.",
-   "Conhecer seus gatilhos ajuda mais do que uma planilha perfeita: perceber quando você gasta para aliviar uma emoção já muda muita coisa."],
-  try:"Antes da próxima compra não planejada, espere 24 horas. Se ainda fizer sentido amanhã, compre sem culpa.",
-  src:"Kahneman & Tversky (1979), teoria da perspectiva; Dunn, Aknin & Norton (2008), Science; Dunn, Gilbert & Wilson (2011), sobre gastar com experiências; Kasser (2002), sobre materialismo e bem-estar.",
-  you:{serena:"Você gasta com beleza e significado. Separe um valor fixo para isso e aproveite sem culpa.",exploradora:"Experiências te fazem feliz, e as pesquisas concordam. Uma reserva para aventuras evita gastos por impulso.",analitica:"Planejar é natural para você. Cuide para que o controle não vire ansiedade com dinheiro.",conectiva:"Você ama presentear. Isso traz bem-estar, desde que caiba no seu orçamento.",contemplativa:"Você tende a precisar de pouco para ser feliz. Use isso a seu favor para construir segurança.",determinada:"Metas financeiras claras te motivam. Celebre cada marco, não só o resultado final."}},
- {id:'a10',title:"Perfeccionismo e autocrítica",cat:'emocoes',min:4,img:'photo-1474932430478-367dbb6832c1',prefs:['Carreira','Emoções','Mente','Autocuidado'],
-  body:["Pesquisadores como Joachim Stoeber separam dois lados do perfeccionismo. Os esforços perfeccionistas são padrões altos e dedicação. As preocupações perfeccionistas são o medo de errar, a autocrítica dura e a sensação de nunca estar bom o bastante.",
-   "O primeiro lado pode impulsionar. O segundo está ligado a ansiedade, procrastinação e esgotamento. E o perfeccionismo está crescendo: uma metanálise com mais de 41 mil universitários mostrou aumento contínuo entre 1989 e 2016.",
-   "A saída não é baixar todos os padrões, e sim mudar o tom. Num estudo de Juliana Breines e Serena Chen, quem olhou para um erro com autocompaixão estudou mais para a prova seguinte do que quem só tentou elevar a autoestima.",
-   "Autocompaixão, como define a psicóloga Kristin Neff, é tratar a si com a gentileza que teria com alguém querido: reconhecer o erro, lembrar que errar é humano e seguir com gentileza."],
-  try:"Na próxima vez que se criticar, pergunte: eu falaria isso para alguém que amo? Reescreva a frase do jeito que falaria com essa pessoa.",
-  src:"Stoeber & Otto (2006); Curran & Hill (2019), Psychological Bulletin; Breines & Chen (2012), Personality and Social Psychology Bulletin; Neff (2003).",
-  you:{serena:"Você pode esperar o momento perfeito para criar. Feito com carinho vale mais do que perfeito e parado.",exploradora:"Você começa muita coisa. Aceitar versões imperfeitas te ajuda a terminar.",analitica:"Padrões altos fazem parte de você. Fique atenta quando o detalhe deixar de ajudar e começar a travar.",conectiva:"Você pode temer decepcionar os outros. Quem te ama não espera perfeição.",contemplativa:"Você reflete muito sobre os próprios erros. Transforme a reflexão em aprendizado e solte o resto.",determinada:"Seu nível de exigência é alto. Celebrar o progresso evita que a cobrança vire esgotamento."}},
- {id:'a11',title:"Inteligência emocional",cat:'emocoes',min:4,img:'photo-1457369804613-52c61a468e7d',prefs:['Emoções','Conflitos','Vida social','Mente'],
-  body:["O conceito foi proposto em 1990 pelos psicólogos Peter Salovey e John Mayer e ficou famoso em 1995 com o livro de Daniel Goleman. No modelo original, inteligência emocional é um conjunto de habilidades, e não um traço fixo.",
-   "São quatro habilidades: perceber emoções (em você e nos outros), usar as emoções para pensar, entender de onde elas vêm e como mudam, e regular o que você sente. Por serem habilidades, podem ser treinadas.",
-   "Um exemplo simples: num estudo de Matthew Lieberman, colocar em palavras o que se sente diminuiu a atividade da amígdala, região do cérebro ligada às reações de alarme. Nomear a emoção já ajuda a acalmá-la.",
-   "Quanto mais preciso o nome, melhor: “frustração” ou “sobrecarga” dizem mais do que “estou mal”. Ampliar seu vocabulário emocional é um treino que vale a pena."],
-  try:"Três vezes hoje, pare e complete: agora eu me sinto... Use uma palavra mais específica do que bem ou mal.",
-  src:"Salovey & Mayer (1990); Mayer & Salovey (1997), modelo das quatro habilidades; Lieberman et al. (2007), Psychological Science; estudos de Lisa Feldman Barrett sobre granularidade emocional.",
-  you:{serena:"Perceber emoções é natural para você. Seu treino é regular o que sente sem se afogar nelas.",exploradora:"Você lê ambientes rápido. Tente nomear também o que sente quando o entusiasmo baixa.",analitica:"Entender emoções combina com sua mente curiosa. O desafio é senti-las antes de explicá-las.",conectiva:"Você lê muito bem o que os outros sentem. Aplique essa mesma atenção a você.",contemplativa:"Você observa seu mundo interno com profundidade. Compartilhar o que percebe aproxima quem você ama.",determinada:"Regular emoções sob pressão é seu forte. Perceber o cansaço cedo também é inteligência emocional."}},
- {id:'a12',title:"Sua rotina ideal e seu cronotipo",cat:'rotina',min:4,img:'photo-1495474472287-4d71bcdd2085',prefs:['Rotina','Dia ideal','Energia','Autocuidado'],
-  body:["Cronotipo é a tendência natural do seu corpo a render mais de manhã ou à noite. Ele depende do relógio biológico, que regula sono, temperatura e hormônios num ciclo de cerca de 24 horas.",
-   "Em 2019, um estudo com quase 700 mil pessoas encontrou 351 regiões do DNA ligadas a ser mais matutina ou mais noturna. O cronotipo também muda com a idade: adolescentes tendem a dormir mais tarde, e o horário vai se adiantando com os anos.",
-   "Quando a agenda obriga você a viver fora do seu relógio, surge o que o cronobiologista Till Roenneberg chama de jet lag social: a diferença entre o horário do corpo e o horário dos compromissos. Ele está associado a mais cansaço e pior humor.",
-   "Nem sempre dá para mudar o horário de trabalho, mas dá para ajustar o resto: tomar luz natural pela manhã, guardar as tarefas difíceis para o seu pico de energia e manter horários de sono parecidos no fim de semana."],
-  try:"Durante uma semana, anote em que horário você se sente mais disposta. Coloque a tarefa mais importante do dia nesse horário.",
-  src:"Jones et al. (2019), Nature Communications; Roenneberg et al. (2007 e 2012), sobre cronotipo e jet lag social.",
-  you:{serena:"Você rende bem em blocos criativos sem interrupção. Proteja seu horário de pico para criar.",exploradora:"Sua rotina pede flexibilidade, mas horários de sono estáveis te dão energia para as aventuras.",analitica:"Você gosta de rotina organizada. Monte-a a partir do seu cronotipo, e não de um modelo pronto.",conectiva:"Sua agenda social pode empurrar o sono para tarde. Proteger o descanso te deixa mais presente.",contemplativa:"Manhãs sem pressa combinam com você. Luz natural cedo ajuda a manter o ritmo.",determinada:"Você tende a encaixar tarefas em todo horário livre. Respeitar o ritmo do corpo rende mais do que forçar."}},
- {id:'a13',title:"Como você lida com conflitos",cat:'relacionamentos',min:4,img:'photo-1510915361894-db8b60106cad',prefs:['Conflitos','Amor','Vida social'],
-  body:["O modelo de Kenneth Thomas e Ralph Kilmann descreve cinco formas de lidar com conflitos: competir, colaborar, negociar um meio-termo, ceder e evitar. Elas variam em quanto você defende o que quer e em quanto considera o que o outro quer.",
-   "Nenhum estilo é sempre o certo. Evitar pode ser sábio numa discussão sem importância; colaborar é ótimo quando a relação e o resultado importam. O problema é usar um estilo só, em todas as situações.",
-   "O psicólogo John Gottman observou casais por décadas. Segundo ele, a maior parte dos conflitos de um casal se repete ao longo do tempo, porque nasce de diferenças de personalidade. O segredo não é eliminá-los, e sim conversar sobre eles com respeito.",
-   "Gottman aponta quatro hábitos que mais prejudicam: crítica, desprezo, defensividade e silêncio punitivo. E um que mais ajuda: as tentativas de reparo, como uma pausa, um toque de humor ou um “vamos recomeçar?”."],
-  try:"No próximo desentendimento, comece pelo que você sente, e não pelo que o outro fez: “eu me chateei quando...” em vez de “você sempre...”.",
-  src:"Thomas & Kilmann (1974), instrumento de modos de conflito; Gottman (1994); Gottman & Silver, “Os Sete Princípios para o Casamento Dar Certo” (1999).",
-  you:{serena:"Você tende a evitar conflitos para manter a paz. Dizer o que sente com calma também protege a relação.",exploradora:"Você fala na hora e segue em frente. Confira se o outro também já está pronto para seguir.",analitica:"Você pensa antes de falar, o que é ótimo. Só não deixe a lógica soar como frieza.",conectiva:"Você busca entender o outro lado. Cuide para não ceder sempre e esquecer o que você precisa.",contemplativa:"Você se afasta para processar. Avise que vai voltar à conversa, para o silêncio não virar punição.",determinada:"Você defende seu ponto com firmeza. Colaborar pode trazer soluções melhores do que vencer."}},
- {id:'a14',title:"Resiliência: como você se levanta",cat:'forcas',min:4,img:'photo-1551632811-561732d1e306',prefs:['Emoções','Novidades','Felicidade','Essência'],
-  body:["Por muito tempo se achou que resiliência era rara, coisa de pessoas excepcionais. Os estudos do psicólogo George Bonanno mostraram o contrário: depois de perdas e eventos difíceis, em média cerca de dois terços das pessoas mantêm um funcionamento estável ao longo do tempo.",
-   "A psicóloga Ann Masten chamou isso de “mágica comum”: a resiliência vem de recursos do dia a dia, como vínculos próximos, sensação de capacidade, esperança e sentido.",
-   "Ser resiliente não significa não sofrer. Significa sofrer e, aos poucos, voltar a funcionar. E muitos desses recursos podem ser fortalecidos: cultivar relações, cuidar do corpo, praticar um otimismo realista e lembrar do que você já superou.",
-   "Pedir ajuda faz parte da resiliência. Ninguém se levanta sem apoio o tempo todo."],
-  try:"Lembre de uma dificuldade que você já superou. Anote três coisas que te ajudaram naquela época: elas são seus recursos de hoje.",
-  src:"Bonanno (2004), American Psychologist; Galatzer-Levy, Huang & Bonanno (2018), revisão de trajetórias após eventos potencialmente traumáticos; Masten (2001), “Ordinary Magic”.",
-  you:{serena:"Sua criatividade é um recurso de resiliência: transformar dor em expressão ajuda a seguir.",exploradora:"Sua adaptabilidade te ajuda a recomeçar. Dê tempo também para sentir o que mudou.",analitica:"Entender o que aconteceu te acalma. Combine essa clareza com o apoio de pessoas próximas.",conectiva:"Seus vínculos são seu maior escudo. Deixe as pessoas cuidarem de você também.",contemplativa:"Encontrar sentido é seu jeito de se reerguer. Escrever ajuda a organizar o que você viveu.",determinada:"Você se levanta rápido. Cuide para não pular a parte de sentir, ela também faz parte."}},
- {id:'a15',title:"Seus valores e seu propósito",cat:'proposito',min:4,img:'photo-1506905925346-21bda4d32df4',prefs:['Felicidade','Essência','Carreira','Dia ideal'],
-  body:["A psicologia positiva, liderada por Martin Seligman, estuda o que faz a vida valer a pena. No modelo PERMA, o bem-estar tem cinco pilares: emoções positivas, engajamento, relacionamentos, sentido e realizações.",
-   "Pesquisadores diferenciam dois tipos de bem-estar: o hedônico, ligado ao prazer do momento, e o eudaimônico, ligado a viver de acordo com seus valores e com um propósito. Os dois importam, mas o segundo tende a sustentar a satisfação por mais tempo.",
-   "Propósito também faz bem ao corpo. Um estudo que acompanhou mais de 6 mil adultos por 14 anos encontrou que as pessoas com mais senso de propósito viveram mais, em qualquer idade.",
-   "Valores são o que é importante para você: liberdade, família, criatividade, segurança, justiça. O psicólogo Shalom Schwartz mostrou que os mesmos valores aparecem em culturas do mundo todo, mudando a ordem de prioridade. Conhecer os seus ajuda a decidir para onde ir."],
-  try:"Escolha os três valores mais importantes para você hoje. Depois confira: sua agenda desta semana reflete esses três?",
-  src:"Seligman, “Florescer” (2011); Huta & Ryan (2010), sobre bem-estar hedônico e eudaimônico; Hill & Turiano (2014), Psychological Science; Schwartz (1992), teoria dos valores.",
-  you:{serena:"Beleza e expressão costumam estar entre seus valores. Criar algo é seu jeito de viver com propósito.",exploradora:"Liberdade e descoberta provavelmente lideram seus valores. Para você, propósito é crescer explorando.",analitica:"Conhecimento e competência tendem a guiar você. Usar o que sabe para ajudar alguém dá um sentido extra.",conectiva:"Amor e conexão são seu norte. Seu propósito costuma passar pelas pessoas de quem você cuida.",contemplativa:"Sentido é sua busca natural. Pequenas ações alinhadas aos seus valores trazem essa sensação no dia a dia.",determinada:"Realização te move. Ligar suas metas a um porquê maior torna as conquistas mais satisfatórias."}}
+ {id:'t0',title:'Os 4 temperamentos: de onde vem essa ideia',cat:'temperamentos',cats:['temperamentos'],prefs:['Temperamentos'],
+  body:['A ideia dos quatro temperamentos é muito antiga. Médicos gregos como Hipócrates e, depois, Galeno acreditavam que o jeito de cada pessoa vinha do equilíbrio de "humores" do corpo. A medicina moderna abandonou essa explicação, mas os nomes ficaram: sanguíneo, colérico, melancólico e fleumático.',
+   'No século 20, o pastor Tim LaHaye popularizou os temperamentos entre cristãos no livro "Temperamento controlado pelo Espírito". Ele usou Pedro, Paulo, Moisés e Abraão como exemplos de pessoas cujo jeito foi transformado por Deus. Florence Littauer levou o tema para milhares de mulheres com o livro "Personality Plus", mostrando que cada pessoa é uma mistura dos quatro.',
+   'Por isso, aqui no Orivie, os temperamentos são um mapa, não uma sentença. Eles ajudam você a perceber tendências: como você reage, o que te cansa, onde você brilha. Mas a Bíblia não divide as pessoas em quatro tipos, e a ciência hoje usa outros modelos, como o Big Five.',
+   'O mais importante é a mensagem que LaHaye repetia: o caráter não muda só por conhecer o próprio temperamento, e sim pela ação do Espírito Santo. Conhecer-se é o primeiro passo para entregar a Deus as suas forças e as suas fraquezas.'],
+  you:{sanguinea:'Use o mapa para entender a sua alegria e os seus impulsos, sem se rotular.',colerica:'Use o mapa como ferramenta de crescimento, não como desculpa para a pressa.',melancolica:'Não use o resultado para se cobrar: use para se acolher.',fleumatica:'Deixe o mapa te dar coragem para crescer onde você costuma se acomodar.'},
+  try:'Escreva em uma frase: "Neste temperamento, eu me reconheci em..."',pray:'Senhor, me ajuda a me conhecer para te conhecer melhor.',
+  src:'Tim LaHaye, Temperamento controlado pelo Espírito e Temperamentos transformados (Mundo Cristão); Florence Littauer, Personality Plus; Martins, Silva e Mutarelli (2008), A teoria dos temperamentos.'},
+ {id:'t1',title:'Sanguínea: alegria que encoraja',cat:'temperamentos',cats:['temperamentos'],prefs:['Temperamentos'],
+  body:['A sanguínea é a mulher que enche a sala. Fala com facilidade, faz amizade em qualquer fila e transforma o culto de domingo em um reencontro cheio de abraços. Ela vive o presente, sente tudo com intensidade e se recupera rápido das tristezas.',
+   'Essa alegria é preciosa no Reino de Deus. Neemias lembrou ao povo que "a alegria do Senhor os fortalecerá" (Neemias 8:10). A sanguínea encoraja, acolhe e lembra a igreja de que a fé também é celebração.',
+   'O desafio aparece quando a emoção manda sozinha. Palavras saem antes do pensamento, promessas ficam pela metade e a vida espiritual oscila conforme o ânimo. Pedro viveu isso: prometeu nunca negar Jesus e, horas depois, negou três vezes (Lucas 22:54-62).',
+   'O fruto do Espírito que mais transforma a sanguínea é o domínio próprio, junto com a fidelidade (Gálatas 5:22-23). Com eles, o entusiasmo ganha raízes. Pedro, o impulsivo, terminou a vida como uma rocha da igreja, pregando com coragem e escrevendo cartas cheias de esperança.'],
+  you:{sanguinea:'Este é o seu retrato. Celebre a sua alegria e escolha um compromisso para cumprir até o fim esta semana.',colerica:'Se você convive com uma sanguínea, valorize o calor dela e tenha paciência com a falta de método.',melancolica:'A sanguínea pode te ensinar leveza. Deixe que ela te tire um pouco da sua cabeça.',fleumatica:'A sanguínea pode te dar o empurrão de energia que às vezes falta.'},
+  try:'Antes de responder uma mensagem hoje, espere um minuto e ore: "Senhor, guarda a minha boca".',pray:'Senhor, dá raízes à minha alegria.',
+  src:'Neemias 8:10; Lucas 22:54-62; João 21:15-17; Gálatas 5:22-23; Tim LaHaye, Temperamentos transformados.'},
+ {id:'t2',title:'Colérica: coragem que lidera',cat:'temperamentos',cats:['temperamentos'],prefs:['Temperamentos'],
+  body:['A colérica enxerga o objetivo e vai. Ela organiza o evento, assume o ministério, resolve o problema da família e não se intimida com obstáculos. É prática, decidida e tem uma energia que impressiona.',
+   'A igreja precisa de mulheres assim. Débora liderou Israel com coragem e fé (Juízes 4-5). Paulo plantou igrejas pelo mundo, movido por um zelo que nunca diminuiu (Filipenses 3:13-14). Coragem e iniciativa são dons.',
+   'Mas a colérica costuma tropeçar na pressa e no controle. Pode atropelar quem é mais lento, falar duro e achar que descansar é perder tempo. Marta, ocupada com tantas tarefas, ouviu de Jesus: "Você está preocupada e inquieta com muitas coisas; todavia apenas uma é necessária" (Lucas 10:41-42).',
+   'O fruto do Espírito que mais transforma a colérica é a paciência, com mansidão e amor. Jesus, o maior líder da história, disse: "Aprendam de mim, pois sou manso e humilde de coração" (Mateus 11:29). Força sob controle é a marca de uma líder cheia do Espírito.'],
+  you:{sanguinea:'A colérica pode te ajudar a transformar ideias em realidade. Aceite a ajuda dela com o planejamento.',colerica:'Este é o seu retrato. Escolha hoje um momento para desacelerar e ouvir antes de agir.',melancolica:'A colérica pode parecer dura, mas costuma ser leal. Diga a ela, com calma, o que te machuca.',fleumatica:'Não deixe a colérica decidir tudo por você: sua opinião também importa.'},
+  try:'Pergunte a alguém da sua casa ou ministério: "Como você está?" e apenas ouça por 5 minutos.',pray:'Jesus, ensina-me a liderar servindo.',
+  src:'Juízes 4-5; Filipenses 3:13-14; Lucas 10:38-42; Mateus 11:29; Gálatas 5:22-23.'},
+ {id:'t3',title:'Melancólica: profundidade que adora',cat:'temperamentos',cats:['temperamentos'],prefs:['Temperamentos'],
+  body:['A melancólica sente e pensa com o coração inteiro. Ela se emociona com uma letra de louvor, percebe a tristeza de alguém pelo olhar e faz tudo com capricho. Gosta de ordem, de profundidade e de relações verdadeiras.',
+   'Muitos salmos parecem escritos por corações assim: honestos, profundos, cheios de perguntas e de adoração. Ana derramou a alma diante de Deus (1 Samuel 1:15), e Moisés, inseguro para falar, se tornou um líder humilde e fiel (Êxodo 3-4).',
+   'O lado difícil é a autocrítica. A melancólica pode se cobrar perfeição, remoer mágoas e enxergar primeiro o que falta. Nos dias ruins, a tristeza pesa mais. Elias, depois de uma grande vitória, chegou a pedir para morrer de tão exausto, e Deus cuidou dele com descanso e comida (1 Reis 19:4-8).',
+   'Os frutos que mais transformam a melancólica são a alegria e a paz. Paulo escreveu: "Minha graça é suficiente a você" (2 Coríntios 12:9). A melancólica não precisa ser perfeita para ser amada. A graça ilumina a profundidade e a transforma em adoração.'],
+  you:{sanguinea:'A melancólica pode te ensinar profundidade. Ouça o que ela percebe.',colerica:'Seja gentil com a sensibilidade da melancólica: ela nota cada palavra.',melancolica:'Este é o seu retrato. Hoje, troque uma frase de cobrança por uma frase de graça.',fleumatica:'Vocês duas valorizam a calma. Ofereça a ela sua presença tranquila nos dias difíceis.'},
+  try:'Escreva três coisas que você fez bem hoje, mesmo que pequenas.',pray:'Senhor, que a tua graça seja maior do que a minha autocrítica.',
+  src:'1 Samuel 1:10-18; Êxodo 3-4; 1 Reis 19:4-8; 2 Coríntios 12:9; Gálatas 5:22-23.'},
+ {id:'t4',title:'Fleumática: paz que sustenta',cat:'temperamentos',cats:['temperamentos'],prefs:['Temperamentos'],
+  body:['A fleumática é o porto seguro do grupo. Calma, leal e constante, ela ouve sem julgar, evita brigas e está sempre presente. Não precisa de holofote: serve nos bastidores e mantém a paz.',
+   'Jesus disse: "Bem-aventurados os pacificadores, pois serão chamados filhos de Deus" (Mateus 5:9). Rute mostrou essa lealdade ao ficar com a sogra quando tudo era incerto (Rute 1:16-17), e Maria de Betânia escolheu ficar aos pés de Jesus (Lucas 10:39).',
+   'O desafio da fleumática é a passividade. Para evitar conflito, ela pode guardar o que sente, adiar decisões e deixar de usar os dons que Deus lhe deu. Abraão, homem de paz, também teve momentos de medo e passividade, mas aprendeu a confiar e a dar passos ousados (Gênesis 12; Hebreus 11:8).',
+   'O fruto que mais transforma a fleumática é a fidelidade que age, junto com a bondade ativa. "A fé, por si só, se não for acompanhada de obras, está morta" (Tiago 2:17). Abigail mostra o equilíbrio: pacificadora, mas rápida em agir quando foi preciso (1 Samuel 25).'],
+  you:{sanguinea:'A fleumática equilibra a sua intensidade. Valorize a calma dela.',colerica:'Não confunda a calma da fleumática com falta de interesse. Pergunte a opinião dela.',melancolica:'A fleumática pode ser a amiga que te ouve sem pressa.',fleumatica:'Este é o seu retrato. Escolha hoje uma decisão pendente e dê o primeiro passo.'},
+  try:'Diga com carinho uma coisa que você sente e costuma guardar.',pray:'Senhor, me dá coragem para dar o próximo passo.',
+  src:'Mateus 5:9; Rute 1:16-17; Lucas 10:39; Gênesis 12; Hebreus 11:8; Tiago 2:17; 1 Samuel 25.'},
+ {id:'t5',title:'Temperamento não é destino',cat:'fruto',cats:['fruto','temperamentos'],prefs:['Temperamentos','Identidade'],
+  body:['É fácil usar o temperamento como desculpa: "sou colérica, por isso sou grossa" ou "sou melancólica, então sempre vou ser triste". Mas a Bíblia aponta para outro caminho: "Se alguém está em Cristo, é nova criação" (2 Coríntios 5:17).',
+   'Deus não apaga quem você é. Pedro continuou intenso, Paulo continuou determinado, Moisés continuou sensível. O que mudou foi a direção: as forças passaram a servir ao Reino, e as fraquezas foram sendo moldadas pelo Espírito.',
+   'Paulo escreveu: "Não se amoldem ao padrão deste mundo, mas transformem-se pela renovação da sua mente" (Romanos 12:2). Transformação é um processo, não um evento. Acontece em escolhas pequenas: uma palavra segurada, um descanso aceito, um passo dado, uma mágoa entregue.',
+   'O fruto do Espírito (Gálatas 5:22-23) é o retrato do caráter que Deus quer formar em todas nós, independentemente do temperamento: amor, alegria, paz, paciência, amabilidade, bondade, fidelidade, mansidão e domínio próprio. Seu temperamento mostra por onde começar.'],
+  you:{sanguinea:'Comece pelo domínio próprio.',colerica:'Comece pela paciência.',melancolica:'Comece pela alegria.',fleumatica:'Comece pela fidelidade que age.'},
+  try:'Escolha um fruto do Espírito para praticar esta semana e escreva onde vai praticá-lo.',pray:'Espírito Santo, transforma o meu caráter.',
+  src:'2 Coríntios 5:17; Romanos 12:2; Gálatas 5:22-23; Tim LaHaye, Temperamentos transformados.'},
+ {id:'t6',title:'Jesus, o caráter perfeito',cat:'fruto',cats:['fruto','temperamentos'],prefs:['Temperamentos','Identidade'],
+  body:['Se olharmos para Jesus com as lentes dos temperamentos, encontramos algo bonito: ele reúne o melhor de todos, sem as fraquezas de nenhum.',
+   'Como uma sanguínea, Jesus acolhia multidões, ia a festas e comia com pessoas que ninguém queria por perto (Lucas 15:1-2). Como uma colérica, agiu com firmeza ao expulsar os vendilhões do templo (Marcos 11:15-17) e caminhou decidido para Jerusalém.',
+   'Como uma melancólica, chorou diante do túmulo do amigo Lázaro (João 11:35) e passou noites em oração. Como uma fleumática, foi manso e humilde de coração (Mateus 11:29), dormiu no barco durante a tempestade e nunca perdeu a paz.',
+   'Por isso, o alvo da vida cristã não é virar outro temperamento, e sim parecer cada vez mais com Jesus. Cada uma de nós começa de um lugar diferente, mas o destino é o mesmo: ser transformada à imagem dele.'],
+  you:{sanguinea:'Olhe para a firmeza e a profundidade de Jesus.',colerica:'Olhe para a mansidão e as lágrimas de Jesus.',melancolica:'Olhe para a alegria e a leveza de Jesus com as pessoas.',fleumatica:'Olhe para a coragem e a iniciativa de Jesus.'},
+  try:'Leia Marcos 4:35-41 e repare na calma e na autoridade de Jesus juntas.',pray:'Jesus, quero me parecer contigo.',
+  src:'Lucas 15:1-2; Marcos 11:15-17; João 11:35; Mateus 11:29; Marcos 4:35-41.'},
+ {id:'f1',title:'O fruto do Espírito e o seu temperamento',cat:'fruto',cats:['fruto'],prefs:['Temperamentos','Rotina com Deus'],
+  body:['Em Gálatas 5:22-23, Paulo descreve o fruto do Espírito: "amor, alegria, paz, paciência, amabilidade, bondade, fidelidade, mansidão e domínio próprio". Repare que é "fruto", no singular: um único caráter, com nove sabores.',
+   'Cada temperamento tem mais facilidade com alguns desses sabores. A sanguínea costuma transbordar alegria e amabilidade. A colérica tem iniciativa e fidelidade às metas. A melancólica tem bondade e profundidade no amor. A fleumática tem paz e paciência.',
+   'E cada temperamento tem mais dificuldade com outros: a sanguínea com domínio próprio, a colérica com paciência e mansidão, a melancólica com alegria e paz, a fleumática com fidelidade que age.',
+   'Fruto não nasce de esforço sozinho: nasce de ligação com a videira. Jesus disse: "Quem permanece em mim, e eu nele, esse dá muito fruto" (João 15:5). Oração, Palavra e comunhão são a seiva que faz o fruto crescer.'],
+  you:{sanguinea:'Peça a Deus domínio próprio nas palavras.',colerica:'Peça paciência nas relações.',melancolica:'Peça alegria nos pensamentos.',fleumatica:'Peça fidelidade que se move.'},
+  try:'Leia João 15:1-8 e anote o que significa "permanecer" para você hoje.',pray:'Senhor, quero dar fruto permanecendo em ti.',
+  src:'Gálatas 5:22-23; João 15:1-8.'},
+ {id:'c1',title:'O que a ciência diz sobre fé e personalidade',cat:'temperamentos',cats:['temperamentos'],prefs:['Temperamentos','Fé e dúvidas'],
+  body:['A psicologia de hoje usa principalmente o modelo Big Five, que descreve a personalidade em cinco grandes traços: abertura, responsabilidade (conscienciosidade), extroversão, amabilidade e tendência a emoções negativas.',
+   'Estudos internacionais que comparam fé e personalidade encontram um padrão: pessoas religiosas tendem a ter mais amabilidade e mais responsabilidade. Pesquisas com dezenas de países mostram que essa ligação é mais forte em culturas religiosas, como a brasileira.',
+   'Isso não quer dizer que a fé "produz" um tipo de personalidade, nem que pessoas de outros jeitos tenham menos fé. Mostra apenas tendências médias em grandes grupos. Cada pessoa é única.',
+   'Para nós, a mensagem é animadora: práticas como oração, comunidade e serviço caminham junto com traços como cuidado com o outro e compromisso. Conhecer a sua personalidade, com a Bíblia e a ciência, ajuda você a crescer com mais consciência.'],
+  you:{sanguinea:'Sua extroversão é um dom para a comunhão.',colerica:'Sua responsabilidade pode servir a muitos.',melancolica:'Sua sensibilidade pode virar cuidado e empatia.',fleumatica:'Sua amabilidade é uma ponte para as pessoas.'},
+  try:'Pense em uma prática de fé que te faz uma pessoa mais gentil e repita hoje.',pray:'Senhor, obrigada por me criar com tanto cuidado.',
+  src:'Saroglou (2010), Religiousness as a cultural adaptation of basic traits; Entringer et al. (2020), Journal of Personality and Social Psychology; Religion and personality (revisões).'},
+ {id:'w1',title:'Ester: coragem para um momento como este',cat:'mulheres',cats:['mulheres'],prefs:['Mulheres da Bíblia','Propósito'],
+  body:['Ester era uma jovem judia órfã, criada pelo primo Mardoqueu, que se tornou rainha da Pérsia. Quando um decreto ameaçou exterminar o seu povo, Mardoqueu disse: "Quem sabe se não foi para um momento como este que você chegou à posição de rainha?" (Ester 4:14).',
+   'Ester não agiu por impulso. Pediu três dias de jejum e, só então, decidiu: "Se eu tiver que morrer, morrerei" (Ester 4:16). Depois, preparou banquetes e esperou o momento certo de falar com o rei. Sua história mostra traços melancólicos: cautela, planejamento e profundidade.',
+   'Ester nos ensina que coragem não é ausência de medo. É decidir obedecer mesmo com medo, com oração e sabedoria. Ela também mostra que Deus age nos bastidores: o nome de Deus nem aparece no livro, mas a sua mão está em cada detalhe.',
+   'Talvez você esteja num lugar difícil e se pergunte por quê. A história de Ester lembra que nenhuma posição é por acaso, e que a sua voz pode proteger e abençoar outras pessoas.'],
+  you:{sanguinea:'Aprenda com Ester a esperar o momento certo antes de falar.',colerica:'Aprenda com Ester a orar antes de agir.',melancolica:'Ester mostra que a sua prudência pode virar coragem.',fleumatica:'Ester mostra que às vezes a paz exige que você fale.'},
+  try:'Ore sobre uma situação em que Deus talvez esteja pedindo a sua voz.',pray:'Senhor, me dá coragem para o momento em que tu me colocaste.',
+  src:'Ester 4:14-16; Ester 5-7.'},
+ {id:'w2',title:'Rute: a lealdade que Deus honra',cat:'mulheres',cats:['mulheres','relacionamentos'],prefs:['Mulheres da Bíblia','Relacionamentos'],
+  body:['Rute era moabita e ficou viúva jovem. Quando a sogra, Noemi, decidiu voltar para Belém, Rute poderia ter ficado na sua terra. Mas respondeu: "Aonde você for, irei; onde você ficar, ficarei! O seu povo será o meu povo e o seu Deus será o meu Deus!" (Rute 1:16).',
+   'Em Belém, Rute trabalhou com humildade recolhendo espigas nos campos para sustentar as duas (Rute 2:2-3). Boaz notou sua bondade e fidelidade, e mais tarde a chamou de mulher de valor (Rute 3:11). Ela se tornou bisavó do rei Davi e faz parte da genealogia de Jesus.',
+   'Rute lembra o temperamento fleumático no seu melhor: lealdade constante, humildade e paz. Mas não foi passiva: tomou decisões corajosas, foi trabalhar e seguiu as orientações de Noemi com iniciativa.',
+   'Sua história mostra que a fidelidade silenciosa é vista por Deus. O que parece pequeno, como cuidar de alguém e trabalhar com dedicação, pode fazer parte de uma história muito maior.'],
+  you:{sanguinea:'Aprenda com Rute a constância nas relações.',colerica:'Aprenda com Rute a humildade de servir.',melancolica:'Rute mostra que recomeçar depois da perda é possível.',fleumatica:'Rute mostra que a sua lealdade, unida à iniciativa, é poderosa.'},
+  try:'Faça um gesto concreto de cuidado por alguém da sua família hoje.',pray:'Senhor, que a minha fidelidade seja vista por ti.',
+  src:'Rute 1-4; Mateus 1:5.'},
+ {id:'w3',title:'Ana: a oração que derrama a alma',cat:'mulheres',cats:['mulheres'],prefs:['Mulheres da Bíblia','Saúde emocional'],
+  body:['Ana não conseguia ter filhos e, todos os anos, era provocada por outra mulher da casa. A dor era tão grande que ela chorava e não comia (1 Samuel 1:6-7).',
+   'No templo, Ana orou em silêncio, só mexendo os lábios. O sacerdote Eli achou que ela estava embriagada. Ela explicou: "Eu estava derramando a minha alma diante do Senhor" (1 Samuel 1:15). E, depois daquela oração, seu rosto já não estava triste (1 Samuel 1:18).',
+   'Ana mostra traços melancólicos: dor profunda, oração intensa e fidelidade. Ela não fingiu estar bem: levou a sua tristeza inteira para Deus. Mais tarde, deu à luz Samuel e o consagrou ao Senhor, cantando um lindo louvor (1 Samuel 2:1-10).',
+   'A paz de Ana chegou antes da resposta. Às vezes, o milagre começa no coração: quando entregamos a dor a Deus, recebemos descanso mesmo sem saber o que vai acontecer.'],
+  you:{sanguinea:'Aprenda com Ana a orar com profundidade, não só com palavras.',colerica:'Aprenda com Ana a entregar o que você não controla.',melancolica:'Ana mostra que você pode levar a dor inteira a Deus.',fleumatica:'Ana mostra que é bom colocar para fora o que você guarda.'},
+  try:'Escreva uma oração honesta sobre algo que dói e entregue a Deus.',pray:'Senhor, eu derramo a minha alma diante de ti.',
+  src:'1 Samuel 1:1-2:10.'},
+ {id:'w4',title:'Débora: liderança com fé',cat:'mulheres',cats:['mulheres','temperamentos'],prefs:['Mulheres da Bíblia','Propósito'],
+  body:['Débora era profetisa e julgava Israel. As pessoas iam até ela, debaixo de uma palmeira, para resolver suas questões (Juízes 4:4-5). Num tempo de opressão, Deus a usou para chamar Baraque para a batalha.',
+   'Quando Baraque disse que só iria se ela fosse junto, Débora respondeu: "Irei com você" (Juízes 4:9). Depois da vitória, ela compôs um cântico que dá toda a glória a Deus (Juízes 5).',
+   'Débora lembra o temperamento colérico: coragem, iniciativa e liderança. Mas sua força vinha da fé. Ela não liderou para se exaltar, e sim para cumprir o que Deus tinha dito.',
+   'Se você tem facilidade para liderar, Débora mostra o caminho: ouvir a Deus primeiro, encorajar outras pessoas a assumirem seus lugares e celebrar a vitória como obra dele.'],
+  you:{sanguinea:'Aprenda com Débora a firmeza na missão.',colerica:'Débora mostra que liderar é encorajar outros a crescerem.',melancolica:'Aprenda com Débora a agir quando Deus fala.',fleumatica:'Débora mostra que você também pode dar o primeiro passo.'},
+  try:'Encoraje alguém a assumir uma responsabilidade que ela tem medo de assumir.',pray:'Senhor, que a minha liderança te glorifique.',
+  src:'Juízes 4-5.'},
+ {id:'w5',title:'Marta: do servir aflito ao servir em paz',cat:'mulheres',cats:['mulheres','dores'],prefs:['Mulheres da Bíblia','Servir na igreja'],
+  body:['Marta recebeu Jesus em casa e se ocupou com muitos preparativos. Ao ver a irmã Maria sentada aos pés dele, reclamou: "Senhor, não te importas que minha irmã tenha me deixado sozinha com o serviço?" (Lucas 10:40).',
+   'Jesus respondeu com carinho: "Marta! Marta! Você está preocupada e inquieta com muitas coisas; todavia apenas uma é necessária. Maria escolheu a boa parte" (Lucas 10:41-42). Ele não condenou o serviço, mas a ansiedade.',
+   'Marta mostra traços coléricos: praticidade, iniciativa e responsabilidade. E sua história não termina ali. Quando Lázaro morreu, foi Marta quem correu ao encontro de Jesus e fez uma das declarações de fé mais fortes dos Evangelhos: "Eu tenho crido que tu és o Cristo, o Filho de Deus" (João 11:27).',
+   'Marta continuou servindo (João 12:2), mas agora com outro coração. A lição é que servir é lindo quando nasce da presença de Jesus, e não da pressão de fazer tudo.'],
+  you:{sanguinea:'Aprenda com Marta a terminar o que começa.',colerica:'Marta é o seu espelho: sirva, mas sente-se aos pés de Jesus primeiro.',melancolica:'Aprenda com Marta a falar com Jesus sobre o que te incomoda.',fleumatica:'Aprenda com Marta a iniciativa de ir ao encontro de Jesus.'},
+  try:'Antes da sua primeira tarefa amanhã, sente-se 5 minutos só para estar com Deus.',pray:'Jesus, quero escolher a boa parte.',
+  src:'Lucas 10:38-42; João 11:20-27; João 12:2.'},
+ {id:'w6',title:'Maria de Betânia: aos pés de Jesus',cat:'mulheres',cats:['mulheres'],prefs:['Mulheres da Bíblia','Rotina com Deus'],
+  body:['Enquanto a casa estava agitada, Maria sentou-se aos pés de Jesus para ouvir o que ele dizia (Lucas 10:39). Jesus defendeu a escolha dela: era a boa parte, que não lhe seria tirada.',
+   'Quando o irmão Lázaro morreu, Maria também caiu aos pés de Jesus, chorando (João 11:32). E, antes da crucificação, derramou um perfume muito caro sobre ele, num gesto de adoração que encheu a casa de fragrância (João 12:3).',
+   'Maria lembra o temperamento fleumático e melancólico: calma, presença e profundidade. Ela não fazia muito barulho, mas entendia o que importava.',
+   'Num mundo apressado, Maria nos ensina que estar com Jesus não é perda de tempo. É de lá que vem a força para tudo o resto.'],
+  you:{sanguinea:'Aprenda com Maria o silêncio diante de Deus.',colerica:'Aprenda com Maria a parar antes de fazer.',melancolica:'Maria mostra que a sua adoração profunda é preciosa.',fleumatica:'Maria é o seu espelho: sua calma é um lugar de encontro com Jesus.'},
+  try:'Fique 10 minutos em silêncio, sem celular, lendo um trecho dos Evangelhos.',pray:'Jesus, quero ficar aos teus pés.',
+  src:'Lucas 10:38-42; João 11:28-32; João 12:1-8.'},
+ {id:'w7',title:'Abigail: sabedoria que pacifica',cat:'mulheres',cats:['mulheres','relacionamentos'],prefs:['Mulheres da Bíblia','Relacionamentos'],
+  body:['Abigail era casada com Nabal, um homem rico e grosseiro. Quando Nabal humilhou Davi e seus homens, Davi decidiu se vingar (1 Samuel 25).',
+   'Ao saber, Abigail agiu rápido: preparou provisões, foi ao encontro de Davi e falou com humildade e sabedoria, lembrando a ele quem Deus o tinha chamado para ser. Davi louvou a Deus e reconheceu o bom senso dela (1 Samuel 25:32-33).',
+   'Abigail mostra que pacificar não é se omitir. Ela lembra o melhor do temperamento fleumático, a busca pela paz, unido à iniciativa. Agiu na hora certa, com as palavras certas.',
+   'Talvez você viva relações difíceis. A história de Abigail não manda aceitar tudo calada: mostra que a sabedoria, a coragem e a palavra mansa podem evitar tragédias e proteger pessoas.'],
+  you:{sanguinea:'Aprenda com Abigail a escolher bem as palavras.',colerica:'Aprenda com Abigail que a resposta mansa vence batalhas.',melancolica:'Abigail mostra que agir rápido também pode ser sábio.',fleumatica:'Abigail é o seu espelho: paz com iniciativa.'},
+  try:'Numa conversa tensa, responda com calma e uma palavra que construa.',pray:'Senhor, me dá sabedoria para pacificar.',
+  src:'1 Samuel 25; Provérbios 15:1.'},
+ {id:'w8',title:'Miriã: louvor e palavras',cat:'mulheres',cats:['mulheres'],prefs:['Mulheres da Bíblia','Comparação'],
+  body:['Miriã, irmã de Moisés e Arão, aparece na Bíblia como profetisa. Depois que Israel atravessou o mar, ela pegou um tamborim e liderou as mulheres em louvor e dança (Êxodo 15:20-21).',
+   'Muitos estudiosos entendem que foi ela a irmã que vigiou o cesto de Moisés no rio e falou com a filha do faraó (Êxodo 2:4-8): uma menina esperta e comunicativa.',
+   'Mas Miriã também errou. Junto com Arão, falou contra Moisés e questionou a autoridade dele, e foi corrigida por Deus (Números 12). Moisés orou por ela, e ela foi restaurada.',
+   'Miriã lembra o temperamento sanguíneo: alegria, liderança no louvor e palavras rápidas. Sua história mostra que a mesma boca que louva precisa ser guardada da crítica e da comparação.'],
+  you:{sanguinea:'Miriã é o seu espelho: louve com alegria e guarde as palavras.',colerica:'Aprenda com Miriã a lidar com a autoridade dos outros.',melancolica:'Aprenda com Miriã a celebrar as vitórias.',fleumatica:'Aprenda com Miriã a se expressar no louvor.'},
+  try:'Cante um louvor hoje e transforme uma crítica em oração.',pray:'Senhor, que a minha boca te louve e edifique.',
+  src:'Êxodo 2:4-8; Êxodo 15:20-21; Números 12.'},
+ {id:'w9',title:'A samaritana: a história que vira testemunho',cat:'mulheres',cats:['mulheres','dores'],prefs:['Mulheres da Bíblia','Identidade'],
+  body:['Ela foi buscar água ao meio-dia, num horário em que quase ninguém ia ao poço. Ali, Jesus pediu água e começou uma conversa que mudou a sua vida (João 4).',
+   'Jesus conhecia toda a história dela, inclusive as partes de que ela se envergonhava. Mesmo assim, ofereceu "água viva" e se revelou como o Messias.',
+   'A samaritana deixou o cântaro e correu para a cidade: "Venham ver um homem que me disse tudo o que tenho feito" (João 4:29). Muitos creram por causa do seu testemunho (João 4:39). Ela mostra traços sanguíneos: espontaneidade e comunicação.',
+   'Sua história lembra que o seu passado não desqualifica você. Quando encontramos Jesus, a vergonha vira testemunho, e a nossa voz pode levar outras pessoas até ele.'],
+  you:{sanguinea:'A samaritana é o seu espelho: sua comunicação pode levar pessoas a Jesus.',colerica:'Aprenda com ela a humildade de reconhecer a própria história.',melancolica:'Ela mostra que Jesus acolhe as partes que você esconde.',fleumatica:'Ela mostra que vale a pena compartilhar o que Deus fez.'},
+  try:'Conte a alguém uma coisa que Deus fez na sua vida.',pray:'Jesus, transforma a minha história em testemunho.',
+  src:'João 4:1-42.'},
+ {id:'w10',title:'Maria, mãe de Jesus: o sim que guarda no coração',cat:'mulheres',cats:['mulheres'],prefs:['Mulheres da Bíblia','Propósito'],
+  body:['Maria era uma jovem de Nazaré quando o anjo anunciou que ela seria a mãe do Salvador. Mesmo sem entender tudo, respondeu: "Sou serva do Senhor; que aconteça comigo conforme a tua palavra" (Lucas 1:38).',
+   'Depois do nascimento de Jesus, a Bíblia diz que Maria guardava todas aquelas coisas e meditava sobre elas no coração (Lucas 2:19). Ela vivia com profundidade e calma.',
+   'Em Caná, quando faltou vinho, Maria orientou os servos: "Façam tudo o que ele lhes mandar" (João 2:5). E esteve ao pé da cruz, presente na dor (João 19:25).',
+   'Maria nos ensina a dizer sim a Deus mesmo sem ter todas as respostas, a meditar no que ele faz e a apontar sempre para Jesus.'],
+  you:{sanguinea:'Aprenda com Maria a meditar antes de falar.',colerica:'Aprenda com Maria a confiar sem controlar.',melancolica:'Maria mostra que guardar no coração pode ser adoração, não preocupação.',fleumatica:'Aprenda com Maria a dizer sim com coragem.'},
+  try:'Anote algo que Deus fez esta semana e medite sobre isso antes de dormir.',pray:'Senhor, que aconteça comigo conforme a tua palavra.',
+  src:'Lucas 1:26-38; Lucas 2:19; João 2:1-5; João 19:25.'},
+ {id:'w11',title:'Sara: do riso de dúvida ao riso de alegria',cat:'mulheres',cats:['mulheres','dores'],prefs:['Mulheres da Bíblia','Fé e dúvidas'],
+  body:['Sara esperou décadas pelo filho prometido. Cansada de esperar, sugeriu que Abraão tivesse um filho com a serva Agar, e isso trouxe muito sofrimento para a família (Gênesis 16).',
+   'Já idosa, ouviu que teria um filho e riu por dentro, sem acreditar (Gênesis 18:12). Deus respondeu: "Existe alguma coisa impossível para o Senhor?" (Gênesis 18:14).',
+   'Quando Isaque nasceu, Sara disse: "Deus me encheu de riso" (Gênesis 21:6). E Hebreus a lembra como uma mulher de fé, que considerou fiel aquele que tinha prometido (Hebreus 11:11).',
+   'A história de Sara é para quem está cansada de esperar. Ela mostra que a dúvida não cancela a promessa de Deus, e que tentar resolver tudo do nosso jeito pode trazer dor. Esperar em Deus também é fé.'],
+  you:{sanguinea:'Aprenda com Sara a paciência na espera.',colerica:'Sara é um alerta: não force o que Deus prometeu fazer.',melancolica:'Sara mostra que Deus é paciente com as nossas dúvidas.',fleumatica:'Aprenda com Sara a continuar crendo mesmo depois de muito tempo.'},
+  try:'Escreva uma promessa ou um sonho que você entregou a Deus e ore por ele com confiança.',pray:'Senhor, eu creio; ajuda-me na espera.',
+  src:'Gênesis 16; 18:9-15; 21:1-7; Hebreus 11:11.'},
+ {id:'w12',title:'Lídia: um coração aberto e uma casa aberta',cat:'mulheres',cats:['mulheres','relacionamentos'],prefs:['Mulheres da Bíblia','Servir na igreja'],
+  body:['Lídia era uma comerciante de tecidos de púrpura, da cidade de Tiatira, que adorava a Deus. Num sábado, à beira de um rio em Filipos, ouviu Paulo falar sobre Jesus (Atos 16:13-14).',
+   'A Bíblia diz que o Senhor abriu o coração dela para atender ao que Paulo dizia. Lídia foi batizada com toda a sua casa e insistiu para que os missionários se hospedassem com ela (Atos 16:15).',
+   'Sua casa virou ponto de encontro dos irmãos em Filipos (Atos 16:40). Lídia mostra traços coléricos e sanguíneos: iniciativa, generosidade e hospitalidade.',
+   'Ela lembra que o trabalho, os recursos e a casa podem servir ao Reino. Hospitalidade é um dom que abre caminho para o evangelho.'],
+  you:{sanguinea:'Lídia mostra como a sua hospitalidade pode servir a Deus.',colerica:'Aprenda com Lídia a usar o seu trabalho e os seus recursos para o Reino.',melancolica:'Aprenda com Lídia a abrir a casa e o coração.',fleumatica:'Lídia mostra que receber pessoas é uma forma linda de servir.'},
+  try:'Convide alguém para um café, uma refeição ou uma oração na sua casa.',pray:'Senhor, abre o meu coração e a minha casa.',
+  src:'Atos 16:11-15, 40.'}
 ];
 
-const GROUPS=[{id:'provei',n:'Provei',ic:'food'},{id:'ouvi',n:'Ouvi',ic:'music'},{id:'visitei',n:'Visitei',ic:'pin'},{id:'li',n:'Li',ic:'books'}];
-const GENERIC_CHECK={provei:'Uma fruta ou bebida diferente',ouvi:'Uma música que me acalma',visitei:'Um cantinho novo no meu bairro',li:'10 páginas de um livro'};
+const PAIN_TEXTS=[
+ {id:'d1',title:'Comparação: quando a vida da outra parece melhor',prefs:['Comparação','Identidade'],
+  body:['Você abre o celular e vê a amiga da igreja com a casa perfeita, o ministério crescendo, o casamento lindo. Em segundos, a sua vida parece pequena. A comparação rouba a alegria e faz a gente esquecer o que Deus já fez.',
+   'Paulo escreveu: "Cada um examine os próprios atos, e então poderá orgulhar-se de si mesmo, sem se comparar com ninguém" (Gálatas 6:4). Deus não te chamou para viver a história de outra pessoa, e sim a sua.',
+   'Cada temperamento se compara de um jeito. A sanguínea compara popularidade e atenção. A colérica compara resultados e conquistas. A melancólica compara qualidade e se sente sempre abaixo. A fleumática compara pouco, mas pode desistir de tentar, achando que outras fazem melhor.',
+   'Miriã e Arão se compararam a Moisés e caíram na crítica (Números 12). O antídoto é a gratidão: olhar para o que Deus colocou nas suas mãos e celebrar o que ele faz na vida das outras, sem competir.'],
+  you:{sanguinea:'Use as redes para encorajar, não para medir sua aceitação.',colerica:'Seu valor não está nos seus resultados.',melancolica:'Pare de medir a sua vida pelos destaques da vida dos outros.',fleumatica:'Não desista do seu chamado por achar que outras fazem melhor.'},
+  try:'Fique um dia sem rolar o feed e anote 5 coisas que Deus te deu.',pray:'Senhor, me livra da comparação e me enche de gratidão.',
+  src:'Gálatas 6:4-5; Números 12.'},
+ {id:'d2',title:'Ansiedade e medo do futuro',prefs:['Ansiedade','Saúde emocional'],
+  body:['Ansiedade é aquele aperto no peito, a mente que não para e o futuro que parece ameaçador. Ela atinge muitas mulheres cristãs, e não é sinal de que você tem pouca fé.',
+   'A Bíblia trata a ansiedade com carinho: "Não andem ansiosos por coisa alguma, mas em tudo, pela oração e súplicas, e com ação de graças, apresentem seus pedidos a Deus. E a paz de Deus, que excede todo o entendimento, guardará o coração e a mente de vocês" (Filipenses 4:6-7). E também: "Lancem sobre ele toda a sua ansiedade, porque ele tem cuidado de vocês" (1 Pedro 5:7).',
+   'Na sanguínea, a ansiedade aparece como agitação e fuga para distrações. Na colérica, como necessidade de controlar tudo. Na melancólica, como pensamentos repetitivos e medo do pior. Na fleumática, como paralisia e adiamento.',
+   'Oração, Palavra, descanso, movimento e conversa com pessoas de confiança ajudam muito. Se a ansiedade estiver forte, frequente ou atrapalhando a sua vida, procure também um psicólogo ou médico. Cuidar da mente é cuidar do templo que Deus te deu.'],
+  you:{sanguinea:'Em vez de fugir para o celular, pare 2 minutos para respirar e orar.',colerica:'Escreva o que é seu e o que é de Deus, e entregue a segunda lista.',melancolica:'Quando a mente for para o pior, pergunte: "O que é verdade agora?".',fleumatica:'Dê um passo pequeno na decisão que você está adiando.'},
+  try:'Respire devagar por 2 minutos (inspire em 4 segundos, solte em 6) e ore Filipenses 4:6-7.',pray:'Senhor, eu lanço sobre ti toda a minha ansiedade.',
+  src:'Filipenses 4:6-7; 1 Pedro 5:7; Mateus 6:34. Em crise, ligue para o CVV: 188.'},
+ {id:'d3',title:'Perfeccionismo e culpa: nunca boa o bastante',prefs:['Identidade','Saúde emocional'],
+  body:['Você revisa tudo mil vezes, se cobra por cada falha e sente que nunca é boa o bastante: como cristã, mãe, esposa, filha, profissional. A culpa vira companhia constante.',
+   'O evangelho é o oposto do perfeccionismo. "Agora já não há condenação para os que estão em Cristo Jesus" (Romanos 8:1). E Jesus disse a Paulo: "Minha graça é suficiente a você, pois o meu poder se aperfeiçoa na fraqueza" (2 Coríntios 12:9).',
+   'A melancólica sente o perfeccionismo como autocrítica. A colérica, como cobrança de desempenho. A sanguínea sente culpa por não cumprir promessas. A fleumática, por não ter feito o que devia.',
+   'Diferencie culpa de convicção. A convicção do Espírito aponta um ponto específico e leva ao arrependimento e à paz. A culpa sem fim acusa tudo e leva ao desânimo. Deus corrige como Pai, não como carrasco.'],
+  you:{sanguinea:'Prometa menos e cumpra com alegria.',colerica:'Você não é o que você produz.',melancolica:'Feito com amor vale mais do que perfeito e parado.',fleumatica:'Comece imperfeito, mas comece.'},
+  try:'Entregue algo hoje sem revisar pela décima vez.',pray:'Pai, eu descanso na tua graça e não na minha perfeição.',
+  src:'Romanos 8:1; 2 Coríntios 12:9; 1 João 1:9.'},
+ {id:'d4',title:'Identidade: quem eu sou em Cristo',prefs:['Identidade'],
+  body:['Muitas de nós buscamos identidade no corpo, no relacionamento, no ministério, nos filhos, no trabalho ou na opinião dos outros. Quando algo disso falha, parece que nós falhamos.',
+   'Deus diz outra coisa: "Eu te louvo porque me fizeste de modo especial e admirável" (Salmos 139:14). "Somos criação de Deus realizada em Cristo Jesus para fazermos boas obras" (Efésios 2:10). E ainda: "Eu o chamei pelo nome; você é meu" (Isaías 43:1).',
+   'Seu temperamento faz parte de como Deus te criou, mas não é a sua identidade. A sanguínea não é "a engraçada", a colérica não é "a que resolve", a melancólica não é "a sensível demais", a fleumática não é "a que nunca reclama". Vocês são filhas amadas.',
+   'Quando a identidade está firme em Cristo, você pode reconhecer fraquezas sem se destruir e celebrar forças sem se exaltar.'],
+  you:{sanguinea:'Seu valor não depende de ser notada.',colerica:'Seu valor não depende de ser útil.',melancolica:'Seu valor não depende de ser perfeita.',fleumatica:'Seu valor não depende de agradar a todos.'},
+  try:'Escreva Salmos 139:14 num papel e cole no espelho.',pray:'Senhor, eu sou tua. Firma a minha identidade em ti.',
+  src:'Salmos 139:13-16; Efésios 2:10; Isaías 43:1.'},
+ {id:'d5',title:'Cansaço de servir: quando a alma esgota',prefs:['Servir na igreja','Saúde emocional'],
+  body:['Ministério, casa, trabalho, filhos, pais, células, eventos. Muitas mulheres cristãs servem tanto que esquecem de ser cuidadas. O cansaço vira irritação, e o serviço perde a alegria.',
+   'Jesus convida: "Venham a mim, todos os que estão cansados e sobrecarregados, e eu darei descanso a vocês" (Mateus 11:28). E lembrou a Marta que uma coisa é necessária: estar com ele (Lucas 10:41-42).',
+   'A colérica se esgota porque não para. A sanguínea, porque diz sim a tudo. A melancólica, porque quer fazer tudo perfeito. A fleumática, porque não consegue dizer não e não pede ajuda.',
+   'Até Jesus se retirava para orar (Marcos 1:35). Descanso não é preguiça: é confiança. Servir a partir do descanso em Deus é muito diferente de servir para provar o próprio valor.'],
+  you:{sanguinea:'Antes do próximo sim, ore e confira sua agenda.',colerica:'Descansar também é obediência.',melancolica:'Faça bem feito o essencial e solte o resto.',fleumatica:'Peça ajuda: você não precisa carregar sozinha.'},
+  try:'Marque na agenda um momento desta semana só para descansar com Deus.',pray:'Jesus, eu venho a ti cansada. Dá-me o teu descanso.',
+  src:'Mateus 11:28-30; Lucas 10:38-42; Marcos 1:35.'},
+ {id:'d6',title:'Dizer não e colocar limites',prefs:['Limites','Relacionamentos'],
+  body:['Você aceita mais um compromisso, mais uma tarefa, mais um favor, mesmo sem ter tempo ou energia. Depois fica cansada, ressentida e com culpa por estar ressentida.',
+   'Jesus disse: "Seja o seu sim, sim, e o seu não, não" (Mateus 5:37). Ele mesmo disse não: quando todos o procuravam, saiu para orar e decidiu ir para outros lugares (Marcos 1:35-38).',
+   'A fleumática tem mais dificuldade de dizer não, para evitar conflito. A sanguínea diz sim no entusiasmo. A melancólica diz sim por culpa. A colérica diz sim porque acha que ninguém faz melhor.',
+   'Limites não são egoísmo: são mordomia do tempo e da energia que Deus te deu. Um não dito com amor protege o seu sim para o que realmente importa.'],
+  you:{sanguinea:'Espere um dia antes de aceitar algo novo.',colerica:'Delegue em vez de assumir tudo.',melancolica:'Um não com amor não é pecado.',fleumatica:'Treine dizer "agora não consigo" com calma.'},
+  try:'Diga um não gentil hoje para algo que não é prioridade.',pray:'Senhor, me ensina a dizer sim e não segundo a tua vontade.',
+  src:'Mateus 5:37; Marcos 1:35-38; Eclesiastes 3:1.'},
+ {id:'d7',title:'Raiva, impaciência e palavras duras',prefs:['Relacionamentos','Saúde emocional'],
+  body:['Você explode com os filhos, responde atravessado ao marido, fala duro com a amiga. Depois vem a culpa. A raiva em si não é pecado, mas o que fazemos com ela pode ferir.',
+   'Tiago aconselha: "Sejam todos prontos para ouvir, tardios para falar e tardios para irar-se, pois a ira do homem não produz a justiça de Deus" (Tiago 1:19-20). E Provérbios ensina: "A resposta calma desvia a fúria, mas a palavra ríspida desperta a ira" (Provérbios 15:1).',
+   'Na colérica, a raiva é rápida e direta. Na sanguínea, explode e passa. Na melancólica, vira mágoa guardada e frieza. Na fleumática, fica escondida até virar silêncio e afastamento.',
+   'Paulo orienta: "Quando vocês ficarem irados, não pequem. Apazíguem a sua ira antes que o sol se ponha" (Efésios 4:26). Dar nome ao sentimento, respirar, orar e conversar depois, com calma, transforma a raiva em diálogo.'],
+  you:{sanguinea:'Conte até dez antes de responder.',colerica:'Peça perdão rápido quando falar duro.',melancolica:'Fale da mágoa antes que ela endureça.',fleumatica:'Coloque em palavras o que te incomoda, com calma.'},
+  try:'Em um momento de irritação hoje, saia por 2 minutos e ore antes de falar.',pray:'Senhor, guarda a minha boca e acalma o meu coração.',
+  src:'Tiago 1:19-20; Provérbios 15:1; Efésios 4:26.'},
+ {id:'d8',title:'Mágoas, perdão e feridas da igreja',prefs:['Perdão','Relacionamentos'],
+  body:['Algumas das feridas mais profundas acontecem justamente na igreja: uma liderança que machucou, uma amiga que traiu, uma palavra de julgamento. Isso dói em dobro, porque esperávamos amor.',
+   'A Bíblia nos chama a perdoar: "Perdoem como o Senhor lhes perdoou" (Colossenses 3:13). E também a tirar do coração a amargura (Efésios 4:31-32). Perdoar não é dizer que não doeu, nem voltar a confiar de imediato: é entregar a dívida a Deus.',
+   'A melancólica tende a guardar mágoas por muito tempo. A fleumática finge que está tudo bem. A colérica corta relações. A sanguínea esquece rápido, mas pode não tratar a ferida.',
+   'O perdão é um processo. Ore pela pessoa, fale com alguém de confiança e, se necessário, coloque limites saudáveis. Em casos de abuso, perdoar não significa permanecer em perigo: procure ajuda.'],
+  you:{sanguinea:'Não pule a etapa de olhar a ferida com Deus.',colerica:'Antes de cortar, ore pela pessoa.',melancolica:'Entregue a lista de dívidas a Deus, uma por uma.',fleumatica:'Admita que doeu: isso faz parte do perdão.'},
+  try:'Ore pelo nome de alguém que te feriu, mesmo que com poucas palavras.',pray:'Pai, eu entrego a ti essa dor e escolho perdoar.',
+  src:'Colossenses 3:13; Efésios 4:31-32; Mateus 18:21-22.'},
+ {id:'d9',title:'Medo de não cumprir o propósito de Deus',prefs:['Propósito'],
+  body:['"Será que estou no lugar certo?" "Será que perdi o meu chamado?" Muitas mulheres vivem com medo de não estarem cumprindo o propósito de Deus, especialmente quando comparam a própria vida com a de outras.',
+   'Deus diz: "Sou eu que conheço os planos que tenho para vocês, planos de dar a vocês esperança e um futuro" (Jeremias 29:11). E Paulo garante: "Aquele que começou boa obra em vocês, vai completá-la" (Filipenses 1:6).',
+   'A colérica teme não fazer o suficiente. A melancólica teme errar a vontade de Deus. A sanguínea muda de direção a cada novidade. A fleumática espera um sinal claro e não sai do lugar.',
+   'O propósito começa no lugar onde você está: amar a Deus e ao próximo nas tarefas de hoje (Colossenses 3:23). Ester descobriu seu propósito no lugar onde Deus a colocou.'],
+  you:{sanguinea:'Escolha um chamado e persevere nele.',colerica:'Propósito não é produtividade.',melancolica:'Deus guia passo a passo; você não precisa ver o fim.',fleumatica:'Dê o próximo passo de obediência, mesmo pequeno.'},
+  try:'Escreva: "Hoje, onde estou, posso servir a Deus fazendo..."',pray:'Senhor, eu confio nos teus planos para mim.',
+  src:'Jeremias 29:11; Filipenses 1:6; Colossenses 3:23; Ester 4:14.'},
+ {id:'d10',title:'Timidez para servir, falar e evangelizar',prefs:['Servir na igreja','Propósito'],
+  body:['Você sente vontade de servir, falar de Jesus ou assumir algo na igreja, mas trava. A voz some, a vergonha aparece e você deixa para outra pessoa.',
+   'Moisés sentiu isso: "Nunca tive facilidade para falar" (Êxodo 4:10). Deus respondeu que estaria com a boca dele. E Paulo encorajou Timóteo: "Deus não nos deu espírito de covardia, mas de poder, de amor e de equilíbrio" (2 Timóteo 1:7).',
+   'A fleumática e a melancólica sentem mais a timidez. A sanguínea fala com facilidade, mas pode ter medo de aprofundar. A colérica tem medo de errar em público.',
+   'Servir não exige ser extrovertida. Uma mensagem, uma oração, uma visita, um café: Deus usa todos os jeitos. Comece pequeno e lembre que quem capacita é ele.'],
+  you:{sanguinea:'Use a sua facilidade para encorajar quem é tímida.',colerica:'Deixe espaço para outras servirem também.',melancolica:'Sirva com o que você faz bem: escrever, orar, organizar.',fleumatica:'Ofereça um pequeno serviço esta semana.'},
+  try:'Mande uma mensagem dizendo a alguém que você está orando por ela.',pray:'Senhor, eu tenho medo, mas confio que tu estás comigo.',
+  src:'Êxodo 4:10-12; 2 Timóteo 1:7; 1 Pedro 4:10.'},
+ {id:'d11',title:'Controle e dificuldade de confiar',prefs:['Ansiedade','Fé e dúvidas'],
+  body:['Você planeja tudo, vigia tudo e tem dificuldade de deixar nas mãos de outras pessoas, e até nas mãos de Deus. Quando algo foge do controle, vem a irritação ou a ansiedade.',
+   'Provérbios ensina: "Confie no Senhor de todo o seu coração e não se apoie em seu próprio entendimento" (Provérbios 3:5). E lembra: "Em seu coração o homem planeja o seu caminho, mas o Senhor determina os seus passos" (Provérbios 16:9).',
+   'Na colérica, o controle é a forma de garantir resultados. Na melancólica, de evitar erros. Na sanguínea e na fleumática, aparece menos, mas surge como medo quando a vida sai do roteiro.',
+   'Sara tentou resolver a promessa do jeito dela e trouxe dor para a família (Gênesis 16). Confiar não é ficar parada: é fazer a sua parte e soltar o resultado.'],
+  you:{sanguinea:'Confie em Deus também nos detalhes chatos.',colerica:'Solte o resultado: a vitória vem do Senhor.',melancolica:'Você não precisa prever tudo para estar segura.',fleumatica:'Confiar inclui agir.'},
+  try:'Escreva algo que você não controla e ore: "Isso é teu, Senhor".',pray:'Senhor, eu solto o controle e confio em ti.',
+  src:'Provérbios 3:5-6; Provérbios 16:9; Gênesis 16.'},
+ {id:'d12',title:'Procrastinação e falta de constância',prefs:['Rotina com Deus','Propósito'],
+  body:['Você começa a leitura da Bíblia com animação e para na segunda semana. Adia aquele projeto, aquela conversa, aquele cuidado. A falta de constância gera frustração.',
+   'Provérbios usa a formiga como exemplo: sem ninguém mandar, ela prepara tudo no tempo certo (Provérbios 6:6-8). E Paulo orienta: "Tudo o que fizerem, façam de todo o coração, como para o Senhor" (Colossenses 3:23).',
+   'A sanguínea começa com empolgação e perde o ritmo. A fleumática adia para evitar desconforto. A melancólica adia porque quer fazer perfeito. A colérica procrastina o que não acha importante, como o descanso.',
+   'Constância nasce de passos pequenos e repetidos. Um capítulo por dia, cinco minutos de oração, uma tarefa por vez. Deus valoriza a fidelidade no pouco (Lucas 16:10).'],
+  you:{sanguinea:'Escolha um hábito só e mantenha por 7 dias.',colerica:'Coloque o descanso na agenda.',melancolica:'Comece antes de estar perfeito.',fleumatica:'Faça os primeiros 5 minutos agora.'},
+  try:'Escolha um hábito espiritual de 5 minutos e marque no checklist todos os dias.',pray:'Senhor, me ajuda a ser fiel no pouco.',
+  src:'Provérbios 6:6-8; Colossenses 3:23; Lucas 16:10.'},
+ {id:'d13',title:'Solidão, inclusive dentro da igreja',prefs:['Relacionamentos','Saúde emocional'],
+  body:['É possível estar cercada de gente no culto e, mesmo assim, se sentir sozinha. Pesquisas com cristãos mostram que a solidão é uma dor real, inclusive entre líderes.',
+   'Deus vê isso: "Deus dá um lar aos solitários" (Salmos 68:6). E a Bíblia nos chama a cuidar uns dos outros: "Consideremos uns aos outros para incentivar-nos ao amor e às boas obras" (Hebreus 10:24).',
+   'A sanguínea sente a solidão quando as conversas são superficiais. A melancólica, quando não encontra profundidade. A colérica, porque raramente mostra fragilidade. A fleumática, porque espera que alguém se aproxime primeiro.',
+   'Comunidade se constrói com pequenos passos: um convite, uma pergunta sincera, um pequeno grupo. E, enquanto isso, lembre que Jesus prometeu estar com você todos os dias (Mateus 28:20).'],
+  you:{sanguinea:'Aprofunde uma amizade em vez de abrir dez.',colerica:'Mostre a alguém uma fragilidade sua.',melancolica:'Dê uma chance a quem ainda não te conhece bem.',fleumatica:'Dê o primeiro passo e faça o convite.'},
+  try:'Convide uma irmã da igreja para um café nesta semana.',pray:'Senhor, me dá amizades verdadeiras e me ajuda a ser uma.',
+  src:'Salmos 68:6; Hebreus 10:24-25; Mateus 28:20; Barna Group, pesquisas sobre saúde relacional de cristãos.'},
+ {id:'d14',title:'Relacionamentos e casamento com temperamentos diferentes',prefs:['Casamento','Relacionamentos'],
+  body:['Ela é sanguínea e ele é melancólico. Ela é colérica e ele é fleumático. As diferenças que atraíram no começo podem virar fonte de brigas no dia a dia.',
+   'Paulo orienta: "Sejam completamente humildes e dóceis, e sejam pacientes, suportando uns aos outros com amor" (Efésios 4:2). E Pedro: "Vivam em harmonia uns com os outros; sejam compassivos" (1 Pedro 3:8).',
+   'A sanguínea precisa de atenção e conversa. A colérica, de respeito e eficiência. A melancólica, de cuidado e profundidade. A fleumática, de paz e paciência. Entender isso ajuda a não levar tudo para o lado pessoal.',
+   'Diferenças não são defeitos: são peças que se completam quando há amor, humildade e diálogo. Conhecer o temperamento do outro é uma forma de amar melhor. Em situações de violência ou abuso, procure ajuda imediatamente.'],
+  you:{sanguinea:'Ouça mais do que fala nas conversas difíceis.',colerica:'Pergunte antes de decidir pelo casal ou pela família.',melancolica:'Diga o que precisa em vez de esperar que adivinhem.',fleumatica:'Traga os assuntos difíceis antes que acumulem.'},
+  try:'Pergunte a alguém próximo: "O que faz você se sentir amado(a)?"',pray:'Senhor, me ensina a amar as diferenças.',
+  src:'Efésios 4:2-3; 1 Pedro 3:8; 1 Coríntios 13:4-7.'},
+ {id:'d15',title:'Dúvidas na fé e fases de deserto',prefs:['Fé e dúvidas'],
+  body:['Há fases em que a oração parece não passar do teto, a Bíblia parece seca e as perguntas se multiplicam. Muitas mulheres sentem culpa por isso, como se duvidar fosse falta de fé.',
+   'Um pai desesperado disse a Jesus: "Creio, ajuda-me a vencer a minha incredulidade!" (Marcos 9:24). E Jesus curou o filho dele. O salmista escreveu: "Por que você está assim tão triste, ó minha alma? Ponha a sua esperança em Deus!" (Salmos 42:5).',
+   'A melancólica sente o deserto com intensidade e se questiona muito. A sanguínea sente falta da emoção dos primeiros tempos. A colérica quer resolver as dúvidas rápido. A fleumática pode simplesmente se afastar em silêncio.',
+   'O deserto faz parte da caminhada de muitos personagens bíblicos. Continue indo a Deus com honestidade, converse com uma liderança de confiança e lembre: a fidelidade de Deus não depende do que você sente.'],
+  you:{sanguinea:'A fé continua mesmo quando a emoção baixa.',colerica:'Dê tempo às perguntas.',melancolica:'Leve as suas dúvidas para Deus, como os salmistas.',fleumatica:'Não se afaste: converse com alguém.'},
+  try:'Leia o Salmo 42 em voz baixa e escreva a sua própria versão.',pray:'Senhor, eu creio; ajuda-me na minha incredulidade.',
+  src:'Marcos 9:24; Salmos 42; Lamentações 3:22-23.'},
+ {id:'d16',title:'Tristeza profunda: fé e cuidado com a saúde mental',prefs:['Saúde emocional','Fé e dúvidas'],
+  body:['Às vezes a tristeza não passa. Perde-se a vontade de fazer as coisas, o sono muda, tudo parece pesado. Isso pode ser depressão, e depressão não é falta de fé, fraqueza espiritual nem frescura.',
+   'A Bíblia mostra pessoas de muita fé que passaram por momentos sombrios. Elias pediu para morrer depois de uma grande vitória, e Deus cuidou dele com descanso, comida e presença (1 Reis 19:4-8). "O Senhor está perto dos que têm o coração quebrantado" (Salmos 34:18).',
+   'Qualquer temperamento pode passar por isso. A melancólica tende a sentir mais os dias escuros, mas sanguíneas, coléricas e fleumáticas também adoecem, muitas vezes escondendo atrás do sorriso, da produtividade ou do silêncio.',
+   'Procure ajuda: um psicólogo, um médico e pessoas de confiança da sua igreja. Tratamento e fé caminham juntos. Se você tiver pensamentos de se machucar, ligue agora para o CVV no 188 (24 horas, grátis) ou procure um pronto-socorro.'],
+  you:{sanguinea:'Você não precisa sorrir o tempo todo.',colerica:'Pedir ajuda é força, não fraqueza.',melancolica:'Os dias escuros não são o fim da sua história.',fleumatica:'Conte a alguém como você realmente está.'},
+  try:'Conte a uma pessoa de confiança como você está se sentindo de verdade.',pray:'Senhor, fica perto do meu coração cansado.',
+  src:'1 Reis 19:4-8; Salmos 34:18; Salmos 42. CVV: 188 (24h, grátis). SAMU: 192.'}
+];
+PAIN_TEXTS.forEach(t=>{t.cat='dores';t.cats=['dores'];if(['d6','d7','d8','d13','d14'].includes(t.id))t.cats.push('relacionamentos');if(['d3','d12'].includes(t.id))t.cats.push('fruto')});
+TEXTS.push(...PAIN_TEXTS);
+(function(){const pool=['photo-1499209974431-9dddcece7f88','photo-1474932430478-367dbb6832c1','photo-1457369804613-52c61a468e7d','photo-1441974231531-c6227db76b6e','photo-1506905925346-21bda4d32df4','photo-1544787219-7f47ccb76574','photo-1495474472287-4d71bcdd2085','photo-1481627834876-b7833e8f5570','photo-1544947950-fa07a98d237f','photo-1512820790803-83ca734da794','photo-1464822759023-fed622ff2c3b','photo-1507525428034-b723cf961d3e','photo-1476514525535-07fb3b4ae5f1','photo-1467269204594-9661b134dd2b','photo-1610832958506-aa56368176cf'];
+ TEXTS.forEach((t,i)=>{if(!t.img)t.img=pool[i%pool.length];const w=t.body.join(' ').split(/\s+/).length;t.min=Math.max(3,Math.round(w/130)+1)})})();
+
+
 
 const ACH=[
  {id:'teste',n:'Primeiro passo',d:'Concluiu o teste de personalidade.',ic:'sparkle',ok:u=>u.testDone},
@@ -939,7 +1118,7 @@ const $=(s,el=document)=>el.querySelector(s);
 const imgUrl=(id,w=800)=>`https://images.unsplash.com/${id}?auto=format&fit=crop&w=${w}&q=70`;
 
 function blankUser(){return{name:'',email:'',pass:'',birth:'',created:today(),paid:false,payMethod:'',payDate:'',
- answers:Array(10).fill(null),testDone:false,testDate:'',testXP:false,profile:null,scores:{},prefs:[],prefsDone:false,resultSeen:false,
+ answers:Array(N_Q).fill(null),testDone:false,testDate:'',testXP:false,profile:null,profile2:null,migrated:false,scores:{},prefs:[],prefsDone:false,resultSeen:false,
  favs:[],favLog:{},read:[],readLog:{},readXP:[],checklist:null,history:[],board:{title:'',photos:[],stickers:[...DEFAULT_STICKERS],seed:newSeed()},boards:[],goals:[],photo:'',
  xp:0,xpLog:{},days:[],best:0,chest:{},ach:[],sound:true,pix:null}}
 function fix(u){
@@ -950,15 +1129,17 @@ function fix(u){
   if(Array.isArray(b[k])&&!Array.isArray(u[k]))u[k]=b[k];
   if(b[k]&&typeof b[k]==='object'&&!Array.isArray(b[k])&&(typeof u[k]!=='object'||Array.isArray(u[k])))u[k]=b[k];
  }
- if(u.answers.length!==10)u.answers=Array.from({length:10},(_,i)=>u.answers[i]||null);
+ if(u.answers.length!==N_Q||u.answers.some(a=>a&&!TEMP_KEYS[a]))u.answers=Array.from({length:N_Q},(_,i)=>TEMP_KEYS[u.answers[i]]?u.answers[i]:null);
  if(!Array.isArray(u.board.photos))u.board={title:'',photos:[]};
  if(!Array.isArray(u.board.stickers))u.board.stickers=[...DEFAULT_STICKERS];
  u.board.stickers=u.board.stickers.filter(id=>STICKERS.some(st=>st.id===id));
  if(!u.board.seed)u.board.seed=newSeed();
  u.boards=u.boards.filter(x=>x&&Array.isArray(x.photos)).map(x=>({...x,stickers:Array.isArray(x.stickers)?x.stickers:[],title:String(x.title||'meu universo')}));
  if(typeof u.board.title!=='string')u.board.title='';
- if(u.profile&&!PROFILES.some(p=>p.id===u.profile))u.profile='serena';
- if(u.testDone&&!u.profile)u.profile='serena';
+ if(u.profile&&!PROFILES.some(p=>p.id===u.profile)){ // conta da versão antiga (6 perfis): refaz o teste na versão cristã, sem perder pagamento e dados
+  u.profile=null;u.profile2=null;u.scores={};u.answers=Array(N_Q).fill(null);if(u.testDone){u.testDone=false;u.migrated=true}u.resultSeen=false;u.prefs=[];u.prefsDone=false}
+ if(u.profile2&&!PROFILES.some(p=>p.id===u.profile2))u.profile2=null;
+ if(u.testDone&&!u.profile)u.profile='sanguinea';
  u.prefs=u.prefs.filter(p=>PREFS.includes(p));
  u.read=u.read.filter(id=>TEXTS.some(t=>t.id===id));u.readXP=u.readXP.filter(id=>TEXTS.some(t=>t.id===id));
  u.xp=Number(u.xp)||0;u.best=Number(u.best)||0;
@@ -997,7 +1178,7 @@ function applyCloud(res,local){
  const u=fix({...d});
  if(local&&Array.isArray(local.boards)){const ids=new Set(u.boards.map(b=>b.id));u.boards=u.boards.concat(local.boards.filter(b=>b&&!ids.has(b.id)))}
  Object.assign(u,{email:pr.email,name:pr.name||u.name,birth:pr.birth||u.birth,paid:!!pr.paid,payMethod:pr.payMethod||'',payDate:pr.payDate||'',created:(pr.created||'').slice(0,10)||u.created,pass:'',_cloudAt:res.updatedAt||Date.now(),_localAt:res.updatedAt||Date.now()});
- if(u.testDone&&!u.profile)u.profile='serena';
+ if(u.testDone&&!u.profile)u.profile='sanguinea';
  DB.users[pr.email]=u;return u;
 }
 function schedulePush(){if(!CLOUD.on||!CLOUD.token||!U())return;const u=U();u._localAt=Date.now();clearTimeout(CLOUD.timer);CLOUD.timer=setTimeout(pushCloud,1200)}
@@ -1048,18 +1229,13 @@ async function checkPass(p,stored){if(!stored)return false;if(String(stored).sta
    ========================================================= */
 function calcProfile(answers){
  try{
-  const s={};DIMS.forEach(k=>s[k]=0);
-  for(let i=0;i<10;i++){
-   let a=answers&&answers[i];
-   if(typeof a!=='string'||a.length!==1||!'ABCDE'.includes(a))a='C';
-   const add=(SCORING[i]&&SCORING[i][a])||{};
-   for(const k in add)s[k]+=add[k];
-  }
-  let best=PROFILES[0],bv=-1;
-  PROFILES.forEach(p=>{const v=p.dims.reduce((t,k)=>t+(s[k]||0),0);if(v>bv){bv=v;best=p}});
-  return {profile:best.id,scores:s};
- }catch(e){return {profile:'serena',scores:{}}}
+  const sc={S:0,C:0,M:0,F:0};
+  for(let i=0;i<N_Q;i++){const a=answers&&answers[i];if(TEMP_KEYS[a])sc[a]++}
+  const order=[...TEMP_ORDER].sort((a,b)=>sc[b]-sc[a]||TEMP_ORDER.indexOf(a)-TEMP_ORDER.indexOf(b));
+  return {profile:TEMP_KEYS[order[0]],profile2:TEMP_KEYS[order[1]],scores:sc};
+ }catch(e){return {profile:'sanguinea',profile2:'colerica',scores:{}}}
 }
+function pname(u){const p=prof(u);const s=PROFILES.find(x=>x.id===(u&&u.profile2));return s&&s.id!==p.id?`${p.name} com traços ${s.traits}`:p.name}
 const prof=u=>PROFILES.find(p=>p.id===(u&&u.profile))||PROFILES[0];
 function streakOf(u){const set=new Set(u.days);const d=new Date();if(!set.has(ymd(d)))d.setDate(d.getDate()-1);let k=0;while(set.has(ymd(d))){k++;d.setDate(d.getDate()-1)}return k}
 function markActive(){
@@ -1107,6 +1283,7 @@ function defaultItems(pid){
 function ensureChecklist(u){
  let c=u.checklist;
  if(!c||typeof c!=='object'||!Array.isArray(c.items)){u.checklist={date:today(),items:defaultItems(u.profile)};save();return}
+ if(c.items.some(i=>i&&!GROUPS.some(g=>g.id===i.g))){u.checklist={date:today(),items:defaultItems(u.profile)};save();return}
  c.items=c.items.filter(i=>i&&typeof i.t==='string').map(i=>({id:i.id||uid(),g:GROUPS.some(g=>g.id===i.g)?i.g:'provei',t:i.t,done:!!i.done,note:typeof i.note==='string'?i.note:''}));
  if(c.date!==today()){c.items.forEach(i=>{i.done=false;i.note=''});c.date=today();save()}
 }
@@ -1264,9 +1441,9 @@ function field(name,label,type,ph,ac,val=''){return `<div><label class="lbl-f" f
 function vWelcome(){return `<main class="screen center-col" style="padding-top:44px">
  ${bigLogo()}
  <div class="mt-8"></div>
- <h1 class="display text-center">Descubra quem você é, do seu jeito</h1>
- <p class="lead text-center mt-3">Um espaço para conhecer sua essência e construir uma vida que tenha a sua identidade.</p>
- <p class="small muted mt-5" style="font-weight:400">10 perguntas · 3 minutos · 6 perfis</p>
+ <h1 class="display text-center">Descubra quem Deus te criou para ser</h1>
+ <p class="lead text-center mt-3">Um espaço para mulheres cristãs conhecerem seu temperamento, suas forças e crescerem no caráter de Cristo.</p>
+ <p class="small muted mt-5" style="font-weight:400">12 perguntas · 3 minutos · 4 temperamentos</p>
 </main>
 <footer class="footbar stack"><button class="btn btn-primary" data-act="go" data-to="cadastro">Começar meu teste</button><button class="btn btn-outline" data-act="go" data-to="login">Já tenho conta</button></footer>`}
 
@@ -1411,22 +1588,23 @@ function unlockPaid(u,method){
 
 /* 4. Teste (formato lição) */
 function vTest(u){
- if(ui.q==null||ui.q<0||ui.q>9){const i=u.answers.findIndex(a=>!a);ui.q=i<0?9:i}
+ if(ui.q==null||ui.q<0||ui.q>N_Q-1){const i=u.answers.findIndex(a=>!a);ui.q=i<0?N_Q-1:i}
  const i=ui.q,q=QUESTIONS[i],a=u.answers[i];
- const answered=u.answers.filter(Boolean).length;const pct=answered*10;
- const lines=['Sem resposta certa ou errada, tá? Só a sua verdade.','Respira e escolhe o que mais parece você.','A primeira ideia costuma ser a mais sincera!','Tô adorando te conhecer!','Metade do caminho! Você está indo super bem.','Essa aqui diz muito sobre a sua energia.','Pensa no que faz seu coração sorrir.','Sem julgamentos aqui, prometo.','Quase lá! Faltam só duas.','Última! Capricha.'];
- const reacts=['Anotado!','Faz todo sentido.','Hmm, interessante!','Adorei saber disso.','Isso é tão você!'];
- const say=a?reacts['ABCDE'.indexOf(a)]:lines[i];
+ const answered=u.answers.filter(Boolean).length;const pct=Math.round(answered/N_Q*100);
+ const opts=q.o.map((o,j)=>({...o,r:((i+3)*7+j*13)%17})).sort((x,y)=>x.r-y.r); // ordem embaralhada fixa
+ const lines=['Sem resposta certa ou errada: só a sua verdade.','Escolha o que mais parece com você no dia a dia.','A primeira ideia costuma ser a mais sincera.','Deus te conhece por inteiro. Responda sem medo.','Pense em como você é, não em como gostaria de ser.','Já passamos de um terço!','Metade do caminho! Você está indo muito bem.','Essa diz muito sobre o seu jeito.','Sem julgamentos aqui.','Faltam só três.','Quase lá!','Última! Capricha.'];
+ const say=a?'Anotado!':lines[i]||'';
  return brand(`<button class="ibtn" data-act="quitTest" aria-label="Pausar teste">${ic('x',22)}</button>`)+`<main class="screen pt-4">
-  <h2 class="h1" style="font-size:26px">Pergunta ${i+1} de 10</h2>
+  ${u.migrated&&answered===0?`<div class="card mb-5" style="background:#E4EBE0;border:0"><b>O Orivie foi atualizado!</b><p class="small mt-1" style="font-weight:400">Agora o teste mostra o seu temperamento à luz da fé. Seu pagamento e seus dados continuam salvos.</p></div>`:''}
+  <h2 class="h1" style="font-size:26px">Pergunta ${i+1} de ${N_Q}</h2>
   <div class="flex items-center gap-3 mt-3"><div class="prog" role="progressbar" aria-label="Progresso do teste" aria-valuenow="${pct}" aria-valuemin="0" aria-valuemax="100"><i style="width:${pct}%"></i></div><span class="pct">${pct}%</span></div>
   <h1 class="h1 mt-6 mb-5">${q.q}</h1>
   <div class="flex flex-col gap-3" role="radiogroup" aria-label="${esc(q.q)}">
-   ${q.o.map((o,j)=>{const k='ABCDE'[j];const sel=a===k;return `<button class="tile ${sel?'sel':''} ${sel&&ui.justPicked?'pop':''}" role="radio" aria-checked="${sel}" data-act="answer" data-k="${k}"><span class="key">${k}</span><span style="flex:1">${o}</span></button>`}).join('')}
+   ${opts.map((o,j)=>{const sel=a===o.k;return `<button class="tile ${sel?'sel':''} ${sel&&ui.justPicked?'pop':''}" role="radio" aria-checked="${sel}" data-act="answer" data-k="${o.k}"><span class="key">${'ABCD'[j]}</span><span style="flex:1">${o.t}</span></button>`}).join('')}
   <p class="small muted text-center mt-5" style="font-weight:400">${say}</p>
   </div>
  </main>
- <footer class="footbar"><button class="btn btn-outline" style="flex:0 0 36%" data-act="qBack" ${i===0?'disabled':''}>Voltar</button><button class="btn btn-primary" data-act="qNext" ${a?'':'disabled'}>${i===9?'Finalizar':'Continuar'}</button></footer>`;
+ <footer class="footbar"><button class="btn btn-outline" style="flex:0 0 36%" data-act="qBack" ${i===0?'disabled':''}>Voltar</button><button class="btn btn-primary" data-act="qNext" ${a?'':'disabled'}>${i===N_Q-1?'Ver resultado':'Continuar'}</button></footer>`;
 }
 
 /* 5. Personalização */
@@ -1446,16 +1624,24 @@ function vPrefs(u){
 
 /* 6. Resultado */
 function vResult(u){
- const p=prof(u);const s=u.scores||{};const max=Math.max(1,...DIMS.map(k=>s[k]||0));
+ const p=prof(u);const s2=PROFILES.find(x=>x.id===u.profile2);const sc=u.scores||{};const tot=Math.max(1,TEMP_ORDER.reduce((t,k)=>t+(sc[k]||0),0));
  return brand()+`<main class="screen">
-  <div class="flex justify-center">${mascot('celebrate',130,'hop')}</div>
-  <div class="flex justify-center mt-3"><span class="tag tag-terra">Você é...</span></div>
-  <h1 class="display text-center mt-2" style="color:var(--terra-dk)">${p.name}</h1>
-  <p class="lead text-center mt-2">${p.short}</p>
-  <section class="card mt-6"><h2 class="h2">Sua essência</h2>${p.desc.map(d=>`<p class="body mt-3">${d}</p>`).join('')}</section>
+  <section class="ori-card" style="display:block;text-align:center;padding:26px 20px">
+   <p class="muted" style="color:var(--texto)">Você é...</p>
+   <h1 class="display mt-1">${pname(u)}</h1>
+   <span class="pill mt-3">${p.title}</span>
+   <p class="mt-4">${p.short}</p>
+  </section>
+  <p class="small muted mt-3 text-center" style="font-weight:400">${TEMP_NOTE}</p>
+  <section class="card mt-5"><h2 class="h2">Seu jeito, criado por Deus</h2>${p.desc.map(d=>`<p class="body mt-3">${d}</p>`).join('')}
+   ${s2&&s2.id!==p.id?`<p class="body mt-3"><b>Seus traços ${s2.traits.toLowerCase()}:</b> ${s2.short}</p>`:''}</section>
   <section class="card mt-4"><h2 class="h2 mb-1">Suas forças</h2><ul class="list">${p.forces.map(f=>`<li>${ic('check',24)}<span>${f}</span></li>`).join('')}</ul></section>
-  <section class="card mt-4"><h2 class="h2 mb-1">Seus desafios</h2><ul class="list">${p.challenges.map(f=>`<li>${ic('leaf',24)}<span>${f}</span></li>`).join('')}</ul><p class="small muted mt-2">Desafios não são defeitos: são lugares onde você pode crescer com carinho.</p></section>
-  <section class="card mt-4"><h2 class="h2 mb-3">Seu mapa de personalidade</h2>${DIMS.map(k=>`<div class="dim"><span>${DIM_N[k]}</span><div class="prog sm ${p.dims.includes(k)?'':'sage'}"><i style="width:${Math.round((s[k]||0)/max*100)}%"></i></div><b>${s[k]||0}</b></div>`).join('')}<p class="small muted mt-3">Em terracota, as dimensões que definem o seu perfil.</p></section>
+  <section class="card mt-4"><h2 class="h2 mb-1">Seus desafios</h2><ul class="list">${p.challenges.map(f=>`<li>${ic('leaf',24)}<span>${f}</span></li>`).join('')}</ul><p class="small muted mt-2">Temperamento não é destino: são lugares onde o Espírito Santo pode trabalhar em você.</p></section>
+  <section class="card mt-4" style="background:#E4EBE0;border:0"><span class="tag">Fruto do Espírito em foco</span><h2 class="h2 mt-2">${p.fruit.n}</h2><p class="body mt-2">${p.fruit.t}</p><p class="small mt-2" style="font-weight:500">Gálatas 5:22-23</p></section>
+  <section class="card mt-4"><h2 class="h2">Versículos para você</h2>${p.verses.slice(0,3).map(v=>`<p class="body mt-3">“${v.t}”<br><b class="small">${v.r}</b></p>`).join('')}</section>
+  <section class="mt-6"><h2 class="h2">Personagens bíblicos com o seu jeito</h2>${p.chars.map(c=>`<div class="card mt-3"><h3 class="h3">${c.n}</h3><p class="small muted" style="font-weight:500">${c.ref}</p><p class="mt-2">${c.story}</p><p class="mt-2" style="font-weight:600">${c.lesson}</p></div>`).join('')}</section>
+  <section class="card mt-4"><h2 class="h2 mb-3">Seu mapa de temperamentos</h2>${TEMP_ORDER.map(k=>{const t=PROFILES.find(x=>x.key===k);const v=sc[k]||0;return `<div class="dim" style="grid-template-columns:110px 1fr 40px"><span>${t.name}</span><div class="prog sm"><i style="width:${Math.round(v/tot*100)}%"></i></div><b>${Math.round(v/tot*100)}%</b></div>`}).join('')}<p class="small muted mt-3">Todas nós somos uma mistura dos quatro.</p></section>
+  <button class="btn btn-outline mt-5" data-act="oriText" data-id="t6">Ler "Jesus, o caráter perfeito"</button>
  </main>
  <footer class="footbar stack"><button class="btn btn-primary" data-act="toWeek">Ver minha semana</button><button class="btn btn-outline" data-act="toLearn">Ler sobre minha personalidade</button></footer>`;
 }
@@ -1475,55 +1661,37 @@ function vApp(u,tab){
    ORI ASSISTENTE (sem IA): respostas prontas, personalizadas por perfil e pelos dados da pessoa
    ========================================================= */
 const ORI_TOPICS=[
+ {id:'versiculo',n:'Um versículo pra hoje'},
+ {id:'ore',n:'Ore comigo'},
+ {id:'ansiosa',n:'Estou ansiosa'},
+ {id:'comparada',n:'Me sinto comparada'},
+ {id:'cansada',n:'Estou cansada de servir'},
+ {id:'perdao',n:'Brigas e perdão'},
+ {id:'personagem',n:'Qual personagem bíblica parece comigo?'},
  {id:'ideia',n:'Me dá uma ideia pro dia'},
- {id:'estresse',n:'Como lido com o estresse?'},
- {id:'decidir',n:'Me ajuda a decidir algo'},
- {id:'desanimo',n:'Estou sem ânimo'},
- {id:'combina',n:'O que combina comigo hoje?'},
- {id:'frase',n:'Uma frase pra mim'},
- {id:'forca',n:'Qual é o meu ponto forte?'},
  {id:'semana',n:'Como está minha semana?'},
  {id:'texto',n:'Me indica um texto'},
  {id:'ajuda',n:'Preciso de ajuda séria'}
 ];
-const ORI_STRESS={
- serena:'Quando o mundo fica barulhento, sua sensibilidade sente tudo em dobro. Tente 5 minutos de silêncio, uma música calma e uma única tarefa pequena. Criar algo simples, como desenhar ou escrever três linhas, ajuda a organizar o que você sente.',
- exploradora:'Você alivia o estresse se movimentando. Uma caminhada curta por um caminho diferente já muda o clima. Depois, escolha só uma coisa para resolver hoje: o resto pode esperar.',
- analitica:'Sua mente quer resolver tudo de uma vez. Escreva o que está te preocupando em duas colunas: o que depende de você e o que não depende. Foque em um próximo passo concreto e faça uma pausa sem telas.',
- conectiva:'Você sente o peso de todo mundo. Converse com alguém de confiança, mas lembre: cuidar de você também é prioridade. Hoje, pratique um “agora não posso” sem culpa.',
- contemplativa:'Você precisa de espaço para digerir as coisas. Respire devagar por 2 minutos (4 segundos inspirando, 6 expirando) e, se puder, fique um pouco ao ar livre. Depois transforme a reflexão em um passo pequeno.',
- determinada:'Sob pressão, você costuma acelerar. Faça o contrário por 10 minutos: pausa de verdade, água e respiração. Depois escolha a prioridade número 1 e peça ajuda no resto.'
-};
-const ORI_DECIDE={
- serena:'Imagine cada opção por um minuto e repare como o seu corpo reage: alívio ou aperto? Sua sensibilidade é uma bússola. Depois, dê um prazo para decidir, para não ficar esperando o momento perfeito.',
- exploradora:'Pergunte: qual opção me faz aprender mais? Se der, teste em pequena escala antes de se comprometer. Escolher também é dizer não para outras aventuras, e tudo bem.',
- analitica:'Liste prós e contras e dê um peso de 1 a 5 para cada um. Some e veja o resultado. Se empatar, escolha a opção que você conseguiria explicar com orgulho daqui a um ano.',
- conectiva:'Pense no que você escolheria se ninguém fosse ficar chateado. Ouça quem você ama, mas a decisão final é sua: sua voz importa tanto quanto a dos outros.',
- contemplativa:'Escreva a pergunta e durma com ela. Sua intuição costuma responder no silêncio. No dia seguinte, faça um pequeno teste prático antes de decidir de vez.',
- determinada:'Você decide rápido, e isso é ótimo. Antes de bater o martelo, pergunte: o que eu estou deixando de considerar? Ouça uma pessoa de confiança por 5 minutos e então siga em frente.'
-};
-const ORI_DOWN={
- serena:'Dias assim acontecem e não dizem nada sobre o seu valor. Que tal algo pequeno e gentil: um chá, uma música que você ama e anotar uma coisa bonita que você viu hoje?',
- exploradora:'Quando a energia some, a rotina pesa ainda mais. Mude um detalhe só: um caminho novo, uma comida diferente, uma playlist nova. Pequenas novidades acordam você.',
- analitica:'Estar sem ânimo não é falha de planejamento. Hoje, troque a lista longa por uma única tarefa de 10 minutos. Terminar algo pequeno devolve a sensação de controle.',
- conectiva:'Às vezes o desânimo pede companhia. Mande uma mensagem para alguém querido, mesmo que seja só “pensei em você”. Conexão também cura.',
- contemplativa:'Respeite o seu ritmo: descansar não é desistir. Escreva o que está sentindo, sem julgar, e depois dê um passo bem pequeno, como abrir a janela ou caminhar 5 minutos.',
- determinada:'Até quem é forte precisa recarregar. Hoje, celebre o que você já fez nesta semana e descanse sem culpa. O ritmo volta.'
-};
-const ORI_SERIOUS=`Sinto muito que você esteja passando por isso. Eu sou uma assistente simples e não substituo ajuda profissional.<br><br><b>Se você está em perigo ou pensando em se machucar, procure ajuda agora:</b><br>• <b>CVV</b>: ligue <a class="link" href="tel:188">188</a> (grátis, 24 horas) ou acesse <a class="link" href="https://cvv.org.br" target="_blank" rel="noopener">cvv.org.br</a><br>• <b>SAMU</b>: <a class="link" href="tel:192">192</a> · <b>Polícia</b>: <a class="link" href="tel:190">190</a><br><br>Você não precisa passar por isso sem apoio. Conversar com alguém de confiança e com um profissional de saúde mental faz diferença.`;
+const ORI_PAIN={ansiosa:{txt:'d2',v:'“Lancem sobre ele toda a sua ansiedade, porque ele tem cuidado de vocês.” (1 Pedro 5:7)',intro:'Sinto muito que você esteja ansiosa. Isso não é falta de fé: é um peso que Deus quer carregar com você.',after:'Se a ansiedade estiver forte ou frequente, procure também um psicólogo ou médico. Em crise, ligue 188 (CVV).'},
+ comparada:{txt:'d1',v:'“Cada um examine os próprios atos, e então poderá orgulhar-se de si mesmo, sem se comparar com ninguém.” (Gálatas 6:4)',intro:'A comparação rouba a alegria. Deus não te chamou para viver a história de outra pessoa.'},
+ cansada:{txt:'d5',v:'“Venham a mim, todos os que estão cansados e sobrecarregados, e eu darei descanso a vocês.” (Mateus 11:28)',intro:'Servir cansa, e até Jesus se retirava para descansar e orar.'},
+ perdao:{txt:'d8',v:'“Perdoem como o Senhor lhes perdoou.” (Colossenses 3:13)',intro:'Brigas e mágoas pesam muito no coração. Perdoar é um processo, e você não precisa fingir que não doeu.',after:'Se houver violência ou abuso, perdoar não significa continuar em perigo: procure ajuda.'}};
+const ORI_SERIOUS=`Sinto muito que você esteja passando por isso. Eu sou uma assistente simples e não substituo ajuda profissional, pastoral ou médica.<br><br><b>Se você está em perigo ou pensando em se machucar, procure ajuda agora:</b><br>• <b>CVV</b>: ligue <a class="link" href="tel:188">188</a> (grátis, 24 horas) ou acesse <a class="link" href="https://cvv.org.br" target="_blank" rel="noopener">cvv.org.br</a><br>• <b>SAMU</b>: <a class="link" href="tel:192">192</a> · <b>Polícia</b>: <a class="link" href="tel:190">190</a> · <b>Violência contra a mulher</b>: <a class="link" href="tel:180">180</a><br><br>Procure também uma liderança de confiança da sua igreja e um profissional de saúde mental. “O Senhor está perto dos que têm o coração quebrantado” (Salmos 34:18). Você não está sozinha.`;
 const ORI_KEYS=[
  ['ajuda',/suicid|me matar|quero morrer|vontade de morrer|me machucar|automutil|autoles|me cortar|nao aguento mais|sem saida|violencia|abuso|agredi|apanh/],
- ['estresse',/estress|ansios|ansiedade|nervos|pressao|sobrecarreg|preocupad|cansad|exaust/],
- ['decidir',/decid|decisao|escolh|duvida|indecis/],
- ['desanimo',/triste|desanim|sem animo|pra baixo|para baixo|sozinh|chorar|vazio|desmotiv|chatead/],
- ['ideia',/ideia|tedio|entediad|o que fazer|sugest|fazer hoje/],
- ['combina',/combina|roupa|musica|lugar|comida|viagem|livro|look/],
- ['frase',/frase|motiva|inspira/],
- ['forca',/forte|forca|qualidade|talento/],
+ ['ansiosa',/ansios|ansiedade|preocupad|nervos|medo do futuro|estress|pressao/],
+ ['comparada',/compar|inveja|insta|redes|melhor que eu/],
+ ['cansada',/cansad|exaust|esgotad|servir|ministerio|sobrecarreg/],
+ ['perdao',/perdo|perdao|briga|magoa|ferid|raiva|discuti/],
+ ['personagem',/personagem|mulher da biblia|parece comigo/],
+ ['ore',/ore|oracao|orar|reza/],
+ ['versiculo',/versiculo|palavra|biblia/],
+ ['ideia',/ideia|tedio|o que fazer|sugest|fazer hoje/],
  ['semana',/semana|progresso|sequencia|como estou|xp/],
  ['texto',/texto|ler|leitura|aprender|artigo/],
- ['ajuda',/ajuda|cvv|terapia|psicolog|socorro/],
- ['oi',/^(oi|ola|bom dia|boa tarde|boa noite|e ai|hey)\b/]
+ ['ajuda',/ajuda|cvv|terapia|psicolog|socorro|depress|triste/],
+ ['oi',/^(oi|ola|bom dia|boa tarde|boa noite|e ai|paz do senhor|graca e paz)\b/]
 ];
 const normTxt=t=>String(t||'').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').trim();
 function oriTopicOf(text){const t=normTxt(text);for(const [id,re] of ORI_KEYS)if(re.test(t))return id;return null}
@@ -1531,20 +1699,18 @@ const oriPick=arr=>arr[Math.floor(Math.random()*arr.length)];
 function oriAnswer(id,u){
  const p=prof(u);const nm=esc(first(u.name));
  const btn=(act,label,extra='')=>`<button class="btn btn-outline btn-sm mt-3" style="width:auto" data-act="${act}" ${extra}>${label}</button>`;
+ if(ORI_PAIN[id]){const o=ORI_PAIN[id];const t=TEXTS.find(x=>x.id===o.txt);
+  return `${o.intro}<br><br><i>${o.v}</i><br><br><b>Para você, ${p.name.toLowerCase()}:</b> ${(t&&t.you[p.id])||''}<br><br><b>Experimente hoje:</b> ${t?t.try:''}${o.after?`<br><br><span class="small muted">${o.after}</span>`:''}${t?btn('oriText','Ler: '+t.title,`data-id="${t.id}"`):''}`}
  switch(id){
-  case 'oi':return `Oi, ${nm}! Que bom te ver por aqui. Toque num assunto abaixo ou me escreva com suas palavras.`;
+  case 'oi':return `Oi, ${nm}! Graça e paz. Toque num assunto abaixo ou me escreva com suas palavras.`;
+  case 'versiculo':{const v=p.verses[dayOfYear()%p.verses.length];return `Seu versículo de hoje:<br><br><i>“${v.t}”</i><br><b>${v.r}</b><br><br>Leia o capítulo inteiro com calma e pergunte: o que Deus está me dizendo aqui?`}
+  case 'ore':{const pr=oriPick(p.prayers);return `Vamos orar juntas? Leia devagar:<br><br><i>“Pai, obrigada por me conhecer por inteiro. ${pr} Eu entrego a ti o meu dia, as minhas forças e as minhas fraquezas. Em nome de Jesus, amém.”</i>`}
+  case 'personagem':{const c=oriPick(p.chars);return `Uma personagem com traços parecidos com os seus é <b>${c.n}</b> (${c.ref}).<br><br>${c.story}<br><br>${c.lesson}`}
   case 'ideia':{const g=oriPick(GROUPS);const idea=(p.check&&p.check[g.id])||GENERIC_CHECK[g.id];const th=p.themes[isoWeek()%4];
-   return `Uma ideia com a cara de quem é ${p.name}: <b>${g.n.toLowerCase()} ${idea.charAt(0).toLowerCase()+idea.slice(1)}</b>.<br><br>E para combinar com o tema da semana, <i>${th.t}</i>: ${th.d}${btn('oriGo','Ir para o checklist','data-v="checklist"')}`}
-  case 'estresse':return `${ORI_STRESS[p.id]||ORI_STRESS.serena}<br><br><span class="small muted">Se o estresse estiver constante, vale conversar com um profissional de saúde.</span>`;
-  case 'decidir':return ORI_DECIDE[p.id]||ORI_DECIDE.serena;
-  case 'desanimo':return `${ORI_DOWN[p.id]||ORI_DOWN.serena}<br><br><span class="small muted">Se esse desânimo estiver durando semanas ou ficando pesado demais, procure um profissional de saúde. Se precisar conversar agora, o CVV atende de graça pelo <a class="link" href="tel:188">188</a>, 24 horas.</span>`;
-  case 'combina':{const list=ITEMS.map(it=>({...it,m:matchOf(it,p.id)})).sort((a,b)=>b.m-a.m).slice(0,8);const it=list[dayOfYear()%list.length];const cat=CATS.find(c=>c.id===it.c);
-   return `Hoje eu escolhi para você: <b>${it.n}</b> (${cat.n.toLowerCase()}, ${it.m}% combina).<br>${it.d} ${cap(it.w)}${btn('item','Ver detalhes',`data-id="${it.id}"`)}`}
-  case 'frase':return `“${oriPick(p.phrases)}”`;
-  case 'forca':{const f=oriPick(p.forces);return `Um dos seus pontos fortes é <b>${f.toLowerCase()}</b>. Como ${p.name}, isso aparece no seu jeito de ver a vida: ${p.short.charAt(0).toLowerCase()+p.short.slice(1)}<br><br>Hoje, use essa força de propósito em uma situação pequena e repare no resultado.`}
-  case 'semana':{const st=streakOf(u);const cl=u.checklist||{items:[]};const done=cl.items.filter(i=>i.done).length;const days=weekDays().filter(d=>u.days.includes(ymd(d))).length;const reads=u.read.length;
-   const msg=days>=5?'Que semana linda de constância!':days>=2?'Você está construindo um ritmo bonito.':'Toda semana pode recomeçar hoje, sem cobrança.';
-   return `Aqui vai o seu resumo:<br>• <b>${days}</b> ${days===1?'dia ativo':'dias ativos'} nesta semana<br>• Sequência atual: <b>${st}</b> ${st===1?'dia':'dias'}<br>• Checks de hoje: <b>${done}/${cl.items.length}</b><br>• Textos lidos: <b>${reads}</b><br><br>${msg}`}
+   return `Uma ideia para hoje: <b>${idea}</b> (${g.n.toLowerCase()}).<br><br>E para o tema da semana, <i>${th.t}</i>: ${th.d}${btn('oriGo','Ir para o checklist','data-v="checklist"')}`}
+  case 'semana':{const st=streakOf(u);const cl=u.checklist||{items:[]};const done=cl.items.filter(i=>i.done).length;const days=weekDays().filter(d=>u.days.includes(ymd(d))).length;
+   const msg=days>=5?'Que semana linda de constância!':days>=2?'Você está construindo um ritmo bonito com Deus.':'Toda semana pode recomeçar hoje, sem culpa.';
+   return `Aqui vai o seu resumo:<br>• <b>${days}</b> ${days===1?'dia ativo':'dias ativos'} nesta semana<br>• Sequência atual: <b>${st}</b> ${st===1?'dia':'dias'}<br>• Checks de hoje: <b>${done}/${cl.items.length}</b><br>• Textos lidos: <b>${u.read.length}</b><br><br>${msg}`}
   case 'texto':{const vis=visibleTexts(u);const t=vis.find(x=>!u.read.includes(x.id))||vis[0];
    return t?`Sugiro este: <b>${t.title}</b> (${t.min} min de leitura).${btn('oriText','Ler agora',`data-id="${t.id}"`)}`:'Abra a aba Aprender para ver os textos.'}
   case 'ajuda':return ORI_SERIOUS;
@@ -1561,12 +1727,12 @@ function oriSay(id,label){
 function oriModal(){
  const u=U();if(!u)return;
  if(!ui.chat||!ui.chat.length){const h=new Date().getHours();const g=h>=5&&h<12?'Bom dia':h>=12&&h<18?'Boa tarde':'Boa noite';
-  ui.chat=[{me:false,html:`${g}, ${esc(first(u.name))}! Eu sou a <b>Ori</b>, sua assistente no Orivie. Posso te dar ideias, dicas para o seu perfil e um resumo da sua semana. Toque num assunto ou escreva abaixo.`}]}
+  ui.chat=[{me:false,html:`${g}, ${esc(first(u.name))}! Eu sou a <b>Ori</b>, sua assistente no Orivie. Posso te dar um versículo, orar com você, conversar sobre o que pesa no coração e indicar textos para o seu temperamento. Toque num assunto ou escreva abaixo.`}]}
  openModal(()=>`<div class="flex items-center justify-between gap-2"><div class="flex items-center gap-3">${leafLogo(40)}<div><h2 class="h2" style="line-height:1.1">Ori</h2><p class="small muted" style="font-weight:400">Sua assistente · respostas prontas</p></div></div><button class="btn-x" data-act="closeModal" aria-label="Fechar">${ic('x',22)}</button></div>
   <div class="chat-log mt-4" aria-live="polite">${ui.chat.map(m=>`<div class="msg ${m.me?'me':'ori'}">${m.html}</div>`).join('')}</div>
   ${oriChips()}
   <form data-form="ori" class="ori-input mt-4" novalidate><label class="sr-only" for="oriT">Escreva para a Ori</label><input id="oriT" name="t" class="input" maxlength="200" placeholder="Escreva aqui..." autocomplete="off"><button class="btn btn-primary" type="submit" style="width:auto;padding:0 18px" aria-label="Enviar">Enviar</button></form>
-  <p class="small muted mt-3" style="font-weight:400">A Ori não é uma inteligência artificial e não substitui terapia. Em crise, ligue 188 (CVV).</p>`,{full:true});
+  <p class="small muted mt-3" style="font-weight:400">A Ori não é uma inteligência artificial e não substitui pastor(a), liderança, terapia ou tratamento médico. Em crise, ligue 188 (CVV).</p>`,{full:true});
  setTimeout(()=>{const s=LAYER().querySelector('.sheet');if(s)s.scrollTop=s.scrollHeight},30);
 }
 
@@ -1587,7 +1753,7 @@ function weekTrail(u){
 function tHoje(u){
  const p=prof(u);const h=new Date().getHours();
  const g=h>=5&&h<12?'Bom dia':h>=12&&h<18?'Boa tarde':'Boa noite';
- const phrase=p.phrases[dayOfYear()%p.phrases.length];const th=p.themes[isoWeek()%4];
+ const phrase=p.phrases[dayOfYear()%p.phrases.length];const th=p.themes[isoWeek()%4];const vd=p.verses[dayOfYear()%p.verses.length];const pr=p.prayers[dayOfYear()%p.prayers.length];
  const cl=u.checklist;const done=cl.items.filter(i=>i.done).length,tot=cl.items.length;const pct=tot?Math.round(done/tot*100):0;
  const xpT=u.xpLog[today()]||0;const ms=missions(u);const allM=ms.every(m=>m.cur>=m.max);const opened=!!u.chest[today()];
  const d=new Date();const dateL=cap(`${DIAS_L[d.getDay()]}, ${d.getDate()} de ${MESES[d.getMonth()]}`);
@@ -1595,8 +1761,8 @@ function tHoje(u){
  const checkMsg=done===0?'Comece por uma atividade pequena. Já conta!':done===tot?'Tudo marcado! Bora concluir o dia?':`Faltam ${tot-done}. Você está indo muito bem!`;
  return `
  <div class="text-center"><h1 class="h1">Hoje</h1><p class="muted">${dateL}</p></div>
- <section class="ori-card mt-5"><div style="flex:1"><h2>${g}, ${esc(first(u.name))}!</h2><p class="mt-1">Frase do dia:</p><p class="ph">“${phrase}”</p></div></section>
- <section class="mt-6"><span class="tag tag-terra">Tema da semana</span><h2 class="h2 mt-2">${th.t}</h2><p class="muted mt-1">${th.d}</p></section>
+ <section class="ori-card mt-5"><div style="flex:1"><h2>${g}, ${esc(first(u.name))}!</h2><p class="mt-2">Versículo do dia:</p><p class="ph">“${vd.t}”</p><p class="small mt-1" style="font-weight:600">${vd.r}</p><p class="mt-3" style="border-top:1px solid rgba(58,46,40,.15);padding-top:10px"><b>Oração do dia:</b> ${pr}</p></div></section>
+ <section class="mt-6"><span class="tag tag-terra">Tema da semana</span><h2 class="h2 mt-2">${th.t}</h2><p class="muted mt-1">${th.d}</p>${th.txt&&TEXTS.some(x=>x.id===th.txt)?`<button class="btn btn-outline btn-sm mt-3" style="width:auto" data-act="oriText" data-id="${th.txt}">Ler sobre isso</button>`:''}</section>
  <section class="mt-6"><div class="flex items-center justify-between gap-2"><h2 class="h2">Meus checks</h2><span class="c-sage" style="font-weight:500">${done}/${tot} concluídos</span></div>
   <div class="flex items-center gap-3 mt-3"><div class="prog" role="progressbar" aria-valuenow="${pct}" aria-valuemin="0" aria-valuemax="100" aria-label="Checks de hoje"><i style="width:${pct}%"></i></div><span class="pct">${pct}%</span></div>
   <div class="mt-2">${cl.items.slice(0,4).map(i=>`<button class="mini-check ${i.done?'on':''}" role="checkbox" aria-checked="${i.done}" data-act="toggleCheck" data-id="${i.id}"><span class="dot">${i.done?ic('tick',16):''}</span><span><span class="block">${esc(i.t)}</span>${i.done?'':'<span class="block small muted" style="font-weight:400">Pendente</span>'}</span>${i.done?'<span class="ok">Concluído</span>':''}</button>`).join('')}</div>
@@ -1627,7 +1793,7 @@ function tCombina(u){
  let list=ITEMS.map(it=>({...it,m:matchOf(it,p.id)}));
  if(f==='favoritos')list=list.filter(it=>u.favs.includes(it.id));else if(f!=='todos')list=list.filter(it=>it.c===f);
  list.sort((a,b)=>b.m-a.m);
- return `<h1 class="display">Combina com você</h1><p class="body mt-2">Escolhas pensadas para quem é ${p.name}.</p>
+ return `<h1 class="display">Combina com você</h1><p class="body mt-2">${p.why.replace(':','')} e com a sua fé.</p>
  <div class="chips mt-4" role="group" aria-label="Filtros">${CATS.map(c=>`<button class="chip-f ${f===c.id?'on':''}" aria-pressed="${f===c.id}" data-act="comb" data-v="${c.id}">${ic(c.ic,18)}${c.n}${c.id==='favoritos'?` <b>${u.favs.length}</b>`:''}</button>`).join('')}</div>
  <div class="flex flex-col gap-4 mt-3">${list.length?list.map(it=>itemCard(it,u,p)).join(''):
   `<div class="empty card">${mascot('think',96)}<h2 class="h2 mt-3">Nenhum favorito ainda</h2><p class="muted mt-1">Toque em um item e favorite o que mais tem a sua cara.</p><button class="btn btn-primary mt-5" data-act="comb" data-v="todos">Ver todos</button></div>`}</div>`;
@@ -1824,6 +1990,16 @@ function ticket(ctx,x,y,rot,l1,l2){
  ctx.fillStyle='#4A3A14';ctx.textAlign='center';ctx.textBaseline='middle';ctx.font='800 28px "DM Sans", Arial, sans-serif';ctx.fillText(l1,0,-14);ctx.fillText(l2,0,20);
  ctx.restore();
 }
+function wrapLines(ctx,text,maxW){const words=String(text).split(/\s+/);const lines=[];let cur='';words.forEach(w=>{const t=cur?cur+' '+w:w;if(ctx.measureText(t).width>maxW&&cur){lines.push(cur);cur=w}else cur=t});if(cur)lines.push(cur);return lines}
+function verseNote(ctx,x,y,rot,text,ref){
+ ctx.save();ctx.translate(x,y);ctx.rotate(rot);const w=360,h=270;shadowOn(ctx,16,6,.28);ctx.fillStyle='#FBF6EA';ctx.fillRect(-w/2,-h/2,w,h);shadowOff(ctx);
+ ctx.strokeStyle='rgba(168,184,160,.5)';ctx.lineWidth=2;for(let yy=-h/2+60;yy<h/2-20;yy+=34){ctx.beginPath();ctx.moveTo(-w/2+18,yy);ctx.lineTo(w/2-18,yy);ctx.stroke()}
+ let size=40,lines;for(;size>=24;size-=2){ctx.font=`700 ${size}px "Caveat", "Segoe Script", cursive`;lines=wrapLines(ctx,'“'+text+'”',w-50);if(lines.length*size*1.08<=h-90)break}
+ ctx.fillStyle='#2A211C';ctx.textAlign='center';ctx.textBaseline='middle';const lh=size*1.08;const top=-h/2+30+((h-90)-lines.length*lh)/2+lh/2;
+ lines.forEach((l,i)=>ctx.fillText(l,0,top+i*lh));
+ ctx.font='700 22px "DM Sans", Arial, sans-serif';ctx.fillStyle='#94553F';ctx.fillText(ref.toUpperCase(),0,h/2-32);
+ ctx.restore();tape(ctx,x-8,y-h/2+6,140,40,rot-.08,'#F5D35E');
+}
 function fish(ctx,x,y,len,rot){
  ctx.save();ctx.translate(x,y);ctx.rotate(rot);shadowOn(ctx,6,3,.2);const h=len*.2;
  ctx.fillStyle='#6E95CC';ctx.beginPath();ctx.moveTo(-len/2,0);ctx.quadraticCurveTo(-len*.1,-h,len*.36,-h*.25);ctx.lineTo(len/2,-h*.75);ctx.lineTo(len*.44,0);ctx.lineTo(len/2,h*.75);ctx.lineTo(len*.36,h*.25);ctx.quadraticCurveTo(-len*.1,h,-len/2,0);ctx.closePath();ctx.fill();shadowOff(ctx);
@@ -1869,8 +2045,8 @@ async function drawBoard(cv,b){
   polaroid(ctx,pick(6),560,1680,380,300,-.02+j()*.04,String(b.title||'').trim()||'minha semana',72,'#C9D5C3');
   /* adesivos fixos */
   [[150,1520],[170,1585],[150,1650]].forEach(([fx,fy])=>fish(ctx,fx,fy,230,-.05+j()*.06));
-  ticket(ctx,860,1680,-.22,'TENHA UM','BOM DIA');
-  paperStar(ctx,560,190,34,.2);paperStar(ctx,700,650,30,-.3);paperStar(ctx,90,1820,30,.1);starCluster(ctx,900,1760,.9);
+  {let vv=null;try{const uu=U();const pp=prof(uu);vv=pp.verses[isoWeek()%pp.verses.length]}catch(e){}if(!vv)vv={t:'Eu te louvo porque me fizeste de modo especial e admirável.',r:'Salmos 139:14'};verseNote(ctx,830,1690,-.07,vv.t,vv.r)}
+  paperStar(ctx,560,190,34,.2);paperStar(ctx,700,650,30,-.3);paperStar(ctx,90,1820,30,.1);paperStar(ctx,1030,1860,26,.4);
   /* adesivos escolhidos */
   const spots=[[80,820],[1000,860],[540,560],[1000,1550],[60,1300],[540,1880],[380,1240],[700,1240]].sort(()=>r()-.5);
   stk.forEach(({st,im},i)=>{const [px,py]=spots[i%spots.length];const w=st.size*(.6+r()*.2),h=w*(st.ar||1);
@@ -1887,7 +2063,7 @@ function boardBlob(b){return new Promise(res=>{try{const c=document.createElemen
 function tBoard(u){
  const b=u.board;const n=b.photos.length;const full=n>=BOARD_MAX;
  const ph=['#C9D5C3','#EBC2B2','#EAE2D9','#DCD3C6'];
- return `<h1 class="display">Seu universo da semana</h1><p class="body mt-2">Imagens que refletem o seu momento. A colagem se monta sozinha.</p>
+ return `<h1 class="display">Mural da fé da semana</h1><p class="body mt-2">Suas fotos e o versículo da semana viram uma colagem.</p>
  <div class="grid grid-cols-2 gap-3 mt-5">${n?b.photos.map((p,i)=>`<div class="bcell2"><img src="${p}" alt="Foto ${i+1} do board"><button class="bdel" data-act="delPhoto" data-i="${i}" aria-label="Remover foto ${i+1}">${ic('x',14)}</button></div>`).join('')
   :ph.map(c=>`<label class="bcell2 empty-ph" for="bfile" style="background:${c}">${ic('camera',28)}</label>`).join('')}</div>
  <input type="file" id="bfile" accept="image/*" multiple class="sr-only" data-file="board" ${full?'disabled':''}>
@@ -1939,9 +2115,9 @@ function boardModal(id){
 function tLearn(u){
  if(ui.reading)return readView(u,ui.reading);
  const p=prof(u);const vis=visibleTexts(u);const readN=vis.filter(t=>u.read.includes(t.id)).length;const pct=Math.round(readN/vis.length*100);
- const f=ui.learn||'todos';const list=f==='todos'?vis:vis.filter(t=>t.cat===f);const cur=list.find(t=>!u.read.includes(t.id));
+ const f=ui.learn||'todos';const list=f==='todos'?vis:vis.filter(t=>(t.cats||[t.cat]).includes(f));const cur=list.find(t=>!u.read.includes(t.id));
  const offs=[0,45,70,45,0,-45,-70,-45];
- return `<div class="flex items-center justify-between gap-3"><div><p class="muted">Sua personalidade</p><h1 class="h1">${p.name}</h1></div><button class="btn btn-outline btn-sm" data-act="guide" data-v="aprender">${ic('bookc',16)} Guia</button></div>
+ return `<div class="flex items-center justify-between gap-3"><div><p class="muted">Sua personalidade</p><h1 class="h1">${pname(u)}</h1></div><button class="btn btn-outline btn-sm" data-act="guide" data-v="aprender">${ic('bookc',16)} Guia</button></div>
  <div class="mt-5"><p class="text-center">Você leu ${readN} de ${vis.length} textos</p><div class="flex items-center gap-3 mt-2"><span class="pct">${pct}%</span><div class="prog" role="progressbar" aria-valuenow="${pct}" aria-valuemin="0" aria-valuemax="100" aria-label="Textos lidos"><i style="width:${pct}%"></i></div></div></div>
  <div class="chips mt-4" role="group" aria-label="Filtros de tema">${LCATS.map(c=>`<button class="chip-f ${f===c.id?'on':''}" aria-pressed="${f===c.id}" data-act="learn" data-v="${c.id}">${c.n}</button>`).join('')}</div>
  ${list.length?`
@@ -1964,9 +2140,11 @@ function readView(u,id){
  <div class="flex gap-2 mt-4 flex-wrap"><span class="tag">${LCATS.find(c=>c.id===t.cat).n}</span><span class="tag tag-mel">${t.min} min de leitura</span>${rd?`<span class="tag tag-terra">${ic('tick',12)} Lido</span>`:''}</div>
  <h1 class="h1 mt-3">${t.title}</h1>
  <article class="reading mt-4">${t.body.map(x=>`<p>${x}</p>`).join('')}</article>
- <div class="whybox mt-2"><div class="speech">${mascot('happy',56)}<div class="bubble"><b>Para você, ${p.name}:</b><br>${(t.you&&t.you[p.id])||''}</div></div></div>
+ <div class="whybox mt-2"><div class="speech">${mascot('happy',56)}<div class="bubble"><b>Para você, ${p.name.toLowerCase()}:</b><br>${(t.you&&t.you[p.id])||''}</div></div></div>
  ${t.try?`<div class="card mt-4" style="background:var(--mel-lt);border-color:var(--mel)"><span class="tag tag-mel">Experimente hoje</span><p class="mt-2" style="font-weight:600">${t.try}</p></div>`:''}
- ${t.src?`<p class="small muted mt-4" style="font-weight:500"><b>Base científica:</b> ${t.src}</p>`:''}
+ ${t.pray?`<div class="card mt-4" style="background:#E4EBE0;border:0"><span class="tag">Oração</span><p class="mt-2" style="font-style:italic">${t.pray}</p></div>`:''}
+ ${t.cat==='temperamentos'?`<p class="small muted mt-4" style="font-weight:400">${TEMP_NOTE}</p>`:''}
+ ${t.src?`<p class="small muted mt-4" style="font-weight:500"><b>Fontes:</b> ${t.src} <span style="font-weight:400">${BIBLE_NOTE}</span></p>`:''}
  <button class="btn ${rd?'btn-sage':'btn-primary'} mt-6" data-act="markRead" data-id="${id}" aria-pressed="${rd}">${rd?`${ic('tick',18)} Lido · toque para desmarcar`:'Marcar como lido'}</button>
  ${next?`<button class="btn btn-outline mt-3" data-act="openText" data-id="${next.id}">Próximo: ${next.title}</button>`:''}`;
 }
@@ -1986,8 +2164,8 @@ function tEu(u){
  <section class="card mt-5"><div class="prof-card">
   <div class="avatar">${u.photo?`<img src="${u.photo}" alt="Sua foto de perfil">`:`<span aria-hidden="true">${esc(first(u.name).charAt(0).toUpperCase()||'O')}</span>`}<label for="afile" class="avatar-edit" aria-label="Trocar foto">${ic('camera',20)}</label></div>
   <input type="file" id="afile" accept="image/*" class="sr-only" data-file="avatar">
-  <div style="min-width:0"><h2 class="h2" style="font-size:22px;overflow-wrap:anywhere">${esc(u.name)}</h2><span class="pill mt-2">${p.name}</span><p class="small muted mt-1" style="font-weight:400;overflow-wrap:anywhere">${esc(u.email)}</p></div></div>
-  <p class="mt-3">${p.short}</p></section>
+  <div style="min-width:0"><h2 class="h2" style="font-size:22px;overflow-wrap:anywhere">${esc(u.name)}</h2><span class="pill mt-2">${pname(u)}</span><p class="small muted mt-1" style="font-weight:400;overflow-wrap:anywhere">${esc(u.email)}</p></div></div>
+  <p class="mt-3">${p.short}</p><p class="small mt-3" style="font-weight:500"><span class="tag">Fruto em foco</span> ${p.fruit.n}</p></section>
   <p class="paid mt-4">${ic('check',20)} Acesso ativo · 1 ano · Pago ${fmtBRL(PAY.price)}${u.payDate?` em ${fmtBR(u.payDate)}`:''}</p>
  <section class="grid grid-cols-2 gap-3 mt-6">
   <div class="stile">${ic('flame',28)}<div><b>${st}</b><span>Dias seguidos</span></div></div>
@@ -1999,10 +2177,10 @@ function tEu(u){
  <section class="mt-6"><div class="flex justify-between items-center"><h2 class="h2">Conquistas</h2><span class="tag tag-mel">${nAch}/${ACH.length}</span></div>
   <div class="grid grid-cols-3 gap-3 mt-3">${ACH.map(a=>{const on=u.ach.includes(a.id);return `<button class="badge ${on?'':'locked'}" data-act="achInfo" data-id="${a.id}" aria-label="${a.n}${on?'':' (bloqueada)'}"><span class="badge-ic">${ic(on?a.ic:'lock',28,on?'':'c-gray')}</span>${a.n}</button>`}).join('')}</div></section>
  <section class="mt-6 flex flex-col gap-3 eu-menu">
-  ${menuTile('metas','target','Metas e hábitos',`${u.goals.length} cadastrada${u.goals.length===1?'':'s'} · ${u.goals.filter(g=>g.done).length} concluída${u.goals.filter(g=>g.done).length===1?'':'s'}`)}
+  ${menuTile('metas','target','Metas e hábitos espirituais',`${u.goals.length} cadastrada${u.goals.length===1?'':'s'} · ${u.goals.filter(g=>g.done).length} concluída${u.goals.filter(g=>g.done).length===1?'':'s'}`)}
   ${menuTile('favs','heart','Meus favoritos',`${u.favs.length} ite${u.favs.length===1?'m':'ns'}`)}
   ${menuTile('editPrefs','brush','Editar escolhas',`${u.prefs.length} temas selecionados`)}
-  ${menuTile('seeResult','sparkle','Ver meu resultado',p.name)}
+  ${menuTile('seeResult','sparkle','Ver meu resultado',pname(u))}
   ${menuTile('retake','refresh','Refazer teste','Seu pagamento e seus dados continuam salvos')}
   ${menuTile('editProfile','pencil','Editar perfil','Nome, nascimento e senha')}
   ${menuTile('toggleSound','sound','Sons e vibração',u.sound?'Ligados':'Desligados',`<span class="switch ${u.sound?'on':''}" role="switch" aria-checked="${u.sound}"></span>`)}
@@ -2172,8 +2350,8 @@ async function copyText(txt){
 function pickAnswer(k){const u=U();if(!u||ui.q==null)return;u.answers[ui.q]=k;save();ui.justPicked=true;sfx('tap');render()}
 function finishTest(){
  const u=U();const r=calcProfile(u.answers);
- u.profile=r.profile;u.scores=r.scores;u.testDone=true;u.testDate=today();u.resultSeen=false;ui.q=null;save();
- const tips=['Misturando suas respostas com carinho...','Regando sua sementinha de personalidade...','Conectando os pontinhos de quem você é...'];
+ u.profile=r.profile;u.profile2=r.profile2;u.scores=r.scores;u.migrated=false;u.testDone=true;u.testDate=today();u.resultSeen=false;ui.q=null;save();
+ const tips=['Olhando suas respostas com carinho...','Descobrindo o jeito com que Deus te criou...','Conectando os pontinhos de quem você é...'];
  openModal(()=>`<div class="text-center" style="padding:16px 0">${mascot('think',110,'floaty')}<h2 class="h2 mt-3">${tips[Math.floor(Math.random()*tips.length)]}</h2><div class="dots mt-5"><i></i><i></i><i></i></div></div>`,{center:true,lock:true});
  setTimeout(()=>{closeModal();if(!u.testXP){u.testXP=true;addXP(50)}markActive();checkAch();save();go('personalizacao')},1600);
 }
@@ -2205,7 +2383,7 @@ const ACT={
  afterPay:()=>{closeModal();go('teste')},
  answer:el=>pickAnswer(el.dataset.k),
  qBack:()=>{if(ui.q>0){ui.q--;sfx('tap');render()}},
- qNext:()=>{const u=U();if(!u.answers[ui.q])return;sfx('tap');if(ui.q<9){ui.q++;render();window.scrollTo(0,0)}else finishTest()},
+ qNext:()=>{const u=U();if(!u.answers[ui.q])return;sfx('tap');if(ui.q<N_Q-1){ui.q++;render();window.scrollTo(0,0)}else finishTest()},
  quitTest:()=>openModal(()=>`<div class="text-center">${mascot('sad',100)}<h2 class="h2 mt-2">Não desista!</h2><p class="muted mt-2">Quer fazer uma pausa? Suas respostas ficam salvas e você continua de onde parou.</p></div><div class="flex flex-col gap-3 mt-6"><button class="btn btn-primary" data-act="closeModal">Continuar teste</button><button class="btn btn-ghost" data-act="logout">Pausar e sair</button></div>`,{center:true}),
  prefToggle:el=>{const v=el.dataset.v;ui.prefs=ui.prefs.includes(v)?ui.prefs.filter(x=>x!==v):[...ui.prefs,v];sfx('tap');render()},
  prefsAll:()=>{ui.prefs=[...PREFS];render()},
@@ -2232,7 +2410,7 @@ const ACT={
  goChecklist:()=>{closeModal();go('app-checklist')},
  guide:el=>{const v=el.dataset.v;
   if(v==='semana')infoBox({title:'Como funciona sua semana',text:'Cada nó é um dia. Ele acende quando você conclui o dia no Checklist, lê um texto no Aprender, salva um board ou faz o teste. Basta uma atividade por dia para manter sua sequência florescendo.',mood:'wave'});
-  else openModal(()=>`<div class="text-center">${mascot('happy',100)}<h2 class="h2 mt-2">Sua trilha de leitura</h2><p class="muted mt-2">Aqui ficam os textos dos temas que você escolheu. Leia no seu ritmo: cada texto lido vale +15 XP e conta para a sua sequência. Quer outros temas? Edite suas escolhas.</p></div><div class="flex flex-col gap-3 mt-6"><button class="btn btn-primary" data-act="closeModal">Entendi</button><button class="btn btn-ghost" data-act="editPrefs">Editar escolhas</button></div>`,{center:true})},
+  else openModal(()=>`<div class="text-center">${mascot('happy',100)}<h2 class="h2 mt-2">Sua trilha de leitura</h2><p class="muted mt-2">Aqui ficam textos sobre temperamentos, mulheres da Bíblia e as dores do dia a dia, a partir dos temas que você escolheu. Leia no seu ritmo: cada texto lido vale +15 XP. Os 4 temperamentos são uma ferramenta antiga de autoconhecimento, não uma verdade bíblica nem científica.</p></div><div class="flex flex-col gap-3 mt-6"><button class="btn btn-primary" data-act="closeModal">Entendi</button><button class="btn btn-ghost" data-act="editPrefs">Editar escolhas</button></div>`,{center:true})},
  comb:el=>{ui.comb=el.dataset.v;sfx('tap');render()},
  item:el=>itemModal(el.dataset.id),
  fav:el=>{const u=U();const id=el.dataset.id;
@@ -2295,7 +2473,7 @@ const ACT={
   confirmBox({title:'Excluir meta?',text:`“${esc(g.t)}” vai sair da sua lista.`,ok:'Excluir',danger:true,onOk:()=>{u.goals=u.goals.filter(x=>x.id!==g.id);save();render();metasModal();toast('Excluída.')}})},
  editPrefs:()=>{closeModal();ui.prefs=null;go('personalizacao')},
  seeResult:()=>go('resultado'),
- retake:()=>confirmBox({title:'Refazer o teste?',text:'Suas respostas e seu perfil atual serão substituídos. Pagamento, checklist, boards, metas e favoritos continuam salvos.',ok:'Refazer teste',cancel:'Agora não',mood:'think',onOk:()=>{const u=U();u.answers=Array(10).fill(null);u.testDone=false;u.profile=null;u.scores={};u.prefsDone=false;u.resultSeen=false;ui.q=0;save();go('teste')}}),
+ retake:()=>confirmBox({title:'Refazer o teste?',text:'Suas respostas e seu perfil atual serão substituídos. Pagamento, checklist, boards, metas e favoritos continuam salvos.',ok:'Refazer teste',cancel:'Agora não',mood:'think',onOk:()=>{const u=U();u.answers=Array(N_Q).fill(null);u.testDone=false;u.profile=null;u.profile2=null;u.scores={};u.prefsDone=false;u.resultSeen=false;ui.q=0;save();go('teste')}}),
  editProfile:()=>profileModal(),
  toggleSound:()=>{const u=U();u.sound=!u.sound;save();render();if(u.sound)sfx('ok');toast(u.sound?'Sons e vibração ligados.':'Sons e vibração desligados.')},
  achInfo:el=>{const u=U();const a=ACH.find(x=>x.id===el.dataset.id);if(!a)return;const on=u.ach.includes(a.id);
