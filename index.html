@@ -399,7 +399,7 @@ body{font-weight:400}
 .seg button.on{background:var(--card);color:var(--texto);box-shadow:inset 0 -3px 0 var(--salvia)}
 /* falas da Ori */
 .bubble{background:var(--card);border:1px solid var(--line);font-weight:400}
-.bubble::before{background:var(--card);border-color:var(--line)}
+.bubble::before{display:none}
 .ori-card{display:flex;align-items:center;gap:14px;padding:20px 18px;border-radius:22px;background:#C3CFBC}
 .ori-card h2{font-weight:700;font-size:24px}
 .ori-card p{font-size:16px;line-height:1.45}
@@ -846,7 +846,10 @@ function ic(n,s=24,cls=''){return `<svg class="ic ${cls}" width="${s}" height="$
 /* Evolução da Ori pelo XP: Semente > Broto > Flor > Frutinha */
 const ORI_STAGES=[{id:'semente',n:'Semente',min:0},{id:'broto',n:'Broto',min:100},{id:'flor',n:'Flor',min:300},{id:'fruta',n:'Frutinha',min:600}];
 function oriStage(xp){try{if(xp==null){const u=U();if(!u)return 1;xp=u.xp}xp=Number(xp)||0;let k=0;ORI_STAGES.forEach((s,i)=>{if(xp>=s.min)k=i});return k}catch(e){return 1}}
+/* A dona do app pediu para tirar a Ori: ilustrações pequenas somem e as grandes viram o logo de folha */
+const ORI_ON=false;
 function mascot(mood='happy',size=96,extra=''){
+ if(!ORI_ON)return size>=100?`<span class="emblem ${extra==='floaty'?'floaty':''}" style="display:inline-grid">${leafLogo(Math.round(size*.62))}</span>`:'';
  const {T,TE,TS,SA,SS,ME,BE}=C;const stg=oriStage();
  /* Ori minimalista: semente lisa, rosto discreto, sem braços nem pés */
  const ey=mood==='think'?70:73,ex=mood==='think'?2:0;
@@ -1039,7 +1042,7 @@ function addXP(n){
  const u=U();if(!u||!n)return;const t=today();
  const before=u.xpLog[t]||0;const st0=oriStage(u.xp);
  u.xp+=n;u.xpLog[t]=before+n;
- const st1=oriStage(u.xp);if(st1>st0)setTimeout(()=>{toast(`${ic('sparkle',20)} A Ori evoluiu! Agora ela é <b>${ORI_STAGES[st1].n}</b>.`);sfx('win')},1400);
+ const st1=oriStage(u.xp);if(ORI_ON&&st1>st0)setTimeout(()=>{toast(`${ic('sparkle',20)} A Ori evoluiu! Agora ela é <b>${ORI_STAGES[st1].n}</b>.`);sfx('win')},1400);
  xpPill(n);
  if(before<DAILY_GOAL&&before+n>=DAILY_GOAL)setTimeout(()=>toast(`${ic('target',20)} Meta do dia batida! Que orgulho.`),900);
 }
@@ -1227,8 +1230,7 @@ function field(name,label,type,ph,ac,val=''){return `<div><label class="lbl-f" f
 /* 1. Boas-vindas */
 function vWelcome(){return `<main class="screen center-col" style="padding-top:44px">
  ${bigLogo()}
- <div class="welcome-art mt-6">${mascot('wave',120,'floaty')}</div>
- <p class="text-center muted mb-5" style="max-width:300px">Oi! Eu sou a <b style="color:var(--texto)">Ori</b>, sua sementinha guia.</p>
+ <div class="mt-8"></div>
  <h1 class="display text-center">Descubra quem você é, do seu jeito</h1>
  <p class="lead text-center mt-3">Um espaço para conhecer sua essência e construir uma vida que tenha a sua identidade.</p>
  <p class="small muted mt-5" style="font-weight:400">10 perguntas · 3 minutos · 6 perfis</p>
@@ -1460,7 +1462,7 @@ function tHoje(u){
  const checkMsg=done===0?'Comece por uma atividade pequena. Já conta!':done===tot?'Tudo marcado! Bora concluir o dia?':`Faltam ${tot-done}. Você está indo muito bem!`;
  return `
  <div class="text-center"><h1 class="h1">Hoje</h1><p class="muted">${dateL}</p></div>
- <section class="ori-card mt-5">${mascot(mood,92)}<div style="flex:1"><h2>${g}, ${esc(first(u.name))}!</h2><p class="mt-1">Frase do dia da Ori:</p><p class="ph">“${phrase}”</p></div></section>
+ <section class="ori-card mt-5"><div style="flex:1"><h2>${g}, ${esc(first(u.name))}!</h2><p class="mt-1">Frase do dia:</p><p class="ph">“${phrase}”</p></div></section>
  <section class="mt-6"><span class="tag tag-terra">Tema da semana</span><h2 class="h2 mt-2">${th.t}</h2><p class="muted mt-1">${th.d}</p></section>
  <section class="mt-6"><div class="flex items-center justify-between gap-2"><h2 class="h2">Meus checks</h2><span class="c-sage" style="font-weight:500">${done}/${tot} concluídos</span></div>
   <div class="flex items-center gap-3 mt-3"><div class="prog" role="progressbar" aria-valuenow="${pct}" aria-valuemin="0" aria-valuemax="100" aria-label="Checks de hoje"><i style="width:${pct}%"></i></div><span class="pct">${pct}%</span></div>
@@ -1857,10 +1859,6 @@ function tEu(u){
   <div style="min-width:0"><h2 class="h2" style="font-size:22px;overflow-wrap:anywhere">${esc(u.name)}</h2><span class="pill mt-2">${p.name}</span><p class="small muted mt-1" style="font-weight:400;overflow-wrap:anywhere">${esc(u.email)}</p></div></div>
   <p class="mt-3">${p.short}</p></section>
   <p class="paid mt-4">${ic('check',20)} Acesso ativo · 1 ano · Pago ${fmtBRL(PAY.price)}${u.payDate?` em ${fmtBR(u.payDate)}`:''}</p>
- ${(()=>{const k=oriStage(u.xp),cur=ORI_STAGES[k],nx=ORI_STAGES[k+1];const pc=nx?Math.round((u.xp-cur.min)/(nx.min-cur.min)*100):100;
-  return `<section class="card mt-6"><div class="flex items-center gap-3">${mascot('happy',64)}<div style="flex:1"><span class="tag tag-mel">Nível da Ori</span><h2 class="h2 mt-1">${cur.n}</h2>
-  <div class="prog mel mt-2" role="progressbar" aria-valuenow="${pc}" aria-valuemin="0" aria-valuemax="100" aria-label="Progresso até o próximo nível"><i style="width:${pc}%"></i></div>
-  <p class="small muted mt-2">${nx?`Faltam ${nx.min-u.xp} XP para virar ${nx.n}.`:'Nível máximo! A Ori virou frutinha.'}</p></div></div></section>`})()}
  <section class="grid grid-cols-2 gap-3 mt-6">
   <div class="stile">${ic('flame',28)}<div><b>${st}</b><span>Dias seguidos</span></div></div>
   <div class="stile">${ic('star',28)}<div><b>${u.xp}</b><span>XP total</span></div></div>
