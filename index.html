@@ -562,7 +562,8 @@ body,#app{background:#FAF8F3;color:#2E2E2E}
 .pin-tabs::-webkit-scrollbar{display:none}
 .pin-tabs button{flex:none;padding:10px 0 12px;font-size:17px;font-weight:600;color:#8B8A94;border-bottom:3px solid transparent;border-radius:0}
 .pin-tabs button.on{color:#2E2E2E;border-bottom-color:#2E2E2E}
-.masonry{column-count:2;column-gap:12px}
+.masonry{display:grid;grid-template-columns:1fr 1fr;gap:12px;align-items:start}
+.mcol{min-width:0}
 .pin{break-inside:avoid;margin-bottom:16px;display:inline-block;width:100%}
 .pin-img{position:relative;display:grid;place-items:center;width:100%;border-radius:22px;overflow:hidden;color:#2E2E2E}
 .pin-img img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
@@ -747,25 +748,25 @@ const PREFS=['Temperamentos','Mulheres da Bíblia','Ansiedade','Identidade','Com
 const CATS=[{id:'todos',n:'Tudo',ic:'sparkle'},{id:'louvores',n:'Louvores',ic:'music'},{id:'livros',n:'Livros',ic:'books'},{id:'devocionais',n:'Devocionais',ic:'book'},{id:'podcasts',n:'Podcasts',ic:'sound'},{id:'lugares',n:'Lugares',ic:'pin'},{id:'estilo',n:'Roupas',ic:'shirt'},{id:'comidas',n:'Comidas',ic:'food'},{id:'favoritos',n:'Favoritos',ic:'heart'}];
 const ITEMS=[
  {id:'l1',c:'louvores',n:'Louvor congregacional animado',d:'Músicas para cantar junto, com palmas e celebração.',w:'é adoração em comunidade, do jeito que enche o seu coração de alegria.',p:['sanguinea','colerica'],img:'photo-1493225457124-a3eb161ffa5f'},
- {id:'l2',c:'louvores',n:'Adoração acústica',d:'Voz, violão e letras para cantar de olhos fechados.',w:'abre espaço para uma adoração profunda e sem pressa.',p:['melancolica','fleumatica'],img:'photo-1510915361894-db8b60106cad'},
+ {id:'l2',c:'louvores',n:'Adoração acústica',d:'Voz, violão e letras para cantar de olhos fechados.',w:'abre espaço para uma adoração profunda e sem pressa.',p:['melancolica','fleumatica'],img:'photo-1525201548942-d8732f6617a0'},
  {id:'l3',c:'louvores',n:'Hinos clássicos',d:'Hinos antigos com letras cheias de doutrina e história.',w:'são letras profundas, que você pode meditar palavra por palavra.',p:['melancolica','fleumatica'],img:'photo-1507838153414-b4b713384a76'},
- {id:'l4',c:'louvores',n:'Playlist para orar em movimento',d:'Louvores de fé e vitória para caminhar, treinar ou dirigir.',w:'acompanha seu ritmo e transforma tarefas em oração.',p:['colerica','sanguinea'],img:'photo-1470225620780-dba8ba36b745'},
- {id:'k1',c:'livros',n:'Biografias de missionárias',d:'Histórias reais de mulheres que levaram o evangelho longe.',w:'mostra coragem e fé em ação, do jeito que inspira você a agir.',p:['colerica','sanguinea'],img:'photo-1589829085413-56de8ae18c73'},
+ {id:'l4',c:'louvores',n:'Playlist para orar em movimento',d:'Louvores de fé e vitória para caminhar, treinar ou dirigir.',w:'acompanha seu ritmo e transforma tarefas em oração.',p:['colerica','sanguinea'],img:'photo-1500530855697-b586d89ba3ee'},
+ {id:'k1',c:'livros',n:'Biografias de missionárias',d:'Histórias reais de mulheres que levaram o evangelho longe.',w:'mostra coragem e fé em ação, do jeito que inspira você a agir.',p:['colerica','sanguinea'],img:'photo-1456513080510-7bf3a84b82f8'},
  {id:'k2',c:'livros',n:'Clássicos cristãos',d:'Obras como "Cristianismo puro e simples", de C. S. Lewis.',w:'alimenta sua sede de entender a fé com profundidade.',p:['melancolica','colerica'],img:'photo-1481627834876-b7833e8f5570'},
- {id:'k3',c:'livros',n:'Estudo sobre mulheres da Bíblia',d:'Personagens bíblicas estudadas uma a uma, com aplicação.',w:'ajuda você a se ver nas histórias e aprender com elas.',p:['fleumatica','melancolica'],img:'photo-1544947950-fa07a98d237f'},
- {id:'k4',c:'livros',n:'Livro sobre temperamentos e fé',d:'Leituras sobre como o Espírito Santo transforma o caráter.',w:'conversa direto com a sua vontade de se conhecer e crescer.',p:['sanguinea','fleumatica'],img:'photo-1512820790803-83ca734da794'},
+ {id:'k3',c:'livros',n:'Estudo sobre mulheres da Bíblia',d:'Personagens bíblicas estudadas uma a uma, com aplicação.',w:'ajuda você a se ver nas histórias e aprender com elas.',p:['fleumatica','melancolica'],img:'photo-1544716278-ca5e3f4abd8c'},
+ {id:'k4',c:'livros',n:'Livro sobre temperamentos e fé',d:'Leituras sobre como o Espírito Santo transforma o caráter.',w:'conversa direto com a sua vontade de se conhecer e crescer.',p:['sanguinea','fleumatica'],img:'photo-1474932430478-367dbb6832c1'},
  {id:'v1',c:'devocionais',n:'Devocional de 5 minutos',d:'Um versículo, uma reflexão curta e uma oração por dia.',w:'é rápido, leve e cabe na sua rotina cheia.',p:['sanguinea','colerica'],img:'photo-1499209974431-9dddcece7f88'},
  {id:'v2',c:'devocionais',n:'Diário de oração',d:'Caderno para escrever orações, respostas e gratidão.',w:'dá forma ao que você sente e mostra a fidelidade de Deus ao longo do tempo.',p:['melancolica','fleumatica'],img:'photo-1474932430478-367dbb6832c1'},
  {id:'v3',c:'devocionais',n:'Plano de leitura bíblica anual',d:'A Bíblia inteira em um ano, com metas diárias.',w:'combina com sua disciplina e com o gosto por cumprir metas.',p:['colerica','melancolica'],img:'photo-1457369804613-52c61a468e7d'},
  {id:'v4',c:'devocionais',n:'Leitura lenta dos Salmos',d:'Um salmo por dia, lido devagar e em voz baixa.',w:'é oração sem pressa, do jeito que traz paz.',p:['fleumatica','melancolica'],img:'photo-1441974231531-c6227db76b6e'},
  {id:'p1',c:'podcasts',n:'Podcast de conversa entre amigas cristãs',d:'Papo leve sobre fé, rotina, amizade e vida real.',w:'parece uma conversa de café com gente que pensa como você.',p:['sanguinea','fleumatica'],img:'photo-1495474472287-4d71bcdd2085'},
- {id:'p2',c:'podcasts',n:'Podcast de estudo bíblico',d:'Episódios que explicam livros da Bíblia em profundidade.',w:'satisfaz sua vontade de entender o contexto e o porquê.',p:['melancolica','colerica'],img:'photo-1511379938547-c1f69419868d'},
- {id:'p3',c:'podcasts',n:'Podcast sobre liderança cristã',d:'Liderar com propósito, humildade e visão.',w:'ajuda você a liderar com força e coração de serva.',p:['colerica'],img:'photo-1551632811-561732d1e306'},
+ {id:'p2',c:'podcasts',n:'Podcast de estudo bíblico',d:'Episódios que explicam livros da Bíblia em profundidade.',w:'satisfaz sua vontade de entender o contexto e o porquê.',p:['melancolica','colerica'],img:'photo-1478737270239-2f02b77fc618'},
+ {id:'p3',c:'podcasts',n:'Podcast sobre liderança cristã',d:'Liderar com propósito, humildade e visão.',w:'ajuda você a liderar com força e coração de serva.',p:['colerica'],img:'photo-1589903308904-1010c2294adc'},
  {id:'g1',c:'lugares',n:'Retiro de mulheres',d:'Um fim de semana de louvor, palavra e descanso.',w:'é pausa, comunhão e encontro com Deus num só lugar.',p:['fleumatica','sanguinea'],img:'photo-1506905925346-21bda4d32df4'},
  {id:'g2',c:'lugares',n:'Café para estudo bíblico',d:'Mesa tranquila, Bíblia aberta e um café quentinho.',w:'é o refúgio perfeito para estudar e meditar sem pressa.',p:['melancolica','fleumatica'],img:'photo-1544787219-7f47ccb76574'},
  {id:'g3',c:'lugares',n:'Trilha para orar ao ar livre',d:'Natureza, silêncio e passos que viram oração.',w:'une movimento e contemplação da criação de Deus.',p:['colerica','fleumatica'],img:'photo-1464822759023-fed622ff2c3b'},
- {id:'g4',c:'lugares',n:'Pequeno grupo em casa',d:'Célula ou grupo de estudo com lanche e conversa.',w:'é comunhão de verdade, com gente que caminha junto.',p:['sanguinea','fleumatica'],img:'photo-1488459716781-31db52582fe9'},
- {id:'g5',c:'lugares',n:'Ação social da igreja',d:'Servir quem precisa: doação, visita, cuidado.',w:'transforma sua energia em amor concreto.',p:['colerica','sanguinea'],img:'photo-1504674900247-0877df9cc836'},
+ {id:'g4',c:'lugares',n:'Pequeno grupo em casa',d:'Célula ou grupo de estudo com lanche e conversa.',w:'é comunhão de verdade, com gente que caminha junto.',p:['sanguinea','fleumatica'],img:'photo-1517486808906-6ca8b3f04846'},
+ {id:'g5',c:'lugares',n:'Ação social da igreja',d:'Servir quem precisa: doação, visita, cuidado.',w:'transforma sua energia em amor concreto.',p:['colerica','sanguinea'],img:'photo-1488521787991-ed7bbaae773c'},
  {id:'e1',c:'estilo',n:'Linho e tons terrosos',d:'Peças leves e naturais em areia, oliva e terracota.',w:'trazem calma, textura e uma beleza discreta.',p:['melancolica','fleumatica'],img:'photo-1490481651871-ab68de25d43d'},
  {id:'e2',c:'estilo',n:'Look de domingo com cor',d:'Uma peça de cor alegre com acessórios delicados.',w:'expressa a sua alegria sem perder a elegância.',p:['sanguinea'],img:'photo-1515372039744-b8f02a3ae446'},
  {id:'e3',c:'estilo',n:'Alfaiataria leve',d:'Cortes limpos e confortáveis para servir e liderar.',w:'reflete a sua praticidade e presença.',p:['colerica','melancolica'],img:'photo-1594633312681-425c7b97ccd1'},
@@ -775,6 +776,52 @@ const ITEMS=[
  {id:'f3',c:'comidas',n:'Jantar em família com oração',d:'Uma receita simples e um momento de gratidão juntos.',w:'transforma a refeição em um momento de cuidado.',p:['fleumatica','sanguinea'],img:'photo-1551183053-bf91a1d81141'},
  {id:'f4',c:'comidas',n:'Marmitas da semana',d:'Refeições organizadas para uma rotina corrida.',w:'combina com a sua praticidade e libera tempo para o que importa.',p:['colerica','melancolica'],img:'photo-1512621776951-a57141f2eefd'},
  {id:'f5',c:'comidas',n:'Frutas da estação',d:'O que a criação oferece agora, fresco e simples.',w:'lembra que há um tempo certo para cada coisa.',p:['melancolica','colerica'],img:'photo-1610832958506-aa56368176cf'},
+ {id:'l5',c:'louvores',n:'Noite de adoração',d:'Mãos levantadas, luzes baixas e o coração aberto.',w:'é um tempo de entrega total, do jeito que você gosta de viver a fé.',p:['sanguinea', 'colerica'],img:'photo-1438232992991-995b7058bbb3'},
+ {id:'l6',c:'louvores',n:'Louvor ao piano',d:'Melodias suaves para orar e meditar.',w:'cria um ambiente de paz para você ouvir a voz de Deus.',p:['melancolica', 'fleumatica'],img:'photo-1520523839897-bd0b52f945a0'},
+ {id:'l7',c:'louvores',n:'Coral e hinos na igreja',d:'Vozes juntas cantando a mesma fé.',w:'une tradição, beleza e comunhão.',p:['fleumatica', 'melancolica'],img:'photo-1519491050282-cf00c82424b4'},
+ {id:'l8',c:'louvores',n:'Louvor do culto jovem',d:'Músicas animadas para cantar com a galera.',w:'sua alegria encontra lugar no meio de muita gente louvando.',p:['sanguinea'],img:'photo-1501386761578-eac5c94b800a'},
+ {id:'l9',c:'louvores',n:'Louvor para dormir em paz',d:'Canções calmas para encerrar o dia com Deus.',w:'acalma a mente e entrega as preocupações antes de dormir.',p:['fleumatica', 'melancolica'],img:'photo-1490730141103-6cac27aaab94'},
+ {id:'l10',c:'louvores',n:'Servir no ministério de louvor',d:'Microfone, ensaio e o desejo de levar outras pessoas a adorar.',w:'usa a sua voz e a sua energia para servir.',p:['sanguinea', 'colerica'],img:'photo-1511671782779-c97d3d27a1d4'},
+ {id:'l11',c:'louvores',n:'Show de louvor',d:'Uma noite de celebração com milhares de vozes.',w:'é festa e adoração ao mesmo tempo.',p:['sanguinea', 'colerica'],img:'photo-1507692049790-de58290a4334'},
+ {id:'k5',c:'livros',n:'Leitura bíblica com café',d:'Um livro aberto, uma xícara quente e tempo sem pressa.',w:'é o seu momento de silêncio e profundidade.',p:['melancolica', 'fleumatica'],img:'photo-1495446815901-a7297e633e8d'},
+ {id:'k6',c:'livros',n:'Biblioteca da igreja',d:'Estantes cheias de estudos, biografias e devocionais.',w:'alimenta sua vontade de aprender sempre mais.',p:['melancolica', 'colerica'],img:'photo-1524995997946-a1c2e315a42f'},
+ {id:'k7',c:'livros',n:'Romance cristão leve',d:'Histórias de fé, amizade e recomeço.',w:'emociona sem pesar e aquece o coração.',p:['sanguinea', 'fleumatica'],img:'photo-1457369804613-52c61a468e7d'},
+ {id:'k8',c:'livros',n:'Livros de cabeceira',d:'Uma pilha de leituras para a semana.',w:'combina com sua sede de crescer e conhecer mais.',p:['colerica', 'melancolica'],img:'photo-1481627834876-b7833e8f5570'},
+ {id:'v5',c:'devocionais',n:'Bíblia de estudo',d:'Notas, mapas e contexto para entender cada livro.',w:'satisfaz sua vontade de ir fundo na Palavra.',p:['melancolica', 'colerica'],img:'photo-1504052434569-70ad5836ab65'},
+ {id:'v6',c:'devocionais',n:'Caderno de versículos',d:'Copiar versículos à mão para guardar no coração.',w:'transforma a leitura em memória e oração.',p:['melancolica', 'fleumatica'],img:'photo-1455390582262-044cdead277a'},
+ {id:'v7',c:'devocionais',n:'Devocional ao ar livre',d:'A Bíblia, a natureza e um tempo a sós com Deus.',w:'une contemplação da criação e da Palavra.',p:['fleumatica', 'sanguinea'],img:'photo-1501854140801-50d01698950b'},
+ {id:'v8',c:'devocionais',n:'Lista de oração da semana',d:'Pedidos e agradecimentos organizados em lista.',w:'dá constância e direção às suas orações.',p:['colerica', 'melancolica'],img:'photo-1484480974693-6ca0a78fb36b'},
+ {id:'v9',c:'devocionais',n:'Estudo com caneta e marca-texto',d:'Sublinhar, anotar e escrever o que Deus falou.',w:'combina com seu jeito caprichoso de aprender.',p:['melancolica', 'colerica'],img:'photo-1434030216411-0b793f4b4173'},
+ {id:'v10',c:'devocionais',n:'Diário de gratidão',d:'Três motivos de gratidão por dia, por escrito.',w:'ensina o coração a enxergar a bondade de Deus.',p:['fleumatica', 'sanguinea'],img:'photo-1517842645767-c639042777db'},
+ {id:'p4',c:'podcasts',n:'Podcast de devocional diário',d:'Uma reflexão curta para ouvir no caminho.',w:'cabe na sua rotina e lembra de Deus durante o dia.',p:['fleumatica', 'sanguinea'],img:'photo-1590602847861-f357a9332bbc'},
+ {id:'p5',c:'podcasts',n:'Podcast de testemunhos',d:'Histórias reais do que Deus fez na vida de pessoas.',w:'enche sua fé de esperança e coragem.',p:['sanguinea', 'fleumatica'],img:'photo-1589903308904-1010c2294adc'},
+ {id:'p6',c:'podcasts',n:'Podcast sobre casamento e família',d:'Conversas sobre relacionamentos à luz da Bíblia.',w:'ajuda você a amar melhor quem está perto.',p:['fleumatica', 'colerica'],img:'photo-1478737270239-2f02b77fc618'},
+ {id:'g6',c:'lugares',n:'Cafeteria aconchegante para ler',d:'Cantinho tranquilo com luz natural.',w:'é perfeito para ler, escrever e orar sem pressa.',p:['melancolica', 'fleumatica'],img:'photo-1445116572660-236099ec97a0'},
+ {id:'g7',c:'lugares',n:'Café para encontrar as amigas',d:'Mesa grande, conversa boa e risadas.',w:'sua alegria floresce perto de quem você ama.',p:['sanguinea'],img:'photo-1554118811-1e0d58224f24'},
+ {id:'g8',c:'lugares',n:'Mirante para orar e agradecer',d:'Uma vista ampla para lembrar da grandeza de Deus.',w:'abre espaço para silêncio e gratidão.',p:['melancolica', 'fleumatica'],img:'photo-1470071459604-3b5ec3a7fe05'},
+ {id:'g9',c:'lugares',n:'Praia ao amanhecer',d:'O mar, o céu e a sensação de recomeço.',w:'renova a sua energia e o seu louvor.',p:['sanguinea', 'fleumatica'],img:'photo-1505142468610-359e7d316be0'},
+ {id:'g10',c:'lugares',n:'Bosque para caminhar em silêncio',d:'Árvores, uma ponte e o som da natureza.',w:'é um convite para desacelerar e ouvir.',p:['fleumatica', 'melancolica'],img:'photo-1447752875215-b2761acb3c5d'},
+ {id:'g11',c:'lugares',n:'Campo de flores',d:'Cores, sol e beleza simples.',w:'lembra que Deus cuida até das flores do campo.',p:['sanguinea', 'melancolica'],img:'photo-1444930694458-01babf71870c'},
+ {id:'g12',c:'lugares',n:'Viagem missionária',d:'Mochila nas costas e o desejo de servir.',w:'une aventura, propósito e amor ao próximo.',p:['colerica', 'sanguinea'],img:'photo-1503220317375-aaad61436b1b'},
+ {id:'g13',c:'lugares',n:'Encontro de jovens da igreja',d:'Amigas, pôr do sol e conversas que fortalecem.',w:'é comunhão e alegria de verdade.',p:['sanguinea', 'fleumatica'],img:'photo-1511632765486-a01980e01a18'},
+ {id:'e5',c:'estilo',n:'Vestido floral midi',d:'Estampa delicada e caimento leve.',w:'é feminino, alegre e confortável.',p:['sanguinea', 'fleumatica'],img:'photo-1496747611176-843222e1e57c'},
+ {id:'e6',c:'estilo',n:'Casaco xadrez elegante',d:'Peça clássica para dias frios.',w:'combina com a sua elegância discreta.',p:['melancolica', 'colerica'],img:'photo-1485968579580-b6d095142e6e'},
+ {id:'e7',c:'estilo',n:'Look básico com jeans',d:'Jeans, tricô e bota de cano curto.',w:'é prático, confortável e sempre bonito.',p:['fleumatica', 'colerica'],img:'photo-1516762689617-e1cffcef479d'},
+ {id:'e8',c:'estilo',n:'Sapato colorido',d:'Um detalhe de cor para alegrar o look.',w:'mostra a sua personalidade alegre.',p:['sanguinea'],img:'photo-1543163521-1bf539c55dd2'},
+ {id:'e9',c:'estilo',n:'Trench coat azul',d:'Clássico, versátil e cheio de presença.',w:'combina com a sua força e praticidade.',p:['colerica', 'melancolica'],img:'photo-1539109136881-3be0616acf4b'},
+ {id:'e10',c:'estilo',n:'Peças básicas para a semana',d:'Camisa branca, jeans e listras.',w:'facilitam o dia a dia sem perder o estilo.',p:['fleumatica', 'colerica'],img:'photo-1525507119028-ed4c629a60a3'},
+ {id:'e11',c:'estilo',n:'Conjunto colorido',d:'Cor vibrante para um dia leve.',w:'é alegria em forma de roupa.',p:['sanguinea'],img:'photo-1515886657613-9f3515b0c78f'},
+ {id:'f6',c:'comidas',n:'Panquecas de domingo',d:'Para um café da manhã especial em família.',w:'transforma a manhã em celebração.',p:['sanguinea', 'fleumatica'],img:'photo-1567620905732-2d1ec7ab7445'},
+ {id:'f7',c:'comidas',n:'Rabanada com frutas',d:'Doce, colorida e feita para compartilhar.',w:'é carinho servido à mesa.',p:['sanguinea', 'fleumatica'],img:'photo-1484723091739-30a097e8f929'},
+ {id:'f8',c:'comidas',n:'Torrada com ovo',d:'Simples, rápida e nutritiva.',w:'dá energia para um dia cheio de tarefas.',p:['colerica'],img:'photo-1525351484163-7529414344d8'},
+ {id:'f9',c:'comidas',n:'Prato colorido e saudável',d:'Legumes, grãos e proteína no mesmo prato.',w:'cuida do corpo, o templo que Deus te deu.',p:['colerica', 'melancolica'],img:'photo-1490645935967-10de6ba17061'},
+ {id:'f10',c:'comidas',n:'Salada para compartilhar',d:'Uma travessa grande para a mesa da família.',w:'é cuidado simples para quem você ama.',p:['fleumatica', 'sanguinea'],img:'photo-1540189549336-e6e99c3679fe'},
+ {id:'f11',c:'comidas',n:'Café gelado da tarde',d:'Uma pausa refrescante no meio do dia.',w:'dá aquela energia para continuar.',p:['sanguinea', 'colerica'],img:'photo-1461023058943-07fcbe16d735'},
+ {id:'f12',c:'comidas',n:'Chá gelado com limão',d:'Leve, refrescante e tranquilo.',w:'combina com uma tarde calma de leitura.',p:['fleumatica', 'melancolica'],img:'photo-1556679343-c7306c1976bc'},
+ {id:'f13',c:'comidas',n:'Bolo de chocolate para celebrar',d:'Para aniversários, vitórias e boas notícias.',w:'celebrar também é agradecer.',p:['sanguinea'],img:'photo-1578985545062-69928b1d9587'},
+ {id:'f14',c:'comidas',n:'Biscoitos caseiros para presentear',d:'Feitos com carinho para levar a alguém.',w:'um gesto simples que demonstra amor.',p:['fleumatica', 'melancolica'],img:'photo-1558961363-fa8fdf82db35'},
+ {id:'f15',c:'comidas',n:'Tortinhas de frutas',d:'Delicadas, bonitas e cheias de detalhe.',w:'combinam com o seu olhar para a beleza.',p:['melancolica', 'sanguinea'],img:'photo-1495147466023-ac5c588e2e94'},
+ {id:'f16',c:'comidas',n:'Sobremesa especial',d:'Um doce bem feito para um momento especial.',w:'é o capricho que você coloca em tudo.',p:['melancolica'],img:'photo-1571877227200-a0d98ea607e9'}
 ];
 const GROUPS=[{id:'orei',n:'Orei',ic:'sparkle'},{id:'li',n:'Li a Palavra',ic:'book'},{id:'servi',n:'Servi',ic:'heart'},{id:'agradeci',n:'Agradeci',ic:'star'}];
 const GENERIC_CHECK={orei:'5 minutos de oração antes de começar o dia',li:'Ler um capítulo da Bíblia',servi:'Ajudar alguém sem esperar nada em troca',agradeci:'Anotar 3 motivos de gratidão'};
@@ -2012,7 +2059,7 @@ function tCombina(u){
  list.sort((a,b)=>b.m-a.m);
  return `<h1 class="display">Combina com você</h1><p class="body mt-2">${p.why.replace(':','')} e com a sua fé.</p>
  <nav class="pin-tabs mt-4" aria-label="Categorias">${CATS.map(c=>`<button class="${f===c.id?'on':''}" aria-pressed="${f===c.id}" data-act="comb" data-v="${c.id}">${c.n}${c.id==='favoritos'&&u.favs.length?` (${u.favs.length})`:''}</button>`).join('')}</nav>
- ${list.length?`<div class="masonry mt-4">${list.map((it,i)=>pinCard(it,u,i)).join('')}</div>`:
+ ${list.length?`<div class="masonry mt-4">${[0,1].map(c=>`<div class="mcol">${list.map((it,i)=>i%2===c?pinCard(it,u,i):'').join('')}</div>`).join('')}</div>`:
   `<div class="empty card mt-4"><h2 class="h2">Nenhum favorito ainda</h2><p class="muted mt-1">Toque no coração das imagens para guardar o que tem a sua cara.</p><button class="btn btn-primary mt-5" data-act="comb" data-v="todos">Ver tudo</button></div>`}`;
 }
 function itemModal(id){
