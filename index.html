@@ -9,7 +9,7 @@
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cellipse cx='32' cy='38' rx='22' ry='23' fill='%23D9A08B'/%3E%3Cellipse cx='24' cy='10' rx='9' ry='4.5' fill='%23A8B8A0' transform='rotate(-25 24 10)'/%3E%3Cellipse cx='40' cy='9' rx='9' ry='4.5' fill='%23A8B8A0' transform='rotate(25 40 9)'/%3E%3Ccircle cx='25' cy='35' r='6' fill='%23fff'/%3E%3Ccircle cx='39' cy='35' r='6' fill='%23fff'/%3E%3Ccircle cx='25' cy='36' r='3.4' fill='%233A2E28'/%3E%3Ccircle cx='39' cy='36' r='3.4' fill='%233A2E28'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700;9..40,800;9..40,900&family=Playfair+Display:wght@600;700;800&family=Abril+Fatface&family=Caveat:wght@700&family=Archivo+Black&family=Special+Elite&family=Courier+Prime:wght@700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700;9..40,800;9..40,900&family=Playfair+Display:wght@600;700;800&family=Abril+Fatface&family=Caveat:wght@700&family=Bebas+Neue&family=Archivo+Black&family=Special+Elite&family=Courier+Prime:wght@700&display=swap" rel="stylesheet">
 <script src="https://cdn.tailwindcss.com"></script>
 <script>
 try{tailwind.config={corePlugins:{preflight:false},theme:{extend:{colors:{creme:'#F7F3EE',salvia:'#A8B8A0',terracota:'#D9A08B',texto:'#3A2E28',bege:'#EAE2D9'},fontFamily:{display:['"Playfair Display"','serif'],ui:['"DM Sans"','sans-serif']}}}}}catch(e){}
@@ -915,6 +915,107 @@ const TEXT_CAT={a1:'psicologia',a2:'desenvolvimento',a3:'psicologia',a4:'psicolo
 const LCATS=[{id:'todos',n:'Todos'},{id:'psicologia',n:'Psicologia e emoções'},{id:'desenvolvimento',n:'Desenvolvimento pessoal'},{id:'filosofia',n:'Filosofia'},{id:'historia',n:'História e cultura'},{id:'sociedade',n:'Conhecimento e sociedade'},{id:'salvos',n:'Salvos'}];
 const EDITORIAL='Equipe editorial Orivie';
 TEXTS.forEach(t=>{t.cat=TEXT_CAT[t.id]||'psicologia';t.cats=[t.cat];t.date=t.date||'2026-11-01';t.kind='geral'});
+/* Aprender: filosofia, história e cultura, conhecimento e sociedade */
+TEXTS.push(
+ {id:'a16',title:'Sócrates e o “conhece-te a ti mesmo”',cat:'filosofia',img:'photo-1457369804613-52c61a468e7d',
+  body:['“Conhece-te a ti mesmo” é uma frase que, segundo autores antigos, estava inscrita no templo de Apolo, em Delfos, na Grécia. Ela virou símbolo de uma ideia que atravessou séculos: antes de entender o mundo, vale entender quem somos.',
+   'Sócrates (c. 470–399 a.C.), filósofo de Atenas, não deixou nada escrito. Conhecemos suas ideias principalmente pelos diálogos de seu aluno Platão. Seu jeito de filosofar era fazer perguntas: em vez de dar respostas prontas, ele questionava as pessoas até que elas percebessem contradições no que achavam saber.',
+   'Na Apologia, Platão registra uma das frases mais famosas atribuídas a Sócrates no julgamento que o condenou: “uma vida sem exame não vale a pena ser vivida”. Examinar a própria vida significa perguntar por que fazemos o que fazemos e se isso combina com o que valorizamos.',
+   'Sócrates também ficou conhecido por reconhecer os limites do próprio conhecimento. Admitir que não sabemos tudo não é fraqueza: é o ponto de partida para aprender.'],
+  you:{serena:'Sua sensibilidade combina com a escuta socrática: pergunte antes de concluir.',exploradora:'Use sua curiosidade para fazer perguntas, não só para buscar novidades.',analitica:'O método das perguntas é a sua praia. Só cuide para examinar também o que sente.',conectiva:'Pergunte às pessoas próximas o que elas veem em você e compare com o que você pensa.',contemplativa:'Você já vive examinando a vida. Escreva as perguntas que mais te acompanham.',determinada:'Antes da próxima meta, pergunte: por que isso importa para mim?'},
+  try:'Escolha uma crença sua (por exemplo, “eu não sou criativa”) e faça três perguntas sobre ela: de onde veio, que provas eu tenho, o que pode estar errado?',
+  src:'Platão, Apologia de Sócrates (38a); Stanford Encyclopedia of Philosophy, verbete “Socrates”.'},
+ {id:'a17',title:'Estoicismo: o que depende de você',cat:'filosofia',img:'photo-1506905925346-21bda4d32df4',
+  body:['O estoicismo é uma escola filosófica que nasceu em Atenas por volta de 300 a.C., com Zenão de Cítio, e ficou muito popular em Roma. Seus nomes mais conhecidos são Sêneca, Epicteto e o imperador Marco Aurélio.',
+   'Epicteto, que viveu parte da vida como escravizado, começa o Manual (Encheirídion) com uma distinção simples: algumas coisas dependem de nós, como nossos julgamentos, escolhas e atitudes; outras não, como a opinião dos outros, o corpo, a reputação e muitos acontecimentos.',
+   'Para os estoicos, boa parte do sofrimento vem de tentar controlar o que não depende de nós. A proposta é concentrar energia no que podemos escolher: como interpretamos os fatos e como agimos diante deles.',
+   'Marco Aurélio escreveu suas reflexões pessoais em um caderno que hoje conhecemos como Meditações. Ali ele lembra a si mesmo de agir com justiça, calma e atenção ao presente. Muitas técnicas da psicologia atual, como a terapia cognitivo-comportamental, reconhecem influência dessas ideias.'],
+  you:{serena:'Quando absorver demais o clima ao redor, pergunte: isso depende de mim?',exploradora:'Liberdade estoica é escolher a própria atitude, mesmo quando o roteiro muda.',analitica:'Separe em duas colunas o que depende e o que não depende de você.',conectiva:'Você não controla o que os outros sentem, só como você cuida e se posiciona.',contemplativa:'As Meditações de Marco Aurélio podem ser uma boa leitura para você.',determinada:'Foque a energia no seu esforço, não no resultado que não controla.'},
+  try:'Pense em uma preocupação de hoje. Escreva o que depende de você e o que não depende. Escolha uma ação só para a primeira lista.',
+  src:'Epicteto, Manual (Encheirídion), 1; Marco Aurélio, Meditações; Robertson, D. (2010), The Philosophy of Cognitive-Behavioural Therapy.'},
+ {id:'a18',title:'Existencialismo: liberdade e escolha',cat:'filosofia',img:'photo-1481627834876-b7833e8f5570',
+  body:['O existencialismo é uma corrente filosófica que ganhou força na França depois da Segunda Guerra Mundial. Seus principais nomes são Jean-Paul Sartre e Simone de Beauvoir, mas a corrente tem raízes em pensadores como Søren Kierkegaard.',
+   'Na conferência “O existencialismo é um humanismo” (1945, publicada em 1946), Sartre resumiu a ideia central: “a existência precede a essência”. Ou seja, não nascemos com um propósito pronto; vamos nos definindo pelas escolhas que fazemos.',
+   'Simone de Beauvoir aplicou essa reflexão à vida das mulheres em O segundo sexo (1949), com a frase famosa “Ninguém nasce mulher: torna-se mulher”. Ela mostrou como muitos papéis tratados como “naturais” são construídos pela cultura e pela história.',
+   'Para os existencialistas, liberdade traz responsabilidade: escolher também é responder pelo que escolhemos. Isso pode gerar angústia, mas também abre espaço para criar uma vida com mais autenticidade.'],
+  you:{serena:'Sua criatividade é uma forma de escolher quem você quer ser.',exploradora:'Você valoriza liberdade. Lembre que ela inclui assumir as consequências.',analitica:'Pergunte quais escolhas suas foram de fato suas e quais foram herdadas.',conectiva:'Ser autêntica também é cuidar de si, não só corresponder ao que esperam.',contemplativa:'As grandes perguntas que você faz são o coração do existencialismo.',determinada:'Suas metas mostram quem você está escolhendo ser.'},
+  try:'Complete: “Uma escolha que eu fiz e que mostra quem eu sou foi...”. Depois escreva uma escolha que você quer fazer este mês.',
+  src:'Sartre, J.-P. (1946), O existencialismo é um humanismo; Beauvoir, S. (1949), O segundo sexo; Stanford Encyclopedia of Philosophy, “Existentialism”.'},
+ {id:'a19',title:'Ética: três jeitos de pensar o que é certo',cat:'filosofia',img:'photo-1474932430478-367dbb6832c1',
+  body:['A ética é a parte da filosofia que pergunta como devemos agir. Ao longo da história, surgiram três grandes formas de responder a essa pergunta, e elas ainda aparecem nas nossas decisões do dia a dia.',
+   'A ética das virtudes, ligada a Aristóteles (Ética a Nicômaco), pergunta: que tipo de pessoa eu quero ser? Para ele, virtudes como coragem e generosidade são hábitos construídos pela prática, e costumam estar no meio-termo entre o excesso e a falta.',
+   'A ética do dever, ligada a Immanuel Kant, diz que algumas ações são certas ou erradas em si mesmas. Seu “imperativo categórico” propõe agir de um jeito que você aceitaria como regra para todos, e tratar as pessoas sempre como fins, nunca apenas como meios.',
+   'O utilitarismo, de Jeremy Bentham e John Stuart Mill, avalia as ações pelas consequências: a melhor escolha é a que produz mais bem-estar para mais pessoas. Na prática, muitas decisões difíceis ficam mais claras quando olhamos por esses três ângulos.'],
+  you:{serena:'Você tende a sentir o que é certo. Os três ângulos ajudam a explicar essa intuição.',exploradora:'Antes de uma decisão rápida, pense nas consequências para quem está perto.',analitica:'Use os três ângulos como um checklist para decisões importantes.',conectiva:'Você pensa muito nos outros. Lembre de incluir você na conta do bem-estar.',contemplativa:'A pergunta de Aristóteles, “quem eu quero ser?”, combina com você.',determinada:'Resultados importam, e também os meios usados para chegar lá.'},
+  try:'Pense em uma decisão difícil e responda: que virtude ela pede? Ela seria aceitável como regra para todos? Quais consequências ela traz?',
+  src:'Aristóteles, Ética a Nicômaco; Kant, I. (1785), Fundamentação da metafísica dos costumes; Mill, J. S. (1863), Utilitarismo.'},
+ {id:'a20',title:'Mulheres que mudaram a ciência',cat:'historia',img:'photo-1554907984-15263bfd63bd',
+  body:['A história da ciência tem muitas mulheres que fizeram descobertas fundamentais, muitas vezes enfrentando a exclusão das universidades e o pouco reconhecimento da época.',
+   'Ada Lovelace (1815–1852) escreveu, em 1843, notas sobre a Máquina Analítica de Charles Babbage. Nelas está um procedimento para calcular números de Bernoulli, considerado um dos primeiros algoritmos pensados para uma máquina. Por isso, ela é lembrada como pioneira da programação.',
+   'Marie Curie (1867–1934) estudou a radioatividade e descobriu, com Pierre Curie, os elementos polônio e rádio. Recebeu o Nobel de Física em 1903 e o de Química em 1911, sendo até hoje a única pessoa premiada em duas ciências diferentes.',
+   'Rosalind Franklin (1920–1958) produziu imagens de difração de raios X, como a famosa “Foto 51”, que foram essenciais para entender a estrutura em dupla hélice do DNA, descrita em 1953. Seu papel só foi amplamente reconhecido décadas depois.'],
+  you:{serena:'A curiosidade dessas mulheres também era criativa: imaginar o que ainda não existia.',exploradora:'Elas exploraram fronteiras do conhecimento. Que fronteira você quer explorar?',analitica:'Observação cuidadosa e persistência: a ciência combina com seu jeito.',conectiva:'Pierre e Marie Curie mostram a força de trabalhar em parceria.',contemplativa:'Muitas descobertas vieram de longas horas de observação silenciosa.',determinada:'Persistir diante de portas fechadas foi a marca dessas cientistas.'},
+  try:'Pesquise uma cientista brasileira (por exemplo, Bertha Lutz, que também era bióloga) e anote uma coisa que você aprendeu.',
+  src:'Nobel Prize Outreach, “Marie Curie – Facts”; Menabrea, L. F. e Lovelace, A. A. (1843), notas sobre a Máquina Analítica; Maddox, B. (2002), Rosalind Franklin: The Dark Lady of DNA.'},
+ {id:'a21',title:'A conquista do voto feminino no Brasil',cat:'historia',img:'photo-1467269204594-9661b134dd2b',
+  body:['Durante a maior parte da história do Brasil, as mulheres não podiam votar. A mudança foi resultado de décadas de mobilização.',
+   'Em 1927, o Rio Grande do Norte aprovou uma lei estadual que permitiu o voto feminino. Celina Guimarães Viana, professora de Mossoró, tornou-se uma das primeiras eleitoras registradas do país e é lembrada como pioneira.',
+   'A bióloga Bertha Lutz foi uma das principais líderes do movimento e fundou, em 1922, a Federação Brasileira pelo Progresso Feminino. A pressão dessas mulheres contribuiu para que o Código Eleitoral de 1932 garantisse o voto feminino em todo o país, direito confirmado pela Constituição de 1934.',
+   'Em 1933, Carlota Pereira de Queirós foi eleita a primeira deputada federal do Brasil. Conhecer essa história ajuda a lembrar que direitos que hoje parecem naturais foram conquistados por pessoas que se organizaram e persistiram.'],
+  you:{serena:'Sua sensibilidade para injustiças é uma força para causas coletivas.',exploradora:'Essas mulheres abriram caminhos novos. Que caminho você quer abrir?',analitica:'Leis e datas mostram como mudanças sociais acontecem passo a passo.',conectiva:'A conquista veio da união de muitas mulheres. Comunidade muda a história.',contemplativa:'Reflita sobre quais direitos você exerce hoje graças a quem veio antes.',determinada:'Décadas de persistência: um exemplo de foco no longo prazo.'},
+  try:'Converse com uma mulher mais velha da sua família sobre como era a vida dela na sua idade.',
+  src:'Tribunal Superior Eleitoral (TSE), “O voto da mulher”; Decreto nº 21.076/1932 (Código Eleitoral); Câmara dos Deputados, biografia de Carlota Pereira de Queirós.'},
+ {id:'a22',title:'Escritoras brasileiras que você precisa conhecer',cat:'historia',img:'photo-1544947950-fa07a98d237f',
+  body:['A literatura brasileira tem vozes femininas marcantes, que retratam o país, a vida interior e experiências muitas vezes deixadas de lado.',
+   'Rachel de Queiroz publicou O quinze (1930), sobre a seca no Ceará, e em 1977 tornou-se a primeira mulher eleita para a Academia Brasileira de Letras. Cecília Meireles, poeta de versos delicados, escreveu o Romanceiro da Inconfidência (1953).',
+   'Clarice Lispector revolucionou a prosa com mergulhos na vida interior das personagens, em obras como A paixão segundo G.H. (1964) e A hora da estrela (1977). Carolina Maria de Jesus registrou o cotidiano da favela do Canindé, em São Paulo, no diário Quarto de despejo (1960), um enorme sucesso de vendas.',
+   'Entre as autoras contemporâneas, Conceição Evaristo criou o conceito de “escrevivência”, a escrita que nasce da vivência, e publicou obras como Ponciá Vicêncio (2003). Ler essas mulheres é conhecer o Brasil por outros olhares.'],
+  you:{serena:'Clarice e Cecília conversam com sua sensibilidade.',exploradora:'Cada livro é uma viagem por um Brasil diferente.',analitica:'Compare como cada autora retrata a sociedade da sua época.',conectiva:'Monte um clube de leitura com amigas a partir de uma dessas autoras.',contemplativa:'A prosa introspectiva de Clarice combina com você.',determinada:'A trajetória de Carolina Maria de Jesus é uma história de persistência.'},
+  try:'Escolha uma dessas autoras e leia um conto ou poema dela esta semana.',
+  src:'Academia Brasileira de Letras, biografia de Rachel de Queiroz; Jesus, C. M. (1960), Quarto de despejo; Evaristo, C. (2003), Ponciá Vicêncio.'},
+ {id:'a23',title:'Renascimento: quando a arte mudou o olhar',cat:'historia',img:'photo-1524995997946-a1c2e315a42f',
+  body:['O Renascimento foi um movimento cultural que começou na Itália, especialmente em Florença, por volta do século XIV e se espalhou pela Europa até o século XVI. Seus artistas e pensadores retomaram ideias da Antiguidade grega e romana e colocaram o ser humano no centro das reflexões.',
+   'Na arte, surgiram técnicas como a perspectiva linear, que dá sensação de profundidade. Leonardo da Vinci pintou a Mona Lisa e A última ceia; Michelangelo pintou o teto da Capela Sistina entre 1508 e 1512; Sandro Botticelli criou O nascimento de Vênus.',
+   'A prensa de tipos móveis, desenvolvida por Johannes Gutenberg por volta de 1450, ajudou a espalhar livros e ideias com uma velocidade inédita, transformando o acesso ao conhecimento.',
+   'Pouco depois, já no período barroco, Artemisia Gentileschi (1593–c. 1656) tornou-se uma das primeiras mulheres aceitas na Academia de Artes do Desenho de Florença, mostrando que talento feminino também marcou essa história.'],
+  you:{serena:'Sua sensibilidade estética vai amar observar as obras desse período.',exploradora:'Visitar um museu (mesmo virtual) é uma viagem no tempo.',analitica:'A perspectiva é matemática aplicada à arte. Vale pesquisar como funciona.',conectiva:'Os ateliês eram espaços de aprendizado coletivo.',contemplativa:'Fique alguns minutos observando uma única obra, sem pressa.',determinada:'Michelangelo levou quatro anos no teto da Capela Sistina: disciplina também é arte.'},
+  try:'Faça um passeio virtual por um museu (muitos oferecem tours online) e escolha uma obra para observar por cinco minutos.',
+  src:'Gombrich, E. H., A história da arte; Encyclopaedia Britannica, verbetes “Renaissance” e “Artemisia Gentileschi”.'},
+ {id:'a24',title:'Como funciona o método científico',cat:'sociedade',img:'photo-1434030216411-0b793f4b4173',
+  body:['A ciência não é uma lista de verdades prontas: é um método para testar ideias e corrigir erros. Ela começa com uma observação e uma pergunta.',
+   'A partir da pergunta, os pesquisadores formulam uma hipótese, ou seja, uma explicação que pode ser testada. Depois planejam experimentos ou observações para verificar se os resultados confirmam ou contradizem essa hipótese.',
+   'Antes de serem publicados, os estudos costumam passar pela revisão por pares: outros especialistas avaliam o método e as conclusões. E um resultado ganha força quando é replicado, isto é, quando outros grupos chegam a resultados parecidos.',
+   'Um cuidado importante é não confundir correlação com causa. Duas coisas podem acontecer juntas sem que uma provoque a outra. Entender esses passos ajuda a ler notícias sobre saúde e comportamento com mais senso crítico.'],
+  you:{serena:'A curiosidade científica também é uma forma de criatividade.',exploradora:'Teste suas ideias na prática, como uma pequena experiência.',analitica:'Esse texto é a sua cara: questione, teste, revise.',conectiva:'Discutir ideias com outras pessoas é parte da ciência.',contemplativa:'Observar com atenção é o primeiro passo de qualquer descoberta.',determinada:'Errar e corrigir faz parte do caminho, na ciência e na vida.'},
+  try:'Escolha uma notícia de saúde e procure: quem fez o estudo, com quantas pessoas e se outros estudos chegaram ao mesmo resultado.',
+  src:'Popper, K. (1959), A lógica da descoberta científica; National Academies of Sciences (2019), Reproducibility and Replicability in Science.'},
+ {id:'a25',title:'Como reconhecer notícias falsas',cat:'sociedade',img:'photo-1495474472287-4d71bcdd2085',
+  body:['Notícias falsas e informações fora de contexto circulam rápido, principalmente em aplicativos de mensagem e redes sociais. Alguns cuidados simples ajudam muito.',
+   'Primeiro, confira a fonte: o conteúdo vem de um veículo conhecido? Tem autor e data? Muitas vezes uma notícia antiga é compartilhada como se fosse nova, ou uma foto real é usada para outro acontecimento.',
+   'Desconfie de títulos alarmantes, que pedem para você compartilhar urgentemente ou que provocam muita raiva ou medo. Busque a mesma informação em outros veículos e em agências de checagem, como Lupa, Aos Fatos e o Projeto Comprova.',
+   'Também vale prestar atenção ao viés de confirmação: tendemos a acreditar mais facilmente no que concorda com o que já pensamos. Parar alguns segundos antes de compartilhar é um gesto de cuidado com quem recebe.'],
+  you:{serena:'Notícias que mexem com emoções pedem uma pausa antes de reagir.',exploradora:'Sua curiosidade pode virar o hábito de investigar a fonte.',analitica:'Checar fontes é uma habilidade que combina com você.',conectiva:'Ajude amigas e familiares com carinho, sem constranger ninguém.',contemplativa:'Respirar antes de compartilhar é um ótimo filtro.',determinada:'Rapidez é boa, mas precisão vem primeiro.'},
+  try:'Antes de compartilhar a próxima notícia, faça três perguntas: quem publicou, quando e onde mais isso aparece?',
+  src:'Wardle, C. e Derakhshan, H. (2017), Information Disorder, Conselho da Europa; Kahneman, D. (2011), Rápido e devagar.'},
+ {id:'a26',title:'Redes sociais, atenção e bem-estar',cat:'sociedade',img:'photo-1512295767273-ac109ac3acfa',
+  body:['As redes sociais fazem parte da vida de quase todo mundo. A pergunta que pesquisadores tentam responder é: elas fazem mal ao bem-estar?',
+   'Os estudos mostram um quadro mais complexo do que as manchetes sugerem. Uma análise com dados de mais de 350 mil adolescentes, publicada em 2019 por Amy Orben e Andrew Przybylski, encontrou uma associação negativa, porém pequena, entre uso de tecnologia digital e bem-estar.',
+   'O tipo de uso parece importar mais do que o tempo total. Usar as redes para conversar e manter vínculos tende a ser diferente de rolar a tela passivamente, comparando a própria vida com recortes perfeitos da vida dos outros.',
+   'Algumas atitudes ajudam: desativar notificações que não são essenciais, deixar o celular longe na hora de dormir, seguir perfis que inspiram de verdade e observar como você se sente depois de usar cada aplicativo.'],
+  you:{serena:'Você absorve muito do que vê. Escolha com cuidado quem segue.',exploradora:'Troque parte da rolagem por experiências fora da tela.',analitica:'Observe seus dados: quanto tempo você usa e como se sente depois.',conectiva:'Use as redes para conversas reais, não só para assistir.',contemplativa:'Reserve momentos do dia sem tela para pensar.',determinada:'Proteja seus horários de foco desligando notificações.'},
+  try:'Durante um dia, anote como você se sente depois de usar cada rede social. No fim, escolha um ajuste.',
+  src:'Orben, A. e Przybylski, A. K. (2019), Nature Human Behaviour, 3, 173–182; Verduyn, P. et al. (2017), Social Issues and Policy Review.'},
+ {id:'a27',title:'Empreender: primeiros passos',cat:'sociedade',img:'photo-1522202176988-66273c2fd55f',
+  body:['Empreender é transformar uma ideia em algo que resolve um problema real de alguém. Pode ser um negócio, um projeto social ou uma renda extra.',
+   'Um bom começo é entender o problema e o público. Converse com possíveis clientes antes de investir muito: o que elas precisam, como resolvem isso hoje e quanto pagariam por uma solução melhor.',
+   'Depois, teste a ideia em pequena escala, com o mínimo de custo possível. Esse teste ajuda a aprender rápido e a ajustar o produto ou serviço antes de crescer. Organizar as finanças desde o início, separando o dinheiro pessoal do dinheiro do negócio, evita muitos problemas.',
+   'No Brasil, o Sebrae oferece cursos e orientações gratuitas para quem está começando, e o regime de Microempreendedor Individual (MEI) é uma forma simples de formalizar pequenos negócios dentro do limite de faturamento definido por lei.'],
+  you:{serena:'Sua criatividade pode virar um produto com a sua identidade.',exploradora:'Comece com um teste pequeno e aprenda no caminho.',analitica:'Pesquise, planeje e acompanhe números desde o começo.',conectiva:'Seu talento com pessoas é ótimo para entender clientes.',contemplativa:'Pense no propósito do seu projeto antes do formato.',determinada:'Defina uma meta simples para o primeiro mês e acompanhe.'},
+  try:'Escreva em uma frase: que problema eu gostaria de resolver e para quem?',
+  src:'Ries, E. (2011), A startup enxuta; Sebrae, conteúdos para empreendedores; Portal do Empreendedor (gov.br), informações sobre o MEI.'}
+);
+TEXTS.forEach(t=>{if(!t.cats)t.cats=[t.cat];t.date=t.date||'2026-11-22';t.kind='geral';if(!t.min){const w=t.body.join(' ').split(/\s+/).length;t.min=Math.max(3,Math.round(w/130)+1)}});
+
 
 /* Experiências de vida */
 const EXP_CATS=[
@@ -2656,7 +2757,7 @@ function jagged(ctx,x,y,w,h,r){
  ctx.beginPath();pts.forEach((p,i)=>i?ctx.lineTo(p[0],p[1]):ctx.moveTo(p[0],p[1]));ctx.closePath();
 }
 /* ---- Colagem estilo "câmera + polaroids": foto de fundo clara, polaroids espalhadas, câmera digital no centro ---- */
-const SCRAP_FONTS=['700 60px "Caveat"','600 36px "DM Sans"'];
+const SCRAP_FONTS=['700 60px "Caveat"','600 36px "DM Sans"','400 60px "Bebas Neue"','500 30px "Playfair Display"'];
 let scrapFontsReady=null;
 function loadScrapFonts(){if(!scrapFontsReady){try{scrapFontsReady=document.fonts&&document.fonts.load?Promise.all(SCRAP_FONTS.map(f=>document.fonts.load(f,'abc').catch(()=>null))).then(()=>null,()=>null):Promise.resolve()}catch(e){scrapFontsReady=Promise.resolve()}}return scrapFontsReady}
 function rrect(ctx,x,y,w,h,r){ctx.beginPath();ctx.moveTo(x+r,y);ctx.arcTo(x+w,y,x+w,y+h,r);ctx.arcTo(x+w,y+h,x,y+h,r);ctx.arcTo(x,y+h,x,y,r);ctx.arcTo(x,y,x+w,y,r);ctx.closePath()}
@@ -2788,6 +2889,120 @@ function fish(ctx,x,y,len,rot){
  ctx.fillStyle='#fff';ctx.beginPath();ctx.arc(-len*.38,-h*.12,h*.18,0,7);ctx.fill();ctx.fillStyle='#1B2A44';ctx.beginPath();ctx.arc(-len*.38,-h*.12,h*.09,0,7);ctx.fill();
  ctx.restore();
 }
+/* ---- Vision board estilo "recap do mês": papel com calendário, polaroids, cartão-postal, ticket, mapa e player ---- */
+function binderClip(ctx,x,y){
+ ctx.save();ctx.translate(x,y);shadowOn(ctx,10,5,.35);
+ ctx.fillStyle='#1E1E1E';ctx.beginPath();ctx.moveTo(-50,0);ctx.lineTo(50,0);ctx.lineTo(42,46);ctx.lineTo(-42,46);ctx.closePath();ctx.fill();shadowOff(ctx);
+ ctx.fillStyle='rgba(255,255,255,.18)';ctx.fillRect(-44,6,88,6);
+ ctx.strokeStyle='#B9BCC2';ctx.lineWidth=5;ctx.lineCap='round';
+ ctx.beginPath();ctx.moveTo(-30,4);ctx.lineTo(-22,-62);ctx.lineTo(22,-62);ctx.lineTo(30,4);ctx.stroke();
+ ctx.restore();
+}
+function paperClip(ctx,x,y,rot){ctx.save();ctx.translate(x,y);ctx.rotate(rot);ctx.strokeStyle='#A9ADB4';ctx.lineWidth=4;ctx.lineCap='round';
+ ctx.beginPath();ctx.moveTo(0,70);ctx.lineTo(0,-30);ctx.arc(10,-30,10,Math.PI,0);ctx.lineTo(20,60);ctx.arc(10,60,10,0,Math.PI);ctx.lineTo(0,-10);ctx.stroke();ctx.restore()}
+function chromeStar(ctx,x,y,r,rot){ctx.save();const g=ctx.createLinearGradient(x-r,y-r,x+r,y+r);g.addColorStop(0,'#FFFFFF');g.addColorStop(.45,'#C9CBD1');g.addColorStop(.6,'#F4F4F6');g.addColorStop(1,'#8E929A');
+ shadowOn(ctx,10,5,.3);ctx.fillStyle=g;ctx.beginPath();for(let i=0;i<10;i++){const a=-Math.PI/2+rot+i*Math.PI/5,rr=i%2?r*.42:r;ctx.lineTo(x+Math.cos(a)*rr,y+Math.sin(a)*rr)}ctx.closePath();ctx.fill();ctx.restore()}
+function holoHeart(ctx,x,y,s,rot){ctx.save();ctx.translate(x,y);ctx.rotate(rot);ctx.scale(s/100,s/100);
+ const g=ctx.createLinearGradient(-50,-50,50,50);g.addColorStop(0,'#DDE6FF');g.addColorStop(.35,'#F7D9F0');g.addColorStop(.6,'#D9F5EE');g.addColorStop(1,'#B8C3E8');
+ shadowOn(ctx,10,4,.25);ctx.fillStyle=g;ctx.beginPath();ctx.moveTo(0,42);ctx.bezierCurveTo(-70,0,-40,-52,0,-18);ctx.bezierCurveTo(40,-52,70,0,0,42);ctx.fill();shadowOff(ctx);
+ ctx.fillStyle='rgba(255,255,255,.7)';for(let i=0;i<26;i++){const a=i*2.4,rr=(i%7)*5;ctx.fillRect(Math.cos(a)*rr-1,Math.sin(a)*rr-6,3,3)}ctx.restore()}
+function pushPin(ctx,x,y){ctx.save();shadowOn(ctx,8,6,.35);ctx.strokeStyle='#8A8A8A';ctx.lineWidth=3;ctx.beginPath();ctx.moveTo(x,y);ctx.lineTo(x-14,y+22);ctx.stroke();
+ const g=ctx.createRadialGradient(x-6,y-6,2,x,y,20);g.addColorStop(0,'#FF6B6B');g.addColorStop(1,'#C21E1E');ctx.fillStyle=g;ctx.beginPath();ctx.arc(x,y,18,0,7);ctx.fill();
+ ctx.fillStyle='#A51818';ctx.beginPath();ctx.ellipse(x+3,y+12,12,6,0,0,7);ctx.fill();ctx.restore()}
+function barcode(ctx,x,y,rot){ctx.save();ctx.translate(x,y);ctx.rotate(rot);shadowOn(ctx,8,3,.25);ctx.fillStyle='#fff';ctx.fillRect(-70,-34,140,68);shadowOff(ctx);
+ ctx.fillStyle='#1E1E1E';let xx=-58;const w=[3,1,2,4,1,1,3,2,1,4,2,1,3,1,2,2,4,1,3,1,2,1];for(let i=0;i<w.length&&xx<58;i++){ctx.fillRect(xx,-24,w[i]*1.6,48);xx+=w[i]*1.6+3}ctx.restore()}
+function ticketBM(ctx,x,y,rot){ctx.save();ctx.translate(x,y);ctx.rotate(rot);const w=200,h=110;shadowOn(ctx,8,4,.25);ctx.fillStyle='#E9885C';ctx.fillRect(-w/2,-h/2,w,h);shadowOff(ctx);
+ ctx.fillStyle='#FAF8F3';[[-w/2,0],[w/2,0]].forEach(([cx,cy])=>{ctx.beginPath();ctx.arc(cx,cy,12,0,7);ctx.fill()});
+ ctx.strokeStyle='#8E3B1E';ctx.lineWidth=2;ctx.strokeRect(-w/2+14,-h/2+10,w-28,h-20);
+ ctx.fillStyle='#8E3B1E';ctx.textAlign='center';ctx.textBaseline='middle';ctx.font='800 30px "Bebas Neue","DM Sans",sans-serif';ctx.fillText('BONS',0,-14);ctx.fillText('MOMENTOS',0,18);
+ ctx.font='700 14px "DM Sans",sans-serif';ctx.save();ctx.rotate(-Math.PI/2);ctx.fillText('2026',0,-w/2+24);ctx.restore();ctx.save();ctx.rotate(Math.PI/2);ctx.fillText('2026',0,-w/2+24);ctx.restore();ctx.restore()}
+function mapScrap(ctx,x,y,w,h,rot){ctx.save();ctx.translate(x,y);ctx.rotate(rot);shadowOn(ctx,10,4,.25);ctx.fillStyle='#E7E1CF';ctx.fillRect(-w/2,-h/2,w,h);shadowOff(ctx);
+ ctx.beginPath();ctx.rect(-w/2,-h/2,w,h);ctx.clip();ctx.fillStyle='#BFD7C2';ctx.beginPath();ctx.moveTo(-w/2,-h/2+30);ctx.bezierCurveTo(-w/4,-h/2+70,0,-h/4,w/2,-h/2+20);ctx.lineTo(w/2,-h/2);ctx.lineTo(-w/2,-h/2);ctx.fill();
+ ctx.fillStyle='#E9D9A8';ctx.beginPath();ctx.ellipse(-w/6,h/6,w/4,h/5,.4,0,7);ctx.fill();
+ ctx.strokeStyle='rgba(120,90,60,.35)';ctx.lineWidth=1.5;for(let i=-w/2;i<w/2;i+=36){ctx.beginPath();ctx.moveTo(i,-h/2);ctx.lineTo(i,h/2);ctx.stroke()}for(let i=-h/2;i<h/2;i+=36){ctx.beginPath();ctx.moveTo(-w/2,i);ctx.lineTo(w/2,i);ctx.stroke()}
+ ctx.strokeStyle='#C0504D';ctx.lineWidth=2;ctx.setLineDash([6,5]);ctx.beginPath();ctx.moveTo(-w/2+20,h/2-20);ctx.bezierCurveTo(-10,0,20,30,w/2-30,-h/2+40);ctx.stroke();ctx.setLineDash([]);ctx.restore()}
+function postcard(ctx,x,y,w,h,rot,lines){ctx.save();ctx.translate(x,y);ctx.rotate(rot);shadowOn(ctx,14,6,.25);ctx.fillStyle='#F3EFE6';ctx.fillRect(-w/2,-h/2,w,h);shadowOff(ctx);
+ ctx.fillStyle='#2E2E2E';ctx.textAlign='left';ctx.textBaseline='middle';ctx.font='500 34px "Playfair Display",Georgia,serif';ctx.fillText('CARTÃO POSTAL',-w/2+40,-h/2+52);
+ ctx.strokeStyle='#2E2E2E';ctx.lineWidth=2;ctx.strokeRect(w/2-120,-h/2+22,92,100);ctx.font='700 12px "DM Sans",sans-serif';ctx.textAlign='center';ctx.fillText('SELO',w/2-74,-h/2+72);
+ ctx.beginPath();ctx.moveTo(0,-h/2+110);ctx.lineTo(0,h/2-26);ctx.stroke();
+ ctx.textAlign='left';ctx.font='700 15px "DM Sans",sans-serif';ctx.fillStyle='#8B8A94';ctx.fillText('MEUS OBJETIVOS',-w/2+40,-h/2+100);
+ for(let n=0;n<3;n++){const ly=-h/2+130+n*44;ctx.strokeStyle='rgba(46,46,46,.25)';ctx.lineWidth=1.5;ctx.beginPath();ctx.moveTo(-w/2+40,ly+18);ctx.lineTo(-14,ly+18);ctx.stroke();
+  const t=String((lines||[])[n]||'').trim();if(t){ctx.fillStyle='#2A211C';fitText(ctx,t,w/2-60,'700 {s}px "Caveat","Segoe Script",cursive',30,16);ctx.fillText(t,-w/2+40,ly)}}
+ for(let n=0;n<3;n++){const ly=-h/2+130+n*44;ctx.beginPath();ctx.moveTo(16,ly+18);ctx.lineTo(w/2-30,ly+18);ctx.stroke()}
+ ctx.restore()}
+function tornTitle(ctx,cx,cy,w,h,text){ctx.save();ctx.translate(cx,cy);ctx.rotate(-.012);const r=rng(7);shadowOn(ctx,14,6,.25);ctx.fillStyle='#F4F4F6';ctx.beginPath();
+ ctx.moveTo(-w/2,-h/2);for(let x=-w/2;x<=w/2;x+=18)ctx.lineTo(x,-h/2+(r()-.5)*8);for(let y=-h/2;y<=h/2;y+=14)ctx.lineTo(w/2+(r()-.5)*10,y);for(let x=w/2;x>=-w/2;x-=18)ctx.lineTo(x,h/2+(r()-.5)*8);for(let y=h/2;y>=-h/2;y-=14)ctx.lineTo(-w/2+(r()-.5)*10,y);ctx.closePath();ctx.fill();shadowOff(ctx);
+ ctx.fillStyle='#2E2E2E';ctx.textAlign='center';ctx.textBaseline='middle';fitText(ctx,text,w-70,'400 {s}px "Bebas Neue","Arial Narrow",sans-serif',96,36);ctx.fillText(text,0,6);ctx.restore()}
+function musicCard(ctx,x,y,w,h,im,track,artist){ctx.save();shadowOn(ctx,16,8,.3);ctx.fillStyle='#34495A';rrect(ctx,x,y,w,h,26);ctx.fill();shadowOff(ctx);
+ ctx.strokeStyle='#fff';ctx.lineWidth=2;ctx.beginPath();ctx.ellipse(x+112,y+44,80,24,-.08,0,7);ctx.stroke();ctx.fillStyle='#fff';ctx.font='700 30px "Caveat",cursive';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText('no repeat',x+112,y+44);
+ rrect(ctx,x+w-230,y+24,170,40,20);ctx.stroke();ctx.font='500 18px "DM Sans",sans-serif';ctx.fillText('🎧 Fones',x+w-145,y+45);
+ ctx.save();rrect(ctx,x+30,y+86,96,96,14);ctx.clip();coverImg(ctx,im,x+30,y+86,96,96,'#7B9CF0');ctx.restore();
+ ctx.textAlign='left';ctx.fillStyle='#fff';ctx.font='600 26px "DM Sans",sans-serif';fitText(ctx,track,w-360,'600 {s}px "DM Sans",sans-serif',26,16);ctx.fillText(track,x+150,y+118);
+ ctx.fillStyle='#C9D2DC';fitText(ctx,artist,w-360,'500 {s}px "DM Sans",sans-serif',22,14);ctx.fillText(artist,x+150,y+156);
+ const bx=x+w-200,by=y+134;ctx.fillStyle='#fff';
+ ctx.fillRect(bx,by-18,6,36);ctx.beginPath();ctx.moveTo(bx+34,by-18);ctx.lineTo(bx+8,by);ctx.lineTo(bx+34,by+18);ctx.fill();
+ ctx.fillRect(bx+70,by-22,12,44);ctx.fillRect(bx+92,by-22,12,44);
+ ctx.beginPath();ctx.moveTo(bx+140,by-18);ctx.lineTo(bx+166,by);ctx.lineTo(bx+140,by+18);ctx.fill();ctx.fillRect(bx+168,by-18,6,36);ctx.restore()}
+function earphones(ctx,x,y){ctx.save();ctx.strokeStyle='#F4F4F6';ctx.lineWidth=5;ctx.lineCap='round';shadowOn(ctx,6,3,.25);
+ ctx.beginPath();ctx.moveTo(x,y);ctx.bezierCurveTo(x+60,y+90,x-120,y+150,x-40,y+230);ctx.bezierCurveTo(x+40,y+300,x+160,y+210,x+120,y+150);ctx.bezierCurveTo(x+80,y+90,x+20,y+180,x+60,y+260);ctx.stroke();
+ ctx.beginPath();ctx.moveTo(x+110,y-20);ctx.bezierCurveTo(x+150,y+60,x+60,y+120,x+120,y+150);ctx.stroke();
+ [[x,y],[x+110,y-20]].forEach(([ex,ey])=>{ctx.fillStyle='#FBFBFC';ctx.beginPath();ctx.ellipse(ex-8,ey-26,30,24,-.5,0,7);ctx.fill();ctx.fillStyle='#E1E3E8';ctx.beginPath();ctx.ellipse(ex,ey-8,10,22,-.3,0,7);ctx.fill()});
+ ctx.restore()}
+function calendarSheet(ctx,x,y,w,h){ctx.save();shadowOn(ctx,24,10,.25);ctx.fillStyle='#EFECE4';ctx.fillRect(x,y,w,h);shadowOff(ctx);
+ const d=new Date();const days=new Date(d.getFullYear(),d.getMonth()+1,0).getDate();
+ ctx.strokeStyle='rgba(46,46,46,.12)';ctx.lineWidth=2;const rows=6;const rh=(h-200)/rows;
+ for(let i=0;i<=rows;i++){const yy=y+160+i*rh;ctx.beginPath();ctx.moveTo(x+30,yy);ctx.lineTo(x+w-30,yy);ctx.stroke()}
+ ctx.fillStyle='rgba(46,46,46,.75)';ctx.font='500 30px "DM Sans",sans-serif';ctx.textAlign='center';ctx.textBaseline='middle';
+ const cols=[x+w*.22,x+w*.5,x+w*.78];const marks=[2,6,13,20,22,26,30,days];const pos=[[1,0],[1,1],[0,2],[2,3],[1,4],[1,5],[1,6],[2,6]];
+ marks.forEach((n,i)=>{const [c,rw]=pos[i];const yy=y+160+rw*rh+rh*.55;if(rw<=rows)ctx.fillText(String(n),cols[c],yy)});
+ const t=d.getDate();ctx.strokeStyle='#D13B3B';ctx.lineWidth=3;ctx.beginPath();ctx.ellipse(cols[2],y+160+6*rh+rh*.55-rh,38,30,-.2,0,7);ctx.restore();
+ return {cols,rh,top:y+160};
+}
+async function drawRecap(ctx,b,order,pick,r,j,stk){
+ let uu=null,pp=null;try{uu=U();pp=prof(uu)}catch(e){}
+ const d=new Date();const mm=String(d.getMonth()+1).padStart(2,'0');
+ /* fundo: foto em tela cheia */
+ if(order.length){coverImg(ctx,pick(order.length>9?9:0),0,0,1080,1920);ctx.fillStyle='rgba(20,28,24,.12)';ctx.fillRect(0,0,1080,1920)}
+ else{const g=ctx.createLinearGradient(0,0,0,1920);g.addColorStop(0,'#A9B8A7');g.addColorStop(1,'#4F6B57');ctx.fillStyle=g;ctx.fillRect(0,0,1080,1920)}
+ const cal=calendarSheet(ctx,122,176,820,1440);
+ /* dia de hoje circulado */
+ ctx.save();ctx.strokeStyle='#D13B3B';ctx.lineWidth=3;ctx.beginPath();ctx.ellipse(122+820*.78,cal.top+6*cal.rh+cal.rh*.55,42,32,-.2,0,7);ctx.stroke();ctx.restore();
+ postcard(ctx,215,420,470,330,-.015,b.goals||[]);
+ tornTitle(ctx,530,252,600,120,(String(b.title||'').trim()||'recap do mês').toUpperCase()+' ['+mm+']');
+ binderClip(ctx,520,170);paperClip(ctx,730,170,.08);
+ chromeStar(ctx,910,185,46,.2);chromeStar(ctx,988,140,30,-.3);
+ /* polaroids */
+ const P=(i,x,y,w,h,rot,cap,sz)=>polaroid(ctx,pick(i),x,y,w,h,rot+j()*.03,cap||'',sz||40,PIN_COLORS[i%4]);
+ P(1,250,640,170,130,-.06);
+ P(2,450,560,170,150,.05);
+ ticketBM(ctx,700,450,-.22);
+ P(3,895,470,170,150,.03);
+ P(5,735,650,140,190,.03);
+ P(6,915,690,160,160,.05);
+ P(4,255,800,160,160,-.04);
+ mapScrap(ctx,870,890,230,150,-.02);pushPin(ctx,880,870);
+ const handle='@'+(uu?first(uu.name).toLowerCase().normalize('NFD').replace(/[^a-z0-9]/g,''):'eu');
+ P(7,270,1150,300,190,-.03,handle,40);
+ /* frase escrita à mão */
+ ctx.save();ctx.translate(190,960);ctx.rotate(-.12);ctx.fillStyle='#D13B3B';ctx.textAlign='center';ctx.font='700 50px "Caveat",cursive';ctx.fillText('aproveite',0,-32);ctx.font='700 38px "Caveat",cursive';ctx.fillText('cada',0,2);ctx.font='700 50px "Caveat",cursive';ctx.fillText('momento.',0,38);ctx.restore();
+ const phrase=String(b.phrase||'').trim()||(pp?pp.phrases[isoWeek()%pp.phrases.length]:'Um passo de cada vez.');
+ P(0,545,905,260,250,.05,phrase,36);
+ barcode(ctx,125,560,-.4);
+ P(8,690,1290,210,180,-.12);
+ P(9,905,1220,210,230,.06);
+ holoHeart(ctx,560,1265,76,-.2);pushPin(ctx,300,1300);
+ P(10,420,1420,190,160,-.05);
+ P(11,215,1450,170,200,.02);
+ holoHeart(ctx,390,1610,66,.1);
+ /* categoria no ticket de papel */
+ ctx.save();ctx.translate(720,1060);ctx.rotate(.03);shadowOn(ctx,8,3,.2);ctx.fillStyle='#FBFBF8';ctx.fillRect(-55,-120,110,240);shadowOff(ctx);ctx.fillStyle='#55534F';ctx.font='500 15px "DM Sans",monospace';ctx.textAlign='left';
+ ['MEU FOCO','──────',...wrapLines(ctx,(b.cat||'Desenvolvimento pessoal').toUpperCase(),90).slice(0,4),'──────',`${String(d.getDate()).padStart(2,'0')}/${mm}`].forEach((t,i)=>ctx.fillText(t,-46,-96+i*26));ctx.restore();
+ musicCard(ctx,458,1495,535,195,pick(2),`FAIXA ${mm}`,(uu?String(uu.name||'').trim()||'Você':'Você').toUpperCase());
+ earphones(ctx,900,1760);
+ /* adesivos escolhidos */
+ const spots=[[110,1780],[560,1820],[990,1000],[90,1180],[1000,1580]].sort(()=>r()-.5);
+ stk.forEach(({st,im},i)=>{const [px,py]=spots[i%spots.length];const w=st.size*(.45+r()*.15),h=w*(st.ar||1);ctx.save();ctx.translate(px,py);ctx.rotate(j()*.6);shadowOn(ctx,12,5,.25);ctx.drawImage(im,-w/2,-h/2,w,h);ctx.restore()});
+}
 async function drawBoard(cv,b){
  if(!cv||!b)return;
  const tok=(cv._tok=(cv._tok||0)+1);
@@ -2801,6 +3016,7 @@ async function drawBoard(cv,b){
   const order=imgs.map((_,i)=>i).sort(()=>r()-.5).map(i=>imgs[i]);
   const pick=i=>order.length?order[i%order.length]:null;
   const j=()=>(r()-.5);
+  if((b.kind||'geral')!=='fe'){await drawRecap(ctx,b,order,pick,r,j,stk);return}
   /* fundo: foto clareada */
   ctx.fillStyle='#F7F3EE';ctx.fillRect(0,0,1080,1920);
   if(order.length){coverImg(ctx,pick(order.length>7?7:0),0,0,1080,1920);ctx.fillStyle='rgba(255,255,255,.28)';ctx.fillRect(0,0,1080,1920)}
@@ -3044,7 +3260,7 @@ function tLearn(u){
  <div class="mt-5"><p>Você leu ${readN} de ${TEXTS.length} textos</p><div class="flex items-center gap-3 mt-2"><div class="prog" role="progressbar" aria-valuenow="${pct}" aria-valuemin="0" aria-valuemax="100" aria-label="Textos lidos"><i style="width:${pct}%"></i></div><span class="pct">${pct}%</span></div></div>
  <nav class="pin-tabs mt-4" aria-label="Categorias">${cats.map(c=>`<button class="${f===c.id?'on':''}" aria-pressed="${f===c.id}" data-act="learn" data-v="${c.id}">${c.n}</button>`).join('')}</nav>
  ${list.length?libList(u,list,LCATS,f):`<div class="empty card mt-4"><p class="h3">${f==='salvos'?'Nenhum texto salvo':'Nenhum texto aqui ainda'}</p><p class="small muted mt-1">${f==='salvos'?'Abra um texto e toque em Salvar para encontrar aqui depois.':'Novos conteúdos estão a caminho.'}</p></div>`}
- <p class="small muted mt-6" style="font-weight:400">Novas áreas (filosofia, história e cultura, sociedade) e trilhas de aprendizagem estão a caminho.${hasFaith(u)?' Os conteúdos de fé ficam na aba Fé.':''}</p>`;
+ <p class="small muted mt-6" style="font-weight:400">Trilhas de aprendizagem estão a caminho.${hasFaith(u)?' Os conteúdos de fé ficam na aba Fé.':''}</p>`;
 }
 function readView(u,id){
  const t=findText(id);if(!t){ui.reading=null;return ''}
