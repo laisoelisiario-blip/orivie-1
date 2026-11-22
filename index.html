@@ -557,6 +557,21 @@ body,#app{background:#FAF8F3;color:#2E2E2E}
 .footbar{background:linear-gradient(to top,#FAF8F3 70%,rgba(250,248,243,0))}
 .msg.ori{background:#EDEFFA}.msg.me{background:#2E2E2E}
 
+/* Combina estilo Pinterest */
+.pin-tabs{display:flex;gap:22px;overflow-x:auto;scrollbar-width:none;margin:0 -16px;padding:0 16px;border-bottom:1px solid #ECEBF2}
+.pin-tabs::-webkit-scrollbar{display:none}
+.pin-tabs button{flex:none;padding:10px 0 12px;font-size:17px;font-weight:600;color:#8B8A94;border-bottom:3px solid transparent;border-radius:0}
+.pin-tabs button.on{color:#2E2E2E;border-bottom-color:#2E2E2E}
+.masonry{column-count:2;column-gap:12px}
+.pin{break-inside:avoid;margin-bottom:16px;display:inline-block;width:100%}
+.pin-img{position:relative;display:grid;place-items:center;width:100%;border-radius:22px;overflow:hidden;color:#2E2E2E}
+.pin-img img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.pin-match{position:absolute;left:10px;bottom:10px;background:rgba(255,255,255,.9);border-radius:999px;padding:3px 10px;font-size:12px;font-weight:600}
+.pin-cap{display:flex;align-items:flex-start;gap:6px;padding:8px 2px 0}
+.pin-title{flex:1;text-align:left;font-size:15px;font-weight:500;line-height:1.3;color:#2E2E2E;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.pin-fav{flex:none;width:30px;height:30px;display:grid;place-items:center;color:#2E2E2E}
+.pin-fav.on{color:#E58FAE}
+
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:1ms!important;animation-iteration-count:1!important;transition-duration:1ms!important}}
 </style>
 </head>
@@ -729,7 +744,7 @@ const PROFILES=[
 ];
 const PREFS=['Temperamentos','Mulheres da Bíblia','Ansiedade','Identidade','Comparação','Perdão','Relacionamentos','Casamento','Servir na igreja','Propósito','Rotina com Deus','Fé e dúvidas','Saúde emocional','Limites'];
 
-const CATS=[{id:'todos',n:'Todos',ic:'sparkle'},{id:'louvores',n:'Louvores',ic:'music'},{id:'livros',n:'Livros',ic:'books'},{id:'devocionais',n:'Devocionais',ic:'book'},{id:'podcasts',n:'Podcasts',ic:'sound'},{id:'lugares',n:'Lugares',ic:'pin'},{id:'estilo',n:'Estilo',ic:'shirt'},{id:'favoritos',n:'Favoritos',ic:'heart'}];
+const CATS=[{id:'todos',n:'Tudo',ic:'sparkle'},{id:'louvores',n:'Louvores',ic:'music'},{id:'livros',n:'Livros',ic:'books'},{id:'devocionais',n:'Devocionais',ic:'book'},{id:'podcasts',n:'Podcasts',ic:'sound'},{id:'lugares',n:'Lugares',ic:'pin'},{id:'estilo',n:'Roupas',ic:'shirt'},{id:'comidas',n:'Comidas',ic:'food'},{id:'favoritos',n:'Favoritos',ic:'heart'}];
 const ITEMS=[
  {id:'l1',c:'louvores',n:'Louvor congregacional animado',d:'Músicas para cantar junto, com palmas e celebração.',w:'é adoração em comunidade, do jeito que enche o seu coração de alegria.',p:['sanguinea','colerica'],img:'photo-1493225457124-a3eb161ffa5f'},
  {id:'l2',c:'louvores',n:'Adoração acústica',d:'Voz, violão e letras para cantar de olhos fechados.',w:'abre espaço para uma adoração profunda e sem pressa.',p:['melancolica','fleumatica'],img:'photo-1510915361894-db8b60106cad'},
@@ -754,7 +769,12 @@ const ITEMS=[
  {id:'e1',c:'estilo',n:'Linho e tons terrosos',d:'Peças leves e naturais em areia, oliva e terracota.',w:'trazem calma, textura e uma beleza discreta.',p:['melancolica','fleumatica'],img:'photo-1490481651871-ab68de25d43d'},
  {id:'e2',c:'estilo',n:'Look de domingo com cor',d:'Uma peça de cor alegre com acessórios delicados.',w:'expressa a sua alegria sem perder a elegância.',p:['sanguinea'],img:'photo-1515372039744-b8f02a3ae446'},
  {id:'e3',c:'estilo',n:'Alfaiataria leve',d:'Cortes limpos e confortáveis para servir e liderar.',w:'reflete a sua praticidade e presença.',p:['colerica','melancolica'],img:'photo-1594633312681-425c7b97ccd1'},
- {id:'e4',c:'estilo',n:'Tricô aconchegante',d:'Malhas macias para dias de chá e leitura.',w:'é como um abraço que você pode vestir.',p:['fleumatica','melancolica'],img:'photo-1434389677669-e08b4cac3105'}
+ {id:'e4',c:'estilo',n:'Tricô aconchegante',d:'Malhas macias para dias de chá e leitura.',w:'é como um abraço que você pode vestir.',p:['fleumatica','melancolica'],img:'photo-1434389677669-e08b4cac3105'},
+ {id:'f1',c:'comidas',n:'Café da manhã com devocional',d:'Pão quentinho, frutas e a Bíblia aberta na mesa.',w:'começa o dia com calma e com Deus em primeiro lugar.',p:['melancolica','fleumatica'],img:'photo-1509042239860-f550ce710b93'},
+ {id:'f2',c:'comidas',n:'Lanche para o pequeno grupo',d:'Bolo, café e petiscos para receber as irmãs.',w:'é comunhão em volta da mesa, do jeito que você gosta de acolher.',p:['sanguinea','fleumatica'],img:'photo-1544787219-7f47ccb76574'},
+ {id:'f3',c:'comidas',n:'Jantar em família com oração',d:'Uma receita simples e um momento de gratidão juntos.',w:'transforma a refeição em um momento de cuidado.',p:['fleumatica','sanguinea'],img:'photo-1551183053-bf91a1d81141'},
+ {id:'f4',c:'comidas',n:'Marmitas da semana',d:'Refeições organizadas para uma rotina corrida.',w:'combina com a sua praticidade e libera tempo para o que importa.',p:['colerica','melancolica'],img:'photo-1512621776951-a57141f2eefd'},
+ {id:'f5',c:'comidas',n:'Frutas da estação',d:'O que a criação oferece agora, fresco e simples.',w:'lembra que há um tempo certo para cada coisa.',p:['melancolica','colerica'],img:'photo-1610832958506-aa56368176cf'},
 ];
 const GROUPS=[{id:'orei',n:'Orei',ic:'sparkle'},{id:'li',n:'Li a Palavra',ic:'book'},{id:'servi',n:'Servi',ic:'heart'},{id:'agradeci',n:'Agradeci',ic:'star'}];
 const GENERIC_CHECK={orei:'5 minutos de oração antes de começar o dia',li:'Ler um capítulo da Bíblia',servi:'Ajudar alguém sem esperar nada em troca',agradeci:'Anotar 3 motivos de gratidão'};
@@ -1975,15 +1995,25 @@ function itemCard(it,u,p){
   <div class="flex justify-end mt-2"><button class="favbtn ${fav?'on':''}" data-act="fav" data-id="${it.id}" aria-pressed="${fav}">${ic(fav?'heart':'heartline',18)} ${fav?'Favoritado':'Favoritar'}</button></div>
  </article>`;
 }
+const PIN_RATIOS=['3/4','4/5','1/1','2/3','4/5','3/4','5/6'];
+const PIN_COLORS=['#FCE7EF','#E8EEFD','#E4F3EA','#EDEFFA'];
+function pinCard(it,u,i){
+ const cat=CATS.find(c=>c.id===it.c)||CATS[0];const fav=u.favs.includes(it.id);
+ let h=0;for(const ch of it.id)h=(h*31+ch.charCodeAt(0))%997;
+ return `<article class="pin">
+  <button class="pin-img" style="aspect-ratio:${PIN_RATIOS[h%PIN_RATIOS.length]};background:${PIN_COLORS[i%4]}" data-act="item" data-id="${it.id}" aria-label="${esc(it.n)}: ver detalhes">${ic(cat.ic,40)}<img src="${imgUrl(it.img,500)}" alt="" loading="lazy" onerror="this.remove()"><span class="pin-match">${it.m}%</span></button>
+  <div class="pin-cap"><button class="pin-title" data-act="item" data-id="${it.id}">${it.n}</button><button class="pin-fav ${fav?'on':''}" data-act="fav" data-id="${it.id}" aria-pressed="${fav}" aria-label="${fav?'Remover dos favoritos':'Favoritar'}">${ic(fav?'heartc':'heartline',20)}</button></div>
+ </article>`;
+}
 function tCombina(u){
  const p=prof(u);const f=ui.comb||'todos';
  let list=ITEMS.map(it=>({...it,m:matchOf(it,p.id)}));
  if(f==='favoritos')list=list.filter(it=>u.favs.includes(it.id));else if(f!=='todos')list=list.filter(it=>it.c===f);
  list.sort((a,b)=>b.m-a.m);
  return `<h1 class="display">Combina com você</h1><p class="body mt-2">${p.why.replace(':','')} e com a sua fé.</p>
- <div class="chips mt-4" role="group" aria-label="Filtros">${CATS.map(c=>`<button class="chip-f ${f===c.id?'on':''}" aria-pressed="${f===c.id}" data-act="comb" data-v="${c.id}">${ic(c.ic,18)}${c.n}${c.id==='favoritos'?` <b>${u.favs.length}</b>`:''}</button>`).join('')}</div>
- <div class="flex flex-col gap-4 mt-3">${list.length?list.map(it=>itemCard(it,u,p)).join(''):
-  `<div class="empty card">${mascot('think',96)}<h2 class="h2 mt-3">Nenhum favorito ainda</h2><p class="muted mt-1">Toque em um item e favorite o que mais tem a sua cara.</p><button class="btn btn-primary mt-5" data-act="comb" data-v="todos">Ver todos</button></div>`}</div>`;
+ <nav class="pin-tabs mt-4" aria-label="Categorias">${CATS.map(c=>`<button class="${f===c.id?'on':''}" aria-pressed="${f===c.id}" data-act="comb" data-v="${c.id}">${c.n}${c.id==='favoritos'&&u.favs.length?` (${u.favs.length})`:''}</button>`).join('')}</nav>
+ ${list.length?`<div class="masonry mt-4">${list.map((it,i)=>pinCard(it,u,i)).join('')}</div>`:
+  `<div class="empty card mt-4"><h2 class="h2">Nenhum favorito ainda</h2><p class="muted mt-1">Toque no coração das imagens para guardar o que tem a sua cara.</p><button class="btn btn-primary mt-5" data-act="comb" data-v="todos">Ver tudo</button></div>`}`;
 }
 function itemModal(id){
  openModal(()=>{const u=U(),p=prof(u),it=ITEMS.find(x=>x.id===id);if(!it)return '<p>Item não encontrado.</p>';const cat=CATS.find(c=>c.id===it.c);const fav=u.favs.includes(id);
