@@ -912,7 +912,7 @@ const PROFILE_EXTRA={
 const INTERESTS=['Autoconhecimento','Psicologia e emoções','Filosofia','História e cultura','Desenvolvimento pessoal','Carreira e estudos','Finanças','Bem-estar','Relacionamentos','Moda e estilo','Música','Livros','Lugares','Gastronomia','Viagens'];
 const PREFS=INTERESTS;
 const TEXT_CAT={a1:'psicologia',a2:'desenvolvimento',a3:'psicologia',a4:'psicologia',a5:'psicologia',a6:'psicologia',a7:'psicologia',a8:'desenvolvimento',a9:'desenvolvimento',a10:'psicologia',a11:'psicologia',a12:'desenvolvimento',a13:'desenvolvimento',a14:'psicologia',a15:'desenvolvimento'};
-const LCATS=[{id:'todos',n:'Todos'},{id:'psicologia',n:'Psicologia e emoções'},{id:'desenvolvimento',n:'Desenvolvimento pessoal'},{id:'filosofia',n:'Filosofia'},{id:'historia',n:'História e cultura'},{id:'sociedade',n:'Conhecimento e sociedade'},{id:'salvos',n:'Salvos'}];
+const LCATS=[{id:'todos',n:'Todos'},{id:'autoconhecimento',n:'Autoconhecimento'},{id:'psicologia',n:'Psicologia e emoções'},{id:'filosofia',n:'Filosofia'},{id:'historia',n:'História e cultura'},{id:'desenvolvimento',n:'Desenvolvimento pessoal'},{id:'carreira',n:'Carreira e estudos'},{id:'financas',n:'Finanças'},{id:'bemestar',n:'Bem-estar'},{id:'relacionamentos',n:'Relacionamentos'},{id:'moda',n:'Moda e estilo'},{id:'musica',n:'Música'},{id:'livros',n:'Livros'},{id:'lugares',n:'Lugares'},{id:'gastronomia',n:'Gastronomia'},{id:'viagens',n:'Viagens'},{id:'sociedade',n:'Conhecimento e sociedade'},{id:'salvos',n:'Salvos'}];
 const EDITORIAL='Equipe editorial Orivie';
 TEXTS.forEach(t=>{t.cat=TEXT_CAT[t.id]||'psicologia';t.cats=[t.cat];t.date=t.date||'2026-11-01';t.kind='geral'});
 /* Aprender: filosofia, história e cultura, conhecimento e sociedade */
@@ -1015,6 +1015,141 @@ TEXTS.push(
   src:'Ries, E. (2011), A startup enxuta; Sebrae, conteúdos para empreendedores; Portal do Empreendedor (gov.br), informações sobre o MEI.'}
 );
 TEXTS.forEach(t=>{if(!t.cats)t.cats=[t.cat];t.date=t.date||'2026-11-22';t.kind='geral';if(!t.min){const w=t.body.join(' ').split(/\s+/).length;t.min=Math.max(3,Math.round(w/130)+1)}});
+/* Aprender: textos para todas as categorias de interesse */
+const Y=(a,b,c,d,e,f)=>({serena:a,exploradora:b,analitica:c,conectiva:d,contemplativa:e,determinada:f});
+TEXTS.push(
+ {id:'a28',title:'Como estudar melhor: o que a ciência diz',cat:'carreira',img:'photo-1434030216411-0b793f4b4173',
+  body:['Muita gente estuda relendo e grifando. Uma revisão de pesquisas publicada em 2013 por John Dunlosky e colegas avaliou dez técnicas de estudo e concluiu que essas duas estão entre as menos eficazes.',
+   'As técnicas mais bem avaliadas foram a prática de recuperação, que é tentar lembrar o conteúdo sem olhar, como em autotestes e flashcards, e a prática espaçada, que é revisar em intervalos ao longo dos dias em vez de concentrar tudo de uma vez.',
+   'Lembrar dá mais trabalho do que reler, e é justamente esse esforço que fortalece a memória. Explicar o conteúdo com as próprias palavras, como se estivesse ensinando alguém, também ajuda a perceber o que ainda não ficou claro.',
+   'Dormir bem depois de estudar faz parte do processo: é durante o sono que o cérebro consolida boa parte do que foi aprendido.'],
+  you:Y('Use desenhos e mapas mentais para lembrar.','Varie os lugares e formatos de estudo para manter o interesse.','Monte um cronograma de revisões espaçadas.','Estude explicando o conteúdo para uma amiga.','Revise em silêncio, escrevendo tudo o que lembra.','Transforme as revisões em metas pequenas e diárias.'),
+  try:'Feche o material e escreva tudo o que lembra do último assunto que estudou. Depois confira o que faltou.',
+  src:'Dunlosky, J. et al. (2013), Psychological Science in the Public Interest, 14(1), 4–58; Walker, M. (2017), Por que nós dormimos.'},
+ {id:'a29',title:'Juros compostos e reserva de emergência',cat:'financas',img:'photo-1554118811-1e0d58224f24',
+  body:['Juros compostos são “juros sobre juros”: o rendimento de cada período passa a render também nos períodos seguintes. Por isso, o tempo é um grande aliado de quem investe, e um grande inimigo de quem deixa dívidas crescerem.',
+   'O cartão de crédito rotativo e o cheque especial costumam ter algumas das taxas de juros mais altas do mercado. Quitar ou renegociar essas dívidas costuma ser o primeiro passo para organizar a vida financeira.',
+   'Depois, vem a reserva de emergência: um dinheiro guardado em uma aplicação segura e de resgate rápido para imprevistos, como problemas de saúde ou perda de renda. Uma referência comum entre educadores financeiros é juntar o equivalente a alguns meses de gastos essenciais.',
+   'O Banco Central do Brasil oferece materiais gratuitos de educação financeira, com explicações simples sobre orçamento, crédito e investimentos.'],
+  you:Y('Crie um nome bonito para sua reserva: isso ajuda a manter o hábito.','Guarde um valor fixo antes de planejar a próxima aventura.','Use uma planilha simples para acompanhar a evolução.','Converse com quem mora com você sobre metas financeiras em comum.','Reflita sobre o que é realmente essencial nos seus gastos.','Defina uma meta mensal de reserva e acompanhe.'),
+  try:'Anote todos os seus gastos de uma semana, sem julgamento, só para conhecer seus hábitos.',
+  src:'Banco Central do Brasil, Caderno de Educação Financeira: Gestão de Finanças Pessoais; Serasa e Procon, orientações sobre renegociação de dívidas.'},
+ {id:'a30',title:'Sono: por que ele importa tanto',cat:'bemestar',img:'photo-1490730141103-6cac27aaab94',
+  body:['Dormir não é tempo perdido. Durante o sono, o corpo se recupera e o cérebro organiza memórias e regula emoções.',
+   'A Academia Americana de Medicina do Sono e a Sleep Research Society recomendam que adultos durmam regularmente 7 horas ou mais por noite. Dormir menos do que isso com frequência está associado a pior humor, menos atenção e mais riscos à saúde.',
+   'Alguns hábitos ajudam: manter horários parecidos para dormir e acordar, inclusive no fim de semana; evitar cafeína no fim do dia; deixar o quarto escuro, silencioso e fresco; e diminuir as telas antes de deitar.',
+   'Se você ronca muito, acorda cansada mesmo dormindo bastante ou tem dificuldade frequente para dormir, vale procurar um médico.'],
+  you:Y('Um ritual calmo antes de dormir combina com você.','Mesmo com a agenda cheia, proteja o horário de dormir.','Experimente registrar seu sono por uma semana.','Combine com quem mora com você um horário mais tranquilo à noite.','Use os minutos antes de dormir para desacelerar sem telas.','Trate o sono como parte do seu desempenho.'),
+  try:'Escolha um horário para desligar as telas hoje, 30 minutos antes de deitar.',
+  src:'Watson, N. F. et al. (2015), Sleep, 38(6), 843–844 (consenso AASM/SRS); Walker, M. (2017), Por que nós dormimos.'},
+ {id:'a31',title:'Movimento e saúde: quanto basta?',cat:'bemestar',img:'photo-1506126613408-eca07ce68773',
+  body:['A Organização Mundial da Saúde (OMS) recomenda que adultos façam de 150 a 300 minutos de atividade física moderada por semana, ou de 75 a 150 minutos de atividade intensa, além de exercícios de fortalecimento muscular em pelo menos dois dias.',
+   'Atividade moderada é aquela em que você consegue conversar, mas não cantar: uma caminhada rápida, dançar, pedalar em ritmo leve.',
+   'As diretrizes de 2020 da OMS reforçam que “qualquer movimento conta”: sair do sofá, subir escadas e caminhar até o mercado já trazem benefícios, especialmente para quem está começando.',
+   'Além do corpo, o movimento costuma melhorar o humor, o sono e a disposição. O melhor exercício é aquele que você gosta o suficiente para repetir.'],
+  you:Y('Dança e yoga podem unir movimento e expressão.','Trilhas e esportes novos combinam com sua energia.','Acompanhe seus minutos por semana em um aplicativo ou caderno.','Chame uma amiga para caminhar junto.','Caminhadas ao ar livre podem ser seu momento de pensar.','Defina uma meta semanal de minutos e celebre quando cumprir.'),
+  try:'Faça uma caminhada de 10 minutos hoje e repare como você se sente depois.',
+  src:'Organização Mundial da Saúde (2020), Diretrizes sobre atividade física e comportamento sedentário.'},
+ {id:'a32',title:'Guarda-roupa cápsula: menos peças, mais combinações',cat:'moda',img:'photo-1490481651871-ab68de25d43d',
+  body:['O guarda-roupa cápsula é uma coleção pequena de peças versáteis que combinam entre si. O termo é associado à londrina Susie Faux, dona de uma boutique nos anos 1970, e ficou famoso em 1985, quando a estilista Donna Karan lançou a coleção “Seven Easy Pieces”.',
+   'A ideia é escolher bases neutras (como jeans, calça de alfaiataria, camisa branca, malha e um casaco) e acrescentar algumas peças de cor ou estampa que tenham a sua cara.',
+   'Com menos peças que combinam, você gasta menos tempo para se vestir, compra com mais intenção e usa mais o que já tem.',
+   'Um bom começo é observar o que você realmente usa. Peças que ficam meses paradas podem ser doadas ou trocadas.'],
+  you:Y('Escolha uma peça especial que expresse sua criatividade.','Priorize peças práticas que acompanhem viagens e mudanças de plano.','Monte uma lista e combine as peças antes de comprar.','Organize uma troca de roupas com amigas.','Prefira tecidos naturais e confortáveis.','Peças versáteis economizam tempo na rotina.'),
+  try:'Separe 10 peças do seu armário e tente montar 10 looks diferentes só com elas.',
+  src:'Encyclopaedia of Fashion e reportagens sobre Susie Faux; Donna Karan, coleção “Seven Easy Pieces” (1985).'},
+ {id:'a33',title:'Cores e estilo: noções básicas',cat:'moda',img:'photo-1509631179647-0177331693ae',
+  body:['O círculo cromático ajuda a combinar cores. Cores análogas ficam lado a lado no círculo (como azul e verde) e criam combinações harmoniosas. Cores complementares ficam opostas (como azul e laranja) e criam contraste.',
+   'Uma regra prática usada por estilistas é a proporção 60-30-10: uma cor principal em cerca de 60% do look, uma secundária em 30% e um detalhe de destaque em 10%.',
+   'Tons neutros (branco, bege, cinza, preto e azul-marinho) funcionam como base e combinam com quase tudo.',
+   'A “colorimetria pessoal”, que analisa quais cores valorizam a pele, é uma prática popular de consultoria de imagem. Ela pode ser divertida e útil, mas não é uma ciência exata: o mais importante é você se sentir bem.'],
+  you:Y('Brinque com cores complementares nos acessórios.','Use cores vivas nos dias em que quer energia.','Teste a regra 60-30-10 e veja o resultado.','Peça a opinião de uma amiga sobre as cores que mais combinam com você.','Paletas suaves e terrosas podem trazer calma.','Escolha uma cor de destaque que transmita confiança.'),
+  try:'Monte um look com a regra 60-30-10 usando peças que você já tem.',
+  src:'Itten, J. (1961), A arte da cor; materiais de teoria das cores usados em design e moda.'},
+ {id:'a34',title:'Por que a música mexe com as emoções',cat:'musica',img:'photo-1511379938547-c1f69419868d',
+  body:['Sabe aquele arrepio no refrão favorito? Pesquisadores investigaram o que acontece no cérebro nesses momentos.',
+   'Em um estudo publicado em 2011 na revista Nature Neuroscience, Valorie Salimpoor e colegas mostraram que ouvir músicas muito emocionantes está ligado à liberação de dopamina, um neurotransmissor envolvido na sensação de prazer e recompensa, inclusive na expectativa do trecho preferido.',
+   'A música também está ligada à memória: canções da adolescência costumam despertar lembranças fortes. E cantar ou tocar em grupo pode aumentar a sensação de conexão com outras pessoas.',
+   'Usar a música de forma intencional pode ajudar no dia a dia: uma playlist para focar, outra para relaxar, outra para ganhar energia.'],
+  you:Y('Crie uma playlist para cada estado de espírito.','Descubra um gênero musical novo por semana.','Repare quais músicas te ajudam a focar.','Cante com amigas: música em grupo aproxima.','Ouça um álbum inteiro em silêncio, com atenção.','Monte uma playlist de energia para os dias de desafio.'),
+  try:'Escute uma música que você ama prestando atenção em um instrumento só.',
+  src:'Salimpoor, V. N. et al. (2011), Nature Neuroscience, 14(2), 257–262; Levitin, D. (2006), A música no seu cérebro.'},
+ {id:'a35',title:'Bossa nova: a música brasileira que encantou o mundo',cat:'musica',img:'photo-1525201548942-d8732f6617a0',
+  body:['A bossa nova surgiu no Rio de Janeiro no fim dos anos 1950, misturando o samba com harmonias inspiradas no jazz, num jeito de cantar suave e intimista.',
+   'Um marco foi a gravação de “Chega de saudade”, de Tom Jobim e Vinicius de Moraes, por João Gilberto, em 1958. O violão de João Gilberto, com sua batida característica, virou símbolo do estilo.',
+   '“Garota de Ipanema”, de Tom Jobim e Vinicius de Moraes, composta em 1962, tornou-se uma das canções mais gravadas do mundo. O álbum Getz/Gilberto, com o saxofonista Stan Getz, João Gilberto e Astrud Gilberto, ganhou o Grammy de Álbum do Ano em 1965.',
+   'Nara Leão, Elis Regina e muitas outras artistas também levaram a bossa nova adiante, influenciando gerações da música popular brasileira.'],
+  you:Y('A delicadeza da bossa nova combina com sua sensibilidade.','Comece por “Chega de saudade” e siga a trilha dos artistas.','Repare nas harmonias: há muito jazz escondido ali.','Ouça com alguém e conversem sobre as lembranças que vêm.','Ótima trilha para uma tarde tranquila.','Use para desacelerar entre tarefas.'),
+  try:'Ouça “Chega de saudade” e depois uma versão de outra cantora. Compare.',
+  src:'Castro, R. (1990), Chega de saudade: a história e as histórias da bossa nova; The Recording Academy, Grammy Awards 1965.'},
+ {id:'a36',title:'Como criar o hábito de ler',cat:'livros',img:'photo-1544716278-ca5e3f4abd8c',
+  body:['Ler mais não depende de ter horas livres, e sim de pequenos hábitos repetidos.',
+   'Comece com metas pequenas, como 10 páginas por dia, e associe a leitura a um momento que já existe na rotina: depois do café, no transporte, antes de dormir.',
+   'Deixe o livro sempre à vista e por perto. Pesquisas sobre hábitos mostram que facilitar o comportamento desejado aumenta a chance de repeti-lo.',
+   'E você não precisa terminar todo livro que começa. Trocar uma leitura que não está funcionando por outra que te prenda é uma ótima forma de manter o prazer de ler.'],
+  you:Y('Poesia e contos curtos são ótimos para começar.','Alterne gêneros para não cair na rotina.','Registre o que leu e uma ideia de cada livro.','Participe de um clube de leitura.','Reserve um cantinho silencioso só para ler.','Defina uma meta de livros para o ano e acompanhe.'),
+  try:'Escolha um horário fixo de hoje para ler 10 páginas.',
+  src:'Wood, W. (2019), Bons hábitos, maus hábitos; Clear, J. (2018), Hábitos atômicos.'},
+ {id:'a37',title:'Clássicos para começar sem medo',cat:'livros',img:'photo-1524995997946-a1c2e315a42f',
+  body:['Clássicos são livros que continuam fazendo sentido muitos anos depois de escritos. Começar por eles pode parecer difícil, mas alguns são ótimas portas de entrada.',
+   'Dom Casmurro (1899), de Machado de Assis, é narrado por Bentinho, que conta sua história com Capitu e deixa o leitor em dúvida até hoje. Orgulho e preconceito (1813), de Jane Austen, mistura romance e humor afiado sobre a sociedade inglesa.',
+   'O pequeno príncipe (1943), de Antoine de Saint-Exupéry, é curto e cheio de reflexões sobre amizade e o que é essencial. Cem anos de solidão (1967), de Gabriel García Márquez, apresenta o realismo mágico da família Buendía.',
+   'Uma dica é ler edições com notas e introdução, que ajudam a entender o contexto de cada época.'],
+  you:Y('O pequeno príncipe conversa com sua sensibilidade.','O realismo mágico de García Márquez é uma aventura.','Dom Casmurro é perfeito para quem gosta de analisar pistas.','Orgulho e preconceito é ótimo para debater com amigas.','O pequeno príncipe é para ler devagar.','Escolha um clássico por mês como desafio.'),
+  try:'Leia o primeiro capítulo de um desses clássicos e decida se quer continuar.',
+  src:'Machado de Assis (1899), Dom Casmurro; Austen, J. (1813), Orgulho e preconceito; Saint-Exupéry, A. (1943), O pequeno príncipe; García Márquez, G. (1967), Cem anos de solidão.'},
+ {id:'a38',title:'Natureza perto de casa: por que faz bem',cat:'lugares',img:'photo-1441974231531-c6227db76b6e',
+  body:['Você não precisa viajar para longe para sentir os benefícios da natureza. Parques, praças arborizadas e jardins também contam.',
+   'Um estudo com cerca de 20 mil pessoas na Inglaterra, publicado em 2019 por Mathew White e colegas, encontrou que passar pelo menos 120 minutos por semana em ambientes naturais estava associado a melhor saúde e bem-estar relatados.',
+   'Esse tempo podia ser somado ao longo da semana, em visitas curtas ou longas. Os autores lembram que o estudo mostra associação, não prova de causa.',
+   'Andar sem pressa, observar árvores, ouvir os sons ao redor e deixar o celular no bolso ajudam a aproveitar melhor esses momentos.'],
+  you:Y('Leve um caderno e desenhe o que vê.','Explore um parque diferente a cada semana.','Some seus minutos na natureza ao longo da semana.','Faça um piquenique com amigas.','Sente-se em silêncio por alguns minutos e observe.','Inclua caminhadas ao ar livre na agenda.'),
+  try:'Encontre o espaço verde mais próximo da sua casa e passe 20 minutos lá esta semana.',
+  src:'White, M. P. et al. (2019), Scientific Reports, 9, 7730.'},
+ {id:'a39',title:'Como aproveitar melhor um museu',cat:'lugares',img:'photo-1554907984-15263bfd63bd',
+  body:['Museus podem cansar quando tentamos ver tudo de uma vez. Uma visita com intenção costuma ser muito mais prazerosa.',
+   'Antes de ir, veja no site do museu o que está em exposição, os horários e se há dias de entrada gratuita. Muitos museus também oferecem visitas guiadas e áudio-guias.',
+   'Na visita, escolha poucas obras para observar com calma. Uma técnica simples é olhar uma obra por alguns minutos, notar detalhes, cores e sensações, e só depois ler a legenda.',
+   'Livrarias, centros culturais e bibliotecas públicas também são ótimos lugares para descobrir exposições, palestras e eventos, muitas vezes gratuitos.'],
+  you:Y('Escolha a obra que mais mexeu com você e escreva sobre ela.','Visite um museu de um tema que você nunca explorou.','Leia sobre o contexto das obras antes de ir.','Convide alguém e conversem sobre o que viram.','Visite em horários mais vazios para observar com calma.','Planeje um roteiro com as obras principais.'),
+  try:'Pesquise um museu ou centro cultural da sua cidade e anote a próxima exposição.',
+  src:'Smith, J. K. e Smith, L. F. (2001), Empirical Studies of the Arts, 19(2), sobre o tempo de observação de obras em museus.'},
+ {id:'a40',title:'Cozinha brasileira: de onde vêm nossos sabores',cat:'gastronomia',img:'photo-1504674900247-0877df9cc836',
+  body:['A comida brasileira nasceu do encontro de muitos povos. Dos povos indígenas vieram ingredientes e técnicas como a mandioca, a tapioca, o beiju e o uso de frutas nativas.',
+   'Os povos africanos escravizados trouxeram ingredientes e saberes que marcaram nossa culinária, como o azeite de dendê, o quiabo e pratos como o acarajé, cujo ofício das baianas foi registrado como Patrimônio Cultural do Brasil pelo Iphan em 2004.',
+   'Os portugueses trouxeram, entre outras coisas, doces à base de ovos e açúcar, como a ambrosia e as compotas. Mais tarde, imigrantes italianos, japoneses, árabes e alemães somaram novos sabores.',
+   'Cada região tem sua identidade: o tacacá no Norte, a moqueca na Bahia e no Espírito Santo, o pão de queijo em Minas Gerais e o churrasco no Sul.'],
+  you:Y('Cozinhe um prato regional e decore a mesa com capricho.','Experimente um prato de uma região que você não conhece.','Pesquise a origem de um prato que você ama.','Prepare uma receita de família com alguém querido.','Cozinhe com calma, prestando atenção aos aromas.','Desafie-se a cozinhar um prato novo por semana.'),
+  try:'Pergunte a alguém da sua família qual era o prato preferido da infância dele e tente prepará-lo.',
+  src:'Iphan, Ofício das Baianas de Acarajé (registro de 2004); Cascudo, L. da C. (1967), História da alimentação no Brasil.'},
+ {id:'a41',title:'O Guia Alimentar brasileiro em poucas palavras',cat:'gastronomia',img:'photo-1512621776951-a57141f2eefd',
+  body:['O Guia Alimentar para a População Brasileira, publicado pelo Ministério da Saúde em 2014, é reconhecido internacionalmente por sua abordagem simples e baseada em comida de verdade.',
+   'Sua “regra de ouro” é preferir alimentos in natura ou minimamente processados, como arroz, feijão, frutas, legumes, ovos e carnes, e preparações culinárias feitas com eles, em vez de alimentos ultraprocessados.',
+   'O guia também valoriza o ato de comer: comer com regularidade e atenção, em ambientes apropriados e, sempre que possível, em companhia.',
+   'Outra recomendação é desenvolver e compartilhar habilidades culinárias. Cozinhar é uma forma de cuidar da saúde e de manter tradições.'],
+  you:Y('Monte pratos coloridos e bonitos.','Experimente uma fruta ou legume novo na feira.','Leia os rótulos e compare ingredientes.','Faça refeições sem telas, junto com quem você ama.','Coma devagar, prestando atenção aos sabores.','Planeje as refeições da semana com antecedência.'),
+  try:'Na sua próxima refeição, deixe o celular longe e coma com atenção.',
+  src:'Ministério da Saúde (2014), Guia Alimentar para a População Brasileira, 2ª edição.'},
+ {id:'a42',title:'Como planejar uma viagem gastando menos',cat:'viagens',img:'photo-1488646953014-85cb44e25828',
+  body:['Viajar pode caber no orçamento com planejamento. O primeiro passo é definir quanto você pode gastar e transformar isso em uma meta de economia mensal.',
+   'Viajar fora da alta temporada, ser flexível com as datas e acompanhar os preços das passagens com antecedência costumam ajudar a economizar.',
+   'Hospedagens compartilhadas, casas de família e destinos próximos de casa podem reduzir bastante os custos. Cozinhar algumas refeições e usar transporte público também ajudam.',
+   'Uma boa planilha com transporte, hospedagem, alimentação, passeios e uma reserva para imprevistos evita surpresas no meio do caminho.'],
+  you:Y('Planeje um roteiro com lugares bonitos e inspiradores.','Deixe espaço no roteiro para o inesperado.','Monte a planilha de custos e compare opções.','Viaje com amigas e divida os gastos.','Escolha destinos tranquilos, perto da natureza.','Defina a meta de economia e acompanhe todo mês.'),
+  try:'Escolha um destino possível para o próximo ano e calcule quanto precisaria guardar por mês.',
+  src:'Ministério do Turismo e Procon, orientações ao consumidor sobre compra de passagens e hospedagens.'},
+ {id:'a43',title:'Viajar sozinha com mais segurança',cat:'viagens',img:'photo-1527631746610-bca00a040d60',
+  body:['Viajar sozinha pode ser uma experiência transformadora: você decide o ritmo, descobre do que gosta e ganha confiança.',
+   'Antes de sair, compartilhe o roteiro e os contatos de hospedagem com alguém de confiança, guarde cópias digitais dos documentos e pesquise os bairros onde vai ficar.',
+   'Durante a viagem, prefira chegar aos lugares de dia, use transportes oficiais ou por aplicativo e mantenha o celular carregado. Para viagens internacionais, verifique a exigência de seguro-viagem e vacinas do destino.',
+   'No Brasil, a Central de Atendimento à Mulher atende pelo 180, e em emergências o número da polícia é o 190.'],
+  you:Y('Leve um caderno de viagem para registrar sensações.','Comece por um destino próximo e vá ampliando.','Pesquise o destino com antecedência e monte um checklist.','Faça passeios em grupo para conhecer gente nova.','Reserve momentos de silêncio no roteiro.','Planeje bem e aproveite a liberdade de decidir tudo.'),
+  try:'Monte um checklist de segurança para a sua próxima viagem, mesmo que seja curta.',
+  src:'Ministério das Relações Exteriores, portal Viaje Mais Seguro; Ligue 180, Central de Atendimento à Mulher.'}
+);
+TEXTS.forEach(t=>{if(!t.cats)t.cats=[t.cat];t.date=t.date||'2026-11-22';t.kind='geral';if(!t.min){const w=t.body.join(' ').split(/\s+/).length;t.min=Math.max(3,Math.round(w/130)+1)}});
+{const CAT2={a1:'autoconhecimento',a6:'autoconhecimento',a15:'autoconhecimento',a2:'desenvolvimento',a8:'desenvolvimento',a14:'desenvolvimento',a9:'financas',a12:'bemestar',a4:'relacionamentos',a5:'relacionamentos',a13:'relacionamentos',a3:'psicologia',a7:'psicologia',a10:'psicologia',a11:'psicologia',a27:'carreira'};
+ TEXTS.forEach(t=>{if(CAT2[t.id])t.cat=CAT2[t.id];t.cats=[t.cat]})}
 
 
 /* Experiências de vida */
@@ -3251,10 +3386,13 @@ function libList(u,texts,cats,f){
  return `<div class="flex flex-col gap-3 mt-3">${texts.map(t=>{const rd=u.read.includes(t.id);const sv=u.saved.includes(t.id);return `<button class="tcard" data-act="openText" data-id="${t.id}" style="padding:16px"><span class="dot" style="display:grid;place-items:center;width:32px;height:32px;border-radius:50%;flex:none;border:1.5px solid var(--salvia);${rd?'background:var(--salvia);':''}color:#fff">${rd?ic('tick',16):''}</span><div style="flex:1;min-width:0"><p class="h3" style="font-weight:600">${t.title}</p><p class="small muted" style="font-weight:400">${rd?'Lido · ':''}${t.min} min · ${(cats.find(c=>c.id===t.cat)||{n:''}).n}${sv?' · Salvo':''}</p></div><span class="c-gray">${ic('chev',18)}</span></button>`}).join('')}</div>`;
 }
 function tLearn(u){
+ const mine0=new Set(LCATS.filter(c=>u.prefs.includes(c.n)).map(c=>c.id));
  if(ui.reading){const t=findText(ui.reading);if(t&&t.kind!=='fe')return readView(u,ui.reading);ui.reading=null}
  const f=ui.learn||'todos';
- const cats=LCATS.filter(c=>c.id==='todos'||c.id==='salvos'||TEXTS.some(t=>t.cat===c.id));
- const list=f==='todos'?TEXTS:f==='salvos'?TEXTS.filter(t=>u.saved.includes(t.id)):TEXTS.filter(t=>t.cat===f);
+ const cats=LCATS.filter(c=>c.id==='todos'||c.id==='salvos'||TEXTS.some(t=>t.cat===c.id)).sort((a,b)=>((b.id==='todos')-(a.id==='todos'))||((b.id!=='salvos')-(a.id!=='salvos'))||((mine0.has(b.id)?1:0)-(mine0.has(a.id)?1:0)));
+ const mine=new Set(LCATS.filter(c=>u.prefs.includes(c.n)).map(c=>c.id));
+ const sorted=[...TEXTS].sort((a,b)=>(mine.has(b.cat)?1:0)-(mine.has(a.cat)?1:0));
+ const list=f==='todos'?sorted:f==='salvos'?TEXTS.filter(t=>u.saved.includes(t.id)):TEXTS.filter(t=>t.cat===f);
  const readN=TEXTS.filter(t=>u.read.includes(t.id)).length;const pct=Math.round(readN/TEXTS.length*100);
  return `<h1 class="display">Aprender</h1><p class="body mt-2">Uma biblioteca para você aprender no seu ritmo, com conteúdos educativos e referências.</p>
  <div class="mt-5"><p>Você leu ${readN} de ${TEXTS.length} textos</p><div class="flex items-center gap-3 mt-2"><div class="prog" role="progressbar" aria-valuenow="${pct}" aria-valuemin="0" aria-valuemax="100" aria-label="Textos lidos"><i style="width:${pct}%"></i></div><span class="pct">${pct}%</span></div></div>
