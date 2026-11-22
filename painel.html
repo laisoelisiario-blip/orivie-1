@@ -103,7 +103,7 @@ td.n{font-variant-numeric:tabular-nums;font-weight:800}
 <script>
 'use strict';
 const SB={url:'https://tsjnozxvhisftzqztlcm.supabase.co',key:'sb_publishable_7dN-SjnCsAjsjGFCZcMJ_g_h2RjgmJq'};
-const PROFILES={sanguinea:'Sanguínea',colerica:'Colérica',melancolica:'Melancólica',fleumatica:'Fleumática',serena:'Serena Criativa (versão antiga)',exploradora:'Exploradora Livre (versão antiga)',analitica:'Mente Analítica (versão antiga)',conectiva:'Alma Conectiva (versão antiga)',contemplativa:'Essência Contemplativa (versão antiga)',determinada:'Espírito Determinado (versão antiga)'};
+const PROFILES={serena:'Alma Serena Criativa',exploradora:'Alma Exploradora Livre',analitica:'Mente Analítica',conectiva:'Alma Conectiva',contemplativa:'Essência Contemplativa',determinada:'Espírito Determinado',sanguinea:'Sanguínea (versão cristã antiga)',colerica:'Colérica (versão cristã antiga)',melancolica:'Melancólica (versão cristã antiga)',fleumatica:'Fleumática (versão cristã antiga)'};
 const $=s=>document.querySelector(s);
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const brl=v=>'R$'+Number(v||0).toFixed(2).replace('.',',');
@@ -150,7 +150,7 @@ function render(){
  $('#list').innerHTML=list.length?list.map(c=>`<article class="card client">
    <div><div class="name">${esc(c.name||'Sem nome')}</div><div class="mail">${esc(c.email)}</div></div>
    <span class="tag ${c.paid?'ok':'wait'}">${c.paid?'Liberada':'Aguardando código'}</span>
-   <div class="meta"><span>Cadastro: ${dt(c.created)}</span>${c.paid?`<span>Liberada em ${dt(c.payDate)}${c.payMethod==='hotmart'?' · pela Hotmart':c.code?` · código nº ${c.code}`:''}</span>`:''}<span>Temperamento: ${c.testDone&&c.profile?esc((PROFILES[c.profile]||c.profile)+(c.profile2&&PROFILES[c.profile2]?' + '+PROFILES[c.profile2]:'')):'teste não feito'}</span>${c.prayers?`<span>${c.prayers} pedido${c.prayers===1?'':'s'} de oração</span>`:''}<span>XP ${c.xp}</span><span>${c.read} leitura${c.read===1?'':'s'}</span><span>Última atividade: ${dth(c.lastActive)}</span></div>
+   <div class="meta"><span>Cadastro: ${dt(c.created)}</span>${c.paid?`<span>Liberada em ${dt(c.payDate)}${c.payMethod==='hotmart'?' · pela Hotmart':c.code?` · código nº ${c.code}`:''}</span>`:''}<span>Perfil: ${c.testDone&&c.profile?esc(PROFILES[c.profile]||c.profile):'teste não feito'}</span>${c.prayers?`<span>${c.prayers} pedido${c.prayers===1?'':'s'} de oração</span>`:''}<span>XP ${c.xp}</span><span>${c.read} leitura${c.read===1?'':'s'}</span><span>Última atividade: ${dth(c.lastActive)}</span></div>
   </article>`).join(''):`<div class="card empty"><b>Nenhuma cliente aqui</b><p class="muted">${q||filter!=='todas'?'Tente outra busca ou filtro.':'Quando alguém criar conta no app, aparece aqui.'}</p></div>`;
  $('#codes').innerHTML=data.codes.length?data.codes.map(c=>`<tr><td class="n">${c.n||'?'}</td><td>${esc(c.email)}</td><td>${dt(c.at)}</td></tr>`).join(''):`<tr><td colspan="3" class="muted">Nenhum código usado ainda.</td></tr>`;
  $('#foot').textContent=`Atualizado em ${new Date(data.generatedAt).toLocaleString('pt-BR')} · receita estimada = contas liberadas × ${brl(s.price)}`;
